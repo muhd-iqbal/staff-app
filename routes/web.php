@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('profile', [UserController::class, 'show']);
+Route::patch('profile/update/{user}', [UserController::class, 'update']);
+Route::get('profile/upload', [PhotoController::class, 'create']);
+Route::patch('profile/upload/{user}', [PhotoController::class, 'update']);
+
+Route::get('staff', [UserController::class, 'list']);
+
+require __DIR__.'/auth.php';
