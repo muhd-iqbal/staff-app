@@ -16,9 +16,9 @@
                               <thead>
                                 <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                                   <th class="px-4 py-3">Nama</th>
-                                  <th class="px-4 py-3">Bahagian</th>
+                                  <th class="px-4 py-3">No Tel</th>
                                   <th class="px-4 py-3">Status</th>
-                                  <th class="px-4 py-3">Date</th>
+                                  <th class="px-4 py-3">Tindakan</th>
                                 </tr>
                               </thead>
                               <tbody class="bg-white">
@@ -33,21 +33,29 @@
                                       </div>
                                       <div>
                                         <p class="font-semibold text-black">{{ $user->name }}</p>
-                                        <p class="text-xs text-gray-600">{{ $user->position }} di Bahagian {{ $user->department }}</p>
+                                        <p class="text-xs text-gray-600">{{ $user->position->name }} di Bahagian {{ $user->department->name }}</p>
                                       </div>
                                     </div>
                                   </td>
-                                  <td class="px-4 py-3 text-ms font-semibold border">22</td>
-                                  <td class="px-4 py-3 text-xs border">
-                                    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Acceptable </span>
+                                  <td class="px-4 py-3 text-ms font-semibold border">{{ $user->phone }}</td>
+                                  <td class="px-4 py-3 text-xs border text-center">
+                                      @if($user->active)
+                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Ya </span>
+                                      @else
+                                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm"> Tidak </span>
+                                      @endif
                                   </td>
-                                  <td class="px-4 py-3 text-sm border">6/4/2000</td>
+                                  <td class="px-4 py-3 text-sm border">
+                                    <a href="/staff/resume/{{ $user->id }}" class="bg-blue-500 hover:bg-blue-600 py-2 px-4 text-sm font-medium text-white border border-transparent rounded-lg focus:outline-none">Lihat</a>
+                                    <a href="/staff/show/{{ $user->id }}" class="bg-blue-500 hover:bg-blue-600 py-2 px-4 text-sm font-medium text-white border border-transparent rounded-lg focus:outline-none">Ubah</a>
+                                  </td>
                                 </tr>
                                 @endforeach
                               </tbody>
                             </table>
                           </div>
                         </div>
+                        {{ $users->links() }}
                       </section>
 
                 </div>

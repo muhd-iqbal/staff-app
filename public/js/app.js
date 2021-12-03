@@ -5347,6 +5347,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
+setTimeout(function () {
+  document.getElementById('flash').style.display = 'none';
+}, 5000);
 
 /***/ }),
 

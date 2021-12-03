@@ -13,6 +13,13 @@ class CreateLeavesTable extends Migration
      */
     public function up()
     {
+        Schema::create('leave_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('approval');
+            $table->timestamps();
+        });
+
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
@@ -20,18 +27,15 @@ class CreateLeavesTable extends Migration
             $table->unsignedBigInteger('leave_type_id');
             $table->string('detail');
             $table->date('start');
-            $table->date('end');
+            $table->date('return');
+            $table->float('day');
+            $table->enum('time', ['h-am', 'full', 'h-pm']);
             $table->boolean('hr_approval');
             $table->boolean('approved');
+            $table->boolean('active')->default(1);
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
-
-        Schema::create('leave_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
-
     }
 
     /**
@@ -41,7 +45,7 @@ class CreateLeavesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leaves');
         Schema::dropIfExists('leave_types');
+        Schema::dropIfExists('leaves');
     }
 }

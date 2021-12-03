@@ -13,6 +13,6 @@ class Department extends Model
 
     public function user()
     {
-        $this->hasMany(User::class);
+        return $this->hasMany(User::class);
     }
 }

@@ -40,14 +40,18 @@ class User extends Authenticatable
 
     public function department()
     {
-        $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'department_id');
     }
     public function position()
     {
-        $this->belongsTo(Position::class);
+        return $this->belongsTo(Position::class, 'position_id');
     }
     public function leave()
     {
-        $this->hasMany(Leave::class);
+        return $this->hasMany(Leave::class);
+    }
+    public function order_item()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

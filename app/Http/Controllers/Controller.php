@@ -10,4 +10,9 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public static function order_num($var)
+    {
+        return env('ORDER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
+    }
 }

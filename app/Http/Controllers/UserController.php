@@ -11,11 +11,6 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function list()
-    {
-        $users = User::paginate(10);
-        return view('staff.view', ['users'=>$users]);
-    }
 
     public function show()
     {

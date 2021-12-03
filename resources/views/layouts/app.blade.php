@@ -15,6 +15,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -33,7 +34,7 @@
             </main>
         </div>
         @if (session()->has('success'))
-            <div class="flash fixed bg-blue-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
+            <div id="flash" class="flash fixed bg-blue-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
                 <p>{{ session('success') }}</p>
             </div>
         @endif
