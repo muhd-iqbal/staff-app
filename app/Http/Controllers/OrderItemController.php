@@ -90,7 +90,10 @@ class OrderItemController extends Controller
 
     public function update_takeover(OrderItem $item)
     {
+        $isDesign = key($this->status);
+
         $attributes['user_id'] = auth()->user()->id;
+        $attributes[$isDesign] = 1;
 
         $item->update($attributes);
 

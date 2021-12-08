@@ -10,18 +10,18 @@ class DashboardController extends Controller
         'Muat Naik Foto' => '/profile/upload',
         'Maklumat Peribadi' => '/profile',
         'Tukar Kata Laluan' => '/change-password',
-        'Perihal Cuti' => '/leaves',
+        // 'Perihal Cuti' => '/leaves',
         'Perihal Staf' => '/staff',
         'Senarai Order' => '/orders',
         'Tugasan' => '/to-do',
     ];
     protected $links_admin = [
-        'Permohonan Cuti' => '/leaves/approval',
-        'Jenis Cuti' => '/top/leave-types',
+        // 'Permohonan Cuti' => '/leaves/approval',
+        // 'Jenis Cuti' => '/top/leave-types',
         'Daftar Staf' => '/register',
     ];
     protected $links_owner = [
-        'Permohonan Cuti (Top)' => '/top/leaves/approval',
+        // 'Permohonan Cuti (Top)' => '/top/leaves/approval',
      ];
 
     public function index()

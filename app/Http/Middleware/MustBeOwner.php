@@ -16,7 +16,7 @@ class MustBeOwner
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()?->position_id != 1) {
+        if (auth()->user()->position_id != 1) {
             return redirect('/')->with('forbidden', 'Halaman tidak dapat diakses.');
         }
         return $next($request);

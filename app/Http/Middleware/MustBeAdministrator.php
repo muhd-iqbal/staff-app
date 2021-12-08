@@ -17,7 +17,7 @@ class MustBeAdministrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()?->isAdmin != 1) {
+        if (auth()->user()->isAdmin != 1) {
             return redirect('/')->with('forbidden', 'Halaman untuk admin sahaja.');
         }
         return $next($request);
