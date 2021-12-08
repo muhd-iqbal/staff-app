@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Queue\RedisQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -61,5 +63,22 @@ class NewPasswordController extends Controller
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withInput($request->only('email'))
                             ->withErrors(['email' => __($status)]);
+    }
+
+    public function show()
+    {
+        return view('auth.passwords.change');
+    }
+
+    public function update()
+    {
+        $attributes = request()->validate([
+            'password' => ['required', 'confirmed', Rules\Password::default()],
+        ]);
+        $attributes['password'] = Hash::make($attributes['password']);
+
+        DB::table('users')->where('id', auth()->user()->id)->update(['password' => $attributes['password']]);
+
+        return redirect('/')->with('success', 'Kata laluan berjaya diubah.');
     }
 }

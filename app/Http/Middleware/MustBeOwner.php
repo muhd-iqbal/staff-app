@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Response;
 
-class MustBeAdministrator
+class MustBeOwner
 {
     /**
      * Handle an incoming request.
@@ -17,8 +16,8 @@ class MustBeAdministrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()?->isAdmin != 1) {
-            return redirect('/')->with('forbidden', 'Halaman untuk admin sahaja.');
+        if (auth()->user()?->position_id != 1) {
+            return redirect('/')->with('forbidden', 'Halaman tidak dapat diakses.');
         }
         return $next($request);
     }

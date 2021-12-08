@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('qualification')->nullable();
             $table->date('birthday')->nullable();
             $table->integer('annual_leave')->nullable();
-            $table->decimal('leave_remaining',2,1)->nullable();
+            // $table->decimal('leave_remaining',2,1)->nullable();
             $table->date('joined_at');
             $table->date('left_at')->nullable();
             $table->boolean('active');

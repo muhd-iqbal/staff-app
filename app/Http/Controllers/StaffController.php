@@ -11,7 +11,7 @@ class StaffController extends Controller
 {
     public function index()
     {
-        $users = User::with(['position', 'department'])->paginate(10);
+        $users = User::with(['position', 'department'])->orderBy('active', 'DESC')->orderBy('name')->paginate(10);
         return view('staff.index', ['users'=>$users]);
     }
 

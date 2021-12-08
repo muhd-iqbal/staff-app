@@ -83,5 +83,6 @@
                 </x-button>
             </div>
         </form>
+        <x-dashboard-link />
     </x-auth-card>
 </x-guest-layout>

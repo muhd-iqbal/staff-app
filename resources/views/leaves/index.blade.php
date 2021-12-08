@@ -107,6 +107,7 @@
                         </div>
                         {{ $leaves->links() }}
                     </section>
+                    <x-dashboard-link />
                 </div>
             </div>
         </div>

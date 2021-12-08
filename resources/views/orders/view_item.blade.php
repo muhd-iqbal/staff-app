@@ -40,7 +40,8 @@
                                             <select name="user_id" id="user_id" class="">
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        {{ $user->id == $item->user_id ? 'selected' : '' }}>
+                                                        {{ $user->id == $item->user_id ? 'selected' : '' }}
+                                                        {{ $item->isPrinting ? 'disabled':'' }} >
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -67,7 +68,8 @@
                                             <select name="status" id="status">
                                                 @foreach ($status as $stat => $stat_val)
                                                     <option value="{{ $stat }}"
-                                                        {{ $stat == $last_stat ? 'selected' : '' }}>{{ $stat_val }}
+                                                        {{ $stat == $last_stat ? 'selected' : '' }}>
+                                                        {{ $stat_val }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -76,6 +78,19 @@
                                         </form>
                                     </div>
                                 </div>
+                            @else
+                                @unless(auth()->user()->id == $item->user_id)
+                                    <div class="w-full m-5">
+                                        <div class="mb-5">
+                                            <form action="/orders/item/{{ $item->id }}/takeover" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <x-button onclick="return confirm('Sahkan ambil alih item')">
+                                                    {{ __('Ambil Alih') }}</x-button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @endunless
                             @endif
 
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>

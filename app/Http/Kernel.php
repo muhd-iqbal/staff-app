@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\MustBeAdministrator;
+use App\Http\Middleware\MustBeOwner;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -56,6 +57,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'admin' => MustBeAdministrator::class,
+        'owner' => MustBeOwner::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

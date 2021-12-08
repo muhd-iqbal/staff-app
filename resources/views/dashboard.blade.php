@@ -14,7 +14,6 @@
                     <section class="container px-6 py-4 mx-auto">
                         <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                             @foreach ($links as $title => $link)
-
                                 <div onclick="window.location='{{ $link }}'"
                                     class="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 cursor-pointer hover:bg-gray-100">
                                     <div>

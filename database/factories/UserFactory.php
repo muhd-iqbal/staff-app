@@ -18,7 +18,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => 'ex@m.ple',
             'icno' => $this->faker->numerify('############'),
             'phone' => $this->faker->numerify('############'),
             'bank_name' => 'cimb',
@@ -29,12 +29,13 @@ class UserFactory extends Factory
             'qualification' => 'Diploma of Art',
             'birthday' => $this->faker->dateTimeBetween('-40 years', '-15 years'),
             'annual_leave' => 8,
-            'leave_remaining' => $this->faker->randomDigitNot(9),
+            // 'leave_remaining' => $this->faker->randomDigitNot(9),
             'joined_at' => $this->faker->dateTimeBetween('-10 years'),
             'active' => $this->faker->boolean(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'isAdmin' => 1,
         ];
     }
 

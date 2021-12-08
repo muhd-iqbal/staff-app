@@ -57,7 +57,7 @@ class OrderItemController extends Controller
     public function update_status(OrderItem $item)
     {
         $status = array_keys($this->status);
-        $attributes = request([
+        request()->validate([
             'status' =>  ['required', Rule::in($status)],
         ]);
 
@@ -86,5 +86,15 @@ class OrderItemController extends Controller
         $item->update($attribute);
 
         return back()->with('success', 'Status Dikemaskini.');
+    }
+
+    public function update_takeover(OrderItem $item)
+    {
+        $attributes['user_id'] = auth()->user()->id;
+
+        $item->update($attributes);
+
+        return back()->with('success', 'Item Diambil Alih.');
+
     }
 }
