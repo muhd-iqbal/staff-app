@@ -38,7 +38,6 @@ class LeaveController extends Controller
         $leave_cnt = Leave::where('user_id', $user->id)->where('active', 1)->where('leave_type_id', 1)->whereYear('start', date("Y"))->sum('day');
         $leave_user = User::select('annual_leave')->where('id', $user->id)->get();
         $max_leave = $leave_user[0]->annual_leave - $leave_cnt;
-
         if(request('time')!="full"){
             $max_leave = min($max_leave,0.5);
         }
@@ -46,18 +45,28 @@ class LeaveController extends Controller
         $attributes = request()->validate([
             'detail' => 'required|min:5|max:100',
             'start' => 'required|date',
-            'return' => 'required|date',
+            'return' => 'required|date|after_or_equal:start',
             'leave_type_id' => 'required|exists:leave_types,id',
             'day' => 'required|numeric|min:0.5|max:'.$max_leave,
             'time' => ['required', Rule::in(array_keys($this->time))],
             'attachment' => request('leave_type_id')!=3 ? ['image'] : ['required', 'image'],
         ]);
 
-        $attributes['user_id'] = auth()->id();
-        $attributes['hr_approval'] = 0;
-        $attributes['approved'] = 0;
+        $approval = LeaveType::find($attributes['leave_type_id']);
+        $attributes['hr_approval'] = 1;
+        $attributes['approved'] = 1;
 
-        $attributes['attachment'] = request()->file('attachment')->store('attachments');
+        if($approval->approval){
+
+            $attributes['hr_approval'] = 0;
+            $attributes['approved'] = 0;
+        }
+
+        $attributes['user_id'] = auth()->id();
+
+        if(isset($attributes['attachment'])){
+            $attributes['attachment'] = request()->file('attachment')->store('attachments');
+        }
 
         Leave::create($attributes);
 
