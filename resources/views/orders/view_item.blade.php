@@ -20,18 +20,22 @@
                                 </div>
                             </div>
 
-                            <div class="flex w-full">
-                                <div class="flex-1 mt-10 mx-7">
+                            <div class="w-full">
+                                <div class="mt-10 mx-7">
+                                    {{ __('Saiz: '). $item->size }} <br>
+                                    {{ __('Kuantiti: '). $item->quantity }}
+                                </div>
+                                <div class="mt-5 mx-7">
                                     <div
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold border p-2">
                                         {!! $item->remarks !!}
                                     </div>
                                 </div>
                             </div>
-                            <hr class="m-10" />
+                            <hr class="mt-10 mx-10" />
 
                             @if (auth()->user()->isAdmin)
-                                <div class="w-full m-5">
+                                <div class="grid grid-cols-1 md:grid-cols-2 mt-5 mx-7">
                                     <div class="mb-5">
                                         <form action="/orders/item/{{ $item->id }}/user" method="POST">
                                             @csrf
@@ -41,7 +45,7 @@
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
                                                         {{ $user->id == $item->user_id ? 'selected' : '' }}
-                                                        {{ $item->isPrinting ? 'disabled':'' }} >
+                                                        {{ $item->isPrinting ? 'disabled' : '' }}>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -49,7 +53,7 @@
                                             <x-button class="h-10">Simpan</x-button>
                                         </form>
                                     </div>
-                                    <div class="mb-5">
+                                    {{-- <div class="mb-5">
                                         @php
                                             $last_stat = '';
                                             if ($item->isDone) {
@@ -76,7 +80,7 @@
 
                                             <x-button class="h-10">Simpan</x-button>
                                         </form>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             @else
                                 @unless(auth()->user()->id == $item->user_id)
@@ -102,9 +106,31 @@
 
                         </div>
                     </div> <!-- end components -->
+                    <div class="mt-5 flex justify-between">
+                        <div class="p-5">
+                            @if(count($pictures))
+                                <h2 class="text-xl font-bold">{{ __('Senarai gambar') }}</h2>
+                            @endif
+                        </div>
+                        <div class="">
+                            <form action="/orders/item/{{ $item->id }}/foto" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file" />
+                                <x-button class="mt-2">Muat naik</x-button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        @foreach ($pictures as $pic)
+                            <img src="{{ asset('storage/' . $pic->picture) }}" alt="" class="w-full p-5 border">
+                        @endforeach
+                    </div>
+                    {{-- {{ __('Tiada gambar dimuat naik')}} --}}
 
                 </div>
             </div>
         </div>
     </div>
+
 </x-app-layout>

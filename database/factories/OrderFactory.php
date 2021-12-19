@@ -18,6 +18,7 @@ class OrderFactory extends Factory
             'customer_phone'=>'0123456789',
             'date'=>$this->faker->dateTimeBetween('+1 day', '+1 month'),
             'method'=>$this->faker->randomElement(['walkin', 'online']),
+            'location'=>$this->faker->randomElement(['gurun', 'guar']),
             // 'remarks'=>$this->faker->sentence(),
         ];
     }

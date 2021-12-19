@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             // $table->decimal('leave_remaining',2,1)->nullable();
             $table->date('joined_at');
             $table->date('left_at')->nullable();
-            $table->boolean('active');
+            $table->boolean('active')->default(1);
             $table->text('photo')->nullable();
             $table->boolean('isAdmin')->default(0);
             $table->rememberToken();

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Senarai Order') }}
+            {{ __('Senarai Pesanan') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -67,20 +67,34 @@
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pesanan</label>
-                                    <select name="method"
-                                        class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                        <option value="walkin" {{ old('method') == 'walkin' ? 'selected' : '' }}>
-                                            Walk-in
-                                        </option>
-                                        <option value="online" {{ old('method') == 'online' ? 'selected' : '' }}>
-                                            Online
-                                        </option>
-                                    </select>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
+                                    <div class="grid grid-cols-1">
+                                        <label
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pesanan</label>
+                                        <select name="method"
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                                            <option value="walkin" {{ old('method') == 'walkin' ? 'selected' : '' }}>
+                                                Walk-in
+                                            </option>
+                                            <option value="online" {{ old('method') == 'online' ? 'selected' : '' }}>
+                                                Online
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Lokasi</label>
+                                        <select name="location"
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                                            <option value="gurun" {{ old('method') == 'gurun' ? 'selected' : '' }}>
+                                                Gurun
+                                            </option>
+                                            <option value="guar" {{ old('method') == 'guar' ? 'selected' : '' }}>
+                                                Guar
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
-
                                 {{-- <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Produk</label>

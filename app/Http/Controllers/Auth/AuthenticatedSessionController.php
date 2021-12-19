@@ -32,6 +32,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (auth()->user()->active == 0) {
+
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            return redirect('/');
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

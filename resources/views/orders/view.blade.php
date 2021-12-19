@@ -13,12 +13,17 @@
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
 
-                            <div class="flex justify-center">
+                            <div class="flex flex-col items-center">
                                 <div class="flex">
-                                    <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Order ID:
+                                    <h1 class="text-gray-600 font-bold md:text-2xl text-xl">{{ __('Pesanan:') }}
                                         {{ \App\Http\Controllers\Controller::order_num($order->id) }}</h1>
-                                    <a href="https://wa.me/6{{ $order->customer_phone }}"><img
-                                            src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg" width="30"></a>
+                                    <a href="{{ 'https://wa.me/6' . $order->customer_phone }}">
+                                        <img src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg" width="30"></a>
+                                </div>
+                                <div>
+                                    <h2 class="text-gray-500 font-bold md:text-xl text-lg">
+                                        {{ ucwords($order->method) }}
+                                        ({{ ucwords($order->location) }})</h2>
                                 </div>
                             </div>
 
@@ -37,9 +42,6 @@
                                         Deadline: @if ($order->deadline)
                                             {{ date('d/m/Y', strtotime($order->deadline)) }}
                                         @endif
-                                    </div>
-                                    <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ $order->method }}
                                     </div>
                                     @if (auth()->user()->isAdmin && !$order->isDone)
                                         <form method="POST" action="/orders/view/{{ $order->id }}/mark-done">
@@ -81,13 +83,21 @@
                                                     Item
                                                 </th>
                                                 <th scope="col"
-                                                    class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    PIC
+                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Saiz
                                                 </th>
                                                 <th scope="col"
+                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Kuantiti
+                                                </th>
+                                                <th scope="col"
+                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Designer
+                                                </th>
+                                                {{-- <th scope="col"
                                                     class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Status
-                                                </th>
+                                                </th> --}}
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -95,9 +105,8 @@
 
                                                 <tr class="cursor-pointer"
                                                     onclick="window.location='/orders/item/{{ $list->id }}'">
-                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                    <td class="py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
-
                                                             <div class="ml-4">
                                                                 <div class="text-sm font-medium text-gray-900">
                                                                     {{ $list->product }}
@@ -105,6 +114,8 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    <td class="text-center">{{ $list->size }}</td>
+                                                    <td class="text-center">{{ $list->quantity }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex-shrink-0 h-10 w-10">
                                                             @if ($list->user)
@@ -114,7 +125,7 @@
                                                             @endif
                                                         </div>
                                                     </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                    {{-- <td class="px-6 py-4 whitespace-nowrap">
                                                         @if ($list->isDone)
                                                             <span
                                                                 class="bg-green-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">Siap</span>
@@ -130,7 +141,7 @@
                                                                 Tindakan</span>
                                                         @endif
 
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
 
                                             @endforeach

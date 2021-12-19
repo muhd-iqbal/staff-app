@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/orders/item/{item}/user', [OrderItemController::class, 'update_user']);
     Route::patch('/orders/item/{item}/status', [OrderItemController::class, 'update_status']);
     Route::patch('/orders/item/{item}/takeover', [OrderItemController::class, 'update_takeover']);
+    Route::post('/orders/item/{item}/foto', [OrderItemController::class, 'update_photo']);
 
     Route::get('to-do', [TaskController::class, 'index']);
 

@@ -15,10 +15,10 @@
                             <table class="w-full">
                               <thead>
                                 <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                  <th class="px-4 py-3">Nama</th>
-                                  @if (auth()->user()->isAdmin)<th class="px-4 py-3">No Tel</th>@endif
-                                  <th class="px-4 py-3">Status</th>
-                                  @if (auth()->user()->isAdmin)<th class="px-4 py-3">Tindakan</th>@endif
+                                  <th class="px-4 py-3">{{ ('Nama') }}</th>
+                                  @if (auth()->user()->isAdmin)<th class="px-4 py-3">{{ ('No Tel') }}</th>@endif
+                                  <th class="px-4 py-3">{{ ('Status') }}</th>
+                                  @if (auth()->user()->isAdmin)<th class="px-4 py-3">{{ ('Tindakan') }}</th>@endif
                                 </tr>
                               </thead>
                               <tbody class="bg-white">
@@ -32,8 +32,8 @@
                                         <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                       </div>
                                       <div>
-                                        <p class="font-semibold text-black">{{ $user->name }}</p>
-                                        <p class="text-xs text-gray-600">{{ $user->position->name }} di Bahagian {{ $user->department->name }}</p>
+                                        <p class="font-semibold text-black">{{ ucwords(strtolower($user->name)) }}</p>
+                                        <p class="text-xs text-gray-600">{{ $user->position->name . __(' di Bahagian ') .  $user->department->name }}</p>
                                       </div>
                                     </div>
                                   </td>

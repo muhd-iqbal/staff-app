@@ -51,6 +51,7 @@ class OrderController extends Controller
             'date' => 'required|date',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
+            'location' => ['required', Rule::in(['gurun', 'guar'])],
             // 'product' => 'required|array',
             // 'remarks' => 'required',
         ]);

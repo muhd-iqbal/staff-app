@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderPicture;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -25,6 +26,8 @@ class OrderItemController extends Controller
     {
         $attributes = request()->validate([
             'product' => 'required|max:255',
+            'size' => 'required|max:100',
+            'quantity' => 'required|numeric|min:1',
             'remarks' => 'required',
         ]);
         $attributes['order_id'] = $order;
@@ -38,7 +41,8 @@ class OrderItemController extends Controller
     {
         return view('orders.view_item', [
             'item' => $item,
-            'users' => User::all(),
+            'pictures' => OrderPicture::where('order_item_id', $item->id)->get(),
+            'users' => User::where('active',1)->get(),
             'status' => $this->status,
         ]);
     }
@@ -99,5 +103,19 @@ class OrderItemController extends Controller
 
         return back()->with('success', 'Item Diambil Alih.');
 
+    }
+
+    public function update_photo($item)
+    {
+        request()->validate([
+            'picture' => 'required|image'
+        ]);
+
+        $attributes['order_item_id'] = $item;
+        $attributes['picture'] = request()->file('picture')->store('picture');
+
+        OrderPicture::create($attributes);
+
+        return back()->with('success', 'Gambar ditambah!');
     }
 }

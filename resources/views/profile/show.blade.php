@@ -52,14 +52,14 @@
                                                 <x-form.select name="department_id" label="Bahagian" span="3">
                                                     @foreach ($departments as $department)
                                                         <option value="{{ $department->id }}"
-                                                            {{ $user->department_id == $department->id ? 'selected' : '' }}>
+                                                            {{ $user->department_id == $department->id ? 'selected' : 'disabled' }}>
                                                             {{ $department->name }}</option>
                                                     @endforeach
                                                 </x-form.select>
                                                 <x-form.select name="position_id" label="Jawatan" span="3">
                                                     @foreach ($positions as $position)
                                                         <option value="{{ $position->id }}"
-                                                            {{ $user->position_id == $position->id ? 'selected' : '' }}>
+                                                            {{ $user->position_id == $position->id ? 'selected' : 'disabled' }}>
                                                             {{ $position->name }}</option>
                                                     @endforeach
                                                 </x-form.select>

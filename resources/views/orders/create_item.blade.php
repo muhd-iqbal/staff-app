@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tambah Order Item') }}
+            {{ __('Tambah Item Pesanan') }}
         </h2>
         <x-head.tinymce-config />
     </x-slot>
@@ -33,20 +33,29 @@
                                 @endif
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Produk</label>
+                                    {{-- <label
+                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Produk</label> --}}
                                     <input
                                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        type="text" name="product" placeholder="Masukkan nama produk & saiz"
+                                        type="text" name="product" placeholder="Masukkan nama produk"
                                         value="{{ old('product') }}" />
+                                    <div class="mt-3 grid grid-cols-2 gap-3">
+                                        <input
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="text" name="size" placeholder="Saiz Item"
+                                            value="{{ old('size') }}" />
+                                        <input
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="number" step=1 name="quantity" placeholder="Kuantiti"
+                                            value="{{ old('quantity') }}" />
+                                    </div>
                                 </div>
-
-
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Nota</label>
 
-                                    <textarea name="remarks" id="mytextarea" placeholder="Remarks">{{ old('remarks') }}</textarea>
+                                    <textarea name="remarks" id="mytextarea"
+                                        placeholder="Remarks">{{ old('remarks') }}</textarea>
 
                                 </div>
 

@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->date('date');
             $table->date('dateline')->nullable();
             $table->String('method');
+            $table->String('location');
             // $table->String('product')->nullable();
             // $table->text('remarks');
             // $table->boolean('isDesign')->default(0);

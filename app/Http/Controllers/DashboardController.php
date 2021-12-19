@@ -10,7 +10,7 @@ class DashboardController extends Controller
         'Muat Naik Foto' => '/profile/upload',
         'Maklumat Peribadi' => '/profile',
         'Tukar Kata Laluan' => '/change-password',
-        'Perihal Cuti' => '/leaves',
+        // 'Perihal Cuti' => '/leaves',
         'Perihal Staf' => '/staff',
         'Senarai Order' => '/orders',
         'Tugasan' => '/to-do',
