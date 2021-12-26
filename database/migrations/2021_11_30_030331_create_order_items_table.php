@@ -21,21 +21,19 @@ class CreateOrderItemsTable extends Migration
             $table->string('product');
             $table->string('size');
             $table->string('quantity');
-            $table->text('remarks');
+            $table->integer('price');
+            $table->text('remarks')->nullable();
             $table->unsignedBigInteger('user_id')->nullable(); //designer
             $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('isConfirmed')->default(0); //for confirmed order
-            $table->timestamp('isConfirmed_time')->nullable();
-            $table->boolean('isDesign')->default(0); //on design phase
-            $table->timestamp('isDesign_time')->nullable();
-            $table->boolean('isApproved')->default(0); //customer approved the design
-            $table->timestamp('isApproved_time')->nullable();
-            $table->boolean('isPrinting')->default(0); //on print list`
-            $table->timestamp('isPrinting_time')->nullable();
-            $table->boolean('isFinishing')->default(0); //on finishing phase
-            $table->timestamp('isFinishing_time')->nullable();
-            $table->boolean('isDone')->default(0); //done processing item
-            $table->timestamp('isDone_time')->nullable();
+            $table->boolean('printing_list')->default(0);
+            $table->boolean('is_design')->default(0); //on design phase
+            $table->timestamp('is_design_time')->nullable();
+            $table->boolean('is_approved')->default(0); //customer approved the design
+            $table->timestamp('is_approved_time')->nullable();
+            $table->boolean('is_printing')->default(0); //on print list`
+            $table->timestamp('is_printing_time')->nullable();
+            $table->boolean('is_done')->default(0); //done processing item
+            $table->timestamp('is_done_time')->nullable();
             $table->timestamps();
         });
     }

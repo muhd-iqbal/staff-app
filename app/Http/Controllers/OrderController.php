@@ -23,16 +23,13 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
+        $orders = Order::with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
         if(request('search')){
             $orders->where('customer_name', 'like', '%'.request('search').'%')->orWhere('customer_phone', 'like', '%'.request('search').'%');
         }
-
         return view('orders.index', [
             'orders' => $orders->paginate(10),
-            // 'orders' => Order::orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC')->paginate(10),
-            // 'customers' => Customer::all()
         ]);
     }
 

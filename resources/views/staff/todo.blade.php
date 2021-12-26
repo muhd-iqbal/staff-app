@@ -31,16 +31,16 @@
                                                     {{ __('No') }}
                                                 </th>
                                                 <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                    {{ __('Pelanggan') }}
-                                                </th>
+                                                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                {{ __('Tarikh') }}
+                                            </th>
+                                            <th
+                                                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                {{ __('Pelanggan') }}
+                                            </th>
                                                 <th
                                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                    {{ __('Tarikh') }}
-                                                </th>
-                                                <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                    {{ __('Status') }}
+                                                    {{ __('Item') }}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -57,21 +57,15 @@
                                                         </th>
                                                         <td
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                            {{ $task->order->customer_name }}
-                                                        </td>
-                                                        <td
-                                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                             {{ date('D d/m/Y', strtotime($task->order->created_at)) }}
                                                         </td>
                                                         <td
+                                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                                            {{ $task->order->customer_name }}
+                                                        </td>
+                                                        <td
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                            @if ($task->order->isDone)
-                                                                <span
-                                                                    class="bg-green-500 font-bold text-white text-center py-1 px-2 rounded-full">Selesai</span>
-                                                            @else
-                                                                <span
-                                                                    class="bg-red-500 font-bold text-white text-center py-1 px-2 rounded-full">Pending</span>
-                                                            @endif
+                                                            {{ $task->product }}
                                                         </td>
                                                     </tr>
                                                 @endforeach

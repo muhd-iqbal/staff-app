@@ -8,15 +8,11 @@ use App\Models\OrderPicture;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
+use App\Http\Controllers\ItemStatusController;
 class OrderItemController extends Controller
 {
-
-    protected $status = ['isDesign' => 'Design', 'isPrinting' => 'Print', 'isDone' => 'Selesai'];
-
     public function create($order)
     {
-
         return view('orders.create_item', [
             'order' => Order::find($order),
         ]);
@@ -28,8 +24,13 @@ class OrderItemController extends Controller
             'product' => 'required|max:255',
             'size' => 'required|max:100',
             'quantity' => 'required|numeric|min:1',
-            'remarks' => 'required',
+            'price' => 'required|min:0|numeric',
+            'remarks' => '',
         ]);
+        if (request()->has('printing_list')) {
+            $attributes['printing_list'] = 1;
+        }
+        $attributes['price'] = $attributes['price']*100; //for database precision
         $attributes['order_id'] = $order;
 
         OrderItem::create($attributes);
@@ -39,11 +40,25 @@ class OrderItemController extends Controller
 
     public function view(OrderItem $item)
     {
+        $status = $this->status_list['none'];
+
+        if($item->is_done){
+            $status = $this->status_list['is_done'];
+        }
+        elseif($item->is_printing){
+            $status = $this->status_list['is_printing'];
+        }
+        elseif($item->is_approved){
+            $status = $this->status_list['is_approved'];
+        }
+        elseif($item->is_design){
+            $status = $this->status_list['is_design'];
+        }
         return view('orders.view_item', [
             'item' => $item,
             'pictures' => OrderPicture::where('order_item_id', $item->id)->get(),
-            'users' => User::where('active',1)->get(),
-            'status' => $this->status,
+            'users' => User::where('active',1)->whereNotIn('position_id', [1])->get(),
+            'status' => $status,
         ]);
     }
 
@@ -52,6 +67,8 @@ class OrderItemController extends Controller
         $attributes = request()->validate([
             'user_id' => 'required|exists:users,id',
         ]);
+        $attributes['is_design'] = 1;
+        $attributes['is_design_time'] = now();
 
         $item->update($attributes);
 

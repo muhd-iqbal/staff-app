@@ -11,6 +11,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $status_list = [
+        'none' => 'Pending',
+        'is_design' => 'Design',
+        'is_approved' => 'Production',
+        'is_printing' => 'Finishing',
+        'is_done' => 'Done'
+    ];
+
     public static function order_num($var)
     {
         return env('ORDER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);

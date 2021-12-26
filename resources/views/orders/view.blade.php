@@ -94,10 +94,10 @@
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Designer
                                                 </th>
-                                                {{-- <th scope="col"
+                                                <th scope="col"
                                                     class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Status
-                                                </th> --}}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -116,32 +116,36 @@
                                                     </td>
                                                     <td class="text-center">{{ $list->size }}</td>
                                                     <td class="text-center">{{ $list->quantity }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="flex-shrink-0 h-10 w-10">
-                                                            @if ($list->user)
-                                                                <img class="h-10 w-10 rounded-full"
-                                                                    src="{{ asset('storage/' . $list->user->photo) }}"
-                                                                    title="{{ $list->user->name }}" />
-                                                            @endif
-                                                        </div>
+                                                    <td class="flex py-4 justify-center">
+                                                        @if ($list->user)
+                                                            <img class="h-10 w-10 rounded-full"
+                                                                src="{{ asset('storage/' . $list->user->photo) }}"
+                                                                title="{{ $list->user->name }}" />
+                                                        @endif
                                                     </td>
-                                                    {{-- <td class="px-6 py-4 whitespace-nowrap">
-                                                        @if ($list->isDone)
+                                                    <td class="justify-center">
+                                                        @if ($list->is_done)
                                                             <span
-                                                                class="bg-green-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">Siap</span>
-                                                        @elseif ($list->isPrinting)
+                                                                class="bg-green-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Selesai') }}</span>
+                                                        @elseif($list->is_printing)
                                                             <span
-                                                                class="bg-yellow-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">Print</span>
-                                                        @elseif ($list->isDesign)
+                                                                class="bg-indigo-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Finishing') }}</span>
+
+                                                        @elseif($list->is_approved)
                                                             <span
-                                                                class="bg-purple-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">Design</span>
+                                                                class="bg-yellow-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Production') }}</span>
+
+                                                        @elseif($list->is_design)
+                                                            <span
+                                                                class="bg-pink-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Design') }}</span>
+
                                                         @else
                                                             <span
-                                                                class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">Tiada
-                                                                Tindakan</span>
+                                                                class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">
+                                                                {{ __('Pending') }}
+                                                    </span>
                                                         @endif
-
-                                                    </td> --}}
+                                                    </td>
                                                 </tr>
 
                                             @endforeach

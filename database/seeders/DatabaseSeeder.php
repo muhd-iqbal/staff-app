@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Praktikal / LI', 'created_at'=>NOW()],
         ]);
         // Department::factory(5)->create();
-        Order::factory(5)->create();
         User::factory(1)->create();
+        Order::factory(5)->create();
         DB::table('leave_types')->insert([
             ['name' => 'Cuti Tahunan', 'approval'=>1],
             ['name' => 'Cuti Kecemasan', 'approval'=>1],

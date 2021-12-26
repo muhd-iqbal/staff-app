@@ -12,7 +12,7 @@
                     <section class="py-1">
                         <a href="/orders/create"
                             class='items-center m-5 bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                            Tambah Pesanan
+                            {{ __('Tambah Pesanan') }}
                         </a>
                         <div class="w-full xl:w-full mb-12 xl:mb-0 px-4 mx-auto">
                             <div class="flex justify-end">
@@ -22,8 +22,7 @@
                                 </form>
                             </div>
                             <div
-                                class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
-
+                                class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                                 <div class="block w-full overflow-x-auto">
                                     <table class="items-center bg-transparent w-full border-collapse ">
                                         <thead>
@@ -46,10 +45,8 @@
                                                 </th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             @foreach ($orders as $order)
-
                                                 <tr onclick="window.location='orders/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
                                                     <th
@@ -67,23 +64,96 @@
                                                     </td>
                                                     <td
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        {{ date('D d/m/Y', strtotime($order->created_at)) }}
+                                                        {{ date('D d/m/Y', strtotime($order->date)) }}
                                                     </td>
                                                     <td
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                        @if ($order->isDone)
-                                                            <span
-                                                                class="bg-green-500 font-bold text-white text-center py-1 px-2 rounded-full">Selesai</span>
+                                                        @php
+                                                            $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
+                                                            $count = count($order->order_item);
+                                                        @endphp
+
+                                                        @foreach ($order->order_item as $item)
+
+                                                            @php
+                                                                if ($item->is_done) {
+                                                                    $is_done++;
+                                                                } elseif ($item->is_printing) {
+                                                                    $is_printing++;
+                                                                } elseif ($item->is_approved) {
+                                                                    $is_approved++;
+                                                                } elseif ($item->is_design) {
+                                                                    $is_design++;
+                                                                } else {
+                                                                    $is_pending++;
+                                                                }
+                                                                // $status + ($item->is_design + $item->is_approved + $item->is_printing + $item->is_done) / 4;
+                                                            @endphp
+                                                        @endforeach
+
+                                                        @unless($count == 0)
+
+                                                            @php $status = $status/$count @endphp
+
+                                                            @if ($is_pending)
+                                                                <div
+                                                                    class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm">
+                                                                    <span class="inline-flex px-1">{{ __('Pending') }}</span>
+                                                                    <span
+                                                                        class="inline-flex bg-white text-red-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_pending }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_design)
+                                                                <div
+                                                                    class="inline-flex items-center bg-pink-600 leading-none text-white rounded-full p-1 shadow text-sm">
+                                                                    <span class="inline-flex px-1">{{ __('Design') }}</span>
+                                                                    <span
+                                                                        class="inline-flex bg-white text-pink-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_design }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_approved)
+                                                                <div
+                                                                    class="inline-flex items-center bg-yellow-600 leading-none text-white rounded-full p-1 shadow text-sm">
+                                                                    <span class="inline-flex px-1">{{ __('Production') }}</span>
+                                                                    <span
+                                                                        class="inline-flex bg-white text-yellow-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_approved }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_printing)
+                                                                <div
+                                                                    class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-1 shadow text-sm">
+                                                                    <span class="inline-flex px-1">{{ __('Finishing') }}</span>
+                                                                    <span
+                                                                        class="inline-flex bg-white text-purple-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_printing }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_done)
+                                                                <div
+                                                                    class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm">
+                                                                    <span class="inline-flex px-1">{{ __('Selesai') }}</span>
+                                                                    <span
+                                                                        class="inline-flex bg-white text-green-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_done }}</span>
+                                                                </div>
+                                                            @endif
+                                                            {{-- @if ($status == 1)
+                                                                <span
+                                                                    class="bg-green-500 font-bold text-white text-center py-1 px-2 rounded-full">Selesai</span>
+                                                            @elseif ($status == 0)
+                                                                <span
+                                                                    class="bg-red-500 font-bold text-white text-center py-1 px-2 rounded-full">Pending</span>
+                                                            @else
+                                                                <span
+                                                                    class="bg-yellow-500 font-bold text-white text-center py-1 px-2 rounded-full">Active</span>
+                                                            @endif --}}
                                                         @else
                                                             <span
-                                                                class="bg-red-500 font-bold text-white text-center py-1 px-2 rounded-full">Pending</span>
-                                                        @endif
+                                                                class="bg-gray-500 font-bold text-white text-center py-1 px-2 rounded-full">Tiada
+                                                                Item</span>
+                                                        @endunless
                                                     </td>
                                                 </tr>
-
                                             @endforeach
                                         </tbody>
-
                                     </table>
                                 </div>
                             </div>
@@ -103,11 +173,8 @@
                                 <span class="inline-flex px-2">Guar</span>
                             </div>
                         </div>
-
                     </section>
-
                     <x-dashboard-link />
-
                 </div>
             </div>
         </div>

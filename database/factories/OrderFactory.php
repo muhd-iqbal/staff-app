@@ -19,6 +19,7 @@ class OrderFactory extends Factory
             'date'=>$this->faker->dateTimeBetween('+1 day', '+1 month'),
             'method'=>$this->faker->randomElement(['walkin', 'online']),
             'location'=>$this->faker->randomElement(['gurun', 'guar']),
+            'user_id'=>1,
             // 'remarks'=>$this->faker->sentence(),
         ];
     }

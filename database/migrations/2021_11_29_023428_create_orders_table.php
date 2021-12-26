@@ -21,10 +21,8 @@ class CreateOrdersTable extends Migration
             $table->date('dateline')->nullable();
             $table->String('method');
             $table->String('location');
-            // $table->String('product')->nullable();
-            // $table->text('remarks');
-            // $table->boolean('isDesign')->default(0);
-            // $table->boolean('isPrinting')->default(0);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('isDone')->default(0);
             $table->timestamps();
         });

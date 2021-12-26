@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="robots" content="noindex,nofollow">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
@@ -36,20 +36,23 @@
         </main>
     </div>
     @if (session()->has('success'))
-        <div id="flash" class="flash fixed bg-blue-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
-            <p>{{ session('success') }}</p>
-        </div>
+    <div id="flash" class="absolute z-50 top-0 left-0 right-0 bg-green-500 text-center leading-10 overflow-hidden shadow-md">
+        {{ session('success') }}
+    </div>
+    {{-- <div id="flash" class="flash fixed bg-blue-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
+        <p>{{ session('success') }}</p>
+    </div> --}}
     @endif
     @if (session()->has('forbidden'))
-        <div id="flash" class="flash fixed bg-red-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
-            <p>{{ session('forbidden') }}</p>
-        </div>
+    <div id="flash" class="absolute z-50 top-0 left-0 right-0 bg-red-500 text-center leading-10 overflow-hidden shadow-md">
+        <p>{{ session('forbidden') }}</p>
+    </div>
     @endif
-    @if (session()->has('flash') || session()->has('forbidden'))
+    @if (session()->has('success') || session()->has('forbidden'))
         <script>
             setTimeout(function() {
                 document.getElementById('flash').style.display = 'none';
-            }, 5000);
+            }, 2500);
         </script>
     @endif
 </body>

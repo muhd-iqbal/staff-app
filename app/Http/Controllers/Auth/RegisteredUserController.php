@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Position;
 use App\Models\User;
+use App\Models\UserPermission;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -56,6 +57,10 @@ class RegisteredUserController extends Controller
             'joined_at' => $request->joined_at,
             'active' => 1,
             'password' => Hash::make($request->password),
+        ]);
+
+        UserPermission::create([
+            'user_id' => $user->id,
         ]);
 
         event(new Registered($user));

@@ -13,7 +13,8 @@ class DashboardController extends Controller
         // 'Perihal Cuti' => '/leaves',
         'Perihal Staf' => '/staff',
         'Senarai Order' => '/orders',
-        'Tugasan' => '/to-do',
+        'Tugasan Design' => '/to-do',
+        'Print List' => '/print',
     ];
     protected $links_admin = [
         // 'Permohonan Cuti' => '/leaves/approval',

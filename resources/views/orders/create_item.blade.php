@@ -33,13 +33,16 @@
                                 @endif
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    {{-- <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Produk</label> --}}
-                                    <input
-                                        class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        type="text" name="product" placeholder="Masukkan nama produk"
-                                        value="{{ old('product') }}" />
-                                    <div class="mt-3 grid grid-cols-2 gap-3">
+                                    <div class="mt-3 grid md:grid-cols-3 gap-3">
+                                        <input
+                                            class="py-2 px-3 md:col-span-2 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="text" name="product" placeholder="Masukkan nama produk"
+                                            value="{{ old('product') }}" />
+                                        <input
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="text" name="price" placeholder="Harga" value="{{ old('price') }}" />
+                                    </div>
+                                    <div class="mt-3 grid md:grid-cols-3 gap-3">
                                         <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="text" name="size" placeholder="Saiz Item"
@@ -48,6 +51,10 @@
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="number" step=1 name="quantity" placeholder="Kuantiti"
                                             value="{{ old('quantity') }}" />
+                                            <div class="flex justify-center items-center">
+                                                <input type="checkbox" name="printing_list" id="printing_list">
+                                                <label for="printing_list" class="mx-3"> Item masuk ke print list? </label>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
