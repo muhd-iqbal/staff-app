@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemStatusController extends Controller
 {
@@ -22,7 +23,6 @@ class ItemStatusController extends Controller
         $item->update($attributes);
 
         return back()->with('success', 'Status Dikemaskini: Design.');
-
     }
     public function update_approved(OrderItem $item)
     {
@@ -36,7 +36,6 @@ class ItemStatusController extends Controller
         $item->update($attributes);
 
         return back()->with('success', 'Status Dikemaskini: Printing');
-
     }
     public function update_printing(OrderItem $item)
     {
@@ -48,7 +47,6 @@ class ItemStatusController extends Controller
         $item->update($attributes);
 
         return back()->with('success', 'Status Dikemaskini: Finishing');
-
     }
     public function update_done(OrderItem $item)
     {
@@ -58,6 +56,35 @@ class ItemStatusController extends Controller
         $item->update($attributes);
 
         return back()->with('success', 'Status Dikemaskini: Siap');
+    }
 
+    public function show_status($status)
+    {
+        switch ($status) {
+            case 'is_done':
+                $title = 'Done';
+                $items = OrderItem::where('is_done', '=', 1);
+                break;
+            case 'is_printing':
+                $title = 'Printing';
+                $items = OrderItem::where('is_printing', '=', 1)->where('is_done', '=', 0);
+                break;
+            case 'is_approved':
+                $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
+                break;
+            case 'is_design':
+                $items = OrderItem::where('is_design', '=', 1)->where('is_approved', '=', 0);
+                break;
+            case 'is_pending':
+                $items = OrderItem::where('is_design', '=', 0);
+                break;
+
+            default:
+                break;
+        }
+
+        return view('orders/item_status', [
+            'items' => $items->paginate(10),
+        ]);
     }
 }

@@ -11,7 +11,7 @@ class TaskController extends Controller
     {
         $user = auth()->user();
         return view('staff/todo', [
-            'todo' => OrderItem::where('user_id', '=', $user->id)->where('is_approved', '=', 0)->with('order')->get(),
+            'todo' => OrderItem::where('user_id', '=', $user->id)->where('is_approved', '=', 0)->orderBy('is_approved', 'ASC')->orderBy('created_at', 'DESC')->with('order')->get(),
         ]);
     }
 

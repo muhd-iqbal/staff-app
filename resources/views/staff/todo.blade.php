@@ -4,6 +4,10 @@
             {{ __('Senarai Tugasan') }}
         </h2>
     </x-slot>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -23,7 +27,7 @@
                                 </div>
 
                                 <div class="block w-full overflow-x-auto">
-                                    <table class="items-center bg-transparent w-full border-collapse ">
+                                    <table id="dataTable" class="items-center bg-transparent w-full border-collapse">
                                         <thead>
                                             <tr>
                                                 <th
@@ -87,4 +91,10 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+
+        });
+    </script>
 </x-app-layout>

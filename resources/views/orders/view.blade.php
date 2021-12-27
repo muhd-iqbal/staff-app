@@ -27,23 +27,26 @@
                                 </div>
                             </div>
 
-                            <div class="flex w-full">
-                                <div class="flex-1 mt-5 mx-7">
+                            <div class="grid md:grid-cols-2">
+                                <div class="mt-5 mx-7">
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        Nama Pelanggan: {{ $order->customer_name }}
+                                        {{ __('Nama Pelanggan: ') . $order->customer_name }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        No Telefon: {{ $order->customer_phone }}
+                                        {{ __('No Telefon: ') . $order->customer_phone }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        Tarikh pesanan: {{ date('d/m/Y', strtotime($order->date)) }}
+                                        {{ __('Tarikh pesanan: ') . date('d/m/Y', strtotime($order->date)) }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        Deadline: @if ($order->deadline)
+                                        {{ __('Deadline: ') }}
+                                        @if ($order->deadline)
                                             {{ date('d/m/Y', strtotime($order->deadline)) }}
                                         @endif
                                     </div>
-                                    @if (auth()->user()->isAdmin && !$order->isDone)
+                                </div>
+                                @if (auth()->user()->isAdmin && !$order->isDone)
+                                    <div class="text-right m-5">
                                         <form method="POST" action="/orders/view/{{ $order->id }}/mark-done">
                                             @csrf
                                             @method('PATCH')
@@ -51,23 +54,21 @@
                                                 onclick="return confirm('{{ __('Sahkan order selesai') }}')">
                                                 {{ __('Tanda Selesai') }}</x-button>
                                         </form>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class='flex gap-5 items-center justify-center p-5 pb-5'>
-                                @if (!$order->isDone)
-                                    <a href="/orders/{{ $order->id }}/add-item"
-                                        class='w-auto bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                        Tambah Item
-                                    </a>
+                                    </div>
                                 @endif
+                            </div>
+                            <div class='flex gap-5 items-center justify-center p-5 pb-5'>
+                                {{-- @if (!$order->isDone) --}}
+                                <a href="/orders/{{ $order->id }}/add-item"
+                                    class='w-auto bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    {{ __('Tambah Item') }}
+                                </a>
+                                {{-- @endif --}}
                                 <a href="/orders"
                                     class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                    Kembali ke senarai pesanan
+                                    {{ __('Kembali ke senarai pesanan') }}
                                 </a>
                             </div>
-
                         </div>
                     </div> <!-- end components -->
 
@@ -80,23 +81,23 @@
                                             <tr>
                                                 <th scope="col"
                                                     class="px-6 py-3 font-medium text-gray-500 uppercase tracking-wider">
-                                                    Item
+                                                    {{ __('Item') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Saiz
+                                                    {{ __('Saiz') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Kuantiti
+                                                    {{ __('Kuantiti') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Designer
+                                                    {{ __('Designer') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Status
+                                                    {{ __('Status') }}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -126,30 +127,24 @@
                                                     <td class="justify-center">
                                                         @if ($list->is_done)
                                                             <span
-                                                                class="bg-green-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Selesai') }}</span>
+                                                                class="bg-green-600 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Selesai') }}</span>
                                                         @elseif($list->is_printing)
                                                             <span
-                                                                class="bg-indigo-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Finishing') }}</span>
-
+                                                                class="bg-purple-600 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Finishing') }}</span>
                                                         @elseif($list->is_approved)
                                                             <span
-                                                                class="bg-yellow-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Production') }}</span>
-
+                                                                class="bg-yellow-700 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Production') }}</span>
                                                         @elseif($list->is_design)
                                                             <span
-                                                                class="bg-pink-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Design') }}</span>
-
+                                                                class="bg-yellow-400 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Design') }}</span>
                                                         @else
                                                             <span
                                                                 class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full">
-                                                                {{ __('Pending') }}
-                                                    </span>
+                                                                {{ __('Pending') }} </span>
                                                         @endif
                                                     </td>
                                                 </tr>
-
                                             @endforeach
-                                            <!-- More people... -->
                                         </tbody>
                                     </table>
                                 </div>
