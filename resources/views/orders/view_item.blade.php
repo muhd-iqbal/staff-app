@@ -135,7 +135,7 @@
                             <form action="/orders/item/{{ $item->id }}/foto" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file" />
+                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file" id="picture" />
                                 <x-button class="mt-2">{{ __('Muat naik') }}</x-button>
                             </form>
                         </div>
@@ -149,4 +149,16 @@
             </div>
         </div>
     </div>
+    <script>
+        const form = document.getElementById("picture");
+        const fileInput = document.getElementById("picture");
+
+        fileInput.addEventListener('change', () => {
+            form.submit();
+        });
+
+        window.addEventListener('paste', e => {
+            fileInput.files = e.clipboardData.files;
+        });
+    </script>
 </x-app-layout>
