@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/leaves/create/{user}', [LeaveController::class, 'store']);
 
     Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/location/{location}', [OrderController::class, 'index_location']);
     Route::get('/orders/create', [OrderController::class, 'create']);
     Route::post('/orders/create', [OrderController::class, 'insert']);
     Route::get('/orders/view/{order}', [OrderController::class, 'view']);

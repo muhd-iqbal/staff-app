@@ -39,6 +39,15 @@ class OrderController extends Controller
         ]);
     }
 
+    public function index_location($location)
+    {
+        $orders = Order::where('location', '=', $location)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
+
+        return view('orders.index', [
+            'orders' => $orders->paginate(20),
+        ]);
+    }
+
     public function create()
     {
         return view('orders.create', [

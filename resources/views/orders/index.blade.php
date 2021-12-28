@@ -164,13 +164,13 @@
                         </div>
                         <div class="m-5 grid md:grid-cols-2">
                             <div>
-                                <div
+                                <div onclick="window.location='/orders/location/gurun'"
                                     class="inline-flex items-center bg-white leading-none text-purple-600 rounded-full p-2 shadow text-sm cursor-pointer">
                                     <span
                                         class="inline-flex bg-purple-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
                                     <span class="inline-flex px-2">Gurun</span>
                                 </div>
-                                <div
+                                <div onclick="window.location='/orders/location/guar'"
                                     class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-sm cursor-pointer">
                                     <span
                                         class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>

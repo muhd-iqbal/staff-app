@@ -15,7 +15,10 @@
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
-                                            <tr>
+                                            <tr class="text-center">
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    {{ __('No') }}</th>
                                                 <th scope="col"
                                                     class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     {{ __('Pelanggan') }}
@@ -39,14 +42,13 @@
 
                                                 @foreach ($items as $list)
 
-                                                    <tr class="cursor-pointer {{ $list->is_urgent?'bg-red-500':'' }}"
+                                                    <tr class="text-center cursor-pointer {{ $list->is_urgent ? 'bg-red-500' : '' }}"
                                                         onclick="window.location='/orders/item/{{ $list->id }}'">
+                                                        <td class="text-center">
+                                                            {{ $loop->iteration }}
+                                                        </td>
                                                         <td class="whitespace-nowrap">
-                                                            <div class="ml-4">
-                                                                <div class="flex items-center">
-                                                                    {{ $list->order->customer_name }}
-                                                                </div>
-                                                            </div>
+                                                            {{ $list->order->customer_name }}
                                                         </td>
                                                         <td class="text-center">
                                                             <div class="text-sm font-medium text-gray-900">
