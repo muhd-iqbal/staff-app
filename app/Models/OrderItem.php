@@ -25,9 +25,4 @@ class OrderItem extends Model
         return $this->hasMany(OrderPicture::class);
     }
 
-    public function order_status()
-    {
-        return $this->hasOne(ItemStatus::class);
-    }
-
 }

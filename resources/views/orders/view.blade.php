@@ -56,12 +56,28 @@
                                         </form>
                                     </div>
                                 @endif
+                                @if (auth()->user()->isAdmin && $order->isDone)
+                                    <div class="text-right m-5">
+                                        <form method="POST" action="/orders/view/{{ $order->id }}/mark-undone">
+                                            @csrf
+                                            @method('PATCH')
+                                            <x-button class="h-10"
+                                                onclick="return confirm('{{ __('Sahkan: tanda order tidak selesai') }}')">
+                                                {{ __('Tanda Tidak Selesai') }}</x-button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
-                            <div class='flex gap-5 items-center justify-center p-5 pb-5'>
+                            <div class='grid grid-rows md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
                                 {{-- @if (!$order->isDone) --}}
                                 <a href="/orders/{{ $order->id }}/add-item"
                                     class='w-auto bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah Item') }}
+                                </a>
+                                {{-- @endif --}}
+                                <a href="/orders/view/{{ $order->id }}/edit"
+                                    class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    {{ __('Edit Order') }}
                                 </a>
                                 {{-- @endif --}}
                                 <a href="/orders"
@@ -109,14 +125,14 @@
                                                     <td class="py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="ml-4">
-                                                                <div class="text-sm font-medium text-gray-900">
+                                                                <div class="text-sm font-medium {{ $list->is_urgent?'text-red-600':'' }}">
                                                                     {{ $list->product }}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">{{ $list->size }}</td>
-                                                    <td class="text-center">{{ $list->quantity }}</td>
+                                                    <td class="text-center {{ $list->is_urgent?'text-red-600':'' }}">{{ $list->size }}</td>
+                                                    <td class="text-center {{ $list->is_urgent?'text-red-600':'' }}">{{ $list->quantity }}</td>
                                                     <td class="flex py-4 justify-center">
                                                         @if ($list->user)
                                                             <img class="h-10 w-10 rounded-full"

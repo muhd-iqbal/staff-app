@@ -11,8 +11,9 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <!-- start component -->
-                    <form action="/orders/{{ $order->id }}/add-item" method="post">
+                    <form action="/orders/item/{{ $item->id }}/update" method="post">
                         @csrf
+                        @method('PATCH')
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
 
@@ -37,34 +38,37 @@
                                         <input
                                             class="py-2 px-3 md:col-span-2 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="text" name="product" placeholder="Masukkan nama produk"
-                                            value="{{ old('product') }}" />
+                                            value="{{ $item->product }}" />
                                         <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="price" placeholder="Harga" value="{{ old('price') }}" />
+                                            type="text" name="price" placeholder="Harga"
+                                            value="{{ $item->price / 100 }}" />
                                         <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="text" name="size" placeholder="Saiz Item"
-                                            value="{{ old('size') }}" />
-                                    </div>
-                                    <div class="mt-3 grid md:grid-cols-4 gap-3">
-                                        <input
+                                            value="{{ $item->size }}" />
+                                        </div>
+                                        <div class="mt-3 grid md:grid-cols-4 gap-3">
+                                            <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="number" step=1 name="quantity" placeholder="Kuantiti"
-                                            value="{{ old('quantity') }}" />
-                                        <div class="flex justify-center items-center">
-                                            <input type="checkbox" name="printing_list" id="printing_list">
-                                            <label for="printing_list" class="mx-3"> Item masuk ke print list?
-                                            </label>
-                                        </div>
-                                        <div class="flex justify-center items-center">
-                                            <input type="checkbox" name="is_urgent" id="is_urgent">
-                                            <label for="is_urgent" class="mx-3 text-red-500"> Urgent?
-                                            </label>
-                                        </div>
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="finishing" placeholder="Nota / Finishing"
-                                            value="{{ old('finishing') }}" />
+                                            value="{{ $item->quantity }}" />
+                                            <div class="flex justify-center items-center">
+                                                <input type="checkbox" name="printing_list" id="printing_list"
+                                                {{ $item->printing_list ? 'checked' : '' }}>
+                                                <label for="printing_list" class="mx-3"> Item masuk ke print list?
+                                                </label>
+                                            </div>
+                                            <div class="flex justify-center items-center">
+                                                <input type="checkbox" name="is_urgent" id="is_urgent"
+                                                {{ $item->is_urgent ? 'checked' : '' }}>
+                                                <label for="is_urgent" class="mx-3 text-red-500"> Urgent?
+                                                </label>
+                                            </div>
+                                            <input
+                                                class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                                type="text" name="finishing" placeholder="Nota / Finishing"
+                                                value="{{ $item->finishing }}" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
@@ -72,18 +76,18 @@
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Nota</label>
 
                                     <textarea name="remarks" id="mytextarea"
-                                        placeholder="Remarks">{{ old('remarks') }}</textarea>
+                                        placeholder="Remarks">{{ $item->remarks }}</textarea>
 
                                 </div>
 
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-                                    <a href="/orders/view/{{ $order->id }}"
+                                    <a href="/orders/item/{{ $item->id }}"
                                         class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                         Batal
                                     </a>
                                     <button
                                         class='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                        Tambah Item
+                                        Kemaskini Item
                                     </button>
                                 </div>
 

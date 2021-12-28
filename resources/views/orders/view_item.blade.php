@@ -21,22 +21,26 @@
                                         <h2 class="text-gray-500 font-bold md:text-xl text-lg">{{ __('Status: ') }}
                                             {{ $status }}</h2>
                                     </div>
+                                    <div class="text-red-500 font-bold text-xl">
+                                        {{ $item->is_urgent ? 'URGENT' : '' }}</div>
                                 </div>
                                 <div class="flex flex-col md:flex-col mt-5 md:mt-0">
                                     <div class="md:text-right">{{ __('Saiz: ') . $item->size }}</div>
                                     <div class="md:text-right">{{ __('Kuantiti: ') . $item->quantity }}</div>
                                     <div class="md:text-right">
                                         {{ __('Harga: RM') . number_format($item->price / 100, 2) }}</div>
+                                    <div class="md:text-right">{{ $item->finishing }}</div>
+
                                 </div>
-                                @if ($item->remarks)
-                                    <div class="mt-5 mx-7">
-                                        <div
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold border p-2">
-                                            {!! $item->remarks !!}
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
+                            @if ($item->remarks)
+                                <div class="mt-5 mx-7">
+                                    <div
+                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold border p-2">
+                                        {!! $item->remarks !!}
+                                    </div>
+                                </div>
+                            @endif
                             <hr class="mt-10 mx-10" />
                             @if (auth()->user()->isAdmin)
                                 <div class="grid grid-cols-1 md:grid-cols-2 mt-5 mx-7">
@@ -62,25 +66,26 @@
                                     </div>
                                     <div class="my-5 flex md:flex-row-reverse gap-2">
                                         @if ($item->is_done)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
-                                            title='Print Semula' color='red' />
+                                            <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
+                                                title='Print Semula' color='red' />
                                             <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                                 title='Design Semula' color='red' />
                                         @elseif($item->is_printing)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/done'
-                                            title='Item Selesai' color='green' />
+                                            <x-form.single-action action='/orders/item/{{ $item->id }}/done'
+                                                title='Item Selesai' color='green' />
                                             <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                                 title='Design Semula' color='red' />
                                         @elseif($item->is_approved)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/printing'
-                                            title='Selesai Print' color='green' />
+                                            <x-form.single-action action='/orders/item/{{ $item->id }}/printing'
+                                                title='Selesai Print' color='green' />
                                             <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                                 title='Design Semula' color='red' />
                                         @elseif($item->is_design)
                                             <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
                                                 title='Confirm Design' color='green' />
                                         @else
-                                            <div class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full h-6">
+                                            <div
+                                                class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full h-6">
                                                 {{ __('Pilih designer di ruangan tugasan') }}
                                             </div>
                                         @endif
@@ -109,6 +114,10 @@
                                 @endunless
                             @endif
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>
+                                <a href="/orders/item/{{ $item->id }}/edit"
+                                    class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    {{ __('Edit item') }}
+                                </a>
                                 <a href="/orders/view/{{ $item->order_id }}"
                                     class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali ke senarai pesanan') }}

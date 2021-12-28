@@ -31,11 +31,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/create', [OrderController::class, 'create']);
     Route::post('/orders/create', [OrderController::class, 'insert']);
     Route::get('/orders/view/{order}', [OrderController::class, 'view']);
+    Route::get('/orders/view/{order}/edit', [OrderController::class, 'edit']);
+    Route::patch('/orders/edit/{order}', [OrderController::class, 'update']);
     Route::patch('/orders/view/{order}/mark-done', [OrderController::class, 'update_done']);
+    Route::patch('/orders/view/{order}/mark-undone', [OrderController::class, 'update_undone']);
 
     Route::get('/orders/{order}/add-item', [OrderItemController::class, 'create']);
     Route::post('/orders/{order}/add-item', [OrderItemController::class, 'insert']);
     Route::get('/orders/item/{item}', [OrderItemController::class, 'view']);
+    Route::get('/orders/item/{item}/edit', [OrderItemController::class, 'edit']);
+    Route::patch('/orders/item/{item}/update', [OrderItemController::class, 'update']);
     Route::patch('/orders/item/{item}/user', [OrderItemController::class, 'update_user']);
     Route::patch('/orders/item/{item}/status', [OrderItemController::class, 'update_status']);
     Route::patch('/orders/item/{item}/takeover', [OrderItemController::class, 'update_takeover']);
@@ -49,13 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/to-do', [TaskController::class, 'index']);
     Route::get('/print', [TaskController::class, 'view_print']);
+    Route::get('/print-list', [TaskController::class, 'print_print']);
 
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    //
+
     Route::get('/staff/show/{user}', [StaffController::class, 'show']);
-    // Route::get('staff/resume/{user}', [StaffController::class, 'resume']);
     Route::patch('/staff/active/{user}', [StaffController::class, 'update']);
 
     Route::get('/leaves/approval', [LeaveController::class, 'show']);

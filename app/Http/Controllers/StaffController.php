@@ -24,15 +24,6 @@ class StaffController extends Controller
         ]);
     }
 
-    public function resume(User $user)
-    {
-        return view('staff.resume', [
-            'user' => $user->with(['department','position']),
-            // 'departments' => Department::get(),
-            // 'positions' => Position::get()
-        ]);
-    }
-
     public function update(User $user)
     {
         $attributes = request()->validate([

@@ -54,7 +54,7 @@
                                                 @foreach ($print as $task)
 
                                                     <tr onclick="window.location='orders/item/{{ $task->id }}';"
-                                                        class="hover:bg-gray-100 cursor-pointer text-center">
+                                                        class="hover:bg-gray-100 cursor-pointer text-center  {{ $task->is_urgent?'bg-red-500':'' }}">
                                                         <td
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap">
                                                             {{ $task->order->customer_name }}
@@ -71,7 +71,9 @@
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-2">
                                                             {{ $task->quantity }}
                                                         </td>
-                                                        <td></td>
+                                                        <td>
+                                                            {{ $task->finishing }}
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -88,8 +90,16 @@
                         </div>
                     </section>
 
-                    <x-dashboard-link />
-
+                    <div class='flex gap-5 items-center justify-center p-5 pb-5'>
+                        <a href="/print-list" target="_blank"
+                            class='w-auto bg-yellow-500 hover:bg-yellow-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                            {{ __('Ke halaman cetak') }}
+                        </a>
+                        <a href="/"
+                            class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                            {{ __('Kembali ke senarai pesanan') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

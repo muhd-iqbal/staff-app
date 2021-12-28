@@ -25,10 +25,14 @@ class OrderItemController extends Controller
             'size' => 'required|max:100',
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
+            'finishing' => 'max:100',
             'remarks' => '',
         ]);
         if (request()->has('printing_list')) {
             $attributes['printing_list'] = 1;
+        }
+        if (request()->has('is_urgent')) {
+            $attributes['is_urgent'] = 1;
         }
         $attributes['price'] = $attributes['price']*100; //for database precision
         $attributes['order_id'] = $order;
@@ -68,7 +72,7 @@ class OrderItemController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
         $attributes['is_design'] = 1;
-        $attributes['is_design_time'] = now();
+    $attributes['is_design_time'] = now();
 
         $item->update($attributes);
 
@@ -134,5 +138,39 @@ class OrderItemController extends Controller
         OrderPicture::create($attributes);
 
         return back()->with('success', 'Gambar ditambah!');
+    }
+
+    public function edit(OrderItem $item)
+    {
+        return view('orders.edit_item', [
+            'item' => $item,
+        ]);
+    }
+
+    public function update(OrderItem $item)
+    {
+        $attributes = request()->validate([
+            'product' => 'required|max:255',
+            'size' => 'required|max:100',
+            'quantity' => 'required|numeric|min:1',
+            'price' => 'required|min:0|numeric',
+            'finishing' => 'max:100',
+            'remarks' => '',
+        ]);
+
+        if (request()->has('printing_list')) {
+            $attributes['printing_list'] = 1;
+        }
+        else{ $attributes['printing_list'] = 0; }
+
+        if (request()->has('is_urgent')) {
+            $attributes['is_urgent'] = 1;
+        }else{  $attributes['is_urgent'] = 0;}
+
+        $attributes['price'] = $attributes['price']*100; //for database precision
+
+        $item->update($attributes);
+
+        return redirect('/orders/item/' . $item->id)->with('success', 'Item Dikemaskini.');
     }
 }

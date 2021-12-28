@@ -3,8 +3,8 @@
     tinymce.init({
 
         selector: 'textarea',
-        plugins: 'fullscreen advcode casechange formatpainter autolink lists permanentpen powerpaste table advtable',
-        toolbar: 'fullscreen casechange checklist code export formatpainter pageembed permanentpen table numlist bullist',
+        plugins: 'fullscreen autolink lists table',
+        toolbar: 'fullscreen checklist code export pageembed table numlist bullist',
         toolbar_mode: 'floating',
         tinycomments_mode: 'embedded',
         tinycomments_author: 'Author name',

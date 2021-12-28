@@ -21,7 +21,7 @@ Or use existing one.
 
 
 ## Contributing
-Pull requests from company's future IT person / developer are welcome. 
+Pull requests from company's IT person / developer are welcome. 
 
 ## License
 For internal use only. Heavily catered to the company.

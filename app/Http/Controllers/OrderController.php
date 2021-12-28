@@ -87,4 +87,37 @@ class OrderController extends Controller
 
         return redirect('/orders')->with('success', 'Order ' . $order->customer_name . ' ditanda selesai.');
     }
+
+    public function update_undone(Order $order)
+    {
+        $attributes['isDone'] = 0;
+
+        $order->update($attributes);
+
+        return redirect('/orders')->with('success', 'Order ' . $order->customer_name . ' ditanda tidak selesai.');
+    }
+
+    public function edit(Order $order)
+    {
+        return view('orders.edit', [
+            'order' => $order,
+        ]);
+    }
+
+    public function update(Order $order)
+    {
+        $attributes = request()->validate([
+            'customer_name' => 'required|min:3|max:255',
+            'customer_phone' => 'min:10|max:11',
+            'date' => 'required|date',
+            'dateline' => 'nullable|date',
+            'method' => ['required', Rule::in(['walkin', 'online'])],
+            'location' => ['required', Rule::in(['gurun', 'guar'])],
+        ]);
+
+        $order->update($attributes);
+
+        return redirect('/orders/view/' . $order->id)->with('success', 'Order berjaya dikemaskini.');
+
+    }
 }

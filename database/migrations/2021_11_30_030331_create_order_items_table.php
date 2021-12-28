@@ -22,7 +22,9 @@ class CreateOrderItemsTable extends Migration
             $table->string('size');
             $table->string('quantity');
             $table->integer('price');
+            $table->string('finishing')->nullable();
             $table->text('remarks')->nullable();
+            $table->boolean('is_urgent')->default(0);
             $table->unsignedBigInteger('user_id')->nullable(); //designer
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('printing_list')->default(0);

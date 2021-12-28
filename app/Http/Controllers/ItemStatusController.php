@@ -70,20 +70,24 @@ class ItemStatusController extends Controller
                 $items = OrderItem::where('is_printing', '=', 1)->where('is_done', '=', 0);
                 break;
             case 'is_approved':
+                $title = 'Production';
                 $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
                 break;
             case 'is_design':
+                $title = 'Design';
                 $items = OrderItem::where('is_design', '=', 1)->where('is_approved', '=', 0);
                 break;
             case 'is_pending':
+                $title = 'Pending';
                 $items = OrderItem::where('is_design', '=', 0);
                 break;
-
             default:
+                abort(404);
                 break;
         }
 
         return view('orders/item_status', [
+            'status' => $title,
             'items' => $items->paginate(10),
         ]);
     }

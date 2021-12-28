@@ -22,4 +22,11 @@ class TaskController extends Controller
             'print' => OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0)->where('printing_list', '=', 1)->with('order')->get(),
         ]);
     }
+    public function print_print()
+    {
+        // return OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0)->with('order')->get();
+        return view('staff/print_blank', [
+            'print' => OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0)->where('printing_list', '=', 1)->with('order')->get(),
+        ]);
+    }
 }
