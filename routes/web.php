@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/orders/item/{item}/design', [ItemStatusController::class, 'update_design']);
     Route::post('/orders/item/{item}/approved', [ItemStatusController::class, 'update_approved']);
-    Route::post('/orders/item/{item}/printing', [ItemStatusController::class, 'update_printing']);
+    // Route::post('/orders/item/{item}/printing', [ItemStatusController::class, 'update_printing']);
     Route::post('/orders/item/{item}/done', [ItemStatusController::class, 'update_done']);
     Route::get('/orders/item/status/{status}', [ItemStatusController::class, 'show_status']);
 

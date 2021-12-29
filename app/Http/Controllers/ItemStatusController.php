@@ -50,6 +50,8 @@ class ItemStatusController extends Controller
     }
     public function update_done(OrderItem $item)
     {
+        $attributes['is_printing'] = 1;
+        $attributes['is_printing_time'] = NOW();
         $attributes['is_done'] = 1;
         $attributes['is_done_time'] = NOW();
 

@@ -84,13 +84,13 @@
                                             title='Print Semula' color='red' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
-                                    @elseif($item->is_printing)
+                                    {{-- @elseif($item->is_printing)
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/done'
                                             title='Item Selesai' color='green' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
-                                            title='Design Semula' color='red' />
+                                            title='Design Semula' color='red' /> --}}
                                     @elseif($item->is_approved)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/printing'
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/done'
                                             title='Selesai Print' color='green' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
