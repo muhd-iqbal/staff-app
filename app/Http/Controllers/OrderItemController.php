@@ -26,7 +26,7 @@ class OrderItemController extends Controller
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:100',
-            'remarks' => 'max:255',
+            'remarks' => 'max:1000',
         ]);
         if (request()->has('printing_list')) {
             $attributes['printing_list'] = 1;
@@ -155,7 +155,7 @@ class OrderItemController extends Controller
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:100',
-            'remarks' => 'max:255',
+            'remarks' => 'max:1000',
         ]);
 
         if (request()->has('printing_list')) {
