@@ -81,4 +81,12 @@ Route::group(['middleware' => ['auth', 'owner']], function () {
 
 });
 
+Route::get('/artisan-clear', function() {
+    Artisan::call('cache:clear');
+    // Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    // Artisan::call('view:clear');
+    return "Cache is cleared";
+});
+
 require __DIR__ . '/auth.php';
