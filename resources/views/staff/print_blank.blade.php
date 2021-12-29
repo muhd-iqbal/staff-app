@@ -58,13 +58,13 @@
                 </thead>
 
                 <tbody>
+                    @if (count($print))
                     <tr>
                         <td colspan="5"
                             class="bg-gray-50 border border-solid border-black align-middle text-center text-sm whitespace-nowrap">
                             GURUN
                         </td>
                     </tr>
-                    @if (count($print))
                         @foreach ($print as $task)
                             @if ($task->order->location == 'gurun')
 

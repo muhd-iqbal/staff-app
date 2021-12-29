@@ -42,8 +42,8 @@
                                 </div>
                             @endif
                             <hr class="mt-10 mx-10" />
-                            @if (auth()->user()->isAdmin)
-                                <div class="grid grid-cols-1 md:grid-cols-2 mt-5 mx-7">
+                            <div class="grid grid-cols-1 md:grid-cols-2 mt-5 mx-7">
+                                @if (auth()->user()->isAdmin)
                                     <div class="mb-5">
                                         <form action="/orders/item/{{ $item->id }}/user" method="POST">
                                             @csrf
@@ -64,32 +64,46 @@
                                             <x-button class="h-10">{{ __('Simpan') }}</x-button>
                                         </form>
                                     </div>
-                                    <div class="my-5 flex md:flex-row-reverse gap-2">
-                                        @if ($item->is_done)
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
-                                                title='Print Semula' color='red' />
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/design'
-                                                title='Design Semula' color='red' />
-                                        @elseif($item->is_printing)
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/done'
-                                                title='Item Selesai' color='green' />
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/design'
-                                                title='Design Semula' color='red' />
-                                        @elseif($item->is_approved)
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/printing'
-                                                title='Selesai Print' color='green' />
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/design'
-                                                title='Design Semula' color='red' />
-                                        @elseif($item->is_design)
-                                            <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
-                                                title='Confirm Design' color='green' />
-                                        @else
-                                            <div
-                                                class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full h-6">
-                                                {{ __('Pilih designer di ruangan tugasan') }}
+                                @else
+                                    @unless(auth()->user()->id == $item->user_id)
+                                        <div class="w-full m-5">
+                                            <div class="mb-5">
+                                                <form action="/orders/item/{{ $item->id }}/takeover" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <x-button onclick="return confirm('Sahkan ambil alih design')">
+                                                        {{ __('Ambil Alih') }}</x-button>
+                                                </form>
                                             </div>
-                                        @endif
-                                        {{-- <x-form.single-action action='/orders/item/{{ $item->id }}/design'
+                                        </div>
+                                    @endunless
+                                @endif
+                                <div class="my-5 flex {{ (auth()->user()->isAdmin)? 'md:flex-row-reverse':'' }} gap-2">
+                                    @if ($item->is_done)
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
+                                            title='Print Semula' color='red' />
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/design'
+                                            title='Design Semula' color='red' />
+                                    @elseif($item->is_printing)
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/done'
+                                            title='Item Selesai' color='green' />
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/design'
+                                            title='Design Semula' color='red' />
+                                    @elseif($item->is_approved)
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/printing'
+                                            title='Selesai Print' color='green' />
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/design'
+                                            title='Design Semula' color='red' />
+                                    @elseif($item->is_design)
+                                        <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
+                                            title='Confirm Design' color='green' />
+                                    @else
+                                        <div
+                                            class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full h-6">
+                                            {{ __('Pilih designer di ruangan tugasan') }}
+                                        </div>
+                                    @endif
+                                    {{-- <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Process' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
                                             title='Hantar Ke Production' />
@@ -97,22 +111,9 @@
                                             title='Selesai Print' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/done'
                                             title='Item Selesai' /> --}}
-                                    </div>
                                 </div>
-                            @else
-                                @unless(auth()->user()->id == $item->user_id)
-                                    <div class="w-full m-5">
-                                        <div class="mb-5">
-                                            <form action="/orders/item/{{ $item->id }}/takeover" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <x-button onclick="return confirm('Sahkan ambil alih design')">
-                                                    {{ __('Ambil Alih') }}</x-button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endunless
-                            @endif
+                            </div>
+
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>
                                 <a href="/orders/item/{{ $item->id }}/edit"
                                     class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
@@ -135,7 +136,8 @@
                             <form action="/orders/item/{{ $item->id }}/foto" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file" id="picture" />
+                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file"
+                                    id="picture" />
                                 <x-button class="mt-2">{{ __('Muat naik') }}</x-button>
                             </form>
                         </div>

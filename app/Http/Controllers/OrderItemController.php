@@ -26,7 +26,7 @@ class OrderItemController extends Controller
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:100',
-            'remarks' => '',
+            'remarks' => 'max:255',
         ]);
         if (request()->has('printing_list')) {
             $attributes['printing_list'] = 1;
@@ -115,7 +115,7 @@ class OrderItemController extends Controller
 
     public function update_takeover(OrderItem $item)
     {
-        $isDesign = key($this->status);
+        $isDesign = 'is_design'; //hard code sorry for asking
 
         $attributes['user_id'] = auth()->user()->id;
         $attributes[$isDesign] = 1;
@@ -155,7 +155,7 @@ class OrderItemController extends Controller
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:100',
-            'remarks' => '',
+            'remarks' => 'max:255',
         ]);
 
         if (request()->has('printing_list')) {
