@@ -67,7 +67,7 @@ class OrderController extends Controller
             // 'product' => 'required|array',
             // 'remarks' => 'required',
         ]);
-
+        $attributes['user_id'] = auth()->user()->id;
         // $attributes['product'] = implode(',', request('product'));
 
         $insert = Order::create($attributes);
