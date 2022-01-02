@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\ItemStatusController;
+use Illuminate\Support\Facades\DB;
+
 class OrderItemController extends Controller
 {
     public function create($order)
@@ -34,7 +36,7 @@ class OrderItemController extends Controller
         if (request()->has('is_urgent')) {
             $attributes['is_urgent'] = 1;
         }
-        $attributes['price'] = $attributes['price']*100; //for database precision
+        $attributes['price'] = $attributes['price'] * 100; //for database precision
         $attributes['order_id'] = $order;
 
         OrderItem::create($attributes);
@@ -46,22 +48,19 @@ class OrderItemController extends Controller
     {
         $status = $this->status_list['none'];
 
-        if($item->is_done){
+        if ($item->is_done) {
             $status = $this->status_list['is_done'];
-        }
-        elseif($item->is_printing){
+        } elseif ($item->is_printing) {
             $status = $this->status_list['is_printing'];
-        }
-        elseif($item->is_approved){
+        } elseif ($item->is_approved) {
             $status = $this->status_list['is_approved'];
-        }
-        elseif($item->is_design){
+        } elseif ($item->is_design) {
             $status = $this->status_list['is_design'];
         }
         return view('orders.view_item', [
             'item' => $item,
             'pictures' => OrderPicture::where('order_item_id', $item->id)->get(),
-            'users' => User::where('active',1)->whereNotIn('position_id', [1])->get(),
+            'users' => User::where('active', 1)->whereNotIn('position_id', [1])->get(),
             'status' => $status,
         ]);
     }
@@ -72,7 +71,7 @@ class OrderItemController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
         $attributes['is_design'] = 1;
-    $attributes['is_design_time'] = now();
+        $attributes['is_design_time'] = now();
 
         $item->update($attributes);
 
@@ -123,7 +122,6 @@ class OrderItemController extends Controller
         $item->update($attributes);
 
         return back()->with('success', 'Item Diambil Alih.');
-
     }
 
     public function update_photo($item)
@@ -160,17 +158,34 @@ class OrderItemController extends Controller
 
         if (request()->has('printing_list')) {
             $attributes['printing_list'] = 1;
+        } else {
+            $attributes['printing_list'] = 0;
         }
-        else{ $attributes['printing_list'] = 0; }
 
         if (request()->has('is_urgent')) {
             $attributes['is_urgent'] = 1;
-        }else{  $attributes['is_urgent'] = 0;}
+        } else {
+            $attributes['is_urgent'] = 0;
+        }
 
-        $attributes['price'] = $attributes['price']*100; //for database precision
+        $attributes['price'] = $attributes['price'] * 100; //for database precision
 
         $item->update($attributes);
 
         return redirect('/orders/item/' . $item->id)->with('success', 'Item Dikemaskini.');
+    }
+
+    public function delete(OrderItem $item)
+    {
+        try {
+            DB::table('order_pictures')->where('order_item_id', '=', $item->id)->delete();
+
+            $item->delete();
+
+            return redirect('/orders/view/' . $item->order_id)->with('success', 'Item berjaya padam.');
+        } catch (\Exception $e) {
+
+            return redirect('/orders/item/' . $item->id)->with('forbidden', 'Ralat, sila hubungi system developer.');
+        }
     }
 }

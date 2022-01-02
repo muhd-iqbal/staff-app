@@ -182,10 +182,6 @@
                                     class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
                                     <span class="inline-flex px-1">{{ __('Selesai') }}</span>
                                 </div>
-                                <div onclick="window.location='/orders/item/status/is_printing'"
-                                    class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
-                                    <span class="inline-flex px-1">{{ __('Finishing') }}</span>
-                                </div>
                                 <div onclick="window.location='/orders/item/status/is_approved'"
                                     class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
                                     <span class="inline-flex px-1">{{ __('Production') }}</span>

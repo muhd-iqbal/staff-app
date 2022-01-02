@@ -90,7 +90,7 @@ class ItemStatusController extends Controller
 
         return view('orders/item_status', [
             'status' => $title,
-            'items' => $items->paginate(10),
+            'items' => $items->paginate(20),
         ]);
     }
 }

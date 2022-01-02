@@ -39,13 +39,13 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @if (count($items))
-
+                                            <?php $count = 1; ?>
                                                 @foreach ($items as $list)
 
                                                     <tr class="text-center cursor-pointer {{ $list->is_urgent ? 'bg-red-500' : '' }}"
                                                         onclick="window.location='/orders/item/{{ $list->id }}'">
                                                         <td class="text-center">
-                                                            {{ $loop->iteration }}
+                                                            {{ ($items ->currentpage()-1) * $items ->perpage() + $loop->index + 1 }}
                                                         </td>
                                                         <td class="whitespace-nowrap">
                                                             {{ $list->order->customer_name }}
@@ -78,11 +78,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mt-3">
+
+                        {{ $items->links() }}
+                    </div>
                     <div class="mt-5 text-center">
                         <a href="/orders"
-                            class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                            {{ __('Kembali ke senarai pesanan') }}
-                        </a>
+                        class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                        {{ __('Kembali ke senarai pesanan') }}
+                    </a>
                     </div>
                 </div>
             </div>

@@ -127,6 +127,15 @@ class OrderController extends Controller
         $order->update($attributes);
 
         return redirect('/orders/view/' . $order->id)->with('success', 'Order berjaya dikemaskini.');
+    }
 
+    public function delete(Order $order)
+    {
+        try {
+            $order->delete();
+            return redirect('/orders')->with('success', 'Order berjaya padam.');
+        } catch (\Exception $e) {
+            return redirect('/orders/view/' . $order->id)->with('forbidden', 'Sila padam item terlebih dahulu.');
+        }
     }
 }

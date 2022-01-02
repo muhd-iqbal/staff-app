@@ -4,6 +4,7 @@
             {{ __('Item Pesanan') . ': ' . \App\Http\Controllers\Controller::order_num($item->order_id) }}
         </h2>
     </x-slot>
+    <x-modalbox action='/orders/item/{{ $item->id }}/delete' text='Padam item? Item akan dihapus dari rekod.' />
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -11,6 +12,10 @@
                     <!-- start component -->
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
+                            @if (auth()->user()->isAdmin)
+                                <div class="text-right" title="Padam Item"><span class=" text-red-500 cursor-pointer"
+                                        onclick="openModal()">x</span></div>
+                            @endif
                             <div class="m-5 grid md:grid-cols-2">
                                 <div class="flex flex-col">
                                     <div class="header">
@@ -30,7 +35,6 @@
                                     <div class="md:text-right">
                                         {{ __('Harga: RM') . number_format($item->price / 100, 2) }}</div>
                                     <div class="md:text-right">{{ $item->finishing }}</div>
-
                                 </div>
                             </div>
                             @if ($item->remarks)
@@ -78,13 +82,14 @@
                                         </div>
                                     @endunless
                                 @endif
-                                <div class="my-5 flex {{ (auth()->user()->isAdmin)? 'md:flex-row-reverse':'' }} gap-2">
+                                <div
+                                    class="my-5 flex {{ auth()->user()->isAdmin ? 'md:flex-row-reverse' : '' }} gap-2">
                                     @if ($item->is_done)
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
                                             title='Print Semula' color='red' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
-                                    {{-- @elseif($item->is_printing)
+                                        {{-- @elseif($item->is_printing)
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/done'
                                             title='Item Selesai' color='green' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'

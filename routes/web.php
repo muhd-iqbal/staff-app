@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/view/{order}', [OrderController::class, 'view']);
     Route::get('/orders/view/{order}/edit', [OrderController::class, 'edit']);
     Route::patch('/orders/edit/{order}', [OrderController::class, 'update']);
+    Route::delete('/orders/{order}/delete', [OrderController::class, 'delete']);
     Route::patch('/orders/view/{order}/mark-done', [OrderController::class, 'update_done']);
     Route::patch('/orders/view/{order}/mark-undone', [OrderController::class, 'update_undone']);
 
@@ -42,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/item/{item}', [OrderItemController::class, 'view']);
     Route::get('/orders/item/{item}/edit', [OrderItemController::class, 'edit']);
     Route::patch('/orders/item/{item}/update', [OrderItemController::class, 'update']);
+    Route::delete('/orders/item/{item}/delete', [OrderItemController::class, 'delete']);
     Route::patch('/orders/item/{item}/user', [OrderItemController::class, 'update_user']);
     Route::patch('/orders/item/{item}/status', [OrderItemController::class, 'update_status']);
     Route::patch('/orders/item/{item}/takeover', [OrderItemController::class, 'update_takeover']);

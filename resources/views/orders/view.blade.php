@@ -4,6 +4,7 @@
             {{ __('Senarai Order') }}
         </h2>
     </x-slot>
+    <x-modalbox action='/orders/{{ $order->id }}/delete' text='Padam order? Setiap item perlu dipadam terlebih dahulu.' />
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -12,7 +13,9 @@
                     <!-- start component -->
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
-
+                            @if (auth()->user()->isAdmin)
+                            <div class="text-right" title="Padam Order"><span class=" text-red-500 cursor-pointer" onclick="openModal()">x</span></div>
+                            @endif
                             <div class="flex flex-col items-center">
                                 <div class="flex">
                                     <h1 class="text-gray-600 font-bold md:text-2xl text-xl">{{ __('Pesanan:') }}
