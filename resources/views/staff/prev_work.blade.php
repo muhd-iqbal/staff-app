@@ -49,8 +49,8 @@
                                         </thead>
 
                                         <tbody>
-                                            @if (count($todo))
-                                                @foreach ($todo as $task)
+                                            @if (count($prev))
+                                                @foreach ($prev as $task)
 
                                                     <tr onclick="window.location='orders/item/{{ $task->id }}';"
                                                         class="hover:bg-gray-100 cursor-pointer">
@@ -83,16 +83,17 @@
                                     </table>
                                 </div>
                             </div>
-                            {{ $todo->links() }}
+                            {{ $prev->links() }}
                         </div>
                     </section>
                     <div class="grid justify-items-center grid-cols-1">
                         <div class="flex items-center">
-                            <a href="/staff/prev-works"
-                                class="border py-2 px-4 rounded-lg bg-yellow-500 text-white ">Kerja terdahulu</a>
+                            <a href="/to-do"
+                                class="border py-2 px-4 rounded-lg bg-yellow-500 text-white ">Tugasan semasa</a>
                             <x-dashboard-link />
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

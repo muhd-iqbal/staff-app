@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/item/status/{status}', [ItemStatusController::class, 'show_status']);
 
     Route::get('/to-do', [TaskController::class, 'index']);
+    Route::get('/staff/prev-works', [TaskController::class, 'previous']);
     Route::get('/print', [TaskController::class, 'view_print']);
     Route::get('/print-list', [TaskController::class, 'print_print']);
 
