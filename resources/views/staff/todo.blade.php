@@ -52,7 +52,7 @@
                                             @if (count($todo))
                                                 @foreach ($todo as $task)
 
-                                                    <tr onclick="window.location='orders/item/{{ $task->id }}';"
+                                                    <tr onclick="window.location='/orders/item/{{ $task->id }}';"
                                                         class="hover:bg-gray-100 cursor-pointer">
                                                         <th
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
