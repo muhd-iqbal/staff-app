@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'icno' => ['required', 'integer', 'min:12', 'unique:users'],
+            'icno' => ['required', 'numeric', 'min:12', 'unique:users'],
             'phone' => ['required', 'regex:/(01)[0-9]/', 'unique:users'],
             'department_id' => ['required', 'integer', 'exists:departments,id'],
             'position_id' => ['required', 'integer', 'exists:positions,id'],

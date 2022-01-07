@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\ItemStatusController;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\DB;
 
 class OrderItemController extends Controller
@@ -57,11 +58,13 @@ class OrderItemController extends Controller
         } elseif ($item->is_design) {
             $status = $this->status_list['is_design'];
         }
+
         return view('orders.view_item', [
             'item' => $item,
             'pictures' => OrderPicture::where('order_item_id', $item->id)->get(),
             'users' => User::where('active', 1)->whereNotIn('position_id', [1])->get(),
             'status' => $status,
+            'suppliers' => Supplier::get(),
         ]);
     }
 
@@ -78,6 +81,16 @@ class OrderItemController extends Controller
         return back()->with('success', 'Designer Dilantik.');
     }
 
+    public function update_sub(OrderItem $item)
+    {
+        $attributes = request()->validate([
+            'supplier_id' => 'required|exists:suppliers,id',
+        ]);
+        $item->update($attributes);
+
+        return back()->with('success', 'Subcon dikemaskini');
+    }
+
     public function update_status(OrderItem $item)
     {
         $status = array_keys($this->status);
@@ -87,24 +100,32 @@ class OrderItemController extends Controller
 
         switch (request('status')) {
             case $status[0]:
-                $attribute[$status[0]] = 1;
-                $attribute[$status[1]] = 0;
-                $attribute[$status[2]] = 0;
+                $attribute = array(
+                    $status[0] => 1,
+                    $status[1] => 0,
+                    $status[2] => 0,
+                );
                 break;
             case $status[1]:
-                $attribute[$status[0]] = 1;
-                $attribute[$status[1]] = 1;
-                $attribute[$status[2]] = 0;
+                $attribute = array(
+                    $status[0] => 1,
+                    $status[1] => 1,
+                    $status[2] => 0,
+                );
                 break;
             case $status[2]:
-                $attribute[$status[0]] = 1;
-                $attribute[$status[1]] = 1;
-                $attribute[$status[2]] = 1;
+                $attribute = array(
+                    $status[0] => 1,
+                    $status[1] => 1,
+                    $status[2] => 1,
+                );
                 break;
             default:
-                $attribute[$status[0]] = 0;
-                $attribute[$status[1]] = 0;
-                $attribute[$status[2]] = 0;
+                $attribute = array(
+                    $status[0] => 0,
+                    $status[1] => 0,
+                    $status[2] => 0,
+                );
         }
 
         $item->update($attribute);

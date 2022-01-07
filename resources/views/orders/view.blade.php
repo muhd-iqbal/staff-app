@@ -147,7 +147,7 @@
                                                         @if ($list->is_done)
                                                             <span
                                                                 class="bg-green-600 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Selesai') }}</span>
-                                                        @elseif($list->is_printing)
+                                                          @elseif($list->is_printing)
                                                             <span
                                                                 class="bg-purple-600 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Finishing') }}</span>
                                                         @elseif($list->is_approved)
@@ -170,7 +170,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- End Details --}}
                 </div>
             </div>
         </div>

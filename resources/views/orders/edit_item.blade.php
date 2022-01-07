@@ -53,7 +53,7 @@
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="number" step=1 name="quantity" placeholder="Kuantiti"
                                             value="{{ $item->quantity }}" />
-                                            <div class="flex justify-center items-center">
+                                            <div class="flex justify-center items-center hidden">
                                                 <input type="checkbox" name="printing_list" id="printing_list"
                                                 {{ $item->printing_list ? 'checked' : '' }}>
                                                 <label for="printing_list" class="mx-3"> Item masuk ke print list?

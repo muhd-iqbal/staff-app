@@ -25,4 +25,9 @@ class OrderItem extends Model
         return $this->hasMany(OrderPicture::class);
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
 }

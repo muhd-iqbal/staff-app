@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
     <x-modalbox action='/orders/item/{{ $item->id }}/delete' text='Padam item? Item akan dihapus dari rekod.' />
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -19,15 +20,37 @@
                             <div class="m-5 grid md:grid-cols-2">
                                 <div class="flex flex-col">
                                     <div class="header">
-                                        <h1 class="text-gray-600 font-bold md:text-2xl text-xl">{{ __('Item: ') }}
+                                        <h1 class="text-gray-600 font-bold md:text-2xl text-xl">
                                             {{ $item->product }}</h1>
                                     </div>
                                     <div>
-                                        <h2 class="text-gray-500 font-bold md:text-xl text-lg">{{ __('Status: ') }}
+                                        <h2 class="text-gray-500 font-bold text-lg">{{ __('PIC: ') }}
+                                            {{ ($item->user_id)? $item->user->name : 'Tiada' }}</h2>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-gray-500 font-bold text-lg">{{ __('Status: ') }}
                                             {{ $status }}</h2>
                                     </div>
                                     <div class="text-red-500 font-bold text-xl">
                                         {{ $item->is_urgent ? 'URGENT' : '' }}</div>
+                                    @if ($item->supplier_id)
+                                        <div class="">
+                                            <form action="/orders/item/{{ $item->id }}/update-subcon" method="POST">
+                                                @csrf
+                                                <select name="supplier_id" id="" onchange="showSubmit('supplier-save')">
+                                                    <option selected disabled>Pilihan Subcon:</option>
+                                                    <option onclick="location.href='/supplier/add'">Tambah Pilihan
+                                                    </option>
+                                                    @foreach ($suppliers as $sub)
+                                                        <option value="{{ $sub->id }}"
+                                                            {{ $sub->id == $item->supplier_id ? 'selected' : '' }}>
+                                                            {{ $sub->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <x-button class="h-10 hidden" id="supplier-save">Simpan</x-button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="flex flex-col md:flex-col mt-5 md:mt-0">
                                     <div class="md:text-right">{{ __('Saiz: ') . $item->size }}</div>
@@ -100,8 +123,55 @@
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
                                     @elseif($item->is_design)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
-                                            title='Confirm Design' color='green' />
+                                        <!-- Modal -->
+                                        <div x-data="{ showModal : false }">
+                                            <!-- Button -->
+                                            <button @click="showModal = !showModal"
+                                                class="px-4 py-2 text-sm bg-purple-500 rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-white focus:outline-none focus:ring-0 font-bold hover:bg-purple-800 focus:bg-indigo-50 focus:text-indigo">
+                                                Confirm Design</button>
+
+                                            <!-- Modal Background -->
+                                            <div x-show="showModal"
+                                                class="fixed text-gray-500 flex items-center justify-center overflow-auto z-50 bg-black bg-opacity-40 left-0 right-0 top-0 bottom-0"
+                                                x-transition:enter="transition ease duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition ease duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0">
+                                                <!-- Modal -->
+                                                <div x-show="showModal"
+                                                    class="bg-white rounded-xl shadow-2xl p-6 sm:w-10/12 md:w-2/3 lg:w-1/2 mx-10"
+                                                    @click.away="showModal = false"
+                                                    x-transition:enter="transition ease duration-100 transform"
+                                                    x-transition:enter-start="opacity-0 scale-90 translate-y-1"
+                                                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                                    x-transition:leave="transition ease duration-100 transform"
+                                                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                                    x-transition:leave-end="opacity-0 scale-90 translate-y-1">
+                                                    <!-- Title -->
+                                                    <!-- Buttons -->
+                                                    <div class="flex flex-col text-center gap-5 mt-5">
+                                                        <span class="font-bold block text-2xl mb-3 text-red-600">
+                                                            {{ __('Pilihan Production') }} </span>
+                                                        <x-form.single-action
+                                                            action='/orders/item/{{ $item->id }}/approved-production'
+                                                            title='Masuk ke print list' color='blue' />
+                                                        <x-form.single-action
+                                                            action='/orders/item/{{ $item->id }}/approved'
+                                                            title='Lain-lain' color='green' />
+                                                        <x-form.single-action
+                                                            action='/orders/item/{{ $item->id }}/approved-subcon'
+                                                            title='Subcon' color='yellow' />
+                                                        {{-- <button @click="showModal = !showModal"
+                                                            class="inline-flex items-center px-4 py-2 border border-gray-500 rounded-md font-semibold text-xs text-black hover:text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 h-10 transition-colors duration-150 ease-linear">Batal</button> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
+                                            title='Confirm Design' color='green' /> --}}
                                     @else
                                         <div
                                             class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full h-6">
@@ -167,5 +237,10 @@
         window.addEventListener('paste', e => {
             fileInput.files = e.clipboardData.files;
         });
+
+        function showSubmit(id) {
+            var x = document.getElementById(id);
+            x.style.display = "inline-block";
+        }
     </script>
 </x-app-layout>
