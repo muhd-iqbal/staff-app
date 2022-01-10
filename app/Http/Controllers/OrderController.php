@@ -26,12 +26,19 @@ class OrderController extends Controller
         $orders = Order::with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
         if (preg_match('/^[A-Za-z]\d+$/', request('search'))) {
-            //    echo $string = preg_replace('/[^a-z]/i', '', request('search'));
             if (substr(strtoupper(request('search')), 0, 1) === env('ORDER_PREFIX')) {
                 return redirect('/orders/view/' . (int)substr(request('search'), 1));
             }
         } elseif (request('search')) {
-            $orders->where('customer_name', 'like', '%' . request('search') . '%')->orWhere('customer_phone', 'like', '%' . request('search') . '%');
+            $orders->where('customer_name', 'like', '%' . request('search') . '%')
+                ->orWhere('customer_phone', 'like', '%' . request('search') . '%');
+        }
+
+        if (!$orders->count()) {
+
+            $orders = Order::whereHas('order_item', function ($query) {
+                $query->where('product', 'like', '%' . request('search') . '%');
+            });
         }
 
         return view('orders.index', [

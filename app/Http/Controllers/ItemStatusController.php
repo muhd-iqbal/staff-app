@@ -133,6 +133,17 @@ class ItemStatusController extends Controller
             case 'is_approved':
                 $title = 'Production';
                 $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
+                switch (request('loc')) {
+                    case 'guar':
+                        $items->whereNull('supplier_id')->where('location', '=', 'guar');
+                        break;
+                    case 'gurun':
+                        $items->whereNull('supplier_id')->where('location', '=', 'gurun');
+                        break;
+                    case 'subcon':
+                        $items->whereNotNull('supplier_id');
+                        break;
+                }
                 break;
             case 'is_design':
                 $title = 'Design';
@@ -144,31 +155,6 @@ class ItemStatusController extends Controller
                 break;
             default:
                 abort(404);
-                break;
-        }
-
-        return view('orders.item_status', [
-            'status' => $title,
-            'items' => $items->paginate(20),
-        ]);
-    }
-
-    public function show_production($production)
-    {
-        $title = "Production";
-        switch ($production) {
-            case 'guar':
-                $items = OrderItem::where('is_approved', '=', 1)
-                    ->where('is_printing', '=', 0)->whereNull('supplier_id')->where('location', '=', 'guar');
-                break;
-            case 'gurun':
-                $items = OrderItem::where('is_approved', '=', 1)
-                    ->where('is_printing', '=', 0)->whereNull('supplier_id')->where('location', '=', 'gurun');
-                break;
-            case 'subcon':
-                $items = OrderItem::where('is_approved', '=', 1)
-                    ->where('is_printing', '=', 0)->where('printing_list', '=', 0)
-                    ->whereNotNull('supplier_id');
                 break;
         }
 

@@ -78,17 +78,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mt-3">
-
-                        {{ $items->links() }}
+                    <div class="mt-2">
+                        {{ $items->withQueryString()->links() }}
+                        {{-- {{ $items->links() }} --}}
                     </div>
                     @if ($status == 'Production')
-                        <div class="flex flex-col-reverse md:flex-row-reverse gap-2">
-                            <a href="/orders/item/status/is_approved/subcon"
+                        <div class="flex flex-col-reverse md:flex-row-reverse gap-2 mt-2">
+                            <a href="/orders/item/status/is_approved?loc=subcon"
                                 class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Subcon</a>
-                            <a href="/orders/item/status/is_approved/guar"
+                            <a href="/orders/item/status/is_approved?loc=guar"
                                 class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Guar</a>
-                            <a href="/orders/item/status/is_approved/gurun"
+                            <a href="/orders/item/status/is_approved?loc=gurun"
                                 class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Gurun</a>
                             <a href="/print"
                                 class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Print
