@@ -11,6 +11,7 @@ cd directory
 git clone https://github.com/muhd-iqbal/staff-app.git
 composer install
 cp .env.example .env
+php artisan key:generate
 ```
 
 Then create database, edit config in .env and run migration with seeder.
