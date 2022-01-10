@@ -209,4 +209,11 @@ class OrderItemController extends Controller
             return redirect('/orders/item/' . $item->id)->with('forbidden', 'Ralat, sila hubungi system developer.');
         }
     }
+
+    public function delete_photo(OrderPicture $picture)
+    {
+        $picture->delete();
+
+        return back()->with('success', 'Item berjaya padam.');
+    }
 }

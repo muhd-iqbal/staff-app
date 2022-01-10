@@ -25,7 +25,7 @@
                                     </div>
                                     <div>
                                         <h2 class="text-gray-500 font-bold text-lg">{{ __('PIC: ') }}
-                                            {{ ($item->user_id)? $item->user->name : 'Tiada' }}</h2>
+                                            {{ $item->user_id ? $item->user->name : 'Tiada' }}</h2>
                                     </div>
                                     <div>
                                         <h2 class="text-gray-500 font-bold text-lg">{{ __('Status: ') }}
@@ -34,30 +34,58 @@
                                     <div class="text-red-500 font-bold text-xl">
                                         {{ $item->is_urgent ? 'URGENT' : '' }}</div>
                                     @if ($item->supplier_id)
-                                        <div class="">
-                                            <form action="/orders/item/{{ $item->id }}/update-subcon" method="POST">
-                                                @csrf
-                                                <select name="supplier_id" id="" onchange="showSubmit('supplier-save')">
-                                                    <option selected disabled>Pilihan Subcon:</option>
-                                                    <option onclick="location.href='/supplier/add'">Tambah Pilihan
-                                                    </option>
-                                                    @foreach ($suppliers as $sub)
-                                                        <option value="{{ $sub->id }}"
-                                                            {{ $sub->id == $item->supplier_id ? 'selected' : '' }}>
-                                                            {{ $sub->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <x-button class="h-10 hidden" id="supplier-save">Simpan</x-button>
-                                            </form>
-                                        </div>
+                                        @if (auth()->user()->isAdmin)
+                                            Subcon:
+                                            <div class="form">
+                                                <form action="/orders/item/{{ $item->id }}/update-subcon"
+                                                    method="POST">
+                                                    @csrf
+                                                    <select name="supplier_id" id=""
+                                                        onchange="showSubmit('supplier-save')">
+                                                        {{-- <option selected disabled>Pilihan Subcon:</option>
+                                                        <option onclick="location.href='/supplier/add'">Tambah Pilihan --}}
+                                                        </option>
+                                                        @foreach ($suppliers as $sub)
+                                                            <option value="{{ $sub->id }}"
+                                                                {{ $sub->id == $item->supplier_id ? 'selected' : '' }}>
+                                                                {{ $sub->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <x-button class="h-10 hidden" id="supplier-save">Simpan
+                                                    </x-button>
+                                                    <a href="/suppliers/create" id="supplier-add" title="Tambah Subcon"
+                                                        class="h-10 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">+</a>
+                                                </form>
+                                            </div>
+                                        @else
+                                            {{ __('Subcon: ') . $item->supplier->name }}
+                                        @endif
+
                                     @endif
                                 </div>
-                                <div class="flex flex-col md:flex-col mt-5 md:mt-0">
+                                <div class="grid grid-col mt-10 md:mt-0">
                                     <div class="md:text-right">{{ __('Saiz: ') . $item->size }}</div>
                                     <div class="md:text-right">{{ __('Kuantiti: ') . $item->quantity }}</div>
                                     <div class="md:text-right">
                                         {{ __('Harga: RM') . number_format($item->price / 100, 2) }}</div>
                                     <div class="md:text-right">{{ $item->finishing }}</div>
+                                    <div class="justify-self-end">
+                                        @php
+                                            $log = 'Dibuat: ' . date('d/m/Y h:i A', strtotime($item->created_at));
+                                            if ($item->is_design) {
+                                                $log .= '\nDesign: ' . date('d/m/Y h:i A', strtotime($item->is_design_time));
+                                            }
+                                            if ($item->is_approved) {
+                                                $log .= '\nApprove: ' . date('d/m/Y h:i A', strtotime($item->is_approved_time));
+                                            }
+                                            if ($item->is_done) {
+                                                $log .= '\nSelesai: ' . date('d/m/Y h:i A', strtotime($item->is_done_time));
+                                            }
+                                        @endphp
+                                        <img class="cursor-pointer" title="Lihat log item"
+                                            onclick="openLog('{{ $log }}')"
+                                            src="https://img.icons8.com/material-rounded/24/000000/log.png" />
+                                    </div>
                                 </div>
                             </div>
                             @if ($item->remarks)
@@ -119,7 +147,7 @@
                                             title='Design Semula' color='red' /> --}}
                                     @elseif($item->is_approved)
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/done'
-                                            title='Selesai Print' color='green' />
+                                            title='Selesai' color='green' />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
                                     @elseif($item->is_design)
@@ -156,36 +184,26 @@
                                                             {{ __('Pilihan Production') }} </span>
                                                         <x-form.single-action
                                                             action='/orders/item/{{ $item->id }}/approved-production'
-                                                            title='Masuk ke print list' color='blue' />
+                                                            title='Production Gurun + Print List' color='blue' />
                                                         <x-form.single-action
                                                             action='/orders/item/{{ $item->id }}/approved'
-                                                            title='Lain-lain' color='green' />
+                                                            title='Production Gurun' color='purple' />
+                                                        <x-form.single-action
+                                                            action='/orders/item/{{ $item->id }}/approved-guar'
+                                                            title='Production Guar' color='pink' />
                                                         <x-form.single-action
                                                             action='/orders/item/{{ $item->id }}/approved-subcon'
                                                             title='Subcon' color='yellow' />
-                                                        {{-- <button @click="showModal = !showModal"
-                                                            class="inline-flex items-center px-4 py-2 border border-gray-500 rounded-md font-semibold text-xs text-black hover:text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 h-10 transition-colors duration-150 ease-linear">Batal</button> --}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {{-- <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
-                                            title='Confirm Design' color='green' /> --}}
                                     @else
                                         <div
                                             class="bg-red-500 font-bold text-white text-center py-1 px-2 text-xs rounded-full h-6">
                                             {{ __('Pilih designer di ruangan tugasan') }}
                                         </div>
                                     @endif
-                                    {{-- <x-form.single-action action='/orders/item/{{ $item->id }}/design'
-                                            title='Design Process' />
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/approved'
-                                            title='Hantar Ke Production' />
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/printing'
-                                            title='Selesai Print' />
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/done'
-                                            title='Item Selesai' /> --}}
                                 </div>
                             </div>
 
@@ -219,7 +237,13 @@
                     </div>
                     <div class="mt-3">
                         @foreach ($pictures as $pic)
-                            <img src="{{ asset('storage/' . $pic->picture) }}" alt="" class="w-full p-5 border">
+                            <div class="relative mb-2">
+                                <img src="{{ asset('storage/' . $pic->picture) }}" alt="" class="w-full p-2 border">
+                                <form action="/orders/item/picture/{{ $pic->id }}/del" method="POST">
+                                    @csrf
+                                    <button class="absolute top-5 right-5 bg-red-500 p-2 py-1 text-white rounded hover:bg-red-400" onclick="return confirm('Padam foto?')">x</button>
+                                </form>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -241,6 +265,10 @@
         function showSubmit(id) {
             var x = document.getElementById(id);
             x.style.display = "inline-block";
+        }
+
+        function openLog(item) {
+            alert(item);
         }
     </script>
 </x-app-layout>

@@ -18,6 +18,11 @@ class AlterOrdersTable extends Migration
             $table->string('pickup')->nullable()->after('isDone');
             $table->timestamp('pickup_time')->nullable()->after('pickup');
         });
+        Schema::table('order_items', function (Blueprint $table)
+        {
+            $table->string('location', 20)->nullable()->after('is_approved_time');
+        });
+
     }
 
     /**
@@ -31,6 +36,10 @@ class AlterOrdersTable extends Migration
         {
            $table->dropColumn('pickup');
            $table->dropColumn('pickup_time');
+        });
+        Schema::table('order_items', function (Blueprint $table)
+        {
+           $table->dropColumn('location');
         });
     }
 }

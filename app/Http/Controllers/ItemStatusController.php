@@ -36,6 +36,24 @@ class ItemStatusController extends Controller
             'is_done' => 0,
             'is_done_time' => null,
             'printing_list' => 0,
+            'location' => 'gurun',
+        );
+        $item->update($attributes);
+
+        return back()->with('success', 'Status Dikemaskini: Production');
+    }
+
+    public function update_approved_guar(OrderItem $item)
+    {
+        $attributes = array(
+            'is_approved' => 1,
+            'is_approved_time' => NOW(),
+            'is_printing' => 0,
+            'is_printing_time' => null,
+            'is_done' => 0,
+            'is_done_time' => null,
+            'printing_list' => 0,
+            'location' => 'guar',
         );
         $item->update($attributes);
 
@@ -52,6 +70,7 @@ class ItemStatusController extends Controller
             'is_done' => 0,
             'is_done_time' => null,
             'printing_list' => 1,
+            'location' => 'gurun',
         );
         $item->update($attributes);
 
@@ -128,7 +147,32 @@ class ItemStatusController extends Controller
                 break;
         }
 
-        return view('orders/item_status', [
+        return view('orders.item_status', [
+            'status' => $title,
+            'items' => $items->paginate(20),
+        ]);
+    }
+
+    public function show_production($production)
+    {
+        $title = "Production";
+        switch ($production) {
+            case 'guar':
+                $items = OrderItem::where('is_approved', '=', 1)
+                    ->where('is_printing', '=', 0)->whereNull('supplier_id')->where('location', '=', 'guar');
+                break;
+            case 'gurun':
+                $items = OrderItem::where('is_approved', '=', 1)
+                    ->where('is_printing', '=', 0)->whereNull('supplier_id')->where('location', '=', 'gurun');
+                break;
+            case 'subcon':
+                $items = OrderItem::where('is_approved', '=', 1)
+                    ->where('is_printing', '=', 0)->where('printing_list', '=', 0)
+                    ->whereNotNull('supplier_id');
+                break;
+        }
+
+        return view('orders.item_status', [
             'status' => $title,
             'items' => $items->paginate(20),
         ]);
