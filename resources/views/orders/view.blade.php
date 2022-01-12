@@ -4,7 +4,8 @@
             {{ __('Senarai Order') }}
         </h2>
     </x-slot>
-    <x-modalbox action='/orders/{{ $order->id }}/delete' text='Padam order? Setiap item perlu dipadam terlebih dahulu.' />
+    <x-modalbox action='/orders/{{ $order->id }}/delete'
+        text='Padam order? Setiap item perlu dipadam terlebih dahulu.' />
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -14,7 +15,8 @@
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
                             @if (auth()->user()->isAdmin)
-                            <div class="text-right" title="Padam Order"><span class=" text-red-500 cursor-pointer" onclick="openModal()">x</span></div>
+                                <div class="text-right" title="Padam Order"><span class=" text-red-500 cursor-pointer"
+                                        onclick="openModal()">x</span></div>
                             @endif
                             <div class="flex flex-col items-center">
                                 <div class="flex">
@@ -41,12 +43,19 @@
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         {{ __('Tarikh pesanan: ') . date('d/m/Y', strtotime($order->date)) }}
                                     </div>
-                                    <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Deadline: ') }}
-                                        @if ($order->deadline)
+                                    @if ($order->deadline)
+                                        <div
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
+                                            {{ __('Deadline: ') }}
                                             {{ date('d/m/Y', strtotime($order->deadline)) }}
-                                        @endif
-                                    </div>
+                                        </div>
+                                    @endif
+                                    @if ($order->pickup)
+                                        <div
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
+                                            {{ __('Pickup: ') . $order->pickup .' ('. date('d/m/Y', strtotime($order->pickup_time)).')' }}
+                                        </div>
+                                    @endif
                                 </div>
                                 @if (auth()->user()->isAdmin && !$order->isDone)
                                     <div class="text-right m-5">
@@ -71,20 +80,27 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class='grid grid-rows md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
+                            <div class='grid grid-rows md:grid-cols-4 gap-5 items-center justify-center p-5 pb-5'>
                                 {{-- @if (!$order->isDone) --}}
                                 <a href="/orders/{{ $order->id }}/add-item"
-                                    class='w-auto bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    class='w-auto text-center bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah Item') }}
                                 </a>
                                 {{-- @endif --}}
                                 <a href="/orders/view/{{ $order->id }}/edit"
-                                    class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    class='w-auto text-center bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit Order') }}
+                                </a>
+                                <a href="/orders/view/{{ $order->id }}/pickup" @if ($order->pickup)
+                                    onclick = "return confirm('Pickup sudah direkod!\nKemaskini semula?')"
+                                    @endif
+                                    class='w-auto text-center bg-blue-500 hover:bg-gray-700 rounded-lg shadow-xl
+                                    font-medium text-white px-4 py-2'>
+                                    {{ __('Pickup') }}
                                 </a>
                                 {{-- @endif --}}
                                 <a href="/orders"
-                                    class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    class='w-auto text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali ke senarai pesanan') }}
                                 </a>
                             </div>
@@ -122,20 +138,24 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach ($lists as $list)
-
                                                 <tr class="cursor-pointer"
                                                     onclick="window.location='/orders/item/{{ $list->id }}'">
                                                     <td class="py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="ml-4">
-                                                                <div class="text-sm font-medium {{ $list->is_urgent?'text-red-600':'' }}">
+                                                                <div
+                                                                    class="text-sm font-medium {{ $list->is_urgent ? 'text-red-600' : '' }}">
                                                                     {{ $list->product }}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center {{ $list->is_urgent?'text-red-600':'' }}">{{ $list->size }}</td>
-                                                    <td class="text-center {{ $list->is_urgent?'text-red-600':'' }}">{{ $list->quantity }}</td>
+                                                    <td
+                                                        class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
+                                                        {{ $list->size }}</td>
+                                                    <td
+                                                        class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
+                                                        {{ $list->quantity }}</td>
                                                     <td class="flex py-4 justify-center">
                                                         @if ($list->user)
                                                             <img class="h-10 w-10 rounded-full"
@@ -147,7 +167,7 @@
                                                         @if ($list->is_done)
                                                             <span
                                                                 class="bg-green-600 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Selesai') }}</span>
-                                                          @elseif($list->is_printing)
+                                                        @elseif($list->is_printing)
                                                             <span
                                                                 class="bg-purple-600 font-bold text-white text-center py-1 px-2 text-xs rounded-full">{{ __('Finishing') }}</span>
                                                         @elseif($list->is_approved)

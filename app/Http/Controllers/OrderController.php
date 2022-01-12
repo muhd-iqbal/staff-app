@@ -46,6 +46,14 @@ class OrderController extends Controller
         ]);
     }
 
+    public function index_nopickup()
+    {
+        //for order which not picked up yet
+        return view('orders.no_pickup', [
+             'orders' => Order::where('isDone', '=', '1')->whereNull('pickup')->paginate(20)
+        ]);
+    }
+
     public function index_location($location)
     {
         $orders = Order::where('location', '=', $location)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
@@ -144,5 +152,30 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return redirect('/orders/view/' . $order->id)->with('forbidden', 'Sila padam item terlebih dahulu.');
         }
+    }
+
+    public function pickup(Order $order)
+    {
+        return view('orders.edit_pickup', [
+            'order' => $order,
+        ]);
+    }
+
+    public function update_pickup(Order $order)
+    {
+        request()->validate([
+            'pickup_type' => [Rule::in(['Gurun','Guar','Kurier'])],
+        ]);
+
+        $attributes['pickup'] = request('pickup_type');
+        $attributes['pickup_time'] = now();
+
+        if(request('pickup') != ""){
+            $attributes['pickup'] .= '-' . request('pickup');
+        }
+
+        $order->update($attributes);
+
+        return redirect('/orders/view/' . $order->id)->with('success', 'Order dikemaskini.');
     }
 }

@@ -17,6 +17,7 @@
                                     {{ __('Tambah Pesanan') }}
                                 </a>
                             </div>
+
                             <div class="text-right">
                                 <form action="/orders">
                                     <input type="text" name="search" placeholder="Carian..."
@@ -52,7 +53,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($orders as $order)
-                                                <tr onclick="window.location='orders/view/{{ $order->id }}'"
+                                                <tr onclick="window.location='/orders/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
@@ -160,7 +161,7 @@
                                     </table>
                                 </div>
                             </div>
-                            {{ $orders->links() }}
+                            {{ $orders->withQueryString()->links() }}
                         </div>
                         <div class="m-5 grid md:grid-cols-2">
                             <div>
@@ -197,6 +198,12 @@
                             </div>
                         </div>
                     </section>
+                    <div class="mx-5">
+                        <a href="/orders/no-pickup"
+                        class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Senarai belum pickup</a>
+
+                    </div>
+
                     <x-dashboard-link />
                 </div>
             </div>

@@ -34,10 +34,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/orders/create', [OrderController::class, 'insert']);
     Route::get('/orders/view/{order}', [OrderController::class, 'view']);
     Route::get('/orders/view/{order}/edit', [OrderController::class, 'edit']);
+    Route::get('/orders/view/{order}/pickup', [OrderController::class, 'pickup']);
+    Route::patch('/orders/pickup/{order}', [OrderController::class, 'update_pickup']);
     Route::patch('/orders/edit/{order}', [OrderController::class, 'update']);
     Route::delete('/orders/{order}/delete', [OrderController::class, 'delete']);
     Route::patch('/orders/view/{order}/mark-done', [OrderController::class, 'update_done']);
     Route::patch('/orders/view/{order}/mark-undone', [OrderController::class, 'update_undone']);
+    Route::get('/orders/no-pickup', [OrderController::class, 'index_nopickup']);
 
     Route::get('/orders/{order}/add-item', [OrderItemController::class, 'create']);
     Route::post('/orders/{order}/add-item', [OrderItemController::class, 'insert']);
