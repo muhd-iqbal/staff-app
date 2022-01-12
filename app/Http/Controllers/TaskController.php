@@ -47,8 +47,15 @@ class TaskController extends Controller
 
     public function print_allstickers()
     {
-        return view('print.all_stickers', [
-            'items' => OrderItem::whereIn('id', request('item_id'))->with('order')->get(),
-        ]);
+        if (request('item_id')) {
+
+            $items = OrderItem::whereIn('id', request('item_id'))->with('order')->get();
+
+            return view('print.all_stickers', [
+                'items' => $items,
+            ]);
+        } else {
+            return back()->with('forbidden', 'Tanda &#9745; sekurang-kurangnya satu list.');
+        }
     }
 }
