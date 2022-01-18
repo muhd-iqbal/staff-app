@@ -11,6 +11,7 @@ class DashboardController extends Controller
         'Maklumat Peribadi' => '/profile',
         'Tukar Kata Laluan' => '/change-password',
         // 'Perihal Cuti' => '/leaves',
+        'Tugasan Semasa' => '/view-designer',
         'Perihal Staf' => '/staff',
         'Senarai Order' => '/orders',
         'Tugasan Design' => '/to-do',

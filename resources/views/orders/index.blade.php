@@ -63,10 +63,14 @@
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                         @if ($order->location == 'gurun')
                                                             <div class="w-5 h-5 bg-purple-600 mr-2 rounded-full"></div>
-                                                        @elseif ($order->location == "guar")
+                                                        @elseif ($order->location == 'guar')
                                                             <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
                                                         @endif
                                                         {{ $order->customer_name }}
+                                                        <div id="urgent-{{ $order->id }}"
+                                                            class="ml-2 inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
+                                                            <span class="inline-flex px-1">{{ __('URGENT') }}</span>
+                                                        </div>
                                                     </td>
                                                     {{-- <td
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
@@ -77,6 +81,7 @@
                                                         @php
                                                             $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
                                                             $count = count($order->order_item);
+                                                            $urgent = 0;
                                                         @endphp
 
                                                         @foreach ($order->order_item as $item)
@@ -92,6 +97,10 @@
                                                                     $is_design++;
                                                                 } else {
                                                                     $is_pending++;
+                                                                }
+
+                                                                if ($item->is_urgent) {
+                                                                    $urgent++;
                                                                 }
 
                                                             @endphp
@@ -156,6 +165,9 @@
                                                         @endunless
                                                     </td>
                                                 </tr>
+                                                @if ($urgent>0)
+                                                    <script>document.getElementById("urgent-{{$order->id}}").style.display='block';</script>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -191,7 +203,7 @@
                                     class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
                                     <span class="inline-flex px-1">{{ __('Design') }}</span>
                                 </div>
-                                <div  onclick="window.location='/orders/item/status/is_pending'"
+                                <div onclick="window.location='/orders/item/status/is_pending'"
                                     class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
                                     <span class="inline-flex px-1">{{ __('Pending') }}</span>
                                 </div>
@@ -200,7 +212,8 @@
                     </section>
                     <div class="mx-5">
                         <a href="/orders/no-pickup"
-                        class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Senarai belum pickup</a>
+                            class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Senarai
+                            belum pickup</a>
 
                     </div>
 

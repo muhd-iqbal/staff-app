@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemStatusController;
 use App\Http\Controllers\LeaveController;
@@ -65,12 +66,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/item/status/{status}', [ItemStatusController::class, 'show_status']);
     Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
 
+    Route::get('/customers', [CustomerController::class, 'index']);
+    Route::get('/customer/{customer}/edit', [CustomerController::class, 'edit']);
+    Route::patch('/customer/{customer}/edit', [CustomerController::class, 'update']);
+
     Route::get('/to-do', [TaskController::class, 'index']);
     Route::get('/staff/prev-works', [TaskController::class, 'previous']);
     Route::get('/print', [TaskController::class, 'view_print']);
     Route::get('/print-list', [TaskController::class, 'print_print']);
     Route::get('/items/print-sticker/{item}', [TaskController::class, 'print_sticker']);
     Route::get('/print/all-stickers', [TaskController::class, 'print_allstickers']);
+    Route::get('/view-designer', [TaskController::class, 'view_designer']);
 
 });
 

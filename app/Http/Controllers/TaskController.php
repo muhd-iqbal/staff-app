@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -55,7 +56,15 @@ class TaskController extends Controller
                 'items' => $items,
             ]);
         } else {
-            return back()->with('forbidden', 'Tanda &#9745; sekurang-kurangnya satu list.');
+            return back()->with('forbidden', 'Tanda
+            &#9745; sekurang-kurangnya satu list.');
         }
+    }
+
+    public function view_designer()
+    {
+        return view('orders.designers', [
+            'users' => User::with('order_item')->get(),
+        ]);
     }
 }
