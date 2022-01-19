@@ -34,31 +34,20 @@
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nama
-                                        Pelanggan</label>
-                                    <input
+                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pelanggan</label>
+                                    <select
                                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        type="text" name="customer_name" placeholder="Masukkan nama pelanggan"
-                                        value="{{ $order->customer_name }}" />
+                                        type="text" name="customer_id" value="{{ $order->customer->name }}">
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}"
+                                                {{ $customer->id == $order->customer_id ? 'selected' : '' }}>
+                                                {{ $customer->name . ' - ' . $customer->phone }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-                                    <div class="grid grid-cols-1">
-                                        <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">No
-                                            Telefon</label>
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="customer_phone" placeholder="No Telefon Pelanggan"
-                                            value="{{ $order->customer_phone }}" />
-                                    </div>
-                                    <div class="grid grid-cols-1">
-                                        <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tarikh</label>
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="date" name="date" value="{{ $order->date }}" readonly />
-                                    </div>
+
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Deadline</label>
@@ -66,18 +55,17 @@
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="date" name="dateline" value="{{ $order->dateline }}" />
                                     </div>
-                                </div>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pesanan</label>
                                         <select name="method"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                            <option value="walkin" {{ $order->method == 'walkin' ? 'selected' : '' }}>
+                                            <option value="walkin"
+                                                {{ $order->method == 'walkin' ? 'selected' : '' }}>
                                                 Walk-in
                                             </option>
-                                            <option value="online" {{ $order->method == 'online' ? 'selected' : '' }}>
+                                            <option value="online"
+                                                {{ $order->method == 'online' ? 'selected' : '' }}>
                                                 Online
                                             </option>
                                         </select>
@@ -87,7 +75,8 @@
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Lokasi</label>
                                         <select name="location"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                            <option value="gurun" {{ $order->location == 'gurun' ? 'selected' : '' }}>
+                                            <option value="gurun"
+                                                {{ $order->location == 'gurun' ? 'selected' : '' }}>
                                                 Gurun
                                             </option>
                                             <option value="guar" {{ $order->location == 'guar' ? 'selected' : '' }}>

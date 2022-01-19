@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
@@ -67,6 +68,7 @@ class OrderController extends Controller
     {
         return view('orders.create', [
             'products' => $this->products,
+            'customers' => Customer::get(),
         ]);
     }
 
@@ -125,15 +127,14 @@ class OrderController extends Controller
     {
         return view('orders.edit', [
             'order' => $order,
+            'customers' => Customer::select(['id', 'name', 'phone'])->get(),
         ]);
     }
 
     public function update(Order $order)
     {
         $attributes = request()->validate([
-            'customer_name' => 'required|min:3|max:255',
-            'customer_phone' => 'min:10|max:11',
-            'date' => 'required|date',
+            'customer_id' => 'required|numeric',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
             'location' => ['required', Rule::in(['gurun', 'guar'])],

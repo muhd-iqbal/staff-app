@@ -43,12 +43,12 @@
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                   <div class="grid grid-cols-6 gap-6">
 
-                                    <x-form.input name="name" label="nama" span="4" value="{{ $user->name }}"/>
+                                    <x-form.input name="name" label="nama" span="4" value="{!! $user->name !!}"/>
                                     <x-form.input name="phone" label="No. Phone" span="2" value="{{ $user->phone }}"/>
                                     <x-form.input name="email" label="emel" span="2" value="{{ $user->email }}"/>
                                     <x-form.input name="icno" label="no ic" span="2" value="{{ $user->icno }}"/>
                                     <x-form.input name="birthday" label="tarikh lahir" span="2" type="date" value="{{ $user->birthday }}"/>
-                                    <x-form.input name="address" label="Alamat" span="6" value="{{ $user->address }}"/>
+                                    <x-form.input name="address" label="Alamat" span="6" value="{!! $user->address !!}"/>
 
                                         <hr class="col-span-6 sm:col-span-6" />
 
@@ -66,7 +66,7 @@
                                         @endforeach
                                     </x-form.select>
 
-                                    <x-form.input name="qualification" label="Kelayakan (Diploma/Ijazah)" span="6" value="{{ $user->qualification }}"/>
+                                    <x-form.input name="qualification" label="Kelayakan (Diploma/Ijazah)" span="6" value="{!! $user->qualification !!}"/>
 
                                     <hr class="col-span-6 sm:col-span-6" />
 

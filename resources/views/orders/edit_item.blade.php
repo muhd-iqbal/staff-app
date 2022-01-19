@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tambah Item Pesanan') }}
+            {{ __('Edit Item') }}
         </h2>
         <x-head.tinymce-config />
     </x-slot>
@@ -34,41 +34,21 @@
                                 @endif
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <div class="mt-3 grid md:grid-cols-4 gap-3">
-                                        <input
-                                            class="py-2 px-3 md:col-span-2 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="product" placeholder="Masukkan nama produk"
-                                            value="{{ $item->product }}" />
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="price" placeholder="Harga"
-                                            value="{{ $item->price / 100 }}" />
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="size" placeholder="Saiz Item"
-                                            value="{{ $item->size }}" />
-                                        </div>
-                                        <div class="mt-3 grid md:grid-cols-4 gap-3">
-                                            <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="number" step=1 name="quantity" placeholder="Kuantiti"
+                                    <div class="mt-3 grid md:grid-cols-12 gap-3">
+                                        <x-form.input name="product" label="Produk" value="{!! $item->product !!}" />
+                                        <x-form.input name="price" label="Harga" value="{{ $item->price / 100 }}" />
+                                        <x-form.input name="size" label="Saiz" value="{!! $item->size !!}" />
+                                        <x-form.input name="finishing" label="Nota / Finishing"
+                                            value="{!! $item->finishing !!}" />
+                                        <x-form.input name="quantity" label="Kuantiti"
                                             value="{{ $item->quantity }}" />
-                                            <div class="flex justify-center items-center hidden">
-                                                <input type="checkbox" name="printing_list" id="printing_list"
-                                                {{ $item->printing_list ? 'checked' : '' }}>
-                                                <label for="printing_list" class="mx-3"> Item masuk ke print list?
-                                                </label>
-                                            </div>
-                                            <div class="flex justify-center items-center">
-                                                <input type="checkbox" name="is_urgent" id="is_urgent"
-                                                {{ $item->is_urgent ? 'checked' : '' }}>
-                                                <label for="is_urgent" class="mx-3 text-red-500"> Urgent?
-                                                </label>
-                                            </div>
-                                            <input
-                                                class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                type="text" name="finishing" placeholder="Nota / Finishing"
-                                                value="{{ $item->finishing }}" />
+                                        <div class="col-span-6 mt-5 md:m-7">
+                                            <label for="is_urgent" class="relative flex-inline items-center isolate p-4 rounded-2xl">
+                                                <input id="is_urgent" type="checkbox" name="is_urgent" class="relative peer z-20 text-red-600 rounded-md focus:ring-0" {{ $item->is_urgent ? 'checked' : '' }}/>
+                                                <span class="ml-2 relative z-20 text-red-500 font-bold">URGENT?</span>
+                                                <div class="absolute inset-0 bg-white peer-checked:bg-purple-50 peer-checked:border-purple-300 z-10 border rounded-2xl"></div>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">

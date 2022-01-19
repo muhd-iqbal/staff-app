@@ -21,6 +21,10 @@ class AlterOrderTableCustomer extends Migration
         //auto populate customer_id based on previous migration
         DB::statement("UPDATE `orders` o SET `customer_id` = (SELECT `id` FROM `customers` WHERE `name` = o.customer_name AND `phone` = o.customer_phone)");
 
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn(['customer_name', 'customer_phone']);
+        });
+
     }
 
     /**

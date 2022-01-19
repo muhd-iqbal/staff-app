@@ -48,7 +48,7 @@
                                                             {{ ($items->currentpage() - 1) * $items->perpage() + $loop->index + 1 }}
                                                         </td>
                                                         <td class="whitespace-nowrap">
-                                                            {{ $list->order->customer_name }}
+                                                            {{ $list->order->customer->name }}
                                                         </td>
                                                         <td class="text-center">
                                                             <div class="text-sm font-medium text-gray-900">

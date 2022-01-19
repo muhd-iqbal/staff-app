@@ -59,7 +59,7 @@
                                                             class="hover:bg-gray-100 cursor-pointer text-center  {{ $task->is_urgent ? 'bg-red-500' : '' }}">
                                                             <td
                                                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap">
-                                                                {{ $task->order->customer_name }}
+                                                                {{ $task->order->customer->name }}
                                                             </td>
                                                             <td
                                                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap">

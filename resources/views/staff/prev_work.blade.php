@@ -64,7 +64,7 @@
                                                         </td>
                                                         <td
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                            {{ $task->order->customer_name }}
+                                                            {{ $task->order->customer->name }}
                                                         </td>
                                                         <td
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">

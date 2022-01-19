@@ -32,25 +32,29 @@
                                 @endif
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nama
-                                        Pelanggan</label>
-                                    <input
+                                    <div class="grid grid-cols-7">
+                                        <x-form.select name="customer_id" label="Nama Pelanggan">
+                                            <option selected disabled>Pilihan Pelanggan..</option>
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}" >
+                                                    {{ $customer->name . ' - ' . $customer->phone }}</option>
+                                            @endforeach
+                                        </x-form.select>
+                                        <div class="flex flex-wrap content-end mx-2">
+                                            <a href="/customers/create"
+                                                class='items-end w-auto bg-blue-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                                +
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {{-- <input
                                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                         type="text" name="customer_name" placeholder="Masukkan nama pelanggan"
-                                        value="{{ old('customer_name') }}" />
+                                        value="{{ old('customer_name') }}" /> --}}
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-                                    <div class="grid grid-cols-1">
-                                        <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">No
-                                            Telefon</label>
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="customer_phone" placeholder="No Telefon Pelanggan"
-                                            value="{{ old('customer_phone') }}" />
-                                    </div>
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-2 mt-5 mx-7">
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tarikh</label>
@@ -65,9 +69,6 @@
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="date" name="dateline" value="{{ old('dateline') }}" />
                                     </div>
-                                </div>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pesanan</label>

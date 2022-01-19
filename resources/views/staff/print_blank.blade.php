@@ -70,7 +70,7 @@
 
                                 <tr class="text-center {{ $task->is_urgent ? 'bg-red-500' : '' }} text-xs">
                                     <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->order->customer_name }}
+                                        {{ $task->order->customer->name }}
                                     </td>
                                     <td class="border border-solid border-black align-middle whitespace-nowrap">
                                         {{ $task->product }}
@@ -98,7 +98,7 @@
 
                                 <tr class="text-center {{ $task->is_urgent ? 'bg-red-500' : '' }} text-xs">
                                     <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->order->customer_name }}
+                                        {{ $task->order->customer->name }}
                                     </td>
                                     <td class="border border-solid border-black align-middle whitespace-nowrap">
                                         {{ $task->product }}

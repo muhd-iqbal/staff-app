@@ -66,10 +66,10 @@
                                                         @elseif ($order->location == "guar")
                                                             <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
                                                         @endif
-                                                        {{ $order->customer_name }}
+                                                        {{ $order->customer->name }}
                                                     </td>
                                                     <td>
-                                                        {{ $order->customer_phone}}
+                                                        {{ $order->customer->phone}}
                                                     </td>
 
                                                 </tr>

@@ -67,6 +67,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
 
     Route::get('/customers', [CustomerController::class, 'index']);
+    Route::get('/customers/create', [CustomerController::class, 'create']);
+    Route::post('/customers/create', [CustomerController::class, 'insert']);
     Route::get('/customer/{customer}/edit', [CustomerController::class, 'edit']);
     Route::patch('/customer/{customer}/edit', [CustomerController::class, 'update']);
 

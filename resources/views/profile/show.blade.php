@@ -30,7 +30,7 @@
                                             <div class="grid grid-cols-6 gap-6">
 
                                                 <x-form.input name="name" label="nama" span="4"
-                                                    value="{{ $user->name }}" />
+                                                    value="{!! $user->name !!}" />
                                                 <x-form.input name="phone" label="No. Phone" span="2"
                                                     value="{{ $user->phone }}" />
                                                 <x-form.input name="email" label="emel" span="2"
@@ -40,7 +40,7 @@
                                                 <x-form.input name="birthday" label="tarikh lahir" span="2" type="date"
                                                     value="{{ $user->birthday }}" />
                                                 <x-form.input name="address" label="Alamat" span="6"
-                                                    value="{{ $user->address }}" />
+                                                    value="{!! $user->address !!}" />
 
                                                 <hr class="col-span-6 sm:col-span-6" />
 
@@ -65,7 +65,7 @@
                                                 </x-form.select>
 
                                                 <x-form.input name="qualification" label="Kelayakan (Diploma/Ijazah)"
-                                                    span="6" value="{{ $user->qualification }}" />
+                                                    span="6" value="{!! $user->qualification !!}" />
 
                                                 <hr class="col-span-6 sm:col-span-6" />
 

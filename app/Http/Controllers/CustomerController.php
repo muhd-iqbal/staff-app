@@ -42,11 +42,18 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('customers.create', [
+            'states' => $this->states,
+        ]);
+    }
+
     public function update(Customer $customer)
     {
         $attributes = request()->validate([
             'name' => 'required',
-            'phone' => 'required|numeric',
+            'phone' => 'required|numeric|digits_between:9,12',
             'email' => 'email|nullable|max:100',
             'address' => 'nullable|required_with:city,postcode,state|max:255',
             'city' => 'nullable|required_with:address,city,state|max:50',
@@ -57,5 +64,22 @@ class CustomerController extends Controller
         $customer->update($attributes);
 
         return back()->with('success', 'Maklumat pelanggan berjaya dikemaskini.');
+    }
+
+    public function insert()
+    {
+        $attributes = request()->validate([
+            'name' => 'required',
+            'phone' => 'required|numeric|digits_between:9,12',
+            'email' => 'email|nullable|max:100',
+            'address' => 'nullable|required_with:city,postcode,state|max:255',
+            'city' => 'nullable|required_with:address,city,state|max:50',
+            'postcode' => 'nullable|required_with:address,city,state|min:5|max:5',
+            'state' => 'nullable|required_with:address,city,postcode|min:3|max:3',
+        ]);
+
+        Customer::create($attributes);
+
+        return redirect('/customers')->with('success', 'Pelanggan ditambah.');
     }
 }

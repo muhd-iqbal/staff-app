@@ -50,7 +50,7 @@
             @break
         @endswitch
         <div class="font-bold text-lg">{{ $item->product }}</div>
-        <div>{{ $item->order->customer_name }}</div>
+        <div>{{ $item->order->customer->name }}</div>
         <div>{{ $item->size . ' (' . $item->quantity }} UNIT)</div>
         </div>
     </section>

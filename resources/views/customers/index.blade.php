@@ -10,6 +10,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="container mx-auto p-6 font-mono">
+                        <div class="flex gap-3 mb-2">
+                            <a href="/customers/create" class="border-2 border-purple-500 bg-purple-300 text-sm rounded-md p-2">Tambah Pelanggan</a>
+                            <a href="/orders/create" class="border-2 border-green-500 bg-green-300 text-sm rounded-md p-2">Tambah Order</a>
+                        </div>
                         <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                             <div class="w-full overflow-x-auto">
                                 <table class="w-full">

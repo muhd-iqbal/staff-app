@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Customer: ') . $customer->name }}
+            {{ __('Tambah Pelanggan') }}
         </h2>
     </x-slot>
 
@@ -12,48 +12,51 @@
                     <section class="container mx-auto p-6 font-mono">
                         <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                             <div class="w-full overflow-x-auto">
-                                <form action="/customer/{{ $customer->id }}/edit" method="POST">
+                                <form action="/customers/create" method="POST">
                                     @csrf
-                                    @method('PATCH')
                                     <div class="grid md:grid-cols-3 gap-5 p-5">
                                         <div class="col-span-2">
                                             <x-form.input name="name" label="Nama Pelanggan"
-                                                value="{!! $customer->name !!}" />
+                                                value="{{ old('name') }}" />
                                         </div>
                                         <div class="col-span-1">
                                             <x-form.input name="phone" label="No Telefon"
-                                                value="{{ $customer->phone }}" />
+                                                value="{{ old('phone') }}" />
                                         </div>
                                         <div class="col-span-1">
                                             <x-form.input type="email" name="email" label="Alamat Emel"
-                                                value="{{ $customer->email }}" />
+                                                value="{{ old('email') }}" />
                                         </div>
                                         <div class="col-span-2">
                                             <x-form.input name="address" label="Alamat"
-                                                value="{!! $customer->address !!}" />
+                                                value="{{ old('address') }}" />
                                         </div>
 
                                         <div class="col-span-1">
                                             <x-form.input name="city" label="Daerah / Bandar"
-                                                value="{{ $customer->city }}" />
+                                                value="{{ old('city') }}" />
                                         </div>
                                         <div class="col-span-1">
                                             <x-form.input name="postcode" label="Poskod"
-                                                value="{{ $customer->postcode }}" />
+                                                value="{{ old('postcode') }}" />
                                         </div>
                                         <div class="col-span-1">
-                                            <x-form.select name="state" label="Negeri" value="{{ $customer->state }}">
+                                            <x-form.select name="state" label="Negeri">
                                                 <option selected disabled>Pilihan negeri..</option>
                                                 @foreach ($states as $sh => $state)
                                                     <option value="{{ $sh }}"
-                                                        {{ $customer->state == $sh ? 'selected' : '' }}>
+                                                        {{ old('state') == $sh ? 'selected' : '' }}>
                                                         {{ $state }}</option>
                                                 @endforeach
                                             </x-form.select>
                                         </div>
                                     </div>
-                                    <div class="flex flex-row-reverse p-5">
-                                        <x-button>Kemaskini</x-button>
+                                    <div class="grid grid-cols-2 p-5">
+                                        <div class="text-sm text-red-500">*Ruangan Nama & No Telefon wajib diisi.</div>
+                                        <div class="text-right">
+                                            <x-button>Tambah</x-button>
+                                        </div>
+
                                     </div>
                                 </form>
                             </div>

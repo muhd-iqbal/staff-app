@@ -22,7 +22,7 @@
                                 <div class="flex">
                                     <h1 class="text-gray-600 font-bold md:text-2xl text-xl">{{ __('Pesanan:') }}
                                         {{ \App\Http\Controllers\Controller::order_num($order->id) }}</h1>
-                                    <a href="{{ 'https://wa.me/6' . $order->customer_phone }}">
+                                    <a href="{{ 'https://wa.me/6' . $order->customer->phone }}">
                                         <img src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg" width="30"></a>
                                 </div>
                                 <div>
@@ -35,10 +35,10 @@
                             <div class="grid md:grid-cols-2">
                                 <div class="mt-5 mx-7">
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Nama Pelanggan: ') . $order->customer_name }}
+                                        {{ __('Nama Pelanggan: ') . $order->customer->name }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('No Telefon: ') . $order->customer_phone }}
+                                        {{ __('No Telefon: ') . $order->customer->phone }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         {{ __('Tarikh pesanan: ') . date('d/m/Y', strtotime($order->date)) }}

@@ -66,9 +66,9 @@
                                                         @elseif ($order->location == 'guar')
                                                             <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
                                                         @endif
-                                                        {{ $order->customer_name }}
+                                                        {{ $order->customer->name }}
                                                         <div id="urgent-{{ $order->id }}"
-                                                            class="ml-2 inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
+                                                            class="ml-2 items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
                                                             <span class="inline-flex px-1">{{ __('URGENT') }}</span>
                                                         </div>
                                                     </td>
