@@ -24,15 +24,16 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
+        $orders = Order::with(['order_item', 'customer'])->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
         if (preg_match('/^[A-Za-z]\d+$/', request('search'))) {
             if (substr(strtoupper(request('search')), 0, 1) === env('ORDER_PREFIX')) {
                 return redirect('/orders/view/' . (int)substr(request('search'), 1));
             }
-        } elseif (request('search')) {
-            $orders->where('customer_name', 'like', '%' . request('search') . '%')
-                ->orWhere('customer_phone', 'like', '%' . request('search') . '%');
+        } else if(request('search')){
+            $orders = Order::whereHas('customer', function ($query) {
+                $query->where('name', 'like', '%' . request('search') . '%')->orWhere('phone', 'like', '%' . request('search') . '%');
+            });
         }
 
         if (!$orders->count()) {
@@ -50,8 +51,13 @@ class OrderController extends Controller
     public function index_nopickup()
     {
         //for order which not picked up yet
+        $orders = Order::where('isDone', '=', '1')->whereNull('pickup');
+
+        if(request('location')){
+            $orders->where('location', '=', request('location'));
+        }
         return view('orders.no_pickup', [
-             'orders' => Order::where('isDone', '=', '1')->whereNull('pickup')->paginate(20)
+             'orders' => $orders->paginate(20)
         ]);
     }
 
@@ -68,15 +74,14 @@ class OrderController extends Controller
     {
         return view('orders.create', [
             'products' => $this->products,
-            'customers' => Customer::get(),
+            'customers' => Customer::orderBy('name')->get(),
         ]);
     }
 
     public function insert()
     {
         $attributes = request()->validate([
-            'customer_name' => 'required|min:3|max:255',
-            'customer_phone' => 'min:10|max:11',
+            'customer_id' => 'required|numeric|exists:customers,id',
             'date' => 'required|date',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
@@ -111,7 +116,7 @@ class OrderController extends Controller
 
         $order->update($attributes);
 
-        return redirect('/orders')->with('success', 'Order ' . $order->customer_name . ' ditanda selesai.');
+        return redirect('/orders')->with('success', 'Order ditanda selesai.');
     }
 
     public function update_undone(Order $order)
@@ -120,7 +125,7 @@ class OrderController extends Controller
 
         $order->update($attributes);
 
-        return redirect('/orders')->with('success', 'Order ' . $order->customer_name . ' ditanda tidak selesai.');
+        return redirect('/orders')->with('success', 'Order ditanda tidak selesai.');
     }
 
     public function edit(Order $order)

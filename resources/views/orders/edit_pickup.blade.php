@@ -41,8 +41,8 @@
                                         Pelanggan</label>
                                     <input
                                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        type="text" name="customer_name" placeholder="Masukkan nama pelanggan"
-                                        value="{{ $order->customer_name }}" disabled />
+                                        type="text" placeholder="Masukkan nama pelanggan"
+                                        value="{{ $order->customer->name }}" disabled />
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">

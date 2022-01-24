@@ -34,17 +34,17 @@
                                         <thead>
                                             <tr>
                                                 <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle text-center border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
                                                     {{ __('No') }}
+                                                </th>
+                                                <th
+                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    {{ __('Order No') }}
                                                 </th>
                                                 <th
                                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                     {{ __('Pelanggan') }}
                                                 </th>
-                                                {{-- <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                    {{ __('Tarikh') }}
-                                                </th> --}}
                                                 <th
                                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                     {{ __('No Phone') }}
@@ -52,9 +52,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                //forgive me a bit sketchy
+                                                $location['guar'] = $location['gurun'] = 0;
+                                            @endphp
                                             @foreach ($orders as $order)
+                                                @php
+                                                    //again, apologize
+                                                    switch ($order->location) {
+                                                        case 'gurun':
+                                                            $location['gurun']++;
+                                                            break;
+                                                        case 'guar':
+                                                            $location['guar']++;
+                                                            break;
+                                                    }
+                                                @endphp
                                                 <tr onclick="window.location='/orders/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
+                                                    <td class="text-center">
+                                                        {{ ($orders->currentpage() - 1) * $orders->perpage() + $loop->index + 1 }}
+                                                    </td>
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                         {{ \App\Http\Controllers\Controller::order_num($order->id) }}
@@ -63,15 +81,14 @@
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                         @if ($order->location == 'gurun')
                                                             <div class="w-5 h-5 bg-purple-600 mr-2 rounded-full"></div>
-                                                        @elseif ($order->location == "guar")
+                                                        @elseif ($order->location == 'guar')
                                                             <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
                                                         @endif
                                                         {{ $order->customer->name }}
                                                     </td>
                                                     <td>
-                                                        {{ $order->customer->phone}}
+                                                        {{ $order->customer->phone }}
                                                     </td>
-
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -81,7 +98,28 @@
                             {{ $orders->withQueryString()->links() }}
                         </div>
                     </section>
-                    <x-dashboard-link />
+                    <div class="m-5 grid md:grid-cols-2">
+                        <div>
+                            <div onclick="window.location='/orders/no-pickup?location=gurun'"
+                                class="inline-flex items-center bg-white leading-none text-purple-600 rounded-full p-2 shadow text-sm cursor-pointer">
+                                <span
+                                    class="inline-flex bg-purple-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $location['gurun'] }}</span>
+                                <span class="inline-flex px-2">Gurun</span>
+                            </div>
+                            <div onclick="window.location='/orders/no-pickup?location=guar'"
+                                class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-sm cursor-pointer">
+                                <span
+                                    class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $location['guar'] }}</span>
+                                <span class="inline-flex px-2">Guar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <a href="/orders"
+                            class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                            {{ __('Kembali ke senarai pesanan') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -64,7 +64,7 @@ class TaskController extends Controller
     public function view_designer()
     {
         return view('orders.designers', [
-            'users' => User::with('order_item')->get(),
+            'users' => User::with('order_item')->where('position_id', '<>', 1)->get(),
         ]);
     }
 }

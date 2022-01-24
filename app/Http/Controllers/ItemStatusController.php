@@ -37,6 +37,7 @@ class ItemStatusController extends Controller
             'is_done_time' => null,
             'printing_list' => 0,
             'location' => 'gurun',
+            'supplier_id' => null,
         );
         $item->update($attributes);
 
@@ -54,6 +55,7 @@ class ItemStatusController extends Controller
             'is_done_time' => null,
             'printing_list' => 0,
             'location' => 'guar',
+            'supplier_id' => null,
         );
         $item->update($attributes);
 
@@ -71,6 +73,7 @@ class ItemStatusController extends Controller
             'is_done_time' => null,
             'printing_list' => 1,
             'location' => 'gurun',
+            'supplier_id' => null,
         );
         $item->update($attributes);
 
