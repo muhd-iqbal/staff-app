@@ -16,6 +16,7 @@ class DashboardController extends Controller
         'Senarai Order' => '/orders',
         'Tugasan Design' => '/to-do',
         'Print List' => '/print',
+        'Pelanggan' => '/customers',
     ];
     protected $links_admin = [
         // 'Permohonan Cuti' => '/leaves/approval',
