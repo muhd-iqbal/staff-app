@@ -22,6 +22,19 @@
                                     </div>
                                 @endforeach
                             </div>
+                            @isset($links_admin)
+                                <div class="text-gray-700 text-lg mb-2 underline">Admin Sahaja</div>
+                                <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
+                                    @foreach ($links_admin as $title => $link)
+                                        <div onclick="window.location='{{ $link }}'"
+                                            class="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 cursor-pointer hover:bg-gray-100">
+                                            <div>
+                                                <p class="text-base font-normal text-gray-800">{{ $title }}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endisset
                         </section>
                     </div>
                 @else
@@ -30,5 +43,4 @@
             </div>
         </div>
     </div>
-
 </x-app-layout>

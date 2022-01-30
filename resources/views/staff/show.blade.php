@@ -23,13 +23,16 @@
                                 <form action="/staff/active/{{ $user->id }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <div class="inline-block w-2/3">
+                                    <div class="inline-block w-1/3">
                                             <x-form.select name="active" label="Status" >
                                             <option value="0" {{ $user->active==false ? "selected" : "" }}>Tidak Aktif</option>
                                             <option value="1" {{ $user->active==true ? "selected" : "" }}>Aktif</option>
                                         </x-form.select>
                                     </div>
-                                    <div class="inline-block">
+                                    <div class="inline-block w-1/3">
+                                        <x-form.input name="annual_leave" label="Cuti Tahunan" span="2" value="{{ $user->annual_leave }}" />
+                                    </div>
+                                    <div class="inline-block mt-2">
                                         <x-button>Kemaskini</x-button>
                                     </div>
                                 </form>

@@ -10,7 +10,7 @@ class DashboardController extends Controller
         'Muat Naik Foto' => '/profile/upload',
         'Maklumat Peribadi' => '/profile',
         'Tukar Kata Laluan' => '/change-password',
-        // 'Perihal Cuti' => '/leaves',
+        'Perihal Cuti' => '/leaves',
         'Tugasan Semasa' => '/view-designer',
         'Perihal Staf' => '/staff',
         'Senarai Order' => '/orders',
@@ -19,28 +19,33 @@ class DashboardController extends Controller
         'Pelanggan' => '/customers',
     ];
     protected $links_admin = [
-        // 'Permohonan Cuti' => '/leaves/approval',
-        // 'Jenis Cuti' => '/top/leave-types',
+        'Permohonan Cuti' => '/leaves/approval',
+        'Jenis Cuti' => '/top/leave-types',
         'Daftar Staf' => '/register',
     ];
     protected $links_owner = [
-        // 'Permohonan Cuti (Top)' => '/top/leaves/approval',
-     ];
+        // 'Permohonan Cuti' => '/top/leaves/approval',
+    ];
 
     public function index()
     {
-        if(auth()->user()->isAdmin){
-            $links = array_merge($this->links, $this->links_admin);
-        }
-        elseif(auth()->user()->position_id==1){
-            $links = array_merge($this->links, $this->links_admin, $this->links_owner);
-        }
-        else{
-            $links = $this->links;
-        }
+        if (auth()->user()->isAdmin) {
+            return view('dashboard', [
+                'links' => $this->links,
+                'links_admin' => $this->links_admin,
+            ]);
 
-        return view('dashboard', [
-            'links' => $links,
-        ]);
+        } elseif (auth()->user()->position_id == 1) {
+
+            return view('dashboard', [
+                'links' => $this->links,
+                'links_admin' => $this->links_admin,
+                'links_owner' => $this->links_owner,
+            ]);
+        } else {
+            return view('dashboard', [
+                'links' => $this->links,
+            ]);
+        }
     }
 }

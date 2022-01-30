@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::patch('/staff/active/{user}', [StaffController::class, 'update']);
 
     Route::get('/leaves/approval', [LeaveController::class, 'show']);
+    Route::get('/leaves/list', [LeaveController::class, 'list']);
     Route::patch('/leaves/approval/{leave}', [LeaveController::class, 'update']);
     Route::delete('/leaves/approval/{leave}', [LeaveController::class, 'delete']);
 

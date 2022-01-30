@@ -27,7 +27,8 @@ class StaffController extends Controller
     public function update(User $user)
     {
         $attributes = request()->validate([
-            'active' => 'required|boolean'
+            'active' => 'required|boolean',
+            'annual_leave' => 'required|numeric|min:0',
         ]);
 
         $user->update($attributes);

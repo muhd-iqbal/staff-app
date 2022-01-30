@@ -9,9 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
                 <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-10">
-                    @foreach ($leaves as $leave)
-                        <x-leave-card :leave="$leave" />
-                    @endforeach
+                    @if (count($leaves))
+                        @foreach ($leaves as $leave)
+                            <x-leave-card :leave="$leave" />
+                        @endforeach
+                    @else
+                        Tiada Permohonan Cuti.
+                    @endif
                 </div>
             </section>
         </div>

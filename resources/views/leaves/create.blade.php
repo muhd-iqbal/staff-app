@@ -25,7 +25,7 @@
 
                                     <x-form.select name="leave_type_id" label="Jenis Cuti" span="2">
                                         @foreach ($leave_types as $type)
-                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                            <option value="{{ $type->id }}" {{ old('leave_type_id')==$type->id? "selected":"" }}>{{ $type->name }}</option>
                                         @endforeach
                                     </x-form.select>
 

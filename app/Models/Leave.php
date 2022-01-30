@@ -13,13 +13,8 @@ class Leave extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
-    /**
-     * Get the leave_type that owns the Leave
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function leave_type()
     {
         return $this->belongsTo(LeaveType::class);
