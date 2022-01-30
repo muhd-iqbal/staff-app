@@ -28,7 +28,7 @@
                                 <div>
                                     <h2 class="text-gray-500 font-bold md:text-xl text-lg">
                                         {{ ucwords($order->method) }}
-                                        ({{ ucwords($order->location) }})</h2>
+                                        ({{ ucwords($order->branch->shortname) }})</h2>
                                 </div>
                             </div>
 

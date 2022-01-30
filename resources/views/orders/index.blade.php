@@ -61,11 +61,9 @@
                                                     </th>
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        @if ($order->location == 'gurun')
-                                                            <div class="w-5 h-5 bg-purple-600 mr-2 rounded-full"></div>
-                                                        @elseif ($order->location == 'guar')
-                                                            <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
-                                                        @endif
+                                                        <div id="branch-label"
+                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-600">
+                                                        </div>
                                                         {{ $order->customer->name }}
                                                         <div id="urgent-{{ $order->id }}"
                                                             class="ml-2 items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
@@ -165,8 +163,10 @@
                                                         @endunless
                                                     </td>
                                                 </tr>
-                                                @if ($urgent>0)
-                                                    <script>document.getElementById("urgent-{{$order->id}}").style.display='block';</script>
+                                                @if ($urgent > 0)
+                                                    <script>
+                                                        document.getElementById("urgent-{{ $order->id }}").style.display = 'block';
+                                                    </script>
                                                 @endif
                                             @endforeach
                                         </tbody>
@@ -177,18 +177,15 @@
                         </div>
                         <div class="m-5 grid md:grid-cols-2">
                             <div>
-                                <div onclick="window.location='/orders/location/gurun'"
-                                    class="inline-flex items-center bg-white leading-none text-purple-600 rounded-full p-2 shadow text-sm cursor-pointer">
-                                    <span
-                                        class="inline-flex bg-purple-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
-                                    <span class="inline-flex px-2">Gurun</span>
-                                </div>
-                                <div onclick="window.location='/orders/location/guar'"
-                                    class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-sm cursor-pointer">
-                                    <span
-                                        class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
-                                    <span class="inline-flex px-2">Guar</span>
-                                </div>
+                                @foreach ($branches as $branch)
+
+                                    <div onclick="window.location='/orders/location/{{ $branch->id }}'"
+                                        class="inline-flex items-center bg-white leading-none text-{{ $branch->color_code }}-600 rounded-full p-2 shadow text-sm cursor-pointer">
+                                        <span
+                                            class="inline-flex bg-{{ $branch->color_code }}-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
+                                        <span class="inline-flex px-2">{{ ucwords($branch->shortname) }}</span>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="flex flex-col-reverse md:flex-row-reverse mt-5 gap-3">
                                 <div onclick="window.location='/orders/item/status/is_done'"
