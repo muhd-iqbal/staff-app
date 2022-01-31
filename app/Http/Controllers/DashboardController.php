@@ -20,6 +20,7 @@ class DashboardController extends Controller
     ];
     protected $links_admin = [
         'Permohonan Cuti' => '/leaves/approval',
+        'Senarai Cuti' => '/leaves/list',
         'Jenis Cuti' => '/top/leave-types',
         'Daftar Staf' => '/register',
     ];

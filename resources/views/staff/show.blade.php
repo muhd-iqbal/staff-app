@@ -14,7 +14,7 @@
                         <div class="md:grid md:grid-cols-2 md:gap-6">
                           <div class="md:col-span-1">
                             <div class="px-4 sm:px-0">
-                              <h1 class="font-bold text-lg font-medium leading-6 text-gray-900">Lihat / Ubah Maklumat Staf</h1>
+                              <h1 class="font-bold text-lg leading-6 text-gray-900">Lihat / Ubah Maklumat Staf</h1>
                               <p class="mt-1 text-sm text-gray-600">
                                 Elakkan penggunaan simbol
                               </p>
