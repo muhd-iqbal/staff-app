@@ -9,6 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <section class="container mx-auto p-6 font-mono">
+                    @foreach ($leaves as $approval)
+                        @if ($approval->hr_approval == 0)
+                            <a href="/leaves/approval" class="p-2 bg-red-500 text-white rounded-md m-5">Permohonan
+                                Baru!</a>
+                        @break
+                    @endif
+                    @endforeach
                     <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                         <div class="w-full overflow-x-auto">
                             <table class="w-full">
@@ -75,6 +82,8 @@
                         </div>
                     </div>
                     {{ $leaves->links() }}
+                    <a href="/top/leave-types" class="bg-green-500 p-2 px-4 rounded-md text-white">Jenis Cuti</a>
+                    <x-dashboard-link />
                 </section>
             </div>
         </div>

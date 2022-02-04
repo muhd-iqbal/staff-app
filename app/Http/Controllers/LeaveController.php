@@ -20,7 +20,7 @@ class LeaveController extends Controller
         $user = auth()->id();
         return view('leaves.index', [
             'user' => User::find($user),
-            'leaves' => Leave::where('user_id', $user)->orderBy('created_at', 'desc')->paginate(10),
+            'leaves' => Leave::where('user_id', $user)->orderBy('created_at', 'desc')->paginate(20),
             'leaves_cnt' => Leave::where('user_id', $user)->where('active', 1)->where('leave_type_id', 1)->whereYear('start', date("Y"))->sum('day'),
         ]);
     }
@@ -47,11 +47,21 @@ class LeaveController extends Controller
             'start' => 'required|date',
             'return' => 'required|date|after_or_equal:start',
             'leave_type_id' => 'required|exists:leave_types,id',
-            'day' => 'required|numeric|min:0.5|max:' . $max_leave,
             'time' => ['required', Rule::in(array_keys($this->time))],
             'attachment' => request('leave_type_id') != 3 ? ['image'] : ['required', 'image'],
         ]);
+        if ($attributes['leave_type_id']==1) {
+           request()->validate([
+                'day' => 'required|numeric|min:0.5|max:' . $max_leave,
+            ]);
+        }else{
+            request()->validate([
+                'day' => 'required|numeric|min:0.5',
+            ]);
+        }
+        $attributes['day'] = request('day');
 
+        //check if leave need approval
         $approval = LeaveType::find($attributes['leave_type_id']);
         $attributes['hr_approval'] = 1;
         $attributes['approved'] = 1;
@@ -110,7 +120,7 @@ class LeaveController extends Controller
     public function list()
     {
         return view('leaves.list', [
-            'leaves' => Leave::with(['user','leave_type'])->orderBy('start', 'desc')->paginate(20),
+            'leaves' => Leave::with(['user', 'leave_type'])->orderBy('start', 'desc')->paginate(20),
         ]);
     }
 }

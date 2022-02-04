@@ -18,6 +18,11 @@
                     @endif
                 </div>
             </section>
+            <div class="text-center">
+                <a href="/leaves/list" class="bg-blue-500 text-white p-2 px-4 rounded-md hover:bg-blue-700">Ke Senarai
+                    Cuti</a>
+                <x-dashboard-link />
+            </div>
         </div>
     </div>
     </div>

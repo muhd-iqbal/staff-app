@@ -29,8 +29,14 @@ class CustomerController extends Controller
 
     public function index()
     {
+        $customers = Customer::orderBy('name');
+
+        if (request('search')) {
+            $customers->where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('phone', 'like', '%' . request('search') . '%');
+        }
         return view('customers.index', [
-            'customers' => Customer::paginate(20),
+            'customers' => $customers->paginate(20),
         ]);
     }
 

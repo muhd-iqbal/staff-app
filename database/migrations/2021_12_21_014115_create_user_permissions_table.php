@@ -18,7 +18,7 @@ class CreateUserPermissionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('set_order_done')->default(0);
             $table->boolean('set_production_status')->default(0);
-            $table->boolean('assign_designer')->default(0);
+             $table->boolean('assign_designer')->default(0);
             $table->timestamps();
         });
     }
