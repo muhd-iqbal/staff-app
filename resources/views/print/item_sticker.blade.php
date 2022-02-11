@@ -38,20 +38,12 @@
 
 <body>
 
-<section>
-        @switch($item->order->location)
-            @case('gurun')
+    <section>
 
-                <div class="lebar-3 bg-purple-300">
-            @break
-            @case('guar')
-
-                <div class="lebar-3 bg-pink-300">
-            @break
-        @endswitch
-        <div class="font-bold text-lg">{{ $item->product }}</div>
-        <div>{{ $item->order->customer->name }}</div>
-        <div>{{ $item->size . ' (' . $item->quantity }} UNIT)</div>
+        <div class="lebar-3 bg-{{ $item->order->branch->color_code }}-300">
+            <div class="font-bold text-lg">{{ $item->product }}</div>
+            <div>{{ $item->order->customer->name }}</div>
+            <div>{{ $item->size . ' (' . $item->quantity }} UNIT)</div>
         </div>
     </section>
 </body>

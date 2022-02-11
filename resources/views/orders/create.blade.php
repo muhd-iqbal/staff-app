@@ -22,8 +22,8 @@
                                 </div>
 
                                 @if ($errors->any())
-                                    <div class="bg-red-500 mt-5 mx-7">
-                                        <ul>
+                                    <div class="mt-5 mx-7">
+                                        <ul class="text-red-600 list-disc">
                                             @foreach ($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
@@ -92,14 +92,14 @@
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Lokasi</label>
-                                        <select name="location"
+                                        <select name="branch_id"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                            <option value="gurun" {{ old('method') == 'gurun' ? 'selected' : '' }}>
-                                                Gurun
-                                            </option>
-                                            <option value="guar" {{ old('method') == 'guar' ? 'selected' : '' }}>
-                                                Guar
-                                            </option>
+                                            @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}"
+                                                    {{ old('branch_id') == $branch->id ? 'selected' : '' }}>
+                                                    {{ ucwords($branch->shortname) }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

@@ -59,14 +59,15 @@
 
                 <tbody>
                     @if (count($print))
+                    @foreach ($branches as $branch)
                     <tr>
                         <td colspan="5"
                             class="bg-gray-50 border border-solid border-black align-middle text-center text-sm whitespace-nowrap">
-                            GURUN
+                            {{ strtoupper($branch->shortname) }}
                         </td>
                     </tr>
                         @foreach ($print as $task)
-                            @if ($task->order->location == 'gurun')
+                            @if ($task->order->branch_id == $branch->id)
 
                                 <tr class="text-center {{ $task->is_urgent ? 'bg-red-500' : '' }} text-xs">
                                     <td class="border border-solid border-black align-middle whitespace-nowrap">
@@ -87,34 +88,7 @@
                                 </tr>
                             @endif
                         @endforeach
-                        <tr>
-                            <td colspan="5"
-                                class="bg-gray-50 border border-solid border-black align-middle text-center text-sm whitespace-nowrap">
-                                GUAR
-                            </td>
-                        </tr>
-                        @foreach ($print as $task)
-                            @if ($task->order->location == 'guar')
-
-                                <tr class="text-center {{ $task->is_urgent ? 'bg-red-500' : '' }} text-xs">
-                                    <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->order->customer->name }}
-                                    </td>
-                                    <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->product }}
-                                    </td>
-                                    <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->size }}
-                                    </td>
-                                    <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->quantity }}
-                                    </td>
-                                    <td class="border border-solid border-black align-middle whitespace-nowrap">
-                                        {{ $task->finishing }}
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
+                    @endforeach
 
                     @else
                         <tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -44,7 +45,8 @@ class OrderController extends Controller
         }
 
         return view('orders.index', [
-            'orders' => $orders->paginate(20),
+            'orders' => $orders->with('branch')->paginate(20),
+            'branches' => Branch::get(),
         ]);
     }
 
@@ -53,20 +55,22 @@ class OrderController extends Controller
         //for order which not picked up yet
         $orders = Order::where('isDone', '=', '1')->whereNull('pickup');
 
-        if(request('location')){
-            $orders->where('location', '=', request('location'));
+        if(request('branch')){
+            $orders->where('branch_id', request('branch'));
         }
         return view('orders.no_pickup', [
-             'orders' => $orders->paginate(20)
+             'orders' => $orders->with('branch')->paginate(20),
+             'branches' => Branch::get(),
         ]);
     }
 
-    public function index_location($location)
+    public function index_location($branch)
     {
-        $orders = Order::where('location', '=', $location)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
+        $orders = Order::where('branch_id', '=', $branch)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
         return view('orders.index', [
             'orders' => $orders->paginate(20),
+            'branches' => Branch::get(),
         ]);
     }
 
@@ -74,6 +78,7 @@ class OrderController extends Controller
     {
         return view('orders.create', [
             'products' => $this->products,
+            'branches' => Branch::get(),
             'customers' => Customer::orderBy('name')->get(),
         ]);
     }
@@ -85,7 +90,7 @@ class OrderController extends Controller
             'date' => 'required|date',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
-            'location' => ['required', Rule::in(['gurun', 'guar'])],
+            'branch_id' => 'required|exists:branches,id',
             // 'product' => 'required|array',
             // 'remarks' => 'required',
         ]);
@@ -133,6 +138,7 @@ class OrderController extends Controller
         return view('orders.edit', [
             'order' => $order,
             'customers' => Customer::select(['id', 'name', 'phone'])->get(),
+            'branches' => Branch::get(),
         ]);
     }
 
@@ -142,7 +148,7 @@ class OrderController extends Controller
             'customer_id' => 'required|numeric',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
-            'location' => ['required', Rule::in(['gurun', 'guar'])],
+            'branch_id' => 'required|exists:branches,id',
         ]);
 
         $order->update($attributes);
