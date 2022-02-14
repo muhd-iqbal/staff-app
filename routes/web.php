@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('/orders/item/{item}/printing', [ItemStatusController::class, 'update_printing']);
     Route::post('/orders/item/{item}/done', [ItemStatusController::class, 'update_done']);
     Route::get('/orders/item/status/{status}', [ItemStatusController::class, 'show_status']);
-    Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
+    // Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
 
     Route::get('/customers', [CustomerController::class, 'index']);
     Route::get('/customers/create', [CustomerController::class, 'create']);
@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/leaves/approval', [LeaveController::class, 'show']);
     Route::get('/leaves/list', [LeaveController::class, 'list']);
+    Route::delete('/leave/{leave}/delete', [LeaveController::class, 'destroy']);
     Route::patch('/leaves/approval/{leave}', [LeaveController::class, 'update']);
     Route::delete('/leaves/approval/{leave}', [LeaveController::class, 'delete']);
 

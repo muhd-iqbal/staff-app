@@ -55,13 +55,13 @@
                                             @php
                                                 //forgive me a bit sketchy
                                                 foreach ($branches as $branch):
-                                                    $branch[$branch->id] = 0;
+                                                    $bra[$branch->id] = 0;
                                                 endforeach;
                                             @endphp
                                             @foreach ($orders as $order)
                                                 @php
                                                     //again, sorry
-                                                    $branch[$order->branch_id]++;
+                                                    $bra[$order->branch_id]++;
                                                 @endphp
                                                 <tr onclick="window.location='/orders/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
@@ -97,7 +97,7 @@
                                 <div onclick="window.location='/orders/no-pickup?branch={{ $branch->id }}'"
                                     class="inline-flex items-center bg-white leading-none text-{{ $branch->color_code }}-600 rounded-full p-2 shadow text-sm cursor-pointer">
                                     <span
-                                        class="inline-flex bg-{{ $branch->color_code }}-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $branch[$branch->id] }}</span>
+                                        class="inline-flex bg-{{ $branch->color_code }}-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $bra[$branch->id] }}</span>
                                     <span class="inline-flex px-2">{{ ucwords($branch->shortname) }}</span>
                                 </div>
                             @endforeach

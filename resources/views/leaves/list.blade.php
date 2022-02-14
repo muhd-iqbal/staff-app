@@ -26,7 +26,7 @@
                                         <th class="px-4 py-3">Staf</th>
                                         <th class="px-4 py-3">Jenis</th>
                                         <th class="px-4 py-3">Status</th>
-                                        <th class="px-4 py-3">Foto</th>
+                                        <th class="px-4 py-3">Foto / Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -73,6 +73,15 @@
                                                         target="_blank"><img
                                                             src="{{ asset('img/has-attachment.svg') }}"
                                                             class="h-7"></a>
+                                                @endif
+                                                @if (auth()->user()->isAdmin)
+                                                    <form action="/leave/{{ $leave->id }}/delete" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button
+                                                            class="bg-blue-500 p-1 text-white rounded-md hover:bg-blue-700"
+                                                            onclick="return confirm('Padam permohonan cuti ')">Padam</button>
+                                                    </form>
                                                 @endif
                                             </td>
                                         </tr>

@@ -12,7 +12,7 @@
                     <div class="p-6 bg-white border-b border-gray-200">
                         <!-- component -->
                         <section class="container px-6 py-4 mx-auto">
-                            <div class="text-gray-700 text-lg mb-2 underline">Order</div>
+                            <div class="text-gray-700 text-lg mb-2 underline cursor-pointer">Order</div>
                             <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                                 @foreach ($links_order as $title => $link)
                                     <div onclick="window.location='{{ $link }}'"
@@ -23,7 +23,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="text-gray-700 text-lg mb-2 underline">Maklumat Akaun</div>
+                            <div class="text-gray-700 text-lg mb-2 underline cursor-pointer">Maklumat Akaun</div>
                             <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                                 @foreach ($links_acc as $title => $link)
                                     <div onclick="window.location='{{ $link }}'"
@@ -35,7 +35,7 @@
                                 @endforeach
                             </div>
                             @isset($links_admin)
-                                <div class="text-gray-700 text-lg mb-2 underline">Admin Sahaja</div>
+                                <div class="text-gray-700 text-lg mb-2 underline cursor-pointer">Admin Sahaja</div>
                                 <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                                     @foreach ($links_admin as $title => $link)
                                         <div onclick="window.location='{{ $link }}'"
@@ -47,7 +47,7 @@
                                     @endforeach
                                 </div>
                             @endisset
-                            <div class="text-gray-700 text-lg mb-2 underline">Lain-lain</div>
+                            <div class="text-gray-700 text-lg mb-2 underline cursor-pointer">Lain-lain</div>
                             <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                                 @foreach ($links_staff as $title => $link)
                                     <div onclick="window.location='{{ $link }}'"

@@ -59,7 +59,7 @@ class OrderController extends Controller
             $orders->where('branch_id', request('branch'));
         }
         return view('orders.no_pickup', [
-             'orders' => $orders->with('branch')->paginate(20),
+             'orders' => $orders->with(['branch', 'customer'])->paginate(20),
              'branches' => Branch::get(),
         ]);
     }

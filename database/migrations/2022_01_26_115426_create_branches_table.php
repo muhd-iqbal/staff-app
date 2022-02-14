@@ -63,10 +63,20 @@ class CreateBranchesTable extends Migration
             $table->unsignedBigInteger('branch_id')->after('location')->default(1);
             $table->foreign('branch_id')->references('id')->on('branches');
         });
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->unsignedBigInteger('branch_id')->after('location')->nullable();
+            $table->foreign('branch_id')->references('id')->on('branches');
+        });
 
+        // DB::table('orders')->where('location', '=', 'gurun')->update(['branch_id' => 1]);
         DB::table('orders')->where('location', '=', 'guar')->update(['branch_id' => 2]);
+        DB::table('order_items')->where('location', '=', 'gurun')->update(['branch_id' => 1]);
+        DB::table('order_items')->where('location', '=', 'guar')->update(['branch_id' => 2]);
 
         Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('location');
+        });
+        Schema::table('order_items', function (Blueprint $table) {
             $table->dropColumn('location');
         });
     }
@@ -81,12 +91,21 @@ class CreateBranchesTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->string('location')->after('method');
         });
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->string('location')->after('is_approved_time');
+        });
 
         DB::table('orders')->where(['branch_id' => 1])->update(['location' => 'gurun']);
-
         DB::table('orders')->where(['branch_id' => 2])->update(['location' => 'guar']);
 
+        DB::table('order_items')->where(['branch_id' => 1])->update(['location' => 'gurun']);
+        DB::table('order_items')->where(['branch_id' => 2])->update(['location' => 'guar']);
+
         Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['branch_id']);
+            $table->dropColumn('branch_id');
+        });
+        Schema::table('order_items', function (Blueprint $table) {
             $table->dropForeign(['branch_id']);
             $table->dropColumn('branch_id');
         });
