@@ -58,4 +58,11 @@ class DashboardController extends Controller
             ]);
         }
     }
+
+    public function index_admin()
+    {
+        return view('dashboard', [
+            'links_admin' => $this->links_admin
+        ]);
+    }
 }

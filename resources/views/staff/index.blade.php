@@ -38,7 +38,7 @@
                                     </div>
                                   </td>
                                   @if (auth()->user()->isAdmin)
-                                  <td class="px-4 py-3 text-ms font-semibold border">{{ \App\Http\Controllers\Controller::phone_format($user->phone) }}</td>
+                                  <td class="px-4 py-3 text-ms font-semibold border">{{ phone_format($user->phone) }}</td>
                                   @endif
                                   <td class="px-4 py-3 text-xs border text-center">
                                       @if($user->active)

@@ -23,6 +23,10 @@
                                             <x-form.input name="phone" label="No Telefon"
                                                 value="{{ old('phone') }}" />
                                         </div>
+                                        <div class="col-span-3">
+                                            <x-form.input name="organisation" label="Syarikat / Organisasi / Sekolah"
+                                                value="{{ old('organisation') }}" />
+                                        </div>
                                         <div class="col-span-1">
                                             <x-form.input type="email" name="email" label="Alamat Emel"
                                                 value="{{ old('email') }}" />

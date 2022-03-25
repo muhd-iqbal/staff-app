@@ -70,7 +70,7 @@
                                                     </td>
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        {{ \App\Http\Controllers\Controller::order_num($order->id) }}
+                                                        {{ order_num($order->id) }}
                                                     </th>
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">

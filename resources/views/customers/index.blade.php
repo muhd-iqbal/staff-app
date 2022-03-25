@@ -53,8 +53,10 @@
                                                     {{ $customer->phone }}
                                                 </td>
                                                 <td class="text-center border">
+                                                    <a href="/customer/{{ $customer->id }}"
+                                                        class="text-md px-4 py-1 rounded-md bg-blue-500 text-indigo-50 font-semibold cursor-pointer">{{ __('Lihat') }}</a>
                                                     <a href="/customer/{{ $customer->id }}/edit"
-                                                        class="text-md px-6 py-2 rounded-md bg-blue-500 text-indigo-50 font-semibold cursor-pointer">{{ __('Edit') }}</a>
+                                                        class="text-md px-4 py-1 rounded-md bg-yellow-600 text-indigo-50 font-semibold cursor-pointer">{{ __('Edit') }}</a>
                                                 </td>
                                             </tr>
                                         @endforeach

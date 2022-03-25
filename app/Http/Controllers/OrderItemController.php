@@ -38,9 +38,12 @@ class OrderItemController extends Controller
             $attributes['is_urgent'] = 1;
         }
         $attributes['price'] = $attributes['price'] * 100; //for database precision
+        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
         $attributes['order_id'] = $order;
 
         OrderItem::create($attributes);
+        DB::table('orders')->where('id', $attributes['order_id'])->increment('total', $attributes['total']);
+        order_adjustment($attributes['order_id']);
 
         return redirect('/orders/view/' . $order)->with('success', 'Item ditambah.');
     }
@@ -190,8 +193,9 @@ class OrderItemController extends Controller
         }
 
         $attributes['price'] = $attributes['price'] * 100; //for database precision
-
+        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
         $item->update($attributes);
+        order_adjustment($item->order_id);
 
         return redirect('/orders/item/' . $item->id)->with('success', 'Item Dikemaskini.');
     }
@@ -201,7 +205,11 @@ class OrderItemController extends Controller
         try {
             DB::table('order_pictures')->where('order_item_id', '=', $item->id)->delete();
 
+            DB::table('orders')->where('id', $item->order_id)->decrement('total', $item->total);
+
             $item->delete();
+
+            order_adjustment($item->order_id);
 
             return redirect('/orders/view/' . $item->order_id)->with('success', 'Item berjaya padam.');
         } catch (\Exception $e) {
