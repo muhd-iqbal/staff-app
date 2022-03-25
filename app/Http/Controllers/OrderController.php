@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -30,9 +31,11 @@ class OrderController extends Controller
             if (substr(strtoupper(request('search')), 0, 1) === env('ORDER_PREFIX')) {
                 return redirect('/orders/view/' . (int)substr(request('search'), 1));
             }
-        } else if(request('search')){
+        } else if (request('search')) {
             $orders = Order::whereHas('customer', function ($query) {
-                $query->where('name', 'like', '%' . request('search') . '%')->orWhere('phone', 'like', '%' . request('search') . '%');
+                $query->where('name', 'like', '%' . request('search') . '%')
+                    ->orWhere('phone', 'like', '%' . request('search') . '%')
+                    ->orWhere('organisation', 'like', '%' . request('search') . '%');
             });
         }
 
@@ -40,11 +43,26 @@ class OrderController extends Controller
 
             $orders = Order::whereHas('order_item', function ($query) {
                 $query->where('product', 'like', '%' . request('search') . '%');
-            });
+            })->orderBy('created_at', 'DESC');
+        }
+
+        if (request('payment')) {
+            switch (request('payment')) {
+                case 'unpaid':
+                    $orders->where('date', '>=', env('POS_START'))->whereColumn('due', '=', 'grand_total');
+                    break;
+                case 'partial':
+                    $orders->where('date', '>=', env('POS_START'))->where('paid', '>', 0)->whereColumn('paid', '<', 'grand_total');
+                    break;
+                default:
+                    $orders->where('date', '>=', env('POS_START'))->whereColumn('paid', '=', 'grand_total')->where('paid', '>', 0);
+                    break;
+            }
         }
 
         return view('orders.index', [
-            'orders' => $orders->paginate(20),
+            'orders' => $orders->with('branch')->paginate(20),
+            'branches' => Branch::get(),
         ]);
     }
 
@@ -53,20 +71,22 @@ class OrderController extends Controller
         //for order which not picked up yet
         $orders = Order::where('isDone', '=', '1')->whereNull('pickup');
 
-        if(request('location')){
-            $orders->where('location', '=', request('location'));
+        if (request('branch')) {
+            $orders->where('branch_id', request('branch'));
         }
         return view('orders.no_pickup', [
-             'orders' => $orders->paginate(20)
+            'orders' => $orders->with(['branch', 'customer'])->paginate(20),
+            'branches' => Branch::get(),
         ]);
     }
 
-    public function index_location($location)
+    public function index_location($branch)
     {
-        $orders = Order::where('location', '=', $location)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
+        $orders = Order::where('branch_id', '=', $branch)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
         return view('orders.index', [
             'orders' => $orders->paginate(20),
+            'branches' => Branch::get(),
         ]);
     }
 
@@ -74,6 +94,7 @@ class OrderController extends Controller
     {
         return view('orders.create', [
             'products' => $this->products,
+            'branches' => Branch::get(),
             'customers' => Customer::orderBy('name')->get(),
         ]);
     }
@@ -85,7 +106,7 @@ class OrderController extends Controller
             'date' => 'required|date',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
-            'location' => ['required', Rule::in(['gurun', 'guar'])],
+            'branch_id' => 'required|exists:branches,id',
             // 'product' => 'required|array',
             // 'remarks' => 'required',
         ]);
@@ -133,6 +154,7 @@ class OrderController extends Controller
         return view('orders.edit', [
             'order' => $order,
             'customers' => Customer::select(['id', 'name', 'phone'])->get(),
+            'branches' => Branch::get(),
         ]);
     }
 
@@ -142,7 +164,7 @@ class OrderController extends Controller
             'customer_id' => 'required|numeric',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
-            'location' => ['required', Rule::in(['gurun', 'guar'])],
+            'branch_id' => 'required|exists:branches,id',
         ]);
 
         $order->update($attributes);
@@ -170,18 +192,42 @@ class OrderController extends Controller
     public function update_pickup(Order $order)
     {
         request()->validate([
-            'pickup_type' => [Rule::in(['Gurun','Guar','Kurier'])],
+            'pickup_type' => [Rule::in(['Gurun', 'Guar', 'Kurier'])],
         ]);
 
         $attributes['pickup'] = request('pickup_type');
         $attributes['pickup_time'] = now();
 
-        if(request('pickup') != ""){
+        if (request('pickup') != "") {
             $attributes['pickup'] .= '-' . request('pickup');
         }
 
         $order->update($attributes);
 
         return redirect('/orders/view/' . $order->id)->with('success', 'Order dikemaskini.');
+    }
+
+    public function print(Order $order)
+    {
+        // return $order;
+        return view('orders.print', [
+            'order' => $order,
+            'payment_method' => $this->payment_method,
+        ]);
+    }
+
+    public function update_additional(Order $order)
+    {
+        $attributes = request()->validate([
+            'shipping' => 'required|numeric',
+            'discount' => 'required|numeric',
+        ]);
+        $attributes['shipping'] = $attributes['shipping'] * 100;
+        $attributes['discount'] = $attributes['discount'] * 100;
+
+        $order->update($attributes);
+        order_adjustment($order->id);
+
+        return back()->with('success', 'Info tambahan dikemaskini.');
     }
 }

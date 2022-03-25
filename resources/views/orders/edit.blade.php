@@ -73,15 +73,14 @@
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Lokasi</label>
-                                        <select name="location"
+                                        <select name="branch_id"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                            <option value="gurun"
-                                                {{ $order->location == 'gurun' ? 'selected' : '' }}>
-                                                Gurun
+                                            @foreach ($branches as $branch)
+                                            <option value="{{ $branch->id }}"
+                                                {{ $order->branch_id == $branch->id ? 'selected' : '' }}>
+                                                {{ ucwords($branch->shortname) }}
                                             </option>
-                                            <option value="guar" {{ $order->location == 'guar' ? 'selected' : '' }}>
-                                                Guar
-                                            </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

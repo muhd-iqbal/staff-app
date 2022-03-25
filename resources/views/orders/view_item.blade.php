@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Item Pesanan') . ': ' . \App\Http\Controllers\Controller::order_num($item->order_id) }}
+            {{ __('Item Pesanan') . ': ' . order_num($item->order_id) }}
         </h2>
     </x-slot>
     <x-modalbox action='/orders/item/{{ $item->id }}/delete' text='Padam item? Item akan dihapus dari rekod.' />
@@ -67,7 +67,7 @@
                                     <div class="md:text-right">{{ __('Saiz: ') . $item->size }}</div>
                                     <div class="md:text-right">{{ __('Kuantiti: ') . $item->quantity }}</div>
                                     <div class="md:text-right">
-                                        {{ __('Harga: RM') . number_format($item->price / 100, 2) }}</div>
+                                        {{ __('Harga: RM') . RM($item->price) }}</div>
                                     <div class="md:text-right">{{ $item->finishing }}</div>
                                     <div class="justify-self-end">
                                         @php

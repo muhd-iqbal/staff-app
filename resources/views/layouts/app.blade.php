@@ -55,6 +55,7 @@
             }, 2500);
         </script>
     @endif
+    <script src="https://kit.fontawesome.com/69c637cb03.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

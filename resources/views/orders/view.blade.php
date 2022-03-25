@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Senarai Order') }}
+            {{ order_num($order->id) }}
         </h2>
     </x-slot>
     <x-modalbox action='/orders/{{ $order->id }}/delete'
@@ -9,8 +9,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-
+                <div
+                    class="p-6 border-t-4
+                    @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
+                    ">
                     <!-- start component -->
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
@@ -21,14 +23,14 @@
                             <div class="flex flex-col items-center">
                                 <div class="flex">
                                     <h1 class="text-gray-600 font-bold md:text-2xl text-xl">{{ __('Pesanan:') }}
-                                        {{ \App\Http\Controllers\Controller::order_num($order->id) }}</h1>
+                                        {{ order_num($order->id) }}</h1>
                                     <a href="{{ 'https://wa.me/6' . $order->customer->phone }}">
                                         <img src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg" width="30"></a>
                                 </div>
                                 <div>
                                     <h2 class="text-gray-500 font-bold md:text-xl text-lg">
                                         {{ ucwords($order->method) }}
-                                        ({{ ucwords($order->location) }})</h2>
+                                        ({{ ucwords($order->branch->shortname) }})</h2>
                                 </div>
                             </div>
 
@@ -36,6 +38,8 @@
                                 <div class="mt-5 mx-7">
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         {{ __('Nama Pelanggan: ') . $order->customer->name }}
+                                        <a href="/customer/{{ $order->customer_id }}/edit?back=/orders/view/{{ $order->id }}"
+                                            class="lowercase bg-gray-600 text-white px-1 rounded hover:text-gray-200">edit</a>
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         {{ __('No Telefon: ') . $order->customer->phone }}
@@ -53,7 +57,7 @@
                                     @if ($order->pickup)
                                         <div
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                            {{ __('Pickup: ') . $order->pickup .' ('. date('d/m/Y', strtotime($order->pickup_time)).')' }}
+                                            {{ __('Pickup: ') . $order->pickup . ' (' . date('d/m/Y', strtotime($order->pickup_time)) . ')' }}
                                         </div>
                                     @endif
                                 </div>
@@ -80,7 +84,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class='grid grid-rows md:grid-cols-4 gap-5 items-center justify-center p-5 pb-5'>
+                            <div class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
                                 {{-- @if (!$order->isDone) --}}
                                 <a href="/orders/{{ $order->id }}/add-item"
                                     class='w-auto text-center bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
@@ -91,9 +95,16 @@
                                     class='w-auto text-center bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit Order') }}
                                 </a>
-                                <a href="/orders/view/{{ $order->id }}/pickup" @if ($order->pickup)
-                                    onclick = "return confirm('Pickup sudah direkod!\nKemaskini semula?')"
-                                    @endif
+                                <a href="/orders/{{ $order->id }}/invoice"
+                                    class='w-auto text-center bg-purple-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    {{ __('Invois') }}
+                                </a>
+                                <a href="/orders/{{ $order->id }}/payments"
+                                    class='w-auto text-center bg-pink-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                    {{ __('Bayaran') }}
+                                </a>
+                                <a href="/orders/view/{{ $order->id }}/pickup"
+                                    @if ($order->pickup) onclick = "return confirm('Pickup sudah direkod!\nKemaskini semula?')" @endif
                                     class='w-auto text-center bg-blue-500 hover:bg-gray-700 rounded-lg shadow-xl
                                     font-medium text-white px-4 py-2'>
                                     {{ __('Pickup') }}
@@ -101,7 +112,7 @@
                                 {{-- @endif --}}
                                 <a href="/orders"
                                     class='w-auto text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                    {{ __('Kembali ke senarai pesanan') }}
+                                    {{ __('Kembali') }}
                                 </a>
                             </div>
                         </div>
@@ -124,7 +135,7 @@
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Kuantiti') }}
+                                                    {{ __('KTT X Harga') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -155,10 +166,10 @@
                                                         {{ $list->size }}</td>
                                                     <td
                                                         class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
-                                                        {{ $list->quantity }}</td>
+                                                        {{ $list->quantity . ' X ' . RM($list->price) }}</td>
                                                     <td class="flex py-4 justify-center">
                                                         @if ($list->user)
-                                                            <img class="h-10 w-10 rounded-full"
+                                                            <img class="h-8 w-8 rounded-full"
                                                                 src="{{ asset('storage/' . $list->user->photo) }}"
                                                                 title="{{ $list->user->name }}" />
                                                         @endif
@@ -190,8 +201,57 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mt-3 border border-gray-200 rounded-lg shadow-lg p-4 bg-white">
+                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                        <div>Tambahan: <span
+                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700"
+                                onclick="toggleModalShipping()">edit</span></div>
+                        <div>Penghantaran: RM{{ RM($order->shipping) }}</div>
+                        <div>Diskaun: RM{{ RM($order->discount) }}</div>
+                        <div>Jumlah: RM{{ RM($order->grand_total) }}</div>
+                    </div>
+
+                    <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="modal-shipping">
+                        <div
+                            class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="fixed inset-0 transition-opacity">
+                                <div class="absolute inset-0 bg-gray-900 opacity-75" />
+                            </div>
+                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                            <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                                <form action="/orders/{{ $order->id }}/additional" method="POST">
+                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label>Caj Penghantaran</label>
+                                        <input type="number" step="0.01" class="w-full bg-gray-100 p-2 mt-2 mb-3"
+                                            name="shipping" value="{{ RM($order->shipping) }}" />
+                                        <label>Jumlah Diskaun</label>
+                                        <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3" name="discount"
+                                            value="{{ RM($order->discount) }}" />
+                                    </div>
+                                    <div class="bg-gray-200 px-4 py-3 text-right">
+                                        <button type="button"
+                                            class="py-2 px-4 bg-red-600 text-white rounded hover:bg-gray-700 mr-2"
+                                            onclick="toggleModalShipping()"> Batal</button>
+                                        <button type="submit"
+                                            class="py-2 px-4 bg-green-500 text-white rounded hover:bg-blue-700 mr-2"
+                                            @if ($order->paid == $order->grand_total) onclick="return confirm('Pesanan telah dibayar sepenuhnya! Teruskan?  ')" @endif>
+                                            Kemaskini</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function toggleModalShipping() {
+            document.getElementById('modal-shipping').classList.toggle('hidden')
+        }
+    </script>
 </x-app-layout>

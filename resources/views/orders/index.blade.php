@@ -4,7 +4,9 @@
             {{ __('Senarai Pesanan') }}
         </h2>
     </x-slot>
+    <style>
 
+    </style>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -21,8 +23,9 @@
                             <div class="text-right">
                                 <form action="/orders">
                                     <input type="text" name="search" placeholder="Carian..."
-                                        class="items-center mx-5 rounded-lg shadow-xl font-medium px-4 py-2"
+                                        class="items-center mx-1 rounded-lg shadow-xl font-medium px-4 py-2"
                                         value="{{ request('search') }}">
+                                        <a href="/orders" class="text-2xl" title="Tunjuk semua">&#8635;</a>
                                 </form>
                             </div>
                         </div>
@@ -34,7 +37,7 @@
                                         <thead>
                                             <tr>
                                                 <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                                     {{ __('No') }}
                                                 </th>
                                                 <th
@@ -46,9 +49,13 @@
                                                     {{ __('Tarikh') }}
                                                 </th> --}}
                                                 <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                     {{ __('Status') }}
                                                 </th>
+                                                {{-- <th
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                    {{ __('Pembayaran') }}
+                                                </th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,27 +64,34 @@
                                                     class="hover:bg-gray-100 cursor-pointer">
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        {{ \App\Http\Controllers\Controller::order_num($order->id) }}
+
+                                                        {{-- <div class="w-3 overflow-hidden inline-block"> --}}
+                                                        @if ($order->date >= env('POS_START'))
+                                                            <div
+                                                                class="w-3 h-3 inline-block
+                                                            @if ($order->due == $order->grand_total) bg-red-600
+                                                            @elseif ($order->due > 0) bg-yellow-500
+                                                            @else bg-green-600 @endif
+                                                            ">
+                                                            </div>
+                                                        @endif
+                                                        {{-- </div> --}}
+                                                        {{ order_num($order->id) }}
                                                     </th>
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        @if ($order->location == 'gurun')
-                                                            <div class="w-5 h-5 bg-purple-600 mr-2 rounded-full"></div>
-                                                        @elseif ($order->location == 'guar')
-                                                            <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
-                                                        @endif
+                                                        <div id="branch-label"
+                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-600">
+                                                        </div>
                                                         {{ $order->customer->name }}
                                                         <div id="urgent-{{ $order->id }}"
                                                             class="ml-2 items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
                                                             <span class="inline-flex px-1">{{ __('URGENT') }}</span>
                                                         </div>
                                                     </td>
-                                                    {{-- <td
-                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        {{ date('D d/m/Y', strtotime($order->date)) }}
-                                                    </td> --}}
                                                     <td
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+
                                                         @php
                                                             $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
                                                             $count = count($order->order_item);
@@ -85,7 +99,6 @@
                                                         @endphp
 
                                                         @foreach ($order->order_item as $item)
-
                                                             @php
                                                                 if ($item->is_done) {
                                                                     $is_done++;
@@ -107,52 +120,51 @@
                                                         @endforeach
 
                                                         @unless($count == 0)
-
                                                             @php $status = $status/$count @endphp
 
                                                             @if ($is_pending)
                                                                 <div
                                                                     class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    {{-- <span
+                                                                        class="inline-flex px-1">{{ __('Pending') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex px-1">{{ __('Pending') }}</span>
-                                                                    <span
-                                                                        class="inline-flex bg-white text-red-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_pending }}</span>
+                                                                        class="inline-flex bg-red-600 text-white rounded-full h-4 px-2 justify-center items-center text-base">{{ $is_pending }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_design)
                                                                 <div
                                                                     class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    {{-- <span
+                                                                        class="inline-flex px-1">{{ __('Design') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex px-1">{{ __('Design') }}</span>
-                                                                    <span
-                                                                        class="inline-flex bg-white text-yellow-300 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_design }}</span>
+                                                                        class="inline-flex text-white bg-yellow-400 rounded-full h-4 px-2 justify-center items-center text-base">{{ $is_design }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_approved)
                                                                 <div
                                                                     class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    {{-- <span
+                                                                        class="inline-flex px-1">{{ __('Production') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex px-1">{{ __('Production') }}</span>
-                                                                    <span
-                                                                        class="inline-flex bg-white text-yellow-700 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_approved }}</span>
+                                                                        class="inline-flex text-white bg-yellow-700 rounded-full h-4 px-2 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_printing)
                                                                 <div
                                                                     class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    {{-- <span
+                                                                        class="inline-flex px-1">{{ __('Finishing') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex px-1">{{ __('Finishing') }}</span>
-                                                                    <span
-                                                                        class="inline-flex bg-white text-purple-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_printing }}</span>
+                                                                        class="inline-flex text-white bg-purple-600 rounded-full h-4 px-2 justify-center items-center text-base">{{ $is_printing }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_done)
                                                                 <div
                                                                     class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    {{-- <span
+                                                                        class="inline-flex px-1">{{ __('Selesai') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex px-1">{{ __('Selesai') }}</span>
-                                                                    <span
-                                                                        class="inline-flex bg-white text-green-600 rounded-full h-4 px-2 justify-center items-center text- font-bold">{{ $is_done }}</span>
+                                                                        class="inline-flex text-white bg-green-600 rounded-full h-4 px-2 justify-center items-center text-base font-bold">{{ $is_done }}</span>
                                                                 </div>
                                                             @endif
                                                         @else
@@ -161,12 +173,20 @@
                                                                 <span
                                                                     class="inline-flex px-1">{{ __('Tiada Item') }}</span>
                                                             </div>
-
                                                         @endunless
+                                                        {{-- <div
+                                                            class="bg-red-500
+                                                            @if ($order->due == $order->grand_total) border-red-600
+                                                            @elseif ($order->due > 0) border-yellow-500
+                                                            @else border-green-600 @endif
+                                                            ">as
+                                                            </div> --}}
                                                     </td>
                                                 </tr>
-                                                @if ($urgent>0)
-                                                    <script>document.getElementById("urgent-{{$order->id}}").style.display='block';</script>
+                                                @if ($urgent > 0)
+                                                    <script>
+                                                        document.getElementById("urgent-{{ $order->id }}").style.display = 'block';
+                                                    </script>
                                                 @endif
                                             @endforeach
                                         </tbody>
@@ -177,35 +197,47 @@
                         </div>
                         <div class="m-5 grid md:grid-cols-2">
                             <div>
-                                <div onclick="window.location='/orders/location/gurun'"
-                                    class="inline-flex items-center bg-white leading-none text-purple-600 rounded-full p-2 shadow text-sm cursor-pointer">
-                                    <span
-                                        class="inline-flex bg-purple-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
-                                    <span class="inline-flex px-2">Gurun</span>
-                                </div>
-                                <div onclick="window.location='/orders/location/guar'"
-                                    class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-sm cursor-pointer">
-                                    <span
-                                        class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
-                                    <span class="inline-flex px-2">Guar</span>
-                                </div>
+                                @foreach ($branches as $branch)
+                                    <div onclick="window.location='/orders/location/{{ $branch->id }}'"
+                                        class="inline-flex items-center bg-white leading-none text-{{ $branch->color_code }}-600 rounded-full p-2 shadow text-sm cursor-pointer">
+                                        <span
+                                            class="inline-flex bg-{{ $branch->color_code }}-600 text-white rounded-full h-6 px-3 justify-center items-center text-"></span>
+                                        <span class="inline-flex px-2">{{ ucwords($branch->shortname) }}</span>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="flex flex-col-reverse md:flex-row-reverse mt-5 gap-3">
-                                <div onclick="window.location='/orders/item/status/is_done'"
-                                    class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
-                                    <span class="inline-flex px-1">{{ __('Selesai') }}</span>
+                            <div>
+                                <div class="flex flex-col-reverse md:flex-row-reverse mt-5 gap-3">
+                                    <div onclick="window.location='/orders/item/status/is_done'"
+                                        class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Selesai') }}</span>
+                                    </div>
+                                    <div onclick="window.location='/orders/item/status/is_approved'"
+                                        class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Production') }}</span>
+                                    </div>
+                                    <div onclick="window.location='/orders/item/status/is_design'"
+                                        class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Design') }}</span>
+                                    </div>
+                                    <div onclick="window.location='/orders/item/status/is_pending'"
+                                        class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Pending') }}</span>
+                                    </div>
                                 </div>
-                                <div onclick="window.location='/orders/item/status/is_approved'"
-                                    class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
-                                    <span class="inline-flex px-1">{{ __('Production') }}</span>
-                                </div>
-                                <div onclick="window.location='/orders/item/status/is_design'"
-                                    class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
-                                    <span class="inline-flex px-1">{{ __('Design') }}</span>
-                                </div>
-                                <div onclick="window.location='/orders/item/status/is_pending'"
-                                    class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
-                                    <span class="inline-flex px-1">{{ __('Pending') }}</span>
+                                <div class="flex flex-row md:flex-row-reverse mt-5 gap-3">
+                                    <div onclick="window.location='/orders?payment=paid'"
+                                        class="inline-flex flex-grow md:flex-grow-0 items-center bg-green-600 leading-none text-white p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Paid') }}</span>
+                                    </div>
+                                    <div onclick="window.location='/orders?payment=partial'"
+                                        class="inline-flex flex-grow md:flex-grow-0 items-center bg-yellow-500 leading-none text-white p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Partial') }}</span>
+                                    </div>
+                                    <div onclick="window.location='/orders?payment=unpaid'"
+                                        class="inline-flex flex-grow md:flex-grow-0 items-center bg-red-600 leading-none text-white p-1 shadow text-sm font-bold cursor-pointer">
+                                        <span class="inline-flex px-1">{{ __('Unpaid') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,9 +246,7 @@
                         <a href="/orders/no-pickup"
                             class="mr-5 bg-white border border-gray-600 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-6">Senarai
                             belum pickup</a>
-
                     </div>
-
                     <x-dashboard-link />
                 </div>
             </div>

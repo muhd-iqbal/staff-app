@@ -54,19 +54,14 @@
                                         <tbody>
                                             @php
                                                 //forgive me a bit sketchy
-                                                $location['guar'] = $location['gurun'] = 0;
+                                                foreach ($branches as $branch):
+                                                    $bra[$branch->id] = 0;
+                                                endforeach;
                                             @endphp
                                             @foreach ($orders as $order)
                                                 @php
-                                                    //again, apologize
-                                                    switch ($order->location) {
-                                                        case 'gurun':
-                                                            $location['gurun']++;
-                                                            break;
-                                                        case 'guar':
-                                                            $location['guar']++;
-                                                            break;
-                                                    }
+                                                    //again, sorry
+                                                    $bra[$order->branch_id]++;
                                                 @endphp
                                                 <tr onclick="window.location='/orders/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
@@ -75,15 +70,13 @@
                                                     </td>
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        {{ \App\Http\Controllers\Controller::order_num($order->id) }}
+                                                        {{ order_num($order->id) }}
                                                     </th>
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        @if ($order->location == 'gurun')
-                                                            <div class="w-5 h-5 bg-purple-600 mr-2 rounded-full"></div>
-                                                        @elseif ($order->location == 'guar')
-                                                            <div class="w-5 h-5 bg-pink-600 mr-2 rounded-full"></div>
-                                                        @endif
+                                                        <div id="branch-label"
+                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-600">
+                                                        </div>
                                                         {{ $order->customer->name }}
                                                     </td>
                                                     <td>
@@ -100,18 +93,14 @@
                     </section>
                     <div class="m-5 grid md:grid-cols-2">
                         <div>
-                            <div onclick="window.location='/orders/no-pickup?location=gurun'"
-                                class="inline-flex items-center bg-white leading-none text-purple-600 rounded-full p-2 shadow text-sm cursor-pointer">
-                                <span
-                                    class="inline-flex bg-purple-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $location['gurun'] }}</span>
-                                <span class="inline-flex px-2">Gurun</span>
-                            </div>
-                            <div onclick="window.location='/orders/no-pickup?location=guar'"
-                                class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-sm cursor-pointer">
-                                <span
-                                    class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $location['guar'] }}</span>
-                                <span class="inline-flex px-2">Guar</span>
-                            </div>
+                            @foreach ($branches as $branch)
+                                <div onclick="window.location='/orders/no-pickup?branch={{ $branch->id }}'"
+                                    class="inline-flex items-center bg-white leading-none text-{{ $branch->color_code }}-600 rounded-full p-2 shadow text-sm cursor-pointer">
+                                    <span
+                                        class="inline-flex bg-{{ $branch->color_code }}-600 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $bra[$branch->id] }}</span>
+                                    <span class="inline-flex px-2">{{ ucwords($branch->shortname) }}</span>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="mt-5 text-center">

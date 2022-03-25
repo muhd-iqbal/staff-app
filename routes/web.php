@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemStatusController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
@@ -30,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/leaves/create/{user}', [LeaveController::class, 'store']);
 
     Route::get('/orders', [OrderController::class, 'index']);
-    Route::get('/orders/location/{location}', [OrderController::class, 'index_location']);
+    Route::get('/orders/location/{branch}', [OrderController::class, 'index_location']);
     Route::get('/orders/create', [OrderController::class, 'create']);
     Route::post('/orders/create', [OrderController::class, 'insert']);
     Route::get('/orders/view/{order}', [OrderController::class, 'view']);
@@ -39,9 +42,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/orders/pickup/{order}', [OrderController::class, 'update_pickup']);
     Route::patch('/orders/edit/{order}', [OrderController::class, 'update']);
     Route::delete('/orders/{order}/delete', [OrderController::class, 'delete']);
+    Route::patch('/orders/{order}/additional', [OrderController::class, 'update_additional']);
     Route::patch('/orders/view/{order}/mark-done', [OrderController::class, 'update_done']);
     Route::patch('/orders/view/{order}/mark-undone', [OrderController::class, 'update_undone']);
     Route::get('/orders/no-pickup', [OrderController::class, 'index_nopickup']);
+
+    Route::get('/payment/{order}', [OrderController::class, 'print']);
+
+    Route::get('/orders/{order}/invoice', [InvoiceController::class, 'index']);
+
+    Route::get('/orders/{order}/payments', [PaymentController::class, 'index']);
+    Route::post('/orders/{order}/payments', [PaymentController::class, 'insert']);
+    Route::delete('/orders/{order}/payments/{payment}', [PaymentController::class, 'destroy']);
 
     Route::get('/orders/{order}/add-item', [OrderItemController::class, 'create']);
     Route::post('/orders/{order}/add-item', [OrderItemController::class, 'insert']);
@@ -64,13 +76,22 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('/orders/item/{item}/printing', [ItemStatusController::class, 'update_printing']);
     Route::post('/orders/item/{item}/done', [ItemStatusController::class, 'update_done']);
     Route::get('/orders/item/status/{status}', [ItemStatusController::class, 'show_status']);
-    Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
+    // Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
 
     Route::get('/customers', [CustomerController::class, 'index']);
     Route::get('/customers/create', [CustomerController::class, 'create']);
     Route::post('/customers/create', [CustomerController::class, 'insert']);
     Route::get('/customer/{customer}/edit', [CustomerController::class, 'edit']);
     Route::patch('/customer/{customer}/edit', [CustomerController::class, 'update']);
+    Route::get('/customer/{customer}', [CustomerController::class, 'select']);
+
+    Route::get('/branches', [BranchController::class, 'index']);
+    Route::get('/branches/{branch}/update', [BranchController::class, 'view']);
+    Route::patch('/branches/{branch}/update', [BranchController::class, 'update']);
+
+    Route::get('/suppliers', [SupplierController::class, 'index']);
+    Route::get('/suppliers/{supplier}/update', [SupplierController::class, 'view']);
+    Route::patch('/suppliers/{supplier}/update', [SupplierController::class, 'update']);
 
     Route::get('/to-do', [TaskController::class, 'index']);
     Route::get('/staff/prev-works', [TaskController::class, 'previous']);
@@ -84,11 +105,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
+    Route::get('/admin', [DashboardController::class, 'index_admin']);
+
     Route::get('/staff/show/{user}', [StaffController::class, 'show']);
     Route::patch('/staff/active/{user}', [StaffController::class, 'update']);
 
     Route::get('/leaves/approval', [LeaveController::class, 'show']);
     Route::get('/leaves/list', [LeaveController::class, 'list']);
+    Route::delete('/leave/{leave}/delete', [LeaveController::class, 'destroy']);
     Route::patch('/leaves/approval/{leave}', [LeaveController::class, 'update']);
     Route::delete('/leaves/approval/{leave}', [LeaveController::class, 'delete']);
 

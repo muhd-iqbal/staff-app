@@ -19,7 +19,7 @@
                                 <div class="flex justify-center">
                                     <div class="flex">
                                         <h1 class="text-gray-600 font-bold md:text-2xl text-xl">
-                                            {{ __('Kemaskini Order: ') . \App\Http\Controllers\Controller::order_num($order->id) }}
+                                            {{ __('Kemaskini Order: ') . order_num($order->id) }}
                                         </h1>
                                     </div>
                                 </div>

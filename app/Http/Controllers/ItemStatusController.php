@@ -20,6 +20,7 @@ class ItemStatusController extends Controller
             'is_printing_time' => null,
             'is_done' => 0,
             'is_done_time' => null,
+            'branch_id' => null,
             'supplier_id' => null,
         );
         $item->update($attributes);
@@ -36,7 +37,8 @@ class ItemStatusController extends Controller
             'is_done' => 0,
             'is_done_time' => null,
             'printing_list' => 0,
-            'location' => 'gurun',
+            // 'location' => 'gurun',
+            'branch_id' => 1,
             'supplier_id' => null,
         );
         $item->update($attributes);
@@ -54,7 +56,8 @@ class ItemStatusController extends Controller
             'is_done' => 0,
             'is_done_time' => null,
             'printing_list' => 0,
-            'location' => 'guar',
+            // 'location' => 'guar',
+            'branch_id' => 2,
             'supplier_id' => null,
         );
         $item->update($attributes);
@@ -72,7 +75,8 @@ class ItemStatusController extends Controller
             'is_done' => 0,
             'is_done_time' => null,
             'printing_list' => 1,
-            'location' => 'gurun',
+            // 'location' => 'gurun',
+            'branch_id' => 1,
             'supplier_id' => null,
         );
         $item->update($attributes);
@@ -137,14 +141,11 @@ class ItemStatusController extends Controller
                 $title = 'Production';
                 $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
                 switch (request('loc')) {
-                    case 'guar':
-                        $items->whereNull('supplier_id')->where('location', '=', 'guar');
-                        break;
-                    case 'gurun':
-                        $items->whereNull('supplier_id')->where('location', '=', 'gurun');
-                        break;
                     case 'subcon':
                         $items->whereNotNull('supplier_id');
+                        break;
+                    default:
+                        $items->whereNull('supplier_id')->where('branch_id', request('loc'));
                         break;
                 }
                 break;

@@ -11,6 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    //status list for orders - DO NOT CHANGE ANY VALUES
     protected $status_list = [
         'none' => 'Pending',
         'is_design' => 'Design',
@@ -19,27 +20,30 @@ class Controller extends BaseController
         'is_done' => 'Done'
     ];
 
-    public static function order_num($var)
-    {
-        return env('ORDER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
-    }
+    //set payment method - DO NOT CHANGE EXISTING VALUES, ADD IS OKAY, KEY MUST NOT EXCEED 10 CHARACTERS
+    protected $payment_method = [
+        'tunai' => 'Tunai',
+        'transfer' => 'Online Transfer',
+        'cek' => 'Cek',
+        'toyyibpay' => 'FPX - Toyyibpay',
+    ];
 
-    public static function phone_format($phoneNumber)
-    {
-        if(strlen($phoneNumber) == 10) {
-            $areaCode = substr($phoneNumber, 0, 3);
-            $nextThree = substr($phoneNumber, 3, 3);
-            $lastFour = substr($phoneNumber, 6, 4);
-
-            $phoneNumber = $areaCode.'-'.$nextThree.' '.$lastFour;
-        }
-        else if(strlen($phoneNumber) == 11) {
-            $areaCode = substr($phoneNumber, 0, 3);
-            $nextFour = substr($phoneNumber, 3, 4);
-            $lastFour = substr($phoneNumber, 7, 4);
-
-            $phoneNumber = $areaCode.'-'.$nextFour.' '.$lastFour;
-        }
-        return $phoneNumber;
-    }
+    public $states = [
+        'KDH' => 'Kedah',
+        'JHR' => 'Johor',
+        'KTN' => 'Kelantan',
+        'MLK' => 'Melaka',
+        'NSN' => 'Negeri Sembilan',
+        'PHG' => 'Pahang',
+        'PRK' => 'Perak',
+        'PLS' => 'Perlis',
+        'PNG' => 'Pulau Pinang',
+        'SBH' => 'Sabah',
+        'SWK' => 'Sarawak',
+        'SGR' => 'Selangor',
+        'TRG' => 'Terengganu',
+        'KUL' => 'W.P. Kuala Lumpur',
+        'LBN' => 'W.P. Labuan',
+        'PJY' => 'W.P. Putrajaya',
+    ];
 }

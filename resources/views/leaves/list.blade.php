@@ -23,10 +23,11 @@
                                     <tr
                                         class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                                         <th class="px-4 py-3">Tarikh Cuti</th>
+                                        <th class="px-4 py-3">Masuk Semula</th>
                                         <th class="px-4 py-3">Staf</th>
                                         <th class="px-4 py-3">Jenis</th>
                                         <th class="px-4 py-3">Status</th>
-                                        <th class="px-4 py-3">Foto</th>
+                                        <th class="px-4 py-3">Foto / Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -37,6 +38,14 @@
                                                     <div>
                                                         <p class="font-semibold text-black">
                                                             {{ date('D d/m/Y', strtotime($leave->start)) }}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-3 border">
+                                                <div class="flex items-center text-sm">
+                                                    <div>
+                                                        <p class="font-semibold text-black">
+                                                            {{ date('D d/m/Y', strtotime($leave->return)) }}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -73,6 +82,15 @@
                                                         target="_blank"><img
                                                             src="{{ asset('img/has-attachment.svg') }}"
                                                             class="h-7"></a>
+                                                @endif
+                                                @if (auth()->user()->isAdmin)
+                                                    <form action="/leave/{{ $leave->id }}/delete" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button
+                                                            class="bg-blue-500 p-1 text-white rounded-md hover:bg-blue-700"
+                                                            onclick="return confirm('Padam permohonan cuti ')">Padam</button>
+                                                    </form>
                                                 @endif
                                             </td>
                                         </tr>

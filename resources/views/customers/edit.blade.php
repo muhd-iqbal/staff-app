@@ -24,6 +24,10 @@
                                             <x-form.input name="phone" label="No Telefon"
                                                 value="{{ $customer->phone }}" />
                                         </div>
+                                        <div class="col-span-3">
+                                            <x-form.input name="organisation" label="Syarikat / Organisasi / Sekolah"
+                                                value="{{ $customer->organisation }}" />
+                                        </div>
                                         <div class="col-span-1">
                                             <x-form.input type="email" name="email" label="Alamat Emel"
                                                 value="{{ $customer->email }}" />
@@ -60,6 +64,12 @@
                         </div>
                     </section>
                     <div class="text-center mb-5">
+                        @if (request('back'))
+                        <a href="{{ request('back') }}"
+                            class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2 mr-2'>
+                            Kembali ke order
+                        </a>
+                        @endif
                         <a href="/customers"
                             class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                             Kembali ke senarai pelanggan

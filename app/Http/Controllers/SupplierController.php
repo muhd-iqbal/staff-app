@@ -12,6 +12,20 @@ class SupplierController extends Controller
         return view('suppliers.create');
     }
 
+    public function index()
+    {
+        return view('suppliers.index', [
+            'suppliers' => Supplier::paginate(20),
+        ]);
+    }
+
+    public function view(Supplier $supplier)
+    {
+        return view('suppliers.view', [
+            'supplier' => $supplier,
+        ]);
+    }
+
     public function store()
     {
         $attributes = request()->validate([

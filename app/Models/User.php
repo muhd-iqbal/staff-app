@@ -58,4 +58,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserPermission::class);
     }
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
 }

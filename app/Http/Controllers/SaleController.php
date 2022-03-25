@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illumnate\Http\Request;
+use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {

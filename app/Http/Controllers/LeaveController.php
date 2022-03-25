@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 class LeaveController extends Controller
 {
-
+    //leave period, don't change this
     protected $time = ['full' => 'Seharian', 'h-am' => 'Setengah Hari (Pagi)', 'h-pm' => 'Setengah Hari (Petang)'];
 
     public function index()
@@ -33,23 +33,43 @@ class LeaveController extends Controller
         ]);
     }
 
+    public function edit(Leave $leave)
+    {
+        return view('leaves.edit', [
+            'leave' => $leave->first(),
+            'leave_types' => LeaveType::all(),
+            'time' => $this->time,
+        ]);
+    }
+
+    public function destroy(Leave $leave)
+    {
+        $leave->delete();
+
+        return redirect('/leaves/list')->with('success', 'Permohonan Cuti Dipadam!');
+    }
+
     public function store(User $user)
     {
+        //check staff current leave, leave allocated to check remaining leave
         $leave_cnt = Leave::where('user_id', $user->id)->where('active', 1)->where('leave_type_id', 1)->whereYear('start', date("Y"))->sum('day');
         $leave_user = User::select('annual_leave')->where('id', $user->id)->get();
         $max_leave = $leave_user[0]->annual_leave - $leave_cnt;
+
+        //set max for half day leave
         if (request('time') != "full") {
             $max_leave = min($max_leave, 0.5);
         }
-
+        //usual stuff
         $attributes = request()->validate([
             'detail' => 'required|min:5|max:100',
             'start' => 'required|date',
             'return' => 'required|date|after_or_equal:start',
             'leave_type_id' => 'required|exists:leave_types,id',
             'time' => ['required', Rule::in(array_keys($this->time))],
-            'attachment' => request('leave_type_id') != 3 ? ['image'] : ['required', 'image'],
+            'attachment' => request('leave_type_id') != 3 ? ['image', 'max:1024'] : ['required', 'image', 'max:1024'],
         ]);
+        //set annual leave max day
         if ($attributes['leave_type_id']==1) {
            request()->validate([
                 'day' => 'required|numeric|min:0.5|max:' . $max_leave,
