@@ -140,13 +140,15 @@ class ItemStatusController extends Controller
             case 'is_approved':
                 $title = 'Production';
                 $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
-                switch (request('loc')) {
-                    case 'subcon':
-                        $items->whereNotNull('supplier_id');
-                        break;
-                    default:
-                        $items->whereNull('supplier_id')->where('branch_id', request('loc'));
-                        break;
+                if (request('loc')) {
+                    switch (request('loc')) {
+                        case 'subcon':
+                            $items->whereNotNull('supplier_id');
+                            break;
+                        default:
+                            $items->whereNull('supplier_id')->where('branch_id', request('loc'));
+                            break;
+                    }
                 }
                 break;
             case 'is_design':

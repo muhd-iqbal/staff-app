@@ -92,6 +92,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/suppliers', [SupplierController::class, 'index']);
     Route::get('/suppliers/{supplier}/update', [SupplierController::class, 'view']);
     Route::patch('/suppliers/{supplier}/update', [SupplierController::class, 'update']);
+    Route::get('/suppliers/create', [SupplierController::class, 'create']);
+    Route::post('/suppliers/create', [SupplierController::class, 'store']);
 
     Route::get('/to-do', [TaskController::class, 'index']);
     Route::get('/staff/prev-works', [TaskController::class, 'previous']);
@@ -118,8 +120,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/top/leave-types', [LeaveTypeController::class, 'index']);
     Route::patch('/top/leave-types/{type}', [LeaveTypeController::class, 'update']);
-    Route::get('suppliers/create', [SupplierController::class, 'create']);
-    Route::post('suppliers/create', [SupplierController::class, 'store']);
 
 });
 
@@ -129,14 +129,6 @@ Route::group(['middleware' => ['auth', 'owner']], function () {
     Route::patch('/top/leaves/approval/{leave}', [TopLeaveController::class, 'update']);
     Route::delete('/top/leaves/approval/{leave}', [TopLeaveController::class, 'delete']);
 
-});
-
-Route::get('/artisan-clear', function() {
-    Artisan::call('cache:clear');
-    // Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    // Artisan::call('view:clear');
-    return "Cache is cleared";
 });
 
 require __DIR__ . '/auth.php';

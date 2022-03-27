@@ -10,6 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="container mx-auto p-6 font-mono">
+                        <a href="/suppliers/create" class="py-2 px-4 bg-green-500 text-white rounded-md float-right mb-3">Tambah Sub / Supplier</a>
                         <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                             <div class="w-full overflow-x-auto">
                                 <table class="w-full">

@@ -11,7 +11,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div
                     class="p-6 border-t-4
-                    @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
+                    @if ($order->date >= env('POS_START'))
+                        @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
+                    @endif
                     ">
                     <!-- start component -->
                     <div class="flex items-center justify-center">
@@ -84,7 +86,8 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
+                            <div
+                                class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
                                 {{-- @if (!$order->isDone) --}}
                                 <a href="/orders/{{ $order->id }}/add-item"
                                     class='w-auto text-center bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
@@ -97,7 +100,7 @@
                                 </a>
                                 <a href="/orders/{{ $order->id }}/invoice"
                                     class='w-auto text-center bg-purple-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                    {{ __('Invois') }}
+                                    {{ __('Invois (Draf)') }}
                                 </a>
                                 <a href="/orders/{{ $order->id }}/payments"
                                     class='w-auto text-center bg-pink-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>

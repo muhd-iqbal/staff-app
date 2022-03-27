@@ -42,9 +42,11 @@
                                     <div class="md:text-base text-sm text-gray-500 text-light font-semibold">
                                         {{ __('No Telefon: ') . $customer->phone }}
                                     </div>
-                                    <div class="md:text-base text-sm text-gray-500 text-light font-semibold">
-                                        {{ __('Emel: ') . $customer->email }}
-                                    </div>
+                                    @if ($customer->email)
+                                        <div class="md:text-base text-sm text-gray-500 text-light font-semibold">
+                                            {{ __('Emel: ') . $customer->email }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class='flex flex-row gap-3 items-center justify-center p-5 pb-5'>
@@ -97,6 +99,10 @@
                                                     class=" px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     {{ __('Harga') }}
                                                 </th>
+                                                <th scope="col"
+                                                    class=" px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    {{ __('Bayaran') }}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -134,10 +140,17 @@
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                         RM{{ RM($order->grand_total) }}
                                                     </td>
+                                                    <td
+                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                        RM{{ RM($order->paid) }}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="text-center my-2">
+                                    Tertunggak: RM {{ RM($customer->order->sum('due')) }}
                                 </div>
                                 {{ $orders->withQueryString()->links() }}
                             </div>
