@@ -21,11 +21,13 @@ class DashboardController extends Controller
         'Tugasan Design' => '/to-do',
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
+        'Senarai Sub / Supplier' => '/suppliers',
     ];
     protected $links_admin = [
         'Daftar Staf' => '/register',
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
+        'Cawangan' => '/branches',
     ];
     protected $links_owner = [
         // 'Permohonan Cuti' => '/top/leaves/approval',

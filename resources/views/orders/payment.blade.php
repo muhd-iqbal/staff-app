@@ -177,6 +177,10 @@
                                                     <div>Lokasi: {{ ucfirst($payment->branch->shortname) }}</div>
                                                     <div>Masa: {{ date('d/m/Y H:i A', strtotime($payment->time)) }}</div>
                                                     <div>Jumlah: RM{{ RM($payment->amount) }}</div>
+                                                    @if ($payment->attachment)
+                                                        <a href="{{ asset('storage/' . $payment->attachment) }}"
+                                                            target="_blank" class="text-blue-600 underline">Lampiran</a>
+                                                    @endif
                                                 </div>
                                                 <div class="text-right">
                                                     <form

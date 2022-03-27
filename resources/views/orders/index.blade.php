@@ -44,18 +44,10 @@
                                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                     {{ __('Pelanggan') }}
                                                 </th>
-                                                {{-- <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                    {{ __('Tarikh') }}
-                                                </th> --}}
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                     {{ __('Status') }}
                                                 </th>
-                                                {{-- <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                    {{ __('Pembayaran') }}
-                                                </th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -65,7 +57,6 @@
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
 
-                                                        {{-- <div class="w-3 overflow-hidden inline-block"> --}}
                                                         @if ($order->date >= env('POS_START'))
                                                             <div
                                                                 class="w-3 h-3 inline-block
@@ -75,7 +66,6 @@
                                                             ">
                                                             </div>
                                                         @endif
-                                                        {{-- </div> --}}
                                                         {{ order_num($order->id) }}
                                                     </th>
                                                     <td
@@ -90,7 +80,7 @@
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2">
 
                                                         @php
                                                             $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
@@ -125,46 +115,36 @@
                                                             @if ($is_pending)
                                                                 <div
                                                                     class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
-                                                                    {{-- <span
-                                                                        class="inline-flex px-1">{{ __('Pending') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex bg-red-600 text-white rounded-full h-4 px-2 justify-center items-center text-base">{{ $is_pending }}</span>
+                                                                        class="inline-flex text-white rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_pending }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_design)
                                                                 <div
                                                                     class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
-                                                                    {{-- <span
-                                                                        class="inline-flex px-1">{{ __('Design') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex text-white bg-yellow-400 rounded-full h-4 px-2 justify-center items-center text-base">{{ $is_design }}</span>
+                                                                        class="inline-flex text-white bg-yellow-400 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_design }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_approved)
                                                                 <div
                                                                     class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
-                                                                    {{-- <span
-                                                                        class="inline-flex px-1">{{ __('Production') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex text-white bg-yellow-700 rounded-full h-4 px-2 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
+                                                                        class="inline-flex text-white bg-yellow-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_printing)
                                                                 <div
                                                                     class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
-                                                                    {{-- <span
-                                                                        class="inline-flex px-1">{{ __('Finishing') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex text-white bg-purple-600 rounded-full h-4 px-2 justify-center items-center text-base">{{ $is_printing }}</span>
+                                                                        class="inline-flex text-white bg-purple-600 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_printing }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_done)
                                                                 <div
                                                                     class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
-                                                                    {{-- <span
-                                                                        class="inline-flex px-1">{{ __('Selesai') }}</span> --}}
                                                                     <span
-                                                                        class="inline-flex text-white bg-green-600 rounded-full h-4 px-2 justify-center items-center text-base font-bold">{{ $is_done }}</span>
+                                                                        class="inline-flex text-white bg-green-600 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_done }}</span>
                                                                 </div>
                                                             @endif
                                                         @else
@@ -174,13 +154,6 @@
                                                                     class="inline-flex px-1">{{ __('Tiada Item') }}</span>
                                                             </div>
                                                         @endunless
-                                                        {{-- <div
-                                                            class="bg-red-500
-                                                            @if ($order->due == $order->grand_total) border-red-600
-                                                            @elseif ($order->due > 0) border-yellow-500
-                                                            @else border-green-600 @endif
-                                                            ">as
-                                                            </div> --}}
                                                     </td>
                                                 </tr>
                                                 @if ($urgent > 0)
