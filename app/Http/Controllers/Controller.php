@@ -28,6 +28,7 @@ class Controller extends BaseController
         'toyyibpay' => 'FPX - Toyyibpay',
     ];
 
+    //dropdown states
     public $states = [
         'KDH' => 'Kedah',
         'JHR' => 'Johor',
@@ -45,5 +46,17 @@ class Controller extends BaseController
         'KUL' => 'W.P. Kuala Lumpur',
         'LBN' => 'W.P. Labuan',
         'PJY' => 'W.P. Putrajaya',
+    ];
+
+    //product indicator - To Be Used
+    protected $products = [
+        'red' => 'Banner',
+        'purple' => 'Streamer',
+        'yellow' => 'Sticker',
+        'green' => 'Business Card',
+        'pink' => 'Flyers',
+        'indigo' => 'Kad Kahwin',
+        'gray' => 'Menu Book',
+        'blue' => 'Lain-lain'
     ];
 }

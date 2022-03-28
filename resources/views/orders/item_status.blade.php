@@ -80,7 +80,6 @@
                     </div>
                     <div class="mt-2">
                         {{ $items->withQueryString()->links() }}
-                        {{-- {{ $items->links() }} --}}
                     </div>
                     @if ($status == 'Production')
                         <div class="flex flex-col-reverse md:flex-row-reverse gap-2 mt-2">

@@ -40,8 +40,6 @@
                                         </div>
                                         <div class="flex-grow"></div>
                                         <div class="flex flex-none md:justify-end">
-                                            {{-- <label for="searchBox"
-                                                class="text-sm font-medium text-gray-700 flex-wrap content-end hidden md:flex">CARIAN..</label> --}}
                                             <input type="text" id="searchBox" autocomplete="searchBox"
                                                 placeholder="Cari..."
                                                 class="w-1/2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -103,29 +101,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Produk</label>
-                                    <div class="grid grid-cols-8 gap-4">
-                                        @foreach ($products as $color => $product)
-                                            <label class="col-span-3 md:col-span-2 mt-3">
-                                                <input type="checkbox"
-                                                    class="form-checkbox h-5 w-5 text-{{ $color }}-600"
-                                                    name="product[]" value="{{ $product }}"
-                                                    {{ (is_array(old('product')) and in_array($product, old('product'))) ? ' checked' : '' }} />
-                                                <span class="ml-2 text-gray-700">{{ $product }}</span>
-                                            </label>
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Remarks</label>
-
-                                    <textarea name="remarks" id="mytextarea"></textarea>
-
-                                </div> --}}
 
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
                                     <a href="/orders"

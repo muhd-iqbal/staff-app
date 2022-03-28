@@ -88,12 +88,10 @@
                             </div>
                             <div
                                 class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
-                                {{-- @if (!$order->isDone) --}}
                                 <a href="/orders/{{ $order->id }}/add-item"
                                     class='w-auto text-center bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah Item') }}
                                 </a>
-                                {{-- @endif --}}
                                 <a href="/orders/view/{{ $order->id }}/edit"
                                     class='w-auto text-center bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit Order') }}
@@ -112,7 +110,6 @@
                                     font-medium text-white px-4 py-2'>
                                     {{ __('Pickup') }}
                                 </a>
-                                {{-- @endif --}}
                                 <a href="/orders"
                                     class='w-auto text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali') }}

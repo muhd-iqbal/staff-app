@@ -35,7 +35,7 @@
                                 @endif
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                <small class="text-red-500">* Kemaskini setelah order telah pickup/kurier</small>
+                                    <small class="text-red-500">* Kemaskini setelah order telah pickup/kurier</small>
                                     <label
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nama
                                         Pelanggan</label>
@@ -49,7 +49,8 @@
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pickup</label>
-                                        <select name="pickup_type" class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" >
+                                        <select name="pickup_type"
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                                             <option value="Gurun">Gurun</option>
                                             <option value="Guar">Guar</option>
                                             <option value="Kurier">Kurier</option>
@@ -57,35 +58,12 @@
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nota / Track</label>
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nota
+                                            / Track</label>
                                         <input name="pickup" value="{{ old('pickup') }}"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
                                     </div>
                                 </div>
-                                {{-- <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Produk</label>
-                                    <div class="grid grid-cols-8 gap-4">
-                                        @foreach ($products as $color => $product)
-                                            <label class="col-span-3 md:col-span-2 mt-3">
-                                                <input type="checkbox"
-                                                    class="form-checkbox h-5 w-5 text-{{ $color }}-600"
-                                                    name="product[]" value="{{ $product }}"
-                                                    {{ (is_array(old('product')) and in_array($product, old('product'))) ? ' checked' : '' }} />
-                                                <span class="ml-2 text-gray-700">{{ $product }}</span>
-                                            </label>
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Remarks</label>
-
-                                    <textarea name="remarks" id="mytextarea"></textarea>
-
-                                </div> --}}
-
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
                                     <a href="/orders/view/{{ $order->id }}"
                                         class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>

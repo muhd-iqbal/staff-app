@@ -4,7 +4,6 @@
             {{ __('Senarai Semasa') }}
             <span class="text-sm text-red-500">(Experiment)</span>
         </h2>
-        {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" /> --}}
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -15,7 +14,6 @@
                         <div class="bg-white mx-auto border border-gray-200">
                             <ul class="shadow-box">
                                 @foreach ($users as $designer)
-                                    {{-- @if ($designer->order_item->count()) --}}
 
                                     <li class="relative border-b border-gray-200" x-data="{selected:null}">
 
@@ -45,7 +43,6 @@
                                         </div>
 
                                     </li>
-                                    {{-- @endif --}}
                                 @endforeach
                             </ul>
                         </div>

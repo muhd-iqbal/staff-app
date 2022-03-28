@@ -12,17 +12,6 @@ use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
-    protected $products = [
-        'red' => 'Banner',
-        'purple' => 'Streamer',
-        'yellow' => 'Sticker',
-        'green' => 'Business Card',
-        'pink' => 'Flyers',
-        'indigo' => 'Kad Kahwin',
-        'gray' => 'Menu Book',
-        'blue' => 'Lain-lain'
-    ];
-
     public function index()
     {
         $orders = Order::with(['order_item', 'customer'])->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
@@ -75,7 +64,7 @@ class OrderController extends Controller
             $orders->where('branch_id', request('branch'));
         }
         return view('orders.no_pickup', [
-            'orders' => $orders->with(['branch', 'customer'])->paginate(20),
+            'orders' => $orders->with(['branch', 'customer'])->orderBy('id', 'DESC')->paginate(20),
             'branches' => Branch::get(),
         ]);
     }

@@ -17,13 +17,7 @@
                 @else
                     {{ strtoupper($order->customer->name) }}
                 @endif
-                {{-- @if ($order->customer->email)
-                    <br />{{ $order->customer->address }}
-                @endif --}}
                 <br />Tel: {{ phone_format($order->customer->phone) }}
-                {{-- @if ($order->customer->email)
-                    <br />{{ $order->customer->email }}
-                @endif --}}
                 @if ($order->customer->organisation)
                     <br />u/p: {{ $order->customer->name }}
                 @endif
