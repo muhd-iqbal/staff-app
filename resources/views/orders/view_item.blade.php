@@ -42,8 +42,6 @@
                                                     @csrf
                                                     <select name="supplier_id" id=""
                                                         onchange="showSubmit('supplier-save')">
-                                                        {{-- <option selected disabled>Pilihan Subcon:</option>
-                                                        <option onclick="location.href='/supplier/add'">Tambah Pilihan --}}
                                                         </option>
                                                         @foreach ($suppliers as $sub)
                                                             <option value="{{ $sub->id }}"
@@ -139,11 +137,6 @@
                                         <x-form.confirm-button id="{{ $item->id }}" txt="Print Semula" />
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
-                                        {{-- @elseif($item->is_printing)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/done'
-                                            title='Item Selesai' color='green' />
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/design'
-                                            title='Design Semula' color='red' /> --}}
                                     @elseif($item->is_approved)
                                         <x-form.single-action action='/orders/item/{{ $item->id }}/done'
                                             title='Selesai' color='green' />

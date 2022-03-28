@@ -35,10 +35,7 @@
                                         @foreach ($time as $key=>$value)
                                         <option value="{{ $key }}" {{ old('time')==$key? "selected":"" }}>{{ $value }}</option>
                                         @endforeach
-                                        {{-- <option value="full" {{ old('time')=="full"? "selected":"" }}>Seharian</option>
-                                        <option value="h-am" {{ old('time')=="h-am"? "selected":"" }}>Setengah Hari (Pagi)</option>
-                                        <option value="h-pm" {{ old('time')=="h-pm"? "selected":"" }}>Setengah Hari (Petang)</option> --}}
-                                    </x-form.select>
+                                     </x-form.select>
                                     <x-form.input name="attachment" label="Lampiran" type="file" />
 
                                   </div>

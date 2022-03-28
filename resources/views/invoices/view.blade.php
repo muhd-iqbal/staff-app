@@ -110,12 +110,6 @@
                             {{ phone_format($order->branch->phone_1) }}
                             {{ $order->branch->phone_2 ? ' / ' . phone_format($order->branch->phone_2) : '' }}
                         </div>
-                        {{-- <div>
-                            {{ __('Bayar Kepada: ') }} <br />
-                            {{ $order->branch->bank_account_1 }}
-                            {{ $order->branch->bank_account_2 ? '<br />' . $order->branch->bank_account_2 : '' }}
-                            {{ $order->branch->bank_account_3 ? '<br />' . $order->branch->bank_account_3 : '' }}
-                        </div> --}}
                     </div>
                 </div>
             </div>
