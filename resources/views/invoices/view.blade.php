@@ -66,7 +66,7 @@
                     @foreach ($order->order_item as $item)
                         <div class="mt-3">
                             <div>
-                                {{ '#' . $loop->iteration . ': ' . $item->product }}
+                                {{ '#' . $loop->iteration . ': ' . $item->product . ' (' . $item->size . ')' }}
                             </div>
                             <div class="grid grid-cols-2">
                                 <div>
