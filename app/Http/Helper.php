@@ -75,3 +75,19 @@ if(!function_exists('RM')){
         return number_format($amount/100, 2);
     }
 }
+
+//calculate order when item change total price
+if (!function_exists('recalculate_order')) {
+    function recalculate_order($order)
+    {
+        $statement = "UPDATE orders od
+        INNER JOIN (
+          SELECT SUM(total) as totals
+          FROM order_items
+          WHERE order_id = $order
+        ) oi ON od.id = $order
+        SET od.total = oi.totals";
+        DB::statement($statement);
+        DB::statement("UPDATE orders SET grand_total = total + shipping - discount, due = grand_total - paid WHERE id = $order");
+    }
+}

@@ -12,7 +12,7 @@ class InvoiceController extends Controller
     {
         return view('invoices.view', [
             'order' => Order::find($order),
-            // 'branch' => Branch::get(),
+            'measurements' => $this->measurement,            // 'branch' => Branch::get(),
         ]);
     }
 }

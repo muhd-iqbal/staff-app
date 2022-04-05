@@ -40,39 +40,42 @@
                                             value="{{ old('product') }}" />
                                         <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="price" placeholder="Harga" value="{{ old('price') }}" />
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="size" placeholder="Saiz Item"
-                                            value="{{ old('size') }}" />
-                                    </div>
-                                    <div class="mt-3 grid md:grid-cols-4 gap-3">
+                                            type="text" name="price" placeholder="Harga Seunit" value="{{ old('price') }}" />
                                         <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="number" step=1 name="quantity" placeholder="Kuantiti"
                                             value="{{ old('quantity') }}" />
-                                        <div class="flex justify-center items-center hidden">
+                                        <input
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="text" name="size" placeholder="Saiz Item"
+                                            value="{{ old('size') }}" />
+                                        <select name="measurement" id="measurement"
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                                            @foreach ($measurements as $k => $v)
+                                                <option value="{{ $k }}">{{ $v }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- <div class="flex justify-center items-center hidden">
                                             <input type="checkbox" name="printing_list" id="printing_list">
                                             <label for="printing_list" class="mx-3"> Item masuk ke print list?
                                             </label>
-                                        </div>
+                                        </div> --}}
+                                        <input
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="text" name="finishing" placeholder="Nota / Finishing"
+                                            value="{{ old('finishing') }}" />
                                         <div class="flex justify-center items-center">
                                             <input type="checkbox" name="is_urgent" id="is_urgent">
                                             <label for="is_urgent" class="mx-3 text-red-500"> Urgent?
                                             </label>
                                         </div>
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="text" name="finishing" placeholder="Nota / Finishing"
-                                            value="{{ old('finishing') }}" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Nota</label>
 
-                                    <textarea name="remarks" id="mytextarea"
-                                        placeholder="Remarks">{{ old('remarks') }}</textarea>
+                                    <textarea name="remarks" id="mytextarea" placeholder="Remarks">{{ old('remarks') }}</textarea>
 
                                 </div>
 

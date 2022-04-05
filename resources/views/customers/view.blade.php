@@ -100,7 +100,7 @@
                                                             class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-600">
                                                         </div>
                                                         {{ $order->date }}
-                                </div> --}}
+                                </div>
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">

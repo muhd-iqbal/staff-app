@@ -18,6 +18,7 @@ class OrderItemController extends Controller
     {
         return view('orders.create_item', [
             'order' => Order::find($order),
+            'measurements' => $this->measurement,
         ]);
     }
 
@@ -26,6 +27,7 @@ class OrderItemController extends Controller
         $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
+            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:100',
@@ -68,6 +70,7 @@ class OrderItemController extends Controller
             'users' => User::where('active', 1)->whereNotIn('position_id', [1])->get(),
             'status' => $status,
             'suppliers' => Supplier::get(),
+            'measurements' => $this->measurement,
         ]);
     }
 
@@ -166,6 +169,7 @@ class OrderItemController extends Controller
     {
         return view('orders.edit_item', [
             'item' => $item,
+            'measurements' => $this->measurement,
         ]);
     }
 
@@ -175,6 +179,7 @@ class OrderItemController extends Controller
             'product' => 'required|max:255',
             'size' => 'required|max:100',
             'quantity' => 'required|numeric|min:1',
+            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:100',
             'remarks' => 'max:1000',
@@ -196,6 +201,7 @@ class OrderItemController extends Controller
         $attributes['total'] = $attributes['price'] * $attributes['quantity'];
         $item->update($attributes);
         order_adjustment($item->order_id);
+        recalculate_order($item->order_id);
 
         return redirect('/orders/item/' . $item->id)->with('success', 'Item Dikemaskini.');
     }
@@ -210,6 +216,7 @@ class OrderItemController extends Controller
             $item->delete();
 
             order_adjustment($item->order_id);
+            recalculate_order($item->order_id);
 
             return redirect('/orders/view/' . $item->order_id)->with('success', 'Item berjaya padam.');
         } catch (\Exception $e) {

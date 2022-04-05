@@ -35,7 +35,7 @@
         @foreach ($order->order_item as $item)
             <div class="flex justify-between mb-1 px-3 py-2 border-dashed border-b border-gray-500">
                 <div>
-                    #{{ $loop->iteration . ': ' . strtoupper($item->product) . ' (' . $item->size . ')' }}<br />
+                    #{{ $loop->iteration . ': ' . strtoupper($item->product) . ' ' . $item->size }} {{ $item->measurement? ' (' . $measurements[$item->measurement] .')':"" }}<br />
                     {{ $item->quantity . ' X RM' . RM($item->price) }}
                 </div>
                 <div class="text-right font-medium">{{ 'RM' . RM($item->total) }}</div>

@@ -36,17 +36,35 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <div class="mt-3 grid md:grid-cols-12 gap-3">
                                         <x-form.input name="product" label="Produk" value="{!! $item->product !!}" />
-                                        <x-form.input name="price" label="Harga" value="{{ $item->price / 100 }}" />
-                                        <x-form.input name="size" label="Saiz" value="{!! $item->size !!}" />
+                                        <x-form.input name="price" label="Harga Seunit"
+                                            value="{{ $item->price / 100 }}" span=3 />
+                                        <x-form.input name="quantity" label="Kuantiti" value="{{ $item->quantity }}"
+                                            span=3 />
+                                        <x-form.input name="size" label="Saiz" value="{!! $item->size !!}" span=3 />
+                                        <div class="col-span-3">
+                                            <label for="measurement"
+                                                class="block text-sm font-medium text-gray-700">Ukuran</label>
+                                            <select name="measurement" id="measurement"
+                                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                @foreach ($measurements as $k => $v)
+                                                    <option value="{{ $k }}"
+                                                        {{ $item->measurement == $k ? 'selected' : '' }}>
+                                                        {{ $v }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <x-form.input name="finishing" label="Nota / Finishing"
-                                            value="{!! $item->finishing !!}" />
-                                        <x-form.input name="quantity" label="Kuantiti"
-                                            value="{{ $item->quantity }}" />
-                                        <div class="col-span-6 mt-5 md:m-7">
-                                            <label for="is_urgent" class="relative flex-inline items-center isolate p-4 rounded-2xl">
-                                                <input id="is_urgent" type="checkbox" name="is_urgent" class="relative peer z-20 text-red-600 rounded-md focus:ring-0" {{ $item->is_urgent ? 'checked' : '' }}/>
+                                            value="{!! $item->finishing !!}" span=3 />
+                                        <div class="col-span-3 mt-5 md:m-7">
+                                            <label for="is_urgent"
+                                                class="relative flex-inline items-center isolate p-4 rounded-2xl">
+                                                <input id="is_urgent" type="checkbox" name="is_urgent"
+                                                    class="relative peer z-20 text-red-600 rounded-md focus:ring-0"
+                                                    {{ $item->is_urgent ? 'checked' : '' }} />
                                                 <span class="ml-2 relative z-20 text-red-500 font-bold">URGENT?</span>
-                                                <div class="absolute inset-0 bg-white peer-checked:bg-purple-50 peer-checked:border-purple-300 z-10 border rounded-2xl"></div>
+                                                <div
+                                                    class="absolute inset-0 bg-white peer-checked:bg-purple-50 peer-checked:border-purple-300 z-10 border rounded-2xl">
+                                                </div>
                                             </label>
                                         </div>
                                     </div>
@@ -55,8 +73,7 @@
                                     <label
                                         class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Nota</label>
 
-                                    <textarea name="remarks" id="mytextarea"
-                                        placeholder="Remarks">{{ $item->remarks }}</textarea>
+                                    <textarea name="remarks" id="mytextarea" placeholder="Remarks">{{ $item->remarks }}</textarea>
 
                                 </div>
 
