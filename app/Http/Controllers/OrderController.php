@@ -202,6 +202,7 @@ class OrderController extends Controller
         return view('orders.print', [
             'order' => $order,
             'payment_method' => $this->payment_method,
+            'measurements' => $this->measurement,
         ]);
     }
 
@@ -218,5 +219,12 @@ class OrderController extends Controller
         order_adjustment($order->id);
 
         return back()->with('success', 'Info tambahan dikemaskini.');
+    }
+
+    public function refresh($order)
+    {
+        recalculate_order($order);
+
+        return back()->with('success', 'Order dikemaskini.');
     }
 }

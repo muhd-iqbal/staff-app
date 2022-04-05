@@ -163,7 +163,7 @@
                                                     </td>
                                                     <td
                                                         class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
-                                                        {{ $list->size }}</td>
+                                                        {{ $list->size }} {{ $list->measurement ? "(".$list->measurement.")" :""}}</td>
                                                     <td
                                                         class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
                                                         {{ $list->quantity . ' X ' . RM($list->price) }}</td>

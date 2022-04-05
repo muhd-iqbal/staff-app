@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\RecalculateController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TaskController;
@@ -46,6 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/orders/view/{order}/mark-done', [OrderController::class, 'update_done']);
     Route::patch('/orders/view/{order}/mark-undone', [OrderController::class, 'update_undone']);
     Route::get('/orders/no-pickup', [OrderController::class, 'index_nopickup']);
+    Route::get('/orders/view/{order}/refresh', [OrderController::class, 'refresh']);
+
 
     Route::get('/payment/{order}', [OrderController::class, 'print']);
 

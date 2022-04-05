@@ -62,7 +62,7 @@
                                     @endif
                                 </div>
                                 <div class="grid grid-col mt-10 md:mt-0">
-                                    <div class="md:text-right">{{ __('Saiz: ') . $item->size }}</div>
+                                    <div class="md:text-right">{{ __('Saiz: ') . $item->size }} ({{$item->measurement}})</div>
                                     <div class="md:text-right">{{ __('Kuantiti: ') . $item->quantity }}</div>
                                     <div class="md:text-right">
                                         {{ __('Harga: RM') . RM($item->price) }}</div>

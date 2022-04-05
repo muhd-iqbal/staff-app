@@ -59,4 +59,13 @@ class Controller extends BaseController
         'gray' => 'Menu Book',
         'blue' => 'Lain-lain'
     ];
+
+    protected $measurement = [
+        // '' => "Biasa",
+        'mm' => "mm",
+        'cm' => "cm",
+        'm' => "m",
+        'ft' => "kaki",
+        'in' => "inci",
+    ];
 }
