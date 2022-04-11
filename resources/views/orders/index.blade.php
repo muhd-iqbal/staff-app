@@ -221,6 +221,7 @@
                                         class="inline-flex flex-grow md:flex-grow-0 items-center bg-red-600 leading-none text-white p-1 shadow text-sm font-bold cursor-pointer">
                                         <span class="inline-flex px-1">{{ __('Unpaid') }}</span>
                                     </div>
+                                    <div class="text-sm font-bold">Tertunggak: RM{{ RM($dues) }} </div>
                                 </div>
                             </div>
                         </div>
