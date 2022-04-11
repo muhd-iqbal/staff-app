@@ -12,6 +12,7 @@ class DashboardController extends Controller
         'Tukar Kata Laluan' => '/change-password',
     ];
     protected $links_staff = [
+        'Peti Tunai' => '/cashflow',
         'Permohonan Cuti' => '/leaves',
         // 'Tugasan Semasa' => '/view-designer',
         'Perihal Staf' => '/staff',
@@ -28,7 +29,6 @@ class DashboardController extends Controller
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
-        'Peti Tunai' => '/cashflow',
     ];
     protected $links_owner = [
         // 'Permohonan Cuti' => '/top/leaves/approval',

@@ -111,6 +111,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/print/all-stickers', [TaskController::class, 'print_allstickers']);
     Route::get('/view-designer', [TaskController::class, 'view_designer']);
 
+    Route::get('/cashflow', [CashflowController::class, 'index']);
+    Route::get('/cashflow/{branch}', [CashflowController::class, 'view']);
+    Route::post('/cashflow/{branch}/add', [CashflowController::class, 'add']);
+    Route::delete('/cashflow/delete/{cashflow}', [CashflowController::class, 'delete']);
+
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -128,11 +133,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/top/leave-types', [LeaveTypeController::class, 'index']);
     Route::patch('/top/leave-types/{type}', [LeaveTypeController::class, 'update']);
-
-    Route::get('/cashflow', [CashflowController::class, 'index']);
-    Route::get('/cashflow/{branch}', [CashflowController::class, 'view']);
-    Route::post('/cashflow/{branch}/add', [CashflowController::class, 'add']);
-    Route::delete('/cashflow/delete/{cashflow}', [CashflowController::class, 'delete']);
 
 });
 

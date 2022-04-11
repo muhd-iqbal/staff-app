@@ -52,6 +52,7 @@ class OrderController extends Controller
         return view('orders.index', [
             'orders' => $orders->with('branch')->paginate(20),
             'branches' => Branch::get(),
+            'dues' => Order::where('date', '>=', env('POS_START'))->sum('due'),
         ]);
     }
 
@@ -76,6 +77,7 @@ class OrderController extends Controller
         return view('orders.index', [
             'orders' => $orders->paginate(20),
             'branches' => Branch::get(),
+            'dues' => Order::where('date', '>=', env('POS_START'))->where('branch_id', $branch)->sum('due'),
         ]);
     }
 
