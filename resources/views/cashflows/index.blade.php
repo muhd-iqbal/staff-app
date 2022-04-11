@@ -14,7 +14,9 @@
                 @csrf
                 <div class="text-black flex flex-col gap-3 mb-3">
                     <div>
-                        <label for="category_id">Kategori <x-form.asterisk /></label>
+                        <label for="category_id">Kategori
+                            <x-form.asterisk />
+                        </label>
                         <select class="w-full rounded-md" name="category_id" id="category_id">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }} -
@@ -23,15 +25,21 @@
                         </select>
                     </div>
                     <div>
-                        <label for="reference">Rujukan <x-form.asterisk /></label>
+                        <label for="reference">Rujukan
+                            <x-form.asterisk />
+                        </label>
                         <input class="w-full rounded-md" type="text" name="reference" id="reference" required>
                     </div>
                     <div>
-                        <label for="date">Tarikh <x-form.asterisk /></label>
+                        <label for="date">Tarikh
+                            <x-form.asterisk />
+                        </label>
                         <input class="w-full rounded-md" type="date" name="date" id="date" value="{{ date('Y-m-d') }}">
                     </div>
                     <div>
-                        <label for="amount">Amaun <x-form.asterisk /></label>
+                        <label for="amount">Amaun
+                            <x-form.asterisk />
+                        </label>
                         <input class="w-full rounded-md" type="number" step="0.01" name="amount" id="amount"
                             placeholder="Amaun dimasukkan/dikeluarkan" required>
                     </div>
@@ -92,14 +100,16 @@
                                                     <td class="border">{{ $cashflow->category->name }}</td>
                                                     <td class="border">{{ $cashflow->note }}</td>
                                                     <td class="border p-0">
-                                                        <form action="/cashflow/delete/{{ $cashflow->id }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="font-bold text-red-600 border px-2"
-                                                                onclick="return confirm('Padam aliran tunai {{ $cashflow->reference }}?')">&#128465;</button>
-                                                        </form>
+                                                        @if ($cashflow->payment_id == null)
+                                                            <form action="/cashflow/delete/{{ $cashflow->id }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="font-bold text-red-600 border px-2"
+                                                                    onclick="return confirm('Padam aliran tunai {{ $cashflow->reference }}?')">&#128465;</button>
+                                                            </form>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
