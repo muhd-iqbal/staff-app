@@ -238,5 +238,26 @@
             $("iframe").attr("src", "/payment/" + order);
             toggleModal('modal-payment');
         }
+
+        const form = document.getElementById("attachment");
+        const fileInput = document.getElementById("attachment");
+
+        fileInput.addEventListener('change', () => {
+            form.submit();
+        });
+
+        window.addEventListener('paste', e => {
+            fileInput.files = e.clipboardData.files;
+        });
+
+        function showSubmit(id) {
+            var x = document.getElementById(id);
+            x.style.display = "inline-block";
+        }
+
+        function openLog(item) {
+            alert(item);
+        }
+
     </script>
 </x-app-layout>

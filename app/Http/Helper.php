@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Models\Cashflow;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
@@ -89,5 +90,20 @@ if (!function_exists('recalculate_order')) {
         SET od.total = oi.totals";
         DB::statement($statement);
         DB::statement("UPDATE orders SET grand_total = total + shipping - discount, due = grand_total - paid WHERE id = $order");
+    }
+}
+
+if (!function_exists('cash_in')) {
+    function cash_in($attributes)
+    {
+        DB::table('branches')->where('id',$attributes['branch_id'])->increment('cash_current', $attributes['amount']);
+        Cashflow::create($attributes);
+    }
+}
+if (!function_exists('cash_out')) {
+    function cash_out($attributes)
+    {
+        DB::table('branches')->where('id',$attributes['branch_id'])->decrement('cash_current', $attributes['amount']);
+        Cashflow::create($attributes);
     }
 }

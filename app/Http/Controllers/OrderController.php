@@ -25,7 +25,7 @@ class OrderController extends Controller
                 $query->where('name', 'like', '%' . request('search') . '%')
                     ->orWhere('phone', 'like', '%' . request('search') . '%')
                     ->orWhere('organisation', 'like', '%' . request('search') . '%');
-            });
+            })->orderBy('created_at', 'DESC');
         }
 
         if (!$orders->count()) {

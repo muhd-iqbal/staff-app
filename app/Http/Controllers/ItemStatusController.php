@@ -166,7 +166,7 @@ class ItemStatusController extends Controller
 
         return view('orders.item_status', [
             'status' => $title,
-            'items' => $items->paginate(20),
+            'items' => $items->orderBy('created_at', 'DESC')->paginate(20),
         ]);
     }
 }

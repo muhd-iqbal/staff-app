@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Cashflow;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -45,8 +46,19 @@ class PaymentController extends Controller
         unset($attributes['date']);
 
         //create the payment and modify order table
-        Payment::create($attributes);
+        $insert = Payment::create($attributes);
+        if($attributes['payment_method']=='tunai'){
 
+            cash_in([
+                'date' => substr($attributes['time'],0,10),
+                'branch_id' => $attributes['branch_id'],
+                'category_id' => 1,
+                'reference' => 'ID Bayaran: '.payment_num($insert->id),
+                'amount' => $attributes['amount'],
+                'note' => 'Bayaran untuk ' . order_num($attributes['order_id']),
+                'payment_id' => $insert->id,
+            ]);
+        }
         DB::table('orders')->where('id', $order)->increment('paid', $attributes['amount']);
         DB::table('orders')->where('id', $order)->decrement('due', $attributes['amount']);
 
@@ -57,6 +69,11 @@ class PaymentController extends Controller
     {
         DB::table('orders')->where('id', $order->id)->decrement('paid', $payment->amount);
         order_adjustment($order->id);
+        if($payment->payment_method == 'tunai'){
+            DB::table('cashflows')->where('payment_id', $payment->id)->delete();
+            DB::table('branches')->where('id',$payment->branch_id)->decrement('cash_current', $payment->amount);
+        }
+
         $payment->delete();
         return back()->with('success', 'Pembayaran '. payment_num($payment->id) .' dipadam');
     }

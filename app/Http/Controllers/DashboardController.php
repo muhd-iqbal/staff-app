@@ -28,6 +28,7 @@ class DashboardController extends Controller
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
+        'Peti Tunai' => '/cashflow',
     ];
     protected $links_owner = [
         // 'Permohonan Cuti' => '/top/leaves/approval',

@@ -4,7 +4,25 @@
             {{ __('Item Pesanan') . ': ' . order_num($item->order_id) }}
         </h2>
     </x-slot>
-    <x-modalbox action='/orders/item/{{ $item->id }}/delete' text='Padam item? Item akan dihapus dari rekod.' />
+    <x-modalbox>
+        <!--Title-->
+        <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-bold">Perhatian</p>
+        </div>
+        <!--Body-->
+        <div class="my-5">
+            <p>Padam item? Item akan dihapus dari rekod.</p>
+        </div>
+        <!--Footer-->
+        <div class="flex justify-end pt-2 gap-2">
+            <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
+            <form action="/orders/item/{{ $item->id }}/delete" method="POST">
+                @csrf
+                @method('DELETE')
+                <x-button>Padam</x-button>
+            </form>
+        </div>
+    </x-modalbox>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -14,8 +32,8 @@
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
                             @if (auth()->user()->isAdmin)
-                                <div class="text-right" title="Padam Item"><span class=" text-red-500 cursor-pointer"
-                                        onclick="openModal()">x</span></div>
+                                <div class="text-right" title="Padam Item"><span
+                                        class=" text-red-500 cursor-pointer" onclick="openModal()">x</span></div>
                             @endif
                             <div class="m-5 grid md:grid-cols-2">
                                 <div class="flex flex-col">
@@ -62,7 +80,8 @@
                                     @endif
                                 </div>
                                 <div class="grid grid-col mt-10 md:mt-0">
-                                    <div class="md:text-right">{{ __('Saiz: ') . $item->size }} ({{$item->measurement}})</div>
+                                    <div class="md:text-right">{{ __('Saiz: ') . $item->size }}
+                                        ({{ $item->measurement }})</div>
                                     <div class="md:text-right">{{ __('Kuantiti: ') . $item->quantity }}</div>
                                     <div class="md:text-right">
                                         {{ __('Harga: RM') . RM($item->price) }}</div>

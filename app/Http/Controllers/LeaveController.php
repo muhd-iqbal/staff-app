@@ -110,7 +110,7 @@ class LeaveController extends Controller
             ->leftJoin('users', 'users.id', '=', 'leaves.user_id')
             ->leftJoin('leave_types', 'leave_types.id', '=', 'leaves.leave_type_id')
             ->where('hr_approval', '=', 0)
-            ->select('leaves.*', 'leave_types.name AS type_name', 'users.name AS user_name')
+            ->select('leaves.*', 'leave_types.name AS type_name', 'users.name AS user_name', 'users.annual_leave')
             ->orderBy('leaves.created_at')
             ->get();
 
