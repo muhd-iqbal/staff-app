@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CashflowController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -52,7 +53,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/payment/{order}', [OrderController::class, 'print']);
 
-    Route::get('/orders/{order}/invoice', [InvoiceController::class, 'index']);
+    Route::get('/orders/{order}/invoice', [InvoiceController::class, 'invoice']);
+    Route::patch('/orders/{order}/invoice', [InvoiceController::class, 'edit_invoice']);
+    Route::get('/orders/{order}/purchase-order', [InvoiceController::class, 'po']);
+    Route::get('/orders/{order}/delivery-order', [InvoiceController::class, 'do']);
+    Route::patch('/orders/{order}/delivery-order', [InvoiceController::class, 'edit_do']);
 
     Route::get('/orders/{order}/payments', [PaymentController::class, 'index']);
     Route::post('/orders/{order}/payments', [PaymentController::class, 'insert']);
@@ -123,6 +128,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/top/leave-types', [LeaveTypeController::class, 'index']);
     Route::patch('/top/leave-types/{type}', [LeaveTypeController::class, 'update']);
+
+    Route::get('/cashflow', [CashflowController::class, 'index']);
+    Route::get('/cashflow/{branch}', [CashflowController::class, 'view']);
+    Route::post('/cashflow/{branch}/add', [CashflowController::class, 'add']);
+    Route::delete('/cashflow/delete/{cashflow}', [CashflowController::class, 'delete']);
 
 });
 

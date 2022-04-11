@@ -4,23 +4,39 @@
             {{ order_num($order->id) }}
         </h2>
     </x-slot>
-    <x-modalbox action='/orders/{{ $order->id }}/delete'
-        text='Padam order? Setiap item perlu dipadam terlebih dahulu.' />
+    <x-modalbox>
+        <!--Title-->
+        <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-bold">Perhatian</p>
+        </div>
+        <!--Body-->
+        <div class="my-5">
+            <p>Padam order? Setiap item perlu dipadam terlebih dahulu.</p>
+        </div>
+        <!--Footer-->
+        <div class="flex justify-end pt-2 gap-2">
+            <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
+            <form action="/orders/{{ $order->id }}/delete" method="POST">
+                @csrf
+                @method('DELETE')
+                <x-button>Padam</x-button>
+            </form>
+        </div>
+    </x-modalbox>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div
                     class="p-6 border-t-4
-                    @if ($order->date >= env('POS_START'))
-                        @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
+                    @if ($order->date >= env('POS_START')) @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
                     @endif
                     ">
                     <!-- start component -->
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
                             @if (auth()->user()->isAdmin)
-                                <div class="text-right" title="Padam Order"><span class=" text-red-500 cursor-pointer"
-                                        onclick="openModal()">x</span></div>
+                                <div class="text-right" title="Padam Order"><span
+                                        class=" text-red-500 cursor-pointer" onclick="openModal()">x</span></div>
                             @endif
                             <div class="flex flex-col items-center">
                                 <div class="flex">
@@ -96,10 +112,29 @@
                                     class='w-auto text-center bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit Order') }}
                                 </a>
-                                <a href="/orders/{{ $order->id }}/invoice"
-                                    class='w-auto text-center bg-purple-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                    {{ __('Invois (Draf)') }}
-                                </a>
+                                <div class="grid grid-flow-col text-center font-medium text-white">
+                                    <div>
+                                        <button
+                                            class="h-10 w-10 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
+                                            onclick="window.location='/orders/{{ $order->id }}/invoice'">
+                                            INV
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button
+                                            class="h-10 w-10 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
+                                            onclick="window.location='/orders/{{ $order->id }}/purchase-order'">
+                                            PO
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button
+                                            class="h-10 w-10 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
+                                            onclick="window.location='/orders/{{ $order->id }}/delivery-order'">
+                                            DO
+                                        </button>
+                                    </div>
+                                </div>
                                 <a href="/orders/{{ $order->id }}/payments"
                                     class='w-auto text-center bg-pink-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Bayaran') }}
@@ -163,7 +198,9 @@
                                                     </td>
                                                     <td
                                                         class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
-                                                        {{ $list->size }} {{ $list->measurement ? "(".$list->measurement.")" :""}}</td>
+                                                        {{ $list->size }}
+                                                        {{ $list->measurement ? '(' . $list->measurement . ')' : '' }}
+                                                    </td>
                                                     <td
                                                         class="text-center {{ $list->is_urgent ? 'text-red-600' : '' }}">
                                                         {{ $list->quantity . ' X ' . RM($list->price) }}</td>

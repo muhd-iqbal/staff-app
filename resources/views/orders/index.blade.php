@@ -45,9 +45,14 @@
                                                     {{ __('Pelanggan') }}
                                                 </th>
                                                 <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                                     {{ __('Status') }}
                                                 </th>
+                                                @if (request('payment'))
+                                                    <th class="bg-blueGray-50 text-blueGray-500 text-center align-middle border border-solid border-blueGray-100 py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
+                                                        <span class="text-red-600">{{ __('Tunggakan') }}</span> <span class="font-bold">/</span> {{ __('Jumlah') }}
+                                                    </th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,7 +85,7 @@
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2">
+                                                        class="border-t-0 px-6 text-center align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2">
 
                                                         @php
                                                             $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
@@ -155,6 +160,11 @@
                                                             </div>
                                                         @endunless
                                                     </td>
+                                                    @if (request('payment'))
+                                                        <td class="text-center">
+                                                            <div class="text-sm"><span class="text-red-600 font-extrabold">{{ RM($order->due) }}</span> <span class="font-bold">/</span> {{ RM($order->grand_total) }}</div>
+                                                        </td>
+                                                    @endif
                                                 </tr>
                                                 @if ($urgent > 0)
                                                     <script>

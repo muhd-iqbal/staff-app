@@ -1,5 +1,6 @@
 <x-guest-layout>
     <div class="mx-auto p-3" style="max-width: 148mm; background: ">
+        <div class="text-right text-xl font-bold text-gray-500">RESIT</div>
         <div class="flex items-center justify-between mb-8 px-3">
 
             <div class="text-center w-full">
@@ -11,7 +12,7 @@
 
         <div class="flex justify-between mb-1 px-3">
             <div class="">
-                <span>Rujukan: {{ order_num($order->id) }}</span><br />
+                <span>No. Pesanan: {{ order_num($order->id) }}</span><br />
                 @if ($order->customer->organisation)
                     {{ strtoupper($order->customer->organisation) }}
                 @else
@@ -81,12 +82,16 @@
         @endif
         @if ($order->due)
             <div class="my-4 px-3 text-center">
-                <span>Buat bayaran ke {{ $order->branch->bank_account_1 }} dengan Rujukan
+                <span>Buat bayaran kepada: <br />
+                    {{ $order->branch->bank_account_1 }} <br />
+                    {{ $order->branch->bank_account_2? $order->branch->bank_account_2."<br />": "" }}
+                    {{ $order->branch->bank_account_3? $order->branch->bank_account_3."<br />": "" }}
+                    dengan Rujukan
                     {{ order_num($order->id) }}
             </div>
         @endif
 
-        <div class="mb-4 text-2xl text-center px-3">
+        <div class="mb-2 text-2xl text-center px-3">
             <span>Terima kasih!</span>
         </div>
 
