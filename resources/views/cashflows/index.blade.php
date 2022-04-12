@@ -118,16 +118,20 @@
                                 </div>
                             </div>
                     </div>
-                    {{-- <div class="flex">
-                <a href="/orders/view/{{ $order->id }}"
-                    class='w-auto text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2 mt-3'>
-                    {{ __('Kembali ke pesanan') }}
-                </a>
-                <div class="ml-auto">
-                    <button onclick="print()"
-                        class="bg-blue-400 p-2 rounded-md px-4 font-bold mt-3 text-white hover:bg-blue-600">Cetak</button>
-                </div>
-            </div> --}}
+                    <div class="flex">
+                        <div>
+                            <a href="/"
+                                class='text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                {{ __('Kembali') }}
+                            </a>
+                        </div>
+                        <div class="ml-auto">
+                            @foreach ($branches as $bra)
+                                <a href="/cashflow/{{ $bra->id }}"
+                                    class="bg-{{ $bra->color_code }}-500 shadow-xl py-2 px-4  rounded-md font-bold text-white hover:bg-{{ $bra->color_code }}-700">{{ ucwords($bra->shortname) }}</a>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
 </x-app-layout>

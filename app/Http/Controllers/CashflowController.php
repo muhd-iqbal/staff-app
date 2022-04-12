@@ -23,6 +23,7 @@ class CashflowController extends Controller
             'branch' => Branch::find($branch),
             'categories' => CashCategory::get(),
             'cashflows' => Cashflow::with('category')->where('branch_id', $branch)->orderBy('created_at', 'desc')->orderBy('created_at', 'desc')->paginate(30),
+            'branches' => Branch::all(),
         ]);
     }
     public function add($branch)
