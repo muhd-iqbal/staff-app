@@ -65,7 +65,7 @@
                             <tr>
                                 <td class="border border-black p-2">Status</td>
                                 <td class="border border-black p-2 capitalize">
-                                    {{ $order->delivery_status ? 'Dihantar' : 'Belum dihantar' }}</td>
+                                    {{ $order->delivery_status ? 'Dihantar' : 'Self Pickup' }}</td>
                             </tr>
                             {{-- <td class="border border-black p-2">
                                     <div>Daripada: </div>
@@ -133,7 +133,7 @@
                             <select name="delivery_status" id="delivery_status">
                                 <option selected disabled>Pilih status</option>
                                 <option value="1" {{ $order->delivery_status == 1 ? 'selected' : '' }}>Dihantar</option>
-                                <option value="0" {{ $order->delivery_status != 1 ? 'selected' : '' }}>Belum dihantar
+                                <option value="0" {{ $order->delivery_status != 1 ? 'selected' : '' }}>Self Pickup
                                 </option>
                             </select>
                     </div>
