@@ -107,3 +107,24 @@ if (!function_exists('cash_out')) {
         Cashflow::create($attributes);
     }
 }
+
+if (!function_exists('month_name')) {
+    function month_name($int)
+    {
+        $month = [
+            '1' => 'Januari',
+            '2' => 'Febuari',
+            '3' => 'Mac',
+            '4' => 'April',
+            '5' => 'Mei',
+            '6' => 'Jun',
+            '7' => 'Julai',
+            '8' => 'Ogos',
+            '9' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Disember',
+        ];
+        return $month[$int];
+    }
+}

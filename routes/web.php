@@ -11,6 +11,7 @@ use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\RecalculateController;
 use App\Http\Controllers\StaffController;
@@ -116,6 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/cashflow/{branch}/add', [CashflowController::class, 'add']);
     Route::delete('/cashflow/delete/{cashflow}', [CashflowController::class, 'delete']);
 
+    Route::get('/payslips', [PayslipController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -133,6 +135,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/top/leave-types', [LeaveTypeController::class, 'index']);
     Route::patch('/top/leave-types/{type}', [LeaveTypeController::class, 'update']);
+
+    Route::get('/admin/payslips', [PayslipController::class, 'indexadmin']);
+    Route::post('/admin/payslips/add', [PayslipController::class, 'create']);
+    Route::delete('/admin/payslips/{payslip}', [PayslipController::class, 'delete']);
 
 });
 

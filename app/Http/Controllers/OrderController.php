@@ -118,7 +118,7 @@ class OrderController extends Controller
                 'lists' => $lists,
             ]);
         else :
-            return back()->with('error', 'Order tidak dijumpai, sila masukkan semula.');
+            return back()->with('forbidden', 'Order tidak dijumpai, sila masukkan semula.');
         endif;
     }
 
