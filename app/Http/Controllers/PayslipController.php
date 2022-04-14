@@ -38,7 +38,7 @@ class PayslipController extends Controller
             'file' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $check = Payslip::with('user')->where('month', request('m'))->where('year', request('y'));
+        $check = Payslip::where('user_id', $attr['user_id'])->where('month', $attr['month'])->where('year', $attr['year'])->first();
 
         if($check === null){
 
