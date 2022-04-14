@@ -14,8 +14,8 @@ class DashboardController extends Controller
     protected $links_staff = [
         'Peti Tunai' => '/cashflow',
         'Permohonan Cuti' => '/leaves',
-        // 'Tugasan Semasa' => '/view-designer',
         'Perihal Staf' => '/staff',
+        'Slip Gaji' => '/payslips',
     ];
     protected $links_order = [
         'Senarai Order' => '/orders',
@@ -29,6 +29,7 @@ class DashboardController extends Controller
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
+        'Slip Gaji Staf' => '/admin/payslips',
     ];
     protected $links_owner = [
         // 'Permohonan Cuti' => '/top/leaves/approval',

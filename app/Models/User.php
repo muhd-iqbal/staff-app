@@ -66,4 +66,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Branch::class);
     }
+    public function payslip()
+    {
+        return $this->hasMany(Payslip::class);
+    }
 }
