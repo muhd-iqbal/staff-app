@@ -48,12 +48,32 @@ if (!function_exists('phone_format')) {
         return $phoneNumber;
     }
 }
+//reformat IC displays
+if (!function_exists('ic_format')) {
+    function ic_format($icNumber)
+    {
+        // XXXXXX-XX-XXXX
+        $firstSix = substr($icNumber, 0, 6);
+        $nextFour = substr($icNumber, 6, 2);
+        $lastFour = substr($icNumber, 8, 4);
+
+        $icNumber = $firstSix . '-' . $nextFour . '-' . $lastFour;
+
+        return $icNumber;
+    }
+}
 
 // assign order number based on prefix on env file
 if (!function_exists('order_num')) {
     function order_num($var)
     {
         return env('ORDER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
+    }
+}
+if (!function_exists('pay_vo_num')) {
+    function pay_vo_num($var)
+    {
+        return env('PAYMENT_VOUCHER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
     }
 }
 
@@ -70,10 +90,10 @@ if (!function_exists('order_adjustment')) {
 }
 
 // convert integer to money format from database
-if(!function_exists('RM')){
+if (!function_exists('RM')) {
     function RM($amount)
     {
-        return number_format($amount/100, 2);
+        return number_format($amount / 100, 2);
     }
 }
 
@@ -96,14 +116,14 @@ if (!function_exists('recalculate_order')) {
 if (!function_exists('cash_in')) {
     function cash_in($attributes)
     {
-        DB::table('branches')->where('id',$attributes['branch_id'])->increment('cash_current', $attributes['amount']);
+        DB::table('branches')->where('id', $attributes['branch_id'])->increment('cash_current', $attributes['amount']);
         Cashflow::create($attributes);
     }
 }
 if (!function_exists('cash_out')) {
     function cash_out($attributes)
     {
-        DB::table('branches')->where('id',$attributes['branch_id'])->decrement('cash_current', $attributes['amount']);
+        DB::table('branches')->where('id', $attributes['branch_id'])->decrement('cash_current', $attributes['amount']);
         Cashflow::create($attributes);
     }
 }

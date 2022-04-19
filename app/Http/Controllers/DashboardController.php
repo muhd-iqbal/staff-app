@@ -13,6 +13,7 @@ class DashboardController extends Controller
     ];
     protected $links_staff = [
         'Peti Tunai' => '/cashflow',
+        'Baucer Bayaran' => '/payment-vouchers',
         'Permohonan Cuti' => '/leaves',
         'Perihal Staf' => '/staff',
         'Slip Gaji' => '/payslips',
@@ -21,6 +22,7 @@ class DashboardController extends Controller
         'Senarai Order' => '/orders',
         'Tugasan Design' => '/to-do',
         'Print List' => '/print',
+        'Graf Jualan' => '/reports',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
     ];
