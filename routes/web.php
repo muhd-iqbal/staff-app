@@ -11,9 +11,11 @@ use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentVoucherController;
+use App\Http\Controllers\PaymentVoucherListController;
 use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\PhotoController;
-use App\Http\Controllers\RecalculateController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TaskController;
@@ -118,6 +120,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/cashflow/delete/{cashflow}', [CashflowController::class, 'delete']);
 
     Route::get('/payslips', [PayslipController::class, 'index']);
+
+    Route::get('/reports', [ReportController::class, 'index']);
+    Route::get('/reports/{year}', [ReportController::class, 'yearly']);
+    Route::get('/reports/{year}/{branch}', [ReportController::class, 'branch_yearly']);
+
+    Route::get('/payment-vouchers', [PaymentVoucherController::class, 'index']);
+    Route::post('/payment-vouchers/add', [PaymentVoucherController::class, 'create']);
+    Route::get('/payment-vouchers/{voucher}', [PaymentVoucherController::class, 'view']);
+    Route::get('/payment-vouchers/{voucher}/edit', [PaymentVoucherController::class, 'edit']);
+    Route::patch('/payment-vouchers/{voucher}/edit', [PaymentVoucherController::class, 'update']);
+    Route::patch('/payment-vouchers/{voucher}/approve', [PaymentVoucherController::class, 'approve']);
+    Route::patch('/payment-vouchers/{voucher}/paid', [PaymentVoucherController::class, 'paid']);
+
+    Route::post('/payment-vouchers/{voucher}/add', [PaymentVoucherListController::class, 'create']);
+    Route::delete('/payment-vouchers/{voucher}/{list}', [PaymentVoucherListController::class, 'delete']);
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
