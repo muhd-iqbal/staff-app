@@ -38,4 +38,18 @@ class SupplierController extends Controller
 
         return redirect(request('prev_url'))->with('success', 'Supplier/Subcon ditambah');
     }
+
+    public function update(Supplier $supplier)
+    {
+        $attributes = request()->validate([
+            'name' => 'required',
+            'phone' => 'nullable|numeric',
+            'email' => 'nullable|email',
+        ]);
+
+        $supplier->update($attributes);
+
+        return redirect('/suppliers')->with('success', 'Supplier/Subcon dikemaskini');
+
+    }
 }
