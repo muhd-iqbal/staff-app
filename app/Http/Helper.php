@@ -70,6 +70,13 @@ if (!function_exists('order_num')) {
         return env('ORDER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
     }
 }
+// assign quote number based on prefix on env file
+if (!function_exists('quote_num')) {
+    function quote_num($var)
+    {
+        return env('QUOTE_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
+    }
+}
 if (!function_exists('pay_vo_num')) {
     function pay_vo_num($var)
     {
@@ -85,6 +92,16 @@ if (!function_exists('order_adjustment')) {
         DB::table('orders')->where('id', $id)->update([
             'grand_total' => DB::raw('`total`-`discount`+`shipping`'),
             'due' => DB::raw('`grand_total`-`paid`')
+        ]);
+    }
+}
+//helper to make grandtotal and due updated on row update
+
+if (!function_exists('quote_adjustment')) {
+    function quote_adjustment($id)
+    {
+        DB::table('quotations')->where('id', $id)->update([
+            'grand_total' => DB::raw('`total`-`discount`+`shipping`'),
         ]);
     }
 }

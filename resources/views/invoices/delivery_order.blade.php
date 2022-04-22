@@ -59,8 +59,26 @@
                             <tr>
                                 <td class="border border-black p-2">Pelanggan</td>
                                 <td class="border border-black p-2">
-                                    {{ $order->customer->organisation }}<br />{{ $order->customer->address }} <br />
-                                    u/p: {{ $order->customer->name }}</td>
+                                    <div>
+                                        {{ $order->customer->organisation }}
+                                    </div>
+                                    @if ($order->customer->address)
+                                        <div>
+                                            <div>
+                                                {{ $order->customer->address }}
+                                            </div>
+                                            <div>
+                                                {{ $order->customer->postcode . ', ' . $order->customer->city }}
+                                            </div>
+                                            <div>
+                                                {{ $order->customer->address }}
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        u/p: {{ $order->customer->name }}
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="border border-black p-2">Status</td>
@@ -126,16 +144,16 @@
                     @csrf
                     @method('PATCH')
                     <div class="grid">
-                            No Tracking
-                            <input type="text" name="delivery_tracking" id="delivery_tracing" class="rounded-md"
-                                value="{{ $order->delivery_tracking }}">
-                            Status
-                            <select name="delivery_status" id="delivery_status">
-                                <option selected disabled>Pilih status</option>
-                                <option value="1" {{ $order->delivery_status == 1 ? 'selected' : '' }}>Dihantar</option>
-                                <option value="0" {{ $order->delivery_status != 1 ? 'selected' : '' }}>Self Pickup
-                                </option>
-                            </select>
+                        No Tracking
+                        <input type="text" name="delivery_tracking" id="delivery_tracing" class="rounded-md"
+                            value="{{ $order->delivery_tracking }}">
+                        Status
+                        <select name="delivery_status" id="delivery_status">
+                            <option selected disabled>Pilih status</option>
+                            <option value="1" {{ $order->delivery_status == 1 ? 'selected' : '' }}>Dihantar</option>
+                            <option value="0" {{ $order->delivery_status != 1 ? 'selected' : '' }}>Self Pickup
+                            </option>
+                        </select>
                     </div>
                     <div class="text-right">
                         <button type="submit"

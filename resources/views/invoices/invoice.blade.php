@@ -38,8 +38,15 @@
                             <div class="mt-3">
                                 {{ __('Kepada: ') }}
                             </div>
-                            {{ $order->customer->company ? '<div>' . $order->customer->company . '</div>' : '' }}
-                            <div>{{ $order->customer->company ? 'PIC: ' : '' . $order->customer->name }}</div>
+                            @if ($order->customer->organisation)
+                                <div>{{ $order->customer->organisation }}</div>
+                                @if ($order->customer->address)
+                                    <div>{{ $order->customer->address }}</div>
+                                    <div>{{ $order->customer->postcode . ', ' . $order->customer->city }}</div>
+                                @endif
+                            @endif
+                            <div>{{ $order->customer->organisation ? 'PIC: ' : '' }}{{ $order->customer->name }}
+                            </div>
                             <div>
                                 {{ __('Telefon: ') . phone_format($order->customer->phone) }}
                             </div>

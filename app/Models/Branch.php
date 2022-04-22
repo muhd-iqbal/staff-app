@@ -14,6 +14,10 @@ class Branch extends Model
     {
         return $this->hasMany(Order::class);
     }
+    public function quotation()
+    {
+        return $this->hasMany(Quotation::class);
+    }
     public function order_item()
     {
         return $this->hasMany(OrderItem::class);

@@ -112,24 +112,17 @@
                                     class='w-auto text-center bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit Order') }}
                                 </a>
-                                <div class="grid grid-flow-col text-center font-medium text-white">
+                                <div class="grid grid-flow-col gap-3 text-center font-medium text-white">
                                     <div>
                                         <button
-                                            class="h-10 w-10 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
+                                            class="w-full py-2 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
                                             onclick="window.location='/orders/{{ $order->id }}/invoice'">
-                                            INV
+                                            INVOIS
                                         </button>
                                     </div>
                                     <div>
                                         <button
-                                            class="h-10 w-10 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
-                                            onclick="window.location='/orders/{{ $order->id }}/purchase-order'">
-                                            PO
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button
-                                            class="h-10 w-10 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
+                                            class="w-full py-2 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
                                             onclick="window.location='/orders/{{ $order->id }}/delivery-order'">
                                             DO
                                         </button>
