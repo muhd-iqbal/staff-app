@@ -20,6 +20,7 @@ class DashboardController extends Controller
     ];
     protected $links_order = [
         'Senarai Order' => '/orders',
+        'Senarai Sebut Harga' => '/quote',
         'Tugasan Design' => '/to-do',
         'Print List' => '/print',
         'Graf Jualan' => '/reports',

@@ -15,6 +15,8 @@ use App\Http\Controllers\PaymentVoucherController;
 use App\Http\Controllers\PaymentVoucherListController;
 use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\QuotationItemController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
@@ -53,6 +55,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/no-pickup', [OrderController::class, 'index_nopickup']);
     Route::get('/orders/view/{order}/refresh', [OrderController::class, 'refresh']);
 
+    Route::get('/quote', [QuotationController::class, 'index']);
+    Route::get('/quote/create', [QuotationController::class, 'create']);
+    Route::post('/quote/create', [QuotationController::class, 'insert']);
+    Route::get('/quote/{quote}', [QuotationController::class, 'view']);
+    Route::delete('/quote/{quote}', [QuotationController::class, 'delete']);
+    Route::get('/quote/{quote}/print', [QuotationController::class, 'print']);
+    Route::patch('/quote/{quote}/print', [QuotationController::class, 'update_footer']);
+    Route::post('/quote/{quote}/export', [QuotationController::class, 'export']);
+
+    Route::post('/quote/{quote}/add-item', [QuotationItemController::class, 'insert']);
+    Route::delete('/quote/{quote}/{list}/delete', [QuotationItemController::class, 'delete']);
 
     Route::get('/payment/{order}', [OrderController::class, 'print']);
 
