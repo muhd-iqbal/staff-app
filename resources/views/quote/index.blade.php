@@ -56,7 +56,7 @@
                                                     class="hover:bg-gray-100 cursor-pointer">
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                        {{ order_num($quote->id) }}
+                                                        {{ quote_num($quote->id) }}
                                                     </th>
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
@@ -66,7 +66,7 @@
                                                         {{ $quote->customer->name }}
                                                     </td>
                                                     <td
-                                                        class="border-t-0 px-6 text-center align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2">
+                                                        class="border-t-0 px-6 text-center align-middle border-l-0 border-r-0 text-3xl whitespace-nowrap p-2">
                                                         @if ($quote->export_to_order)
                                                             <span class="text-green-500">&#10003;</span>
                                                         @else
