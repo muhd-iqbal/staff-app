@@ -13,7 +13,7 @@ class PaymentVoucherController extends Controller
     public function index()
     {
         return view('pay_vouchers.index', [
-            'vouchers' => PaymentVoucher::orderBy('created_at', 'DESC')->paginate(2),
+            'vouchers' => PaymentVoucher::orderBy('created_at', 'DESC')->paginate(20),
         ]);
     }
 
