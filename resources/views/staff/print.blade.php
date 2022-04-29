@@ -1,18 +1,40 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight print:hidden">
             {{ __('Print List') }}
         </h2>
     </x-slot>
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
 
+            #section-to-print,
+            #section-to-print * {
+                visibility: visible;
+            }
+
+            #section-to-print {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+    </style>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="py-1">
                         <div class="w-full xl:w-full mb-12 xl:mb-0 px-4 mx-auto mt-5">
-                            <form action="/print/all-stickers"  >
-                                <div
+                            <div class="text-right mb-2">
+                                <button type="button" onclick="print()"
+                                    class="bg-green-500 text-white p-2 px-4 rounded-md shadow-md hover:bg-green-700">Print List</button>
+                            </div>
+                            <form action="/print/all-stickers">
+                                <div id="section-to-print"
                                     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
                                     <div class="rounded-t mb-0 px-4 py-3 border-0">
                                         <div class="flex flex-wrap items-center">
@@ -41,42 +63,43 @@
                                                     </th>
                                                     <th
                                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
-                                                        {{ __('Kuantiti') }}
+                                                        {{ __('Qty') }}
                                                     </th>
                                                     <th
                                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
                                                         {{ __('Due/Finishing') }}
                                                     </th>
-                                                    <th class="text-right pr-2"><input type="checkbox" onclick="toggle(this);" title="Tanda Semua" /></th>
+                                                    <th class="text-right pr-2 print:hidden"><input type="checkbox"
+                                                            onclick="toggle(this);" title="Tanda Semua" /></th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 @if (count($print))
                                                     @foreach ($print as $task)
-
                                                         <tr onclick="window.location='orders/item/{{ $task->id }}';"
                                                             class="hover:bg-gray-100 cursor-pointer text-center  {{ $task->is_urgent ? 'bg-red-500' : '' }}">
                                                             <td
-                                                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap">
+                                                                class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs">
                                                                 {{ $task->order->customer->name }}
                                                             </td>
                                                             <td
-                                                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap">
+                                                                class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs">
                                                                 {{ $task->product }}
                                                             </td>
                                                             <td
-                                                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap">
-                                                                {{ $task->size }}
+                                                                class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs">
+                                                                {{ $task->size }} ({{ $task->measurement }})
                                                             </td>
                                                             <td
-                                                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-2">
+                                                                class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs p-2">
                                                                 {{ $task->quantity }}
                                                             </td>
-                                                            <td>
+                                                            <td
+                                                                class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs p-2">
                                                                 {{ $task->finishing }}
                                                             </td>
-                                                            <td class="cursor-default flex items-center gap-1"
+                                                            <td class="border-t-2 cursor-pointer flex items-center gap-1 print:hidden"
                                                                 onclick=event.stopPropagation()>
                                                                 <img src="https://img.icons8.com/material-outlined/24/000000/print.png"
                                                                     onclick="window.location='/items/print-sticker/{{ $task->id }}'" />
@@ -88,7 +111,7 @@
                                                 @else
                                                     <tr>
                                                         <td colspan=4
-                                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                             Tiada.</td>
                                                     </tr>
                                                 @endif

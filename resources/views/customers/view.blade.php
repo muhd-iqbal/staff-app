@@ -97,7 +97,7 @@
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                         <div id="branch-label"
-                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-600">
+                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-500">
                                                         </div>
                                                         {{ $order->date }}
                                 </div>
