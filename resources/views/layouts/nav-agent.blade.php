@@ -15,7 +15,7 @@
             <div class="sm:flex sm:items-center sm:ml-6 mt-2">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <a href="/logout"
+                        <a href="{{ route('agent.logout')}}"
                             class="flex bg-red-600 p-2 text-white items-center text-sm font-medium rounded-md hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
                             >
                             <div>Log Keluar</div>
@@ -26,10 +26,10 @@
                     <x-slot name="content">
                         <!-- Authentication -->
                         <x-dropdown-link href="/profile">{{ __('Maklumat') }}</x-dropdown-link>
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('agent.logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('agent.logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -48,10 +48,10 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link href="/profile">{{ __('Maklumat Peribadi') }}</x-responsive-nav--link>
                     <!-- Authentication -->
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('agent.logout') }}">
                         @csrf
 
-                        <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+                        <x-responsive-nav-link :href="route('agent.logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                             {{ __('Log Out') }}
                         </x-responsive-nav-link>
