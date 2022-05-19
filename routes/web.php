@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/customer/{customer}/edit', [CustomerController::class, 'edit']);
     Route::patch('/customer/{customer}/edit', [CustomerController::class, 'update']);
     Route::get('/customer/{customer}', [CustomerController::class, 'select']);
+    Route::patch('/customer/{customer}/agent', [CustomerController::class, 'agent']);
 
     Route::get('/branches', [BranchController::class, 'index']);
     Route::get('/branches/{branch}/update', [BranchController::class, 'view']);

@@ -46,8 +46,17 @@
                                                     {{ ($customers->currentpage() - 1) * $customers->perpage() + $loop->index + 1 }}
                                                 </td>
                                                 <td class="px-4 py-3 border">
-                                                    <p class="text-sm font-semibold text-black">
-                                                        {{ ucwords(strtolower($customer->name)) }}</p>
+                                                    <div class="flex">
+                                                        <p class="text-sm font-semibold text-black">
+                                                            {{ ucwords(strtolower($customer->name)) }}</p>
+                                                        @if ($customer->is_agent)
+                                                            <div
+                                                                class="ml-2 items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                <span
+                                                                    class="inline-flex px-1">{{ __('AGENT') }}</span>
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                 </td>
                                                 <td class="text-center border">
                                                     {{ $customer->phone }}

@@ -44,7 +44,7 @@ class AgentController extends Controller
     public function index()
     {
         $agent = Customer::where('id', session('agent_id'))->first();
-        $orders = Order::with('branch')->where('customer_id', session('agent_id'))->orderBy('created_at', 'DESC')->paginate(20);
+        $orders = Order::with('branch')->where('customer_id', session('agent_id'))->where('date', '>=', env('POS_START'))->orderBy('created_at', 'DESC')->paginate(20);
         return view('agents.dashboard', [
             'agent' => $agent,
             'orders' => $orders,

@@ -62,13 +62,28 @@
                                 </form>
                             </div>
                         </div>
+                        <form action="/customer/{{ $customer->id }}/agent" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="p-5 gap-4 align-middle">
+                                <label for="is_agent">Tandakan untuk agen</label>
+                                <input type="checkbox" name="is_agent" id="is_agent" class="h-5 w-5 rounded"
+                                    {{ $customer->is_agent ? 'checked' : '' }}>
+                                <input type="password" name="password" id="password" class="rounded"
+                                    placeholder="Ubah Kata Laluan">
+                                    <x-button>Simpan</x-button>
+                                    @error('password')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                            </div>
+                        </form>
                     </section>
                     <div class="text-center mb-5">
                         @if (request('back'))
-                        <a href="{{ request('back') }}"
-                            class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2 mr-2'>
-                            Kembali ke order
-                        </a>
+                            <a href="{{ request('back') }}"
+                                class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2 mr-2'>
+                                Kembali ke order
+                            </a>
                         @endif
                         <a href="/customers"
                             class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
@@ -79,4 +94,14 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function agent_checked() {
+            div = document.getElementById('password');
+            if (document.getElementById('is_agent').checked) {
+                div.style.display = 'block'
+            } else {
+                div.style.display = 'none'
+            }
+        }
+    </script>
 </x-app-layout>

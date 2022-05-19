@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AgentOrderController extends Controller
 {
@@ -25,7 +26,8 @@ class AgentOrderController extends Controller
             'size' => 'required|max:50',
             'quantity' => 'required|integer|min:1',
             'branch_id' => 'required|exists:branches,id',
-            'remarks' => 'nullable'
+            'remarks' => 'nullable',
+            'measurement' => ['required', Rule::in(array_keys($this->measurement))]
         ]);
 
         $check_if_exist = Order::where('customer_id', session('agent_id'))
@@ -49,6 +51,7 @@ class AgentOrderController extends Controller
                 'remarks' => $attr['remarks'],
                 'price' => 0,
                 'total' => 0,
+                'measurement' => $attr['measurement'],
             ]);
         } else {
             OrderItem::create([
@@ -59,6 +62,7 @@ class AgentOrderController extends Controller
                 'remarks' => $attr['remarks'],
                 'price' => 0,
                 'total' => 0,
+                'measurement' => $attr['measurement'],
             ]);
         }
         return redirect("/agent")->with('success', 'Order Berjaya Dibuat');
@@ -75,5 +79,4 @@ class AgentOrderController extends Controller
             'agent' => Customer::where('id', session('agent_id'))->first(),
         ]);
     }
-
 }

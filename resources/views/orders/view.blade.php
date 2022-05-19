@@ -23,6 +23,9 @@
             </form>
         </div>
     </x-modalbox>
+    @php
+        $alert = 0;
+    @endphp
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -177,6 +180,13 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach ($lists as $list)
+                                                @php
+                                                    if ($list->price == 0) {
+                                                        $alert = $alert+1;
+                                                    }else{
+                                                        $alert = $alert;
+                                                    }
+                                                @endphp
                                                 <tr class="cursor-pointer"
                                                     onclick="window.location='/orders/item/{{ $list->id }}'">
                                                     <td class="py-4 whitespace-nowrap">
@@ -279,6 +289,12 @@
             </div>
         </div>
     </div>
+    @if ($alert > 0)
+        <script>
+            alert_count = {{ $alert }}
+            alert('Terdapat '+ alert_count + ' Item Dengan Nilai RM0, kemaskini atau abaikan mesej ini.')
+        </script>
+    @endif
     <script>
         function toggleModalShipping() {
             document.getElementById('modal-shipping').classList.toggle('hidden')

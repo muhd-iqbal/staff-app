@@ -80,4 +80,25 @@ class CustomerController extends Controller
 
         return redirect('/customers')->with('success', 'Pelanggan ditambah.');
     }
+
+    public function agent(Customer $customer)
+    {
+        $attr = request()->validate([
+            'password' => 'max:100|required_with:is_agent'
+        ]);
+
+        $attr['password'] = md5($attr['password']);
+
+        if (request()->has('is_agent')) {
+            $attr['is_agent'] = 1;
+        }
+        else{
+            $attr['is_agent'] = 0;
+            $attr['password'] = null;
+        }
+
+        $customer->update($attr);
+
+        return back()->with('success', 'Status ejen dikemaskini');
+    }
 }
