@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CashflowController;
 use App\Http\Controllers\CustomerController;
@@ -181,3 +182,4 @@ Route::group(['middleware' => ['auth', 'owner']], function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/agent.php';
