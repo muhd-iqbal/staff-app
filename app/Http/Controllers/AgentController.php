@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AgentController extends Controller
 {
@@ -31,12 +32,13 @@ class AgentController extends Controller
             'password' => 'required|max:100|min:6'
         ]);
 
-        $agent = Customer::where('id', $credentials['id'])->where('password', '=', md5($credentials['password']))->first();
+        $agent = Customer::where('id', $credentials['id'])->first();
 
-        if ($agent) {
+        if (Hash::check($credentials['password'], $agent->password)) {
             session(['agent_id' => $agent->id]);
             return redirect('/agent');
         } else {
+
             return redirect('/agent/login')->with('forbidden', 'Password Salah');
         }
     }
@@ -44,10 +46,12 @@ class AgentController extends Controller
     public function index()
     {
         $agent = Customer::where('id', session('agent_id'))->first();
-        $orders = Order::with('branch')->where('customer_id', session('agent_id'))->where('date', '>=', env('POS_START'))->orderBy('created_at', 'DESC')->paginate(20);
+        $orders = Order::with('branch')->where('customer_id', session('agent_id'))->where('date', '>=', env('POS_START'))->orderBy('created_at', 'DESC')->paginate(5);
+        $total = Order::where('customer_id', session('agent_id'))->where('date', '>=', env('POS_START'))->get();
         return view('agents.dashboard', [
             'agent' => $agent,
             'orders' => $orders,
+            'total' => $total,
         ]);
     }
 

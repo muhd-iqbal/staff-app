@@ -46,8 +46,9 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-
-                <x-button class="ml-3">
+                <a href="/agent" class="flex-none bg-red-500 hover:bg-red-600 text-white p-1 px-4 rounded shadow">Login Ejen</a>
+                <div class="grow"></div>
+                <x-button class="ml-3 flex-none">
                     {{ __('Log Masuk') }}
                 </x-button>
             </div>

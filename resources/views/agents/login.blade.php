@@ -1,6 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
+            <div class="text-xl font-bold uppercase my-5"> Log Masuk Ejen</div>
             <a href="/">
                 <x-application-logo class="w-40 h-40 fill-current text-gray-500" />
             </a>

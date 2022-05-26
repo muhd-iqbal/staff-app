@@ -29,7 +29,7 @@
                         </div>
                     @endif
                     <div class="text-center mt-1">
-                        Jumlah Tertunggak: RM{{ RM($orders->sum('due')) }}
+                        Jumlah Tertunggak: RM{{ RM($total->sum('due')) }}
                     </div>
                     <div class="text-right my-4">
                         <a href="/agent/add-order"

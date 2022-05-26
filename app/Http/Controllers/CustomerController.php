@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -87,7 +88,7 @@ class CustomerController extends Controller
             'password' => 'max:100|required_with:is_agent'
         ]);
 
-        $attr['password'] = md5($attr['password']);
+        $attr['password'] = Hash::make($attr['password']);
 
         if (request()->has('is_agent')) {
             $attr['is_agent'] = 1;
