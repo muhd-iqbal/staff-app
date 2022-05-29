@@ -29,7 +29,7 @@ class AgentOrderController extends Controller
             'branch_id' => 'required|exists:branches,id',
             'remarks' => 'nullable',
             'measurement' => ['required', Rule::in(array_keys($this->measurement))],
-            'image' => 'nullable|image',
+            // 'image' => 'nullable|image',
         ]);
 
         $insert = [

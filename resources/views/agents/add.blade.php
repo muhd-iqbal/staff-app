@@ -28,7 +28,7 @@
                                     <option value="{{ $k }}">{{ $v }}</option>
                                 @endforeach
                             </x-form.select>
-                            <x-form.input name="image" type="file" label="Lampiran / Gambar" span="4" />
+                            {{-- <x-form.input name="image" type="file" label="Lampiran / Gambar" span="4" /> --}}
                         </div>
                         <div class="grid grid-cols-1 mt-5">
                             <label class="md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Nota</label>
