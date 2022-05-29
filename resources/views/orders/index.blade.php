@@ -4,11 +4,11 @@
             {{ __('Senarai Pesanan') }}
         </h2>
     </x-slot>
-    <style>
-
-    </style>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-yellow-500 p-2 rounded mb-4 text-center">
+                Terdapat {{ $to_be_updated }} Item tiada harga. <a href="/order/item/zero-value" class="bg-gray-100 px-2 rounded ml-2">Lihat</a>
+            </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="py-1">
@@ -25,7 +25,7 @@
                                     <input type="text" name="search" placeholder="Carian..."
                                         class="items-center mx-1 rounded-lg shadow-xl font-medium px-4 py-2"
                                         value="{{ request('search') }}">
-                                        <a href="/orders" class="text-2xl" title="Tunjuk semua">&#8635;</a>
+                                    <a href="/orders" class="text-2xl" title="Tunjuk semua">&#8635;</a>
                                 </form>
                             </div>
                         </div>
@@ -49,8 +49,10 @@
                                                     {{ __('Status') }}
                                                 </th>
                                                 @if (request('payment'))
-                                                    <th class="bg-blueGray-50 text-blueGray-500 text-center align-middle border border-solid border-blueGray-100 py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
-                                                        <span class="text-red-600">{{ __('Tunggakan') }}</span> <span class="font-bold">/</span> {{ __('Jumlah') }}
+                                                    <th
+                                                        class="bg-blueGray-50 text-blueGray-500 text-center align-middle border border-solid border-blueGray-100 py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
+                                                        <span class="text-red-600">{{ __('Tunggakan') }}</span>
+                                                        <span class="font-bold">/</span> {{ __('Jumlah') }}
                                                     </th>
                                                 @endif
                                             </tr>
@@ -162,7 +164,10 @@
                                                     </td>
                                                     @if (request('payment'))
                                                         <td class="text-center">
-                                                            <div class="text-sm"><span class="text-red-600 font-extrabold">{{ RM($order->due) }}</span> <span class="font-bold">/</span> {{ RM($order->grand_total) }}</div>
+                                                            <div class="text-sm"><span
+                                                                    class="text-red-600 font-extrabold">{{ RM($order->due) }}</span>
+                                                                <span class="font-bold">/</span>
+                                                                {{ RM($order->grand_total) }}</div>
                                                         </td>
                                                     @endif
                                                 </tr>

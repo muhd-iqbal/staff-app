@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('/orders/item/{item}/printing', [ItemStatusController::class, 'update_printing']);
     Route::post('/orders/item/{item}/done', [ItemStatusController::class, 'update_done']);
     Route::get('/orders/item/status/{status}', [ItemStatusController::class, 'show_status']);
+    Route::get('/order/item/zero-value', [ItemStatusController::class, 'show_zero']);
     // Route::get('/orders/item/status/is_approved/{production}', [ItemStatusController::class, 'show_production']);
 
     Route::get('/customers', [CustomerController::class, 'index']);

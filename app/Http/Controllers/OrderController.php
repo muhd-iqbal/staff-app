@@ -53,6 +53,7 @@ class OrderController extends Controller
             'orders' => $orders->with('branch')->paginate(20),
             'branches' => Branch::get(),
             'dues' => Order::where('date', '>=', env('POS_START'))->sum('due'),
+            'to_be_updated' => OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(env('POS_START'))) . ' 00:00:00')->count(),
         ]);
     }
 

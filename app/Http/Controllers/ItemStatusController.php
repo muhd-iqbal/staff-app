@@ -169,4 +169,13 @@ class ItemStatusController extends Controller
             'items' => $items->orderBy('created_at', 'DESC')->paginate(20),
         ]);
     }
+    public function show_zero()
+    {
+        $to_be_updated = OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(env('POS_START'))) . ' 00:00:00');
+
+        return view('orders.item_status', [
+            'status' => 'Order Belum Dikemaskini',
+            'items' => $to_be_updated->orderBy('created_at', 'DESC')->paginate(20),
+        ]);
+    }
 }

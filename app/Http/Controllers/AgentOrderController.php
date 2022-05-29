@@ -22,19 +22,39 @@ class AgentOrderController extends Controller
     public function create()
     {
         $attr = request()->validate([
+            'order_id' => 'nullable|starts_with:' . env('ORDER_PREFIX'),
             'product' => 'required|min:5',
             'size' => 'required|max:50',
             'quantity' => 'required|integer|min:1',
             'branch_id' => 'required|exists:branches,id',
             'remarks' => 'nullable',
-            'measurement' => ['required', Rule::in(array_keys($this->measurement))]
+            'measurement' => ['required', Rule::in(array_keys($this->measurement))],
+            'image' => 'nullable|image',
         ]);
 
-        $check_if_exist = Order::where('customer_id', session('agent_id'))
-            ->where('date', '=', date("Y-m-d"))->where('branch_id', $attr['branch_id'])->first();
+        $insert = [
+            'product' => $attr['product'],
+            'size' => $attr['size'],
+            'quantity' => $attr['quantity'],
+            'remarks' => $attr['remarks'],
+            'price' => 0,
+            'total' => 0,
+            'measurement' => $attr['measurement'],
+        ];
 
+        if (request('order_id') != null) {
+            $order_id = (int)ltrim($attr['order_id'], env('ORDER_PREFIX'));
 
-        if ($check_if_exist === null) {
+            $check_if_same_user = Order::where('customer_id', session('agent_id'))
+                ->where('id', $order_id)->first();
+
+            if ($check_if_same_user) {
+                $insert['order_id'] =  $order_id;
+                OrderItem::create($insert);
+            } else {
+                return back()->with('forbidden', 'No Order dimasukkan bukan kepunyaan anda.');
+            }
+        } else {
             $new_order = Order::create([
                 'customer_id' => session('agent_id'),
                 'date' => date("Y-m-d"),
@@ -42,31 +62,11 @@ class AgentOrderController extends Controller
                 'branch_id' => $attr['branch_id'],
                 'user_id' => 1,
             ]);
-
-            OrderItem::create([
-                'order_id' => $new_order->id,
-                'product' => $attr['product'],
-                'size' => $attr['size'],
-                'quantity' => $attr['quantity'],
-                'remarks' => $attr['remarks'],
-                'price' => 0,
-                'total' => 0,
-                'measurement' => $attr['measurement'],
-            ]);
-        } else {
-            OrderItem::create([
-                'order_id' => $check_if_exist->id,
-                'product' => $attr['product'],
-                'size' => $attr['size'],
-                'quantity' => $attr['quantity'],
-                'remarks' => $attr['remarks'],
-                'price' => 0,
-                'total' => 0,
-                'measurement' => $attr['measurement'],
-            ]);
+            $insert['order_id'] =  $new_order->id;
+            OrderItem::create($insert);
         }
+
         return redirect("/agent")->with('success', 'Order Berjaya Dibuat');
-        // return redirect("/agent/order/$new_order->id")->with('success', 'Order Berjaya Dibuat');
     }
 
     public function view(Order $order)

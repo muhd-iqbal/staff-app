@@ -62,10 +62,10 @@ class Controller extends BaseController
 
     protected $measurement = [
         // '' => "Biasa",
+        'ft' => "kaki",
+        'in' => "inci",
         'mm' => "mm",
         'cm' => "cm",
         'm' => "m",
-        'ft' => "kaki",
-        'in' => "inci",
     ];
 }
