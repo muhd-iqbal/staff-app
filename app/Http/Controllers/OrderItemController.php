@@ -221,7 +221,7 @@ class OrderItemController extends Controller
             return redirect('/orders/view/' . $item->order_id)->with('success', 'Item berjaya padam.');
         } catch (\Exception $e) {
 
-            return redirect('/orders/item/' . $item->id)->with('forbidden', 'Ralat, sila hubungi system developer.');
+            return redirect('/orders/view/' . $item->order_id)->with('forbidden', 'Ralat, sila hubungi system developer.');
         }
     }
 
