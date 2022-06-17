@@ -115,9 +115,19 @@
                                 </tbody>
                                 </table>
                             </div>
-                            <div class="text-center my-2">
-                                Tertunggak: RM
-                                {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('due')) }}
+                            <div class="grid grid-cols-3">
+                                <div class="text-center my-2">
+                                    Bayaran: RM
+                                    {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('paid')) }}
+                                </div>
+                                <div class="text-center my-2">
+                                    Tertunggak: RM
+                                    {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('due')) }}
+                                </div>
+                                <div class="text-center my-2">
+                                    Jumlah: RM
+                                    {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('grand_total')) }}
+                                </div>
                             </div>
                             {{ $orders->withQueryString()->links() }}
                         </div>
