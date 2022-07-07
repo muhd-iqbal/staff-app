@@ -25,7 +25,6 @@
                     display: none;
                 }
             }
-
         </style>
     </x-slot>
 
@@ -197,6 +196,22 @@
                     <button onclick="print()"
                         class="bg-blue-400 p-2 rounded-md px-4 font-bold mt-3 text-white hover:bg-blue-600">Cetak</button>
                 </div>
+            </div>
+            <div class="text-center">
+                @if ($voucher->attachment)
+                    <a href="{{ asset('storage/' . $voucher->attachment) }}" target="_blank"
+                        class="text-blue-600">Lihat Attachment</a>
+                @endif
+                <form action="/payment-vouchers/{{ $voucher->id }}/img" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="attachment" id="attachment" required>
+                    <button type="submit"
+                        class="px-2 py-1 bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500"
+                        @if($voucher->attachment) onclick="return confirm('Lampiran telah dimuat naik. Ganti baru?')" @endif
+                        >Submit</button>
+                </form>
+                <small class="text-red-500">Satu lampiran sahaja.</small>
             </div>
 
         </div>

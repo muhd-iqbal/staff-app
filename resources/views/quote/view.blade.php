@@ -26,7 +26,7 @@
                         @endforeach
                     </x-form.select>
                     <x-form.input name="price" label="Harga Seunit" type="number" value="{{ old('amount') }}"
-                        class="mb-2" tags="required" />
+                        class="mb-2" tags="step=0.01 required" />
                 </div>
                 <x-button class="mt-3">Tambah</x-button>
             </form>

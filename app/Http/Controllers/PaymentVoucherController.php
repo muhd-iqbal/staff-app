@@ -115,4 +115,15 @@ class PaymentVoucherController extends Controller
             return back()->with('success', 'Payment voucher mark received');
         }
     }
+
+    public function img(PaymentVoucher $voucher, Request $request)
+    {
+        $request->validate(['attachment' => 'required|file']);
+
+        $attr['attachment'] = request()->file('attachment')->store('attachments');
+
+        $voucher->update($attr);
+
+        return back()->with('success', 'Lamparan dimuatnaik');
+    }
 }

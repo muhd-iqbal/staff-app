@@ -9,6 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <section class="container mx-auto p-6">
+                    <div class="text-right"><a href="/agent/add-order?id={{ order_num($order->id) }}" class="bg-blue-500 text-white p-2 py-1 rounded-md shadow-md hover:bg-blue-700">Tambah</a></div>
                     <div class="text-center text-3xl font-bold">
                         ID: {{ order_num($order->id) }}
                     </div>
@@ -40,18 +41,18 @@
                                     <td class="border">{{ $item->quantity }}</td>
                                     <td class="border">
                                         @if ($item->price > 0)
-                                        {{ RM($item->price) }}
+                                            {{ RM($item->price) }}
                                         @else
-                                        <span class="text-red-500 uppercase">belum dikemaskini</span>
+                                            <span class="text-red-500 uppercase">belum dikemaskini</span>
                                         @endif
                                     </td>
-                                    <td class="border">{{ RM($item->price*$item->quantity) }}</td>
+                                    <td class="border">{{ RM($item->price * $item->quantity) }}</td>
                                 </tr>
                             @endforeach
                         </table>
                         <div class="text-center my-4 mt-10">
-                        <a href="/agent" class="bg-gray-500 p-1 px-2 rounded text-white">Kembali ke dashboard</a>
-                    </div>
+                            <a href="/agent" class="bg-gray-500 p-1 px-2 rounded text-white">Kembali ke dashboard</a>
+                        </div>
                 </section>
             </div>
         </div>

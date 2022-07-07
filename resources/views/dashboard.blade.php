@@ -62,6 +62,19 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                    <form action="{{ config('auth.tie_web') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="email" id="email"
+                                            value="{{ config('auth.tie_username') }}">
+                                        <input type="hidden" name="password" id="password"
+                                            value="{{ config('auth.tie_pass') }}">
+                                        <button type="submit"
+                                            class="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 w-full">
+                                            <div>
+                                                <p class="text-base font-normal text-gray-800">Admin Tie</p>
+                                            </div>
+                                        </button>
+                                    </form>
                                 </div>
                             @endisset
                         </section>

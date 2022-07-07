@@ -1,7 +1,7 @@
 <x-agent-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tambah Order') }}
+            {{ __('Tambah Order') }}: {{ request('id') ? request('id') : '' }}
         </h2>
         <x-head.tinymce-config />
     </x-slot>
@@ -13,8 +13,11 @@
                     <form action="add-order" method="POST">
                         @csrf
                         <div class="grid grid-cols-12 gap-6">
-                            <x-form.input name="order_id" label="No Order (Kosongkan jika order baru)" span="2" tags="placeholder={{ env('ORDER_PREFIX') . '000001'}}" />
-                            <x-form.select name="branch_id" label="Cawangan (Abaikan jika masukkan No Order)" span="2">
+                            <x-form.input name="order_id" label="No Order (Kosongkan jika order baru)" span="2"
+                                tags="placeholder={{ env('ORDER_PREFIX') . '000001' }}"
+                                value="{{ request('id') ? request('id') : '' }}" />
+                            <x-form.select name="branch_id" label="Cawangan (Abaikan jika masukkan No Order)"
+                                span="2">
                                 @foreach ($branches as $branch)
                                     <option value="{{ $branch->id }}">{{ $branch->shortname }}</option>
                                 @endforeach

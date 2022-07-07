@@ -148,6 +148,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/payment-vouchers/{voucher}/edit', [PaymentVoucherController::class, 'update']);
     Route::patch('/payment-vouchers/{voucher}/approve', [PaymentVoucherController::class, 'approve']);
     Route::patch('/payment-vouchers/{voucher}/paid', [PaymentVoucherController::class, 'paid']);
+    Route::post('/payment-vouchers/{voucher}/img', [PaymentVoucherController::class, 'img']);
 
     Route::post('/payment-vouchers/{voucher}/add', [PaymentVoucherListController::class, 'create']);
     Route::delete('/payment-vouchers/{voucher}/{list}', [PaymentVoucherListController::class, 'delete']);
