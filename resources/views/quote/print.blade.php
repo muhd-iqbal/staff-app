@@ -20,7 +20,6 @@
                     top: 0;
                 }
             }
-
         </style>
     </x-slot>
 
@@ -39,7 +38,9 @@
                                 <div class="text-2xl font-bold uppercase">{{ $quote->branch->name }}</div>
                                 <div class="text-base font-bold uppercase">{{ $quote->branch->address }}</div>
                                 <div class="text-base font-bold uppercase">Tel:
-                                    {{ phone_format($quote->branch->phone_1) }} {{ $quote->branch->phone_2 ? ' / ' . phone_format($quote->branch->phone_2):""}}</div>
+                                    {{ phone_format($quote->branch->phone_1) }}
+                                    {{ $quote->branch->phone_2 ? ' / ' . phone_format($quote->branch->phone_2) : '' }}
+                                </div>
                                 <div class="text-base font-bold">EMEL: admin@inspirazs.com.my</div>
                             </div>
                         </div>
@@ -47,8 +48,11 @@
                         <div class="mt-5">
                             {{ __('Kepada: ') }}
                         </div>
-                        {{ $quote->customer->company ? '<div>' . $quote->customer->company . '</div>' : '' }}
-                        <div>{{ $quote->customer->company ? 'PIC: ' : '' . $quote->customer->name }}</div>
+                        {{ $quote->customer->organisation ? $quote->customer->organisation : $quote->customer->name }}<br>
+                        {{-- <div>{{ $quote->customer->organisation ? '' : $quote->customer->name }}</div> --}}
+                        {{ $quote->customer->address }},<br>{{ $quote->customer->postcode }}
+                        {{ $quote->customer->city }}, {{ $quote->customer->state }}
+                        <div>{{ $quote->customer->organisation ? 'PIC: '.$quote->customer->name : ''  }}</div>
                         <div>
                             {{ __('Telefon: ') . phone_format($quote->customer->phone) }}
                         </div>
@@ -138,8 +142,7 @@
                     @csrf
                     @method('PATCH')
                     <div>
-                        <textarea name="foot_note" id="foot_note" cols="30" rows="3"
-                            class="rounded-md resize-none">{{ $quote->foot_note }}</textarea>
+                        <textarea name="foot_note" id="foot_note" cols="30" rows="3" class="rounded-md resize-none">{{ $quote->foot_note }}</textarea>
                     </div>
                     <div>
                         <button type="submit"
