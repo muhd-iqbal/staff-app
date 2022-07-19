@@ -4,9 +4,22 @@
             {{ __('Senarai Pesanan') }}
         </h2>
     </x-slot>
+    <script>
+        function goToOrder() {
+            var id = prompt("Masukkan ID Pesanan");
+            if (id === null) {
+                return; //break out of the function early
+            }
+            document.getElementById("id").value = id;
+            document.getElementById("form").submit();
+        }
+    </script>
+    <form id="form" action="/order/go">
+        <input type="hidden" id="id" name="id" />
+    </form>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @isset ($to_be_updated)
+            @isset($to_be_updated)
                 <div class="bg-yellow-500 p-2 rounded mb-4 text-center">
                     Terdapat {{ $to_be_updated }} Item tiada harga. <a href="/order/item/zero-value"
                         class="bg-gray-100 px-2 rounded ml-2">Lihat</a>
@@ -15,15 +28,17 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="py-1">
-                        <div class="grid md:grid-cols-2 my-2">
+                        <div class="flex flex-col md:flex-row gap-5 my-2">
                             <div class="mt-3">
                                 <a href="/orders/create"
                                     class='items-center mx-5 bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                    {{ __('Tambah Pesanan') }}
+                                    {{ __('Tambah') }}
                                 </a>
+                                <button onclick="goToOrder()" title="Carian Order">&#128269;</button>
                             </div>
+                            <div class="flex-grow"></div>
 
-                            <div class="text-right">
+                            <div class="flex md:flex-row-reverse">
                                 <form action="/orders">
                                     <input type="text" name="search" placeholder="Carian..."
                                         class="items-center mx-1 rounded-lg shadow-xl font-medium px-4 py-2"
@@ -51,31 +66,36 @@
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                                     {{ __('Status') }}
                                                 </th>
-                                                @if (request('payment'))
-                                                    <th
-                                                        class="bg-blueGray-50 text-blueGray-500 text-center align-middle border border-solid border-blueGray-100 py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
-                                                        <span class="text-red-600">{{ __('Tunggakan') }}</span>
-                                                        <span class="font-bold">/</span> {{ __('Jumlah') }}
-                                                    </th>
-                                                @endif
+                                                <th
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    {{ __('P/U') }}
+                                                </th>
+                                                <th
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    {{ __('DUE') }}
+                                                </th>
+                                                <th
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    &nbsp;
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($orders as $order)
                                                 <tr onclick="window.location='/orders/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
-                                                    <th
-                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                                    @php
+                                                        if ($order->due == $order->grand_total) {
+                                                            $paid = 'bg-red-600 text-white';
+                                                        } elseif ($order->due > 0) {
+                                                            $paid = 'bg-yellow-500 text-white';
+                                                        } else {
+                                                            $paid = '';
+                                                        }
 
-                                                        @if ($order->date >= env('POS_START'))
-                                                            <div
-                                                                class="w-3 h-3 inline-block
-                                                            @if ($order->due == $order->grand_total) bg-red-600
-                                                            @elseif ($order->due > 0) bg-yellow-500
-                                                            @else bg-green-600 @endif
-                                                            ">
-                                                            </div>
-                                                        @endif
+                                                    @endphp
+                                                    <th id="noid"
+                                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 {{ @$paid }}">
                                                         {{ order_num($order->id) }}
                                                     </th>
                                                     <td
@@ -83,7 +103,14 @@
                                                         <div id="branch-label"
                                                             class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-500">
                                                         </div>
-                                                        {{ $order->customer->name }}
+                                                        <div>
+                                                            <div class="uppercase">
+                                                                {{ $order->customer->name }}
+                                                            </div>
+                                                            <div class="text-xs uppercase">
+                                                                {{ $order->customer->organisation }}
+                                                            </div>
+                                                        </div>
                                                         <div id="urgent-{{ $order->id }}"
                                                             class="ml-2 items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
                                                             <span class="inline-flex px-1">{{ __('URGENT') }}</span>
@@ -165,15 +192,13 @@
                                                             </div>
                                                         @endunless
                                                     </td>
-                                                    @if (request('payment'))
-                                                        <td class="text-center">
-                                                            <div class="text-sm"><span
-                                                                    class="text-red-600 font-extrabold">{{ RM($order->due) }}</span>
-                                                                <span class="font-bold">/</span>
-                                                                {{ RM($order->grand_total) }}
-                                                            </div>
-                                                        </td>
-                                                    @endif
+                                                    <td class="text-center">{!! $order->pickup_time
+                                                        ? date('d-M', strtotime($order->pickup_time))
+                                                        : '<span class="text-red-500">&times;</span>' !!}
+                                                    </td>
+                                                    <td class="text-red-500 text-center">
+                                                        {{ $order->due ? RM($order->due) : '' }}</td>
+                                                    <td class="uppercase p-0 text-xs">{{ $order->pay_method }}</td>
                                                 </tr>
                                                 @if ($urgent > 0)
                                                     <script>
@@ -230,7 +255,7 @@
                                         class="inline-flex flex-grow md:flex-grow-0 items-center bg-red-600 leading-none text-white p-1 shadow text-sm font-bold cursor-pointer">
                                         <span class="inline-flex px-1">{{ __('Unpaid') }}</span>
                                     </div>
-                                    <div class="text-sm font-bold">Tertunggak: RM{{ RM($dues) }} </div>
+                                    <div class="text-sm font-bold" title="Order dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Tertunggak: RM{{ RM($dues) }} </div>
                                 </div>
                             </div>
                         </div>

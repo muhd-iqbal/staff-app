@@ -17,7 +17,7 @@ class OrderController extends Controller
         $orders = Order::with(['order_item', 'customer'])->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
         if (preg_match('/^[A-Za-z]\d+$/', request('search'))) {
-            if (substr(strtoupper(request('search')), 0, 1) === env('ORDER_PREFIX')) {
+            if (substr(strtoupper(request('search')), 0, 1) === config('app.order_prefix')) {
                 return redirect('/orders/view/' . (int)substr(request('search'), 1));
             }
         } else if (request('search')) {
@@ -38,13 +38,13 @@ class OrderController extends Controller
         if (request('payment')) {
             switch (request('payment')) {
                 case 'unpaid':
-                    $orders->where('date', '>=', env('POS_START'))->whereColumn('due', '=', 'grand_total');
+                    $orders->where('date', '>=', config('app.pos_start'))->whereColumn('due', '=', 'grand_total');
                     break;
                 case 'partial':
-                    $orders->where('date', '>=', env('POS_START'))->where('paid', '>', 0)->whereColumn('paid', '<', 'grand_total');
+                    $orders->where('date', '>=', config('app.pos_start'))->where('paid', '>', 0)->whereColumn('paid', '<', 'grand_total');
                     break;
                 default:
-                    $orders->where('date', '>=', env('POS_START'))->whereColumn('paid', '=', 'grand_total')->where('paid', '>', 0);
+                    $orders->where('date', '>=', config('app.pos_start'))->whereColumn('paid', '=', 'grand_total')->where('paid', '>', 0);
                     break;
             }
         }
@@ -52,8 +52,8 @@ class OrderController extends Controller
         return view('orders.index', [
             'orders' => $orders->with('branch')->paginate(20),
             'branches' => Branch::get(),
-            'dues' => Order::where('date', '>=', env('POS_START'))->sum('due'),
-            'to_be_updated' => OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(env('POS_START'))) . ' 00:00:00')->count(),
+            'dues' => $orders->where('date', '>=',config('app.pos_start'))->sum('due'),
+            'to_be_updated' => OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(config('app.pos_start'))) . ' 00:00:00')->count(),
         ]);
     }
 
@@ -78,7 +78,7 @@ class OrderController extends Controller
         return view('orders.index', [
             'orders' => $orders->paginate(20),
             'branches' => Branch::get(),
-            'dues' => Order::where('date', '>=', env('POS_START'))->where('branch_id', $branch)->sum('due'),
+            'dues' => Order::where('date', '>=', config('app.pos_start'))->where('branch_id', $branch)->sum('due'),
         ]);
     }
 
@@ -99,7 +99,7 @@ class OrderController extends Controller
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
             'branch_id' => 'required|exists:branches,id',
-            // 'product' => 'required|array',
+            'pay_method' => 'required|in:cash,lo',
             // 'remarks' => 'required',
         ]);
         $attributes['user_id'] = auth()->user()->id;
@@ -110,17 +110,18 @@ class OrderController extends Controller
         return redirect('/orders/view/' . $insert->id)->with('success', 'Order berjaya dibuat.');
     }
 
-    public function view(Order $order)
+    public function view($order)
     {
-        $lists = OrderItem::with('user')->where('order_id', $order->id)->get();
-        if ($lists) :
+        $order = Order::find($order);
+        if ($order === null) {
+            return back()->with('forbidden', 'Order tidak dijumpai, sila masukkan semula.');
+        } else {
+            $lists = OrderItem::with('user')->where('order_id', $order->id)->get();
             return view('orders.view', [
                 'order' => $order,
                 'lists' => $lists,
             ]);
-        else :
-            return back()->with('forbidden', 'Order tidak dijumpai, sila masukkan semula.');
-        endif;
+        }
     }
 
     public function update_done(Order $order)
@@ -156,6 +157,7 @@ class OrderController extends Controller
             'customer_id' => 'required|numeric',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
+            'pay_method' => ['required', Rule::in(['cash', 'lo'])],
             'branch_id' => 'required|exists:branches,id',
         ]);
 

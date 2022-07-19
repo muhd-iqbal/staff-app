@@ -83,7 +83,7 @@
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
 
-                                                        @if ($order->date >= env('POS_START'))
+                                                        @if ($order->date >= config('app.pos_start'))
                                                             <div
                                                                 class="w-3 h-3 inline-block
                                                         @if ($order->due == $order->grand_total) bg-red-600
@@ -118,15 +118,15 @@
                             <div class="grid grid-cols-3">
                                 <div class="text-center my-2">
                                     Bayaran: RM
-                                    {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('paid')) }}
+                                    {{ RM($customer->order->where('date', '>=', config('app.pos_start'))->sum('paid')) }}
                                 </div>
                                 <div class="text-center my-2">
                                     Tertunggak: RM
-                                    {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('due')) }}
+                                    {{ RM($customer->order->where('date', '>=', config('app.pos_start'))->sum('due')) }}
                                 </div>
                                 <div class="text-center my-2">
                                     Jumlah: RM
-                                    {{ RM($customer->order->where('date', '>=', env('POS_START'))->sum('grand_total')) }}
+                                    {{ RM($customer->order->where('date', '>=', config('app.pos_start'))->sum('grand_total')) }}
                                 </div>
                             </div>
                             {{ $orders->withQueryString()->links() }}

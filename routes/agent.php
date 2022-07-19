@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AgentOrderController;
+use App\Http\Controllers\OrderItemController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,4 +18,6 @@ Route::group(['prefix' => 'agent', 'middleware' => 'agent'], function () {
     Route::post('/add-order', [AgentOrderController::class, 'create']);
 
     Route::get('order/{order}', [AgentOrderController::class, 'view']);
+    Route::get('order/{order}/{item}', [AgentOrderController::class, 'images']);
+    Route::post('item/{item}', [OrderItemController::class, 'update_photo']);
 });

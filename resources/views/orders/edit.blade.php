@@ -32,18 +32,35 @@
                                     </div>
                                 @endif
 
-                                <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label
-                                        class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pelanggan</label>
-                                    <select
-                                        class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        type="text" name="customer_id" value="{{ $order->customer->name }}">
-                                        @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}"
-                                                {{ $customer->id == $order->customer_id ? 'selected' : '' }}>
-                                                {{ $customer->name . ' - ' . $customer->phone }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="grid grid-cols-3 mt-5 mx-7 gap-5 md:gap-8">
+                                    <div class="grid col-span-2">
+                                        <label
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pelanggan</label>
+                                        <select
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                            type="text" name="customer_id" value="{{ $order->customer->name }}">
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}"
+                                                    {{ $customer->id == $order->customer_id ? 'selected' : '' }}>
+                                                    {{ $customer->name . ' - ' . $customer->organisation . ' - ' . $customer->phone }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="grid grid-cols-1">
+                                        <label
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Lokasi</label>
+                                        <select name="branch_id"
+                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                                            @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}"
+                                                    {{ $order->branch_id == $branch->id ? 'selected' : '' }}>
+                                                    {{ ucwords($branch->shortname) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
@@ -72,15 +89,17 @@
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Lokasi</label>
-                                        <select name="branch_id"
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CASH / LO</label>
+                                        <select name="pay_method"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                            @foreach ($branches as $branch)
-                                            <option value="{{ $branch->id }}"
-                                                {{ $order->branch_id == $branch->id ? 'selected' : '' }}>
-                                                {{ ucwords($branch->shortname) }}
+                                            <option value="cash"
+                                                {{ $order->pay_method == 'cash' ? 'selected' : '' }}>
+                                                Cash
                                             </option>
-                                            @endforeach
+                                            <option value="lo"
+                                                {{ $order->pay_method == 'lo' ? 'selected' : '' }}>
+                                                LO
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

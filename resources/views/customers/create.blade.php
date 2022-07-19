@@ -15,6 +15,16 @@
                                 <form action="/customers/create" method="POST">
                                     @csrf
                                     <div class="grid md:grid-cols-3 gap-5 p-5">
+                                        <div class="col-span-1">
+                                            <x-form.select name="title" label="Title" class="uppercase">
+                                                <option value="">Tiada / Masukkan sendiri...</option>
+                                                <option value="en">En</option>
+                                                <option value="cik">Cik</option>
+                                                <option value="cg">Cg</option>
+                                                <option value="tn">Tuan</option>
+                                                <option value="pn">Puan</option>
+                                            </x-form.select>
+                                        </div>
                                         <div class="col-span-2">
                                             <x-form.input name="name" label="Nama Pelanggan"
                                                 value="{{ old('name') }}" />
@@ -23,7 +33,7 @@
                                             <x-form.input name="phone" label="No Telefon"
                                                 value="{{ old('phone') }}" />
                                         </div>
-                                        <div class="col-span-3">
+                                        <div class="col-span-2">
                                             <x-form.input name="organisation" label="Syarikat / Organisasi / Sekolah"
                                                 value="{{ old('organisation') }}" />
                                         </div>

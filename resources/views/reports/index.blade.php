@@ -17,7 +17,7 @@
                 <section class="container mx-auto p-6 font-mono">
                     <div class="flex">
                         <div>
-                            @if (request('year') > date('Y', strtotime(env('POS_START'))))
+                            @if (request('year') > date('Y', strtotime(config('app.pos_start'))))
                             <a href="/reports/{{ request('year') - 1 }}{{ request('branch')? '/'.request('branch'):''}}"
                             class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                             {{ request('year') - 1 }}</a>

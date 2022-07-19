@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('customer/{customer}', function ($customer) {
     return [
-        'order' => Order::with(['order_item'])->where('customer_id', $customer)->where('date', '>=', env('POS_START'))->orderBy('id', 'DESC')->paginate(20),
+        'order' => Order::with(['order_item'])->where('customer_id', $customer)->where('date', '>=', config('app.pos_start'))->orderBy('id', 'DESC')->paginate(20),
         'customer' => Customer::find($customer),
     ];
 });

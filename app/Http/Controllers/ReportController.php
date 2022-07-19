@@ -23,7 +23,7 @@ class ReportController extends Controller
             DB::raw('sum(shipping) as shippings'),
             DB::raw('sum(grand_total) as totals'),
         )
-            ->where(DB::raw('date(date)'), '>=', env('POS_START'))
+            ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
             ->groupBy('month')
             ->get();
@@ -56,7 +56,7 @@ class ReportController extends Controller
             DB::raw('sum(shipping) as shippings'),
             DB::raw('sum(grand_total) as totals'),
         )
-            ->where(DB::raw('date(date)'), '>=', env('POS_START'))
+            ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
             ->where('branch_id', '=', $branch)
             ->groupBy('month')

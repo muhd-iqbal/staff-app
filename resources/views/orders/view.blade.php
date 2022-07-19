@@ -31,36 +31,44 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div
                     class="p-6 border-t-4
-                    @if ($order->date >= env('POS_START')) @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
+                    @if ($order->date >= config('app.pos_start')) @if ($order->due == $order->grand_total) border-red-600 @elseif ($order->due > 0) border-yellow-500 @else border-green-600 @endif
                     @endif
                     ">
                     <!-- start component -->
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
                             @if (auth()->user()->isAdmin)
-                                <div class="text-right" title="Padam Order"><span
-                                        class=" text-red-500 cursor-pointer" onclick="openModal()">x</span></div>
+                                <div class="text-right" title="Padam Order"><span class=" text-red-500 cursor-pointer"
+                                        onclick="openModal()">x</span></div>
                             @endif
                             <div class="flex flex-col items-center">
                                 <div class="flex">
                                     <h1 class="text-gray-600 font-bold md:text-2xl text-xl">{{ __('Pesanan:') }}
                                         {{ order_num($order->id) }}</h1>
                                     <a href="{{ 'https://wa.me/6' . $order->customer->phone }}">
-                                        <img src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg" width="30"></a>
+                                        <img src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg"
+                                            width="30"></a>
                                 </div>
                                 <div>
                                     <h2 class="text-gray-500 font-bold md:text-xl text-lg">
                                         {{ ucwords($order->method) }}
                                         ({{ ucwords($order->branch->shortname) }})</h2>
                                 </div>
+                                @if ($order->pay_method)
+                                    <div class="bg-gray-400 text-white px-1 rounded-lg uppercase">
+                                        {{ $order->pay_method }}
+                                        </div>
+                                @endif
                             </div>
 
                             <div class="grid md:grid-cols-2">
                                 <div class="mt-5 mx-7">
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
+                                        {{ __('Organisasi: ') . $order->customer->organisation }}
+                                        <br>
                                         {{ __('Nama Pelanggan: ') . $order->customer->name }}
-                                        <a href="/customer/{{ $order->customer_id }}/edit?back=/orders/view/{{ $order->id }}"
-                                            class="lowercase bg-gray-600 text-white px-1 rounded hover:text-gray-200">edit</a>
+                                        <a href="/customer/{{ $order->customer_id }}"
+                                            class="lowercase bg-gray-600 text-white px-1 rounded hover:text-gray-200">lihat</a>
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         {{ __('No Telefon: ') . $order->customer->phone }}
@@ -182,8 +190,8 @@
                                             @foreach ($lists as $list)
                                                 @php
                                                     if ($list->price == 0) {
-                                                        $alert = $alert+1;
-                                                    }else{
+                                                        $alert = $alert + 1;
+                                                    } else {
                                                         $alert = $alert;
                                                     }
                                                 @endphp
@@ -268,8 +276,8 @@
                                         <input type="number" step="0.01" class="w-full bg-gray-100 p-2 mt-2 mb-3"
                                             name="shipping" value="{{ RM($order->shipping) }}" />
                                         <label>Jumlah Diskaun</label>
-                                        <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3" name="discount"
-                                            value="{{ RM($order->discount) }}" />
+                                        <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3"
+                                            name="discount" value="{{ RM($order->discount) }}" />
                                     </div>
                                     <div class="bg-gray-200 px-4 py-3 text-right">
                                         <button type="button"
@@ -292,7 +300,7 @@
     @if ($alert > 0)
         <script>
             alert_count = {{ $alert }}
-            alert('Terdapat '+ alert_count + ' Item Dengan Nilai RM0, kemaskini atau abaikan mesej ini.')
+            alert('Terdapat ' + alert_count + ' Item Dengan Nilai RM0, kemaskini atau abaikan mesej ini.')
         </script>
     @endif
     <script>

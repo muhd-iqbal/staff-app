@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/orders/view/{order}/mark-undone', [OrderController::class, 'update_undone']);
     Route::get('/orders/no-pickup', [OrderController::class, 'index_nopickup']);
     Route::get('/orders/view/{order}/refresh', [OrderController::class, 'refresh']);
+    Route::get('/order/go', fn () => redirect('/orders/view/' . request('id')));
 
     Route::get('/quote', [QuotationController::class, 'index']);
     Route::get('/quote/create', [QuotationController::class, 'create']);
@@ -173,7 +174,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/payslips', [PayslipController::class, 'indexadmin']);
     Route::post('/admin/payslips/add', [PayslipController::class, 'create']);
     Route::delete('/admin/payslips/{payslip}', [PayslipController::class, 'delete']);
-
 });
 
 Route::group(['middleware' => ['auth', 'owner']], function () {
@@ -181,7 +181,6 @@ Route::group(['middleware' => ['auth', 'owner']], function () {
     Route::get('/top/leaves/approval', [TopLeaveController::class, 'show']);
     Route::patch('/top/leaves/approval/{leave}', [TopLeaveController::class, 'update']);
     Route::delete('/top/leaves/approval/{leave}', [TopLeaveController::class, 'delete']);
-
 });
 
 require __DIR__ . '/auth.php';

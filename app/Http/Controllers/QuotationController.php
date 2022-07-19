@@ -19,7 +19,7 @@ class QuotationController extends Controller
         $quotes = Quotation::with(['quote_item', 'customer'])->orderBy('created_at', 'DESC');
 
         if (preg_match('/^[A-Za-z]\d+$/', request('search'))) {
-            if (substr(strtoupper(request('search')), 0, 1) === env('QUOTE_PREFIX')) {
+            if (substr(strtoupper(request('search')), 0, 1) === config('app.quote_prefix')) {
                 return redirect('/quote/' . (int)substr(request('search'), 1));
             }
         } else if (request('search')) {
@@ -98,7 +98,6 @@ class QuotationController extends Controller
         $quote->delete();
 
         return redirect('/quote')->with('success', 'Sebut harga dipadam!');
-
     }
 
     public function export(Quotation $quote)
@@ -131,6 +130,6 @@ class QuotationController extends Controller
 
         $quote->update(['export_to_order' => 1]);
 
-        return redirect('/orders/view/'.$order->id);
+        return redirect('/orders/view/' . $order->id);
     }
 }

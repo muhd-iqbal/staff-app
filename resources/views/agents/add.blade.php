@@ -14,7 +14,7 @@
                         @csrf
                         <div class="grid grid-cols-12 gap-6">
                             <x-form.input name="order_id" label="No Order (Kosongkan jika order baru)" span="2"
-                                tags="placeholder={{ env('ORDER_PREFIX') . '000001' }}"
+                                tags="placeholder={{ config('app.order_prefix') . '000001' }}"
                                 value="{{ request('id') ? request('id') : '' }}" />
                             <x-form.select name="branch_id" label="Cawangan (Abaikan jika masukkan No Order)"
                                 span="2">

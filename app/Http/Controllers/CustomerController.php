@@ -16,7 +16,8 @@ class CustomerController extends Controller
 
         if (request('search')) {
             $customers->where('name', 'like', '%' . request('search') . '%')
-                ->orWhere('phone', 'like', '%' . request('search') . '%');
+                ->orWhere('phone', 'like', '%' . request('search') . '%')
+                ->orWhere('organisation', 'like', '%' . request('search') . '%');
         }
         return view('customers.index', [
             'customers' => $customers->paginate(20),
@@ -77,6 +78,9 @@ class CustomerController extends Controller
             'state' => 'nullable|required_with:address,city,postcode|min:3|max:3',
         ]);
 
+        if (request('title') != null) {
+            $attributes['name'] = request('title') . ' ' . $attributes['name'];
+        }
         Customer::create($attributes);
 
         return redirect('/customers')->with('success', 'Pelanggan ditambah.');
@@ -92,8 +96,7 @@ class CustomerController extends Controller
 
         if (request()->has('is_agent')) {
             $attr['is_agent'] = 1;
-        }
-        else{
+        } else {
             $attr['is_agent'] = 0;
             $attr['password'] = null;
         }

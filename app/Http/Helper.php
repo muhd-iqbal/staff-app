@@ -67,20 +67,20 @@ if (!function_exists('ic_format')) {
 if (!function_exists('order_num')) {
     function order_num($var)
     {
-        return env('ORDER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
+        return config('app.order_prefix') . str_pad($var, 5, '0', STR_PAD_LEFT);
     }
 }
 // assign quote number based on prefix on env file
 if (!function_exists('quote_num')) {
     function quote_num($var)
     {
-        return env('QUOTE_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
+        return config('app.quote_prefix') . str_pad($var, 5, '0', STR_PAD_LEFT);
     }
 }
 if (!function_exists('pay_vo_num')) {
     function pay_vo_num($var)
     {
-        return env('PAYMENT_VOUCHER_PREFIX') . str_pad($var, 5, '0', STR_PAD_LEFT);
+        return config('app.payment_voucher_prefix') . str_pad($var, 5, '0', STR_PAD_LEFT);
     }
 }
 

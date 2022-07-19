@@ -14,6 +14,10 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'order_prefix' => env('ORDER_PREFIX'),
+    'quote_prefix' => env('QUOTE_PREFIX'),
+    'payment_voucher_prefix' => env('PAYMENT_VOUCHER_PREFIX'),
+    'pos_start'=> env('POS_START'),
 
     /*
     |--------------------------------------------------------------------------

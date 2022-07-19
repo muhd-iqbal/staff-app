@@ -41,29 +41,123 @@
                     <div class="overflow-x-auto sm:rounded-lg">
                         <div class="inline-block min-w-full align-middle">
                             <div class="overflow-hidden ">
+                                <small class="underline">Klik no rujukan order untuk lihat order.</small>
                                 <table class="w-full border-collapse mb-5">
                                     <tr>
                                         <th class="border">Rujukan</th>
-                                        <th class="border">Cawangan</th>
                                         <th class="border">Tarikh</th>
                                         <th class="border">Tertunggak</th>
-                                        <th class="border">Tindakan</th>
+                                        <th class="border">Status</th>
+                                        {{-- <th class="border">Tindakan</th> --}}
                                     </tr>
                                     @foreach ($orders as $order)
                                         <tr class="text-center">
-                                            <td class="border">{{ order_num($order->id) }}</td>
-                                            <td class="border">{{ $order->branch->shortname }}</td>
-                                            <td class="border">{{ $order->date }}</td>
-                                            <td class="border{{ $order->due ? ' text-red-500' : '' }}">
+                                            <td class="border px-1 underline text-blue-700"><a
+                                                    href="/agent/order/{{ $order->id }}">{{ order_num($order->id) }}</a>
+                                            </td>
+                                            <td class="border px-1">{{ date('d/m/y', strtotime($order->date)) }}</td>
+                                            <td class="px-1 border{{ $order->due ? ' text-red-500' : '' }}">
                                                 {{ $order->due ? RM($order->due) : 'N/A' }}</td>
-                                            <td class="border underline"><a
-                                                    href="/agent/order/{{ $order->id }}">Lihat</a>
+                                            <td class="border px-1">
+                                                @php
+                                                    $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
+                                                    $count = count($order->order_item);
+                                                    $urgent = 0;
+                                                @endphp
+
+                                                @foreach ($order->order_item as $item)
+                                                    @php
+                                                        if ($item->is_done) {
+                                                            $is_done++;
+                                                        } elseif ($item->is_printing) {
+                                                            $is_printing++;
+                                                        } elseif ($item->is_approved) {
+                                                            $is_approved++;
+                                                        } elseif ($item->is_design) {
+                                                            $is_design++;
+                                                        } else {
+                                                            $is_pending++;
+                                                        }
+
+                                                        if ($item->is_urgent) {
+                                                            $urgent++;
+                                                        }
+
+                                                    @endphp
+                                                @endforeach
+
+                                                @unless($count == 0)
+                                                    @php $status = $status/$count @endphp
+
+                                                    @if ($is_pending)
+                                                        <div
+                                                            class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                                                            <span
+                                                                class="inline-flex text-white rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_pending }}</span>
+                                                        </div>
+                                                    @endif
+                                                    @if ($is_design)
+                                                        <div
+                                                            class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                                                            <span
+                                                                class="inline-flex text-white bg-yellow-400 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_design }}</span>
+                                                        </div>
+                                                    @endif
+                                                    @if ($is_approved)
+                                                        <div
+                                                            class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                                                            <span
+                                                                class="inline-flex text-white bg-yellow-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
+                                                        </div>
+                                                    @endif
+                                                    @if ($is_printing)
+                                                        <div
+                                                            class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                                                            <span
+                                                                class="inline-flex text-white bg-purple-600 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_printing }}</span>
+                                                        </div>
+                                                    @endif
+                                                    @if ($is_done)
+                                                        <div
+                                                            class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                                                            <span
+                                                                class="inline-flex text-white bg-green-600 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_done }}</span>
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    <div
+                                                        class="inline-flex items-center bg-gray-600 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                                                        <span class="inline-flex px-1">{{ __('Tiada Item') }}</span>
+                                                    </div>
+                                                @endunless
                                             </td>
                                         </tr>
                                     @endforeach
                                 </table>
                                 {{ $orders->links() }}
                             </div>
+                        </div>
+                    </div>
+                    <div class="text-right mt-2">
+                        <div
+                            class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                            <span
+                                class="inline-flex text-white bg-red-600 rounded-full h-6 px-1 justify-center items-center text-base font-bold">Pending</span>
+                        </div>
+                        <div
+                            class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                            <span
+                                class="inline-flex text-white bg-yellow-400 rounded-full h-6 px-1 justify-center items-center text-base font-bold">Design</span>
+                        </div>
+                        <div
+                            class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                            <span
+                                class="inline-flex text-white bg-yellow-700 rounded-full h-6 px-1 justify-center items-center text-base font-bold">Production</span>
+                        </div>
+                        <div
+                            class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-0 shadow text-sm font-bold">
+                            <span
+                                class="inline-flex text-white bg-green-600 rounded-full h-6 px-1 justify-center items-center text-base font-bold">Selesai</span>
                         </div>
                     </div>
                 </section>

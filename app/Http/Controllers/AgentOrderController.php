@@ -22,7 +22,7 @@ class AgentOrderController extends Controller
     public function create()
     {
         $attr = request()->validate([
-            'order_id' => 'nullable|starts_with:' . env('ORDER_PREFIX'),
+            'order_id' => 'nullable|starts_with:' . config('app.order_prefix'),
             'product' => 'required|min:5',
             'size' => 'required|max:50',
             'quantity' => 'required|integer|min:1',
@@ -43,7 +43,7 @@ class AgentOrderController extends Controller
         ];
 
         if (request('order_id') != null) {
-            $order_id = (int)ltrim($attr['order_id'], env('ORDER_PREFIX'));
+            $order_id = (int)ltrim($attr['order_id'], config('app.order_prefix'));
 
             $check_if_same_user = Order::where('customer_id', session('agent_id'))
                 ->where('id', $order_id)->first();
@@ -76,6 +76,15 @@ class AgentOrderController extends Controller
         return view('agents.viewitem', [
             'order' => $order,
             'items' => $items,
+            'agent' => Customer::where('id', session('agent_id'))->first(),
+        ]);
+    }
+
+    public function images(Order $order, OrderItem $item)
+    {
+        return view('agents.images', [
+            'order' => $order,
+            'item' => $item,
             'agent' => Customer::where('id', session('agent_id'))->first(),
         ]);
     }

@@ -19,8 +19,8 @@
                             </div>
                             <div class="md:float-right">
                                 <form action="/customers" method="get">
-                                    <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                        placeholder="Carian..">
+                                    <input type="text" name="search" id="search"
+                                        value="{{ request('search') }}" placeholder="Carian..">
                                     @if (request('search'))
                                         <a href="/customers" class="text-2xl" title="Tunjuk semua">&#8635;</a>
                                     @endif
@@ -44,24 +44,28 @@
                                             <tr class="text-gray-700">
                                                 <td class="text-center border">
                                                     {{ ($customers->currentpage() - 1) * $customers->perpage() + $loop->index + 1 }}
+                                                    @if ($customer->is_agent)
+                                                        <div
+                                                            class="ml-2 items-center  bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                            <span class="inline-flex px-1">{{ __('AGENT') }}</span>
+                                                        </div>
+                                                    @endif
                                                 </td>
                                                 <td class="px-4 py-3 border">
                                                     <div class="flex">
-                                                        <p class="text-sm font-semibold text-black">
-                                                            {{ ucwords(strtolower($customer->name)) }}</p>
-                                                        @if ($customer->is_agent)
-                                                            <div
-                                                                class="ml-2 items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
-                                                                <span
-                                                                    class="inline-flex px-1">{{ __('AGENT') }}</span>
-                                                            </div>
-                                                        @endif
+                                                        <div>
+                                                            <p class="text-sm font-semibold text-black uppercase">
+                                                                {{ $customer->name }}</p>
+                                                            <p class="text-sm font-semibold text-black uppercase">
+                                                                {{ $customer->organisation }}</p>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td class="text-center border">
                                                     {{ $customer->phone }}
                                                 </td>
                                                 <td class="text-center border">
+
                                                     <a href="/customer/{{ $customer->id }}"
                                                         class="text-md px-4 py-1 rounded-md bg-blue-500 text-indigo-50 font-semibold cursor-pointer">{{ __('Lihat') }}</a>
                                                     <a href="/customer/{{ $customer->id }}/edit"

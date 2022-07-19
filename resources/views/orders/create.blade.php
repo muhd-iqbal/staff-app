@@ -38,28 +38,27 @@
                                                 class="h-10 inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                                                 +</a>
                                         </div>
-                                        <div class="flex-grow"></div>
-                                        <div class="flex flex-none md:justify-end">
+                                        <div class="flex flex-none">
                                             <input type="text" id="searchBox" autocomplete="searchBox"
                                                 placeholder="Cari..."
                                                 class="w-1/2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-6 gap-2 mt-5">
-
+                                    <div class="gap-2 mt-5 grid">
                                         <x-form.select name="customer_id" label="Nama Pelanggan" class="py-3">
                                             <option selected disabled>Pilihan Pelanggan..</option>
                                             @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">
-                                                    {{ $customer->name . ' - ' . $customer->phone }}</option>
+                                                    {{ $customer->name . ' - ' . $customer->organisation . ' - ' . $customer->phone }}
+                                                </option>
                                             @endforeach
                                         </x-form.select>
                                     </div>
 
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-2 mt-5 mx-7">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-2 mt-5 mx-7">
                                     <div class="grid grid-cols-1">
                                         <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tarikh</label>
@@ -69,16 +68,9 @@
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Deadline</label>
-                                        <input
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            type="date" name="dateline" value="{{ old('dateline') }}" />
-                                    </div>
-                                    <div class="grid grid-cols-1">
-                                        <label
                                             class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Pesanan</label>
                                         <select name="method"
-                                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                                        class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                                             <option value="walkin" {{ old('method') == 'walkin' ? 'selected' : '' }}>
                                                 Walk-in
                                             </option>
@@ -97,8 +89,21 @@
                                                     {{ old('branch_id') == $branch->id ? 'selected' : '' }}>
                                                     {{ ucwords($branch->shortname) }}
                                                 </option>
-                                            @endforeach
-                                        </select>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="grid grid-cols-1">
+                                            <label
+                                                class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Deadline</label>
+                                            <input
+                                                class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                                type="date" name="dateline" value="{{ old('dateline') }}" />
+                                        </div>
+                                    <div>
+                                        <x-form.select name="pay_method" label="cash / lo" class="py-3 border-2">
+                                            <option value="cash">Cash</option>
+                                            <option value="lo">LO</option>
+                                        </x-form.select>
                                     </div>
                                 </div>
 
