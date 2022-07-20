@@ -61,6 +61,7 @@ class AgentOrderController extends Controller
                 'method' => 'walkin',
                 'branch_id' => $attr['branch_id'],
                 'user_id' => 1,
+                'pay_method' => 'cash',
             ]);
             $insert['order_id'] =  $new_order->id;
             OrderItem::create($insert);
