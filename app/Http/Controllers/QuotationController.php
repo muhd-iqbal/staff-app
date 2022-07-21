@@ -108,6 +108,7 @@ class QuotationController extends Controller
         $attr['date'] = date("Y-m-d");
         $attr['method'] = $quote->method;
         $attr['total'] = $quote->total;
+        $attr['pay_method'] = 'cash';
         $attr['shipping'] = $quote->shipping;
         $attr['discount'] = $quote->discount;
         $attr['grand_total'] = $quote->grand_total;
