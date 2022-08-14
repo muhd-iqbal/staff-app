@@ -26,9 +26,9 @@ class UserController extends Controller
     {
         $attributes = request()->validate([
             'name' => 'required|min:5|max:255',
-            'phone' => 'required|min:10|max:15|unique:users,email,'.$user->id,
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'icno' => 'required|min:12|max:12,unique:users,icno,'.$user->id,
+            'phone' => 'required|min:10|max:15|unique:users,email,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'icno' => 'required|min:12|max:12,unique:users,icno,' . $user->id,
             'birthday' => 'required|date',
             'address' => 'required|max:255',
             'joined_at' => 'required|date',
@@ -40,9 +40,10 @@ class UserController extends Controller
             'bank_acc' => 'required|max:20',
         ]);
 
+        $attributes['birthday_reminder'] = get_next_birthday($attributes['birthday']);
+
         $user->update($attributes);
 
         return back()->with('success', 'Maklumat berjaya Diubah!');
-
     }
 }

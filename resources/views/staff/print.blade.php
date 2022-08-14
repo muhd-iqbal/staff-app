@@ -29,10 +29,12 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="py-1">
                         <div class="w-full xl:w-full mb-12 xl:mb-0 px-4 mx-auto mt-5">
+                            <div class="text-lg font-bold">{{ $print->count() }} item</div>
                             <div class="text-right mb-2">
                                 <button type="button" onclick="print()"
                                     class="bg-green-500 text-white p-2 px-4 rounded-md shadow-md hover:bg-green-700">Print List</button>
                             </div>
+
                             <form action="/print/all-stickers">
                                 <div id="section-to-print"
                                     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">

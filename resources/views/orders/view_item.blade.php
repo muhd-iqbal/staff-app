@@ -1,4 +1,15 @@
 <x-app-layout>
+    <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+    <script type="text/javascript">
+        var Clipboard = new ClipboardJS('.btn');
+
+        function copied() {
+            let cp = document.getElementById("btn");
+            cp.innerHTML = 'Copied!'
+            cp.classList.add("bg-gray-300");
+            cp.classList.remove("bg-gray-700");
+        }
+    </script>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Item Pesanan') . ': ' . order_num($item->order_id) }}
@@ -32,14 +43,24 @@
                     <div class="flex items-center justify-center">
                         <div class="grid bg-white rounded-lg shadow-xl w-full">
                             @if (auth()->user()->isAdmin)
-                                <div class="text-right" title="Padam Item"><span
-                                        class=" text-red-500 cursor-pointer" onclick="openModal()">x</span></div>
+                                <div class="text-right" title="Padam Item"><span class=" text-red-500 cursor-pointer"
+                                        onclick="openModal()">x</span></div>
                             @endif
+                            <div class="">
+                                <!-- Trigger -->
+
+                            </div>
                             <div class="m-5 grid md:grid-cols-2">
                                 <div class="flex flex-col">
-                                    <div class="header">
+                                    <div class="header flex gap-2">
                                         <h1 class="text-gray-600 font-bold md:text-2xl text-xl">
-                                            {{ $item->product }}</h1>
+                                            {{ $item->product }}
+                                        </h1>
+                                        <button onclick="copied()" id="btn"
+                                            class="btn bg-gray-700 text-white p-2 py-1 rounded-md text-sm hover:bg-gray-300 active:bg-gray-700"
+                                            data-clipboard-text="{{ order_num($item->id) }} - {{ $item->order->customer->name }} {{ $item->order->customer->organisation ? ' - ' . $item->order->customer->organisation : '' }} - {{ $item->product }} {{ $item->size }} ({{ $item->measurement }})">
+                                            Copy
+                                        </button>
                                     </div>
                                     <div>
                                         <h2 class="text-gray-500 font-bold text-lg">{{ __('PIC: ') }}
@@ -203,7 +224,8 @@
                     <div class="mt-3">
                         @foreach ($pictures as $pic)
                             <div class="relative mb-2">
-                                <img src="{{ asset('storage/' . $pic->picture) }}" alt="" class="w-full p-2 border">
+                                <img src="{{ asset('storage/' . $pic->picture) }}" alt=""
+                                    class="w-full p-2 border">
                                 <form action="/orders/item/picture/{{ $pic->id }}/del" method="POST">
                                     @csrf
                                     <button

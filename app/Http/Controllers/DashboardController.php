@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -38,16 +39,21 @@ class DashboardController extends Controller
         // 'Permohonan Cuti' => '/top/leaves/approval',
     ];
 
+    protected $birthday = 0;
+
     public function index()
     {
+        if (date('Y-m-d') >= auth()->user()->birthday_reminder && auth()->user()->birthday_reminder != null) {
+            $this->birthday = 1;
+        }
         if (auth()->user()->isAdmin) {
             return view('dashboard', [
                 'links_acc' => $this->links_acc,
                 'links_staff' => $this->links_staff,
                 'links_order' => $this->links_order,
                 'links_admin' => $this->links_admin,
+                'bday' => $this->birthday,
             ]);
-
         } elseif (auth()->user()->position_id == 1) {
 
             return view('dashboard', [
@@ -56,12 +62,14 @@ class DashboardController extends Controller
                 'links_order' => $this->links_order,
                 'links_admin' => $this->links_admin,
                 'links_owner' => $this->links_owner,
+                'bday' => $this->birthday,
             ]);
         } else {
             return view('dashboard', [
                 'links_acc' => $this->links_acc,
                 'links_staff' => $this->links_staff,
                 'links_order' => $this->links_order,
+                'bday' => $this->birthday,
             ]);
         }
     }
@@ -71,5 +79,13 @@ class DashboardController extends Controller
         return view('dashboard', [
             'links_admin' => $this->links_admin
         ]);
+    }
+
+    public function easter()
+    {
+        $user = User::find(auth()->id());
+        $attr['birthday_reminder'] = get_next_birthday($user->birthday);
+        $user->update($attr);
+        return back();
     }
 }

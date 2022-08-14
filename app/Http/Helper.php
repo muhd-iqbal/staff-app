@@ -165,3 +165,15 @@ if (!function_exists('month_name')) {
         return $month[$int];
     }
 }
+
+if (!function_exists('get_next_birthday')) {
+    function get_next_birthday($birthday)
+    {
+        $date = new DateTime($birthday);
+        $date->modify('+' . date('Y') - $date->format('Y') . ' years');
+        if ($date < new DateTime()) {
+            $date->modify('+1 year');
+        }
+        return $date->format('Y-m-d');
+    }
+}

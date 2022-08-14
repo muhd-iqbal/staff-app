@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/easter', [DashboardController::class, 'easter']);
 
     Route::get('/profile', [UserController::class, 'show']);
     Route::patch('/profile/update/{user}', [UserController::class, 'update']);
