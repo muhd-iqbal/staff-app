@@ -117,6 +117,7 @@
                                     </table>
                                 </div>
                             </div>
+                            {{ $cashflows->withQueryString()->links() }}
                     </div>
                     <div class="flex">
                         <div>
