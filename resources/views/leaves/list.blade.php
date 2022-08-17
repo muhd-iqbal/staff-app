@@ -101,6 +101,7 @@
                     </div>
                     {{ $leaves->links() }}
                     <a href="/top/leave-types" class="bg-green-500 p-2 px-4 rounded-md text-white">Jenis Cuti</a>
+                    <a href="/top/leave-staff" class="bg-green-500 p-2 px-4 rounded-md text-white">Baki Cuti Staf</a>
                     <x-dashboard-link />
                 </section>
             </div>

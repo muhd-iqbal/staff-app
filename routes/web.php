@@ -169,6 +169,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::patch('/leaves/approval/{leave}', [LeaveController::class, 'update']);
     Route::delete('/leaves/approval/{leave}', [LeaveController::class, 'delete']);
 
+    Route::get('/top/leave-staff', [LeaveController::class, 'staff']);
     Route::get('/top/leave-types', [LeaveTypeController::class, 'index']);
     Route::patch('/top/leave-types/{type}', [LeaveTypeController::class, 'update']);
 

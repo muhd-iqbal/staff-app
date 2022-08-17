@@ -70,11 +70,11 @@ class LeaveController extends Controller
             'attachment' => request('leave_type_id') != 3 ? ['image', 'max:1024'] : ['required', 'image', 'max:1024'],
         ]);
         //set annual leave max day
-        if ($attributes['leave_type_id']==1) {
-           request()->validate([
+        if ($attributes['leave_type_id'] == 1) {
+            request()->validate([
                 'day' => 'required|numeric|min:0.5|max:' . $max_leave,
             ]);
-        }else{
+        } else {
             request()->validate([
                 'day' => 'required|numeric|min:0.5',
             ]);
@@ -141,6 +141,18 @@ class LeaveController extends Controller
     {
         return view('leaves.list', [
             'leaves' => Leave::with(['user', 'leave_type'])->orderBy('start', 'desc')->paginate(20),
+        ]);
+    }
+
+    public function staff()
+    {
+
+        return view('leaves.staff', [
+            'staff' =>  User::where('active', 1)->with(['leave' => function ($q) {
+                $q->where('start', '>=', date("Y") . '-01-01')
+                    ->where('start', '<=', date("Y") . '-12-31')
+                    ->where('leave_type_id', 1);
+            }])->get(),
         ]);
     }
 }
