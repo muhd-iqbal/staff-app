@@ -43,7 +43,7 @@
                                             <td class="px-4 py-3 border">
                                                 <p class="text-black">
                                                     @if ($list->annual_leave)
-                                                        {{ $list->annual_leave - $list->leave->count() }} /
+                                                        {{ $list->annual_leave - $list->leave->sum('day') }} /
                                                         {{ $list->annual_leave }}
                                                     @endif
                                                 </p>
