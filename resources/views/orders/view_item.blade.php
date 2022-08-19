@@ -58,7 +58,7 @@
                                         </h1>
                                         <button onclick="copied()" id="btn"
                                             class="btn bg-gray-700 text-white p-2 py-1 rounded-md text-sm hover:bg-gray-300 active:bg-gray-700"
-                                            data-clipboard-text="{{ order_num($item->id) }} - {{ $item->order->customer->name }} {{ $item->order->customer->organisation ? ' - ' . $item->order->customer->organisation : '' }} - {{ $item->product }} {{ $item->size }} ({{ $item->measurement }})">
+                                            data-clipboard-text="{{ order_num($item->order->id) }} - {{ $item->order->customer->name }} {{ $item->order->customer->organisation ? ' - ' . $item->order->customer->organisation : '' }} - {{ $item->product }} {{ $item->size }} ({{ $item->measurement }})">
                                             Copy
                                         </button>
                                     </div>
