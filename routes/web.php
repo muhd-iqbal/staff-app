@@ -19,6 +19,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\QuotationItemController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SMAController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TaskController;
@@ -142,6 +143,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reports', [ReportController::class, 'index']);
     Route::get('/reports/{year}', [ReportController::class, 'yearly']);
     Route::get('/reports/{year}/{branch}', [ReportController::class, 'branch_yearly']);
+    Route::get('/old-reports', [ReportController::class, 'old_index']);
+    Route::get('/old-reports/{year}', [ReportController::class, 'old_yearly']);
+    Route::get('/old-reports/{year}/{branch}', [ReportController::class, 'old_branch_yearly']);
 
     Route::get('/payment-vouchers', [PaymentVoucherController::class, 'index']);
     Route::post('/payment-vouchers/add', [PaymentVoucherController::class, 'create']);
@@ -154,6 +158,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/payment-vouchers/{voucher}/add', [PaymentVoucherListController::class, 'create']);
     Route::delete('/payment-vouchers/{voucher}/{list}', [PaymentVoucherListController::class, 'delete']);
+
+    Route::get('/orders/old', [SMAController::class, 'redir']);
+    Route::get('/orders/old/{branch}', [SMAController::class, 'index']);
+    Route::get('/orders/old/{branch}/{id}', [SMAController::class, 'view']);
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {

@@ -40,6 +40,12 @@ class UserController extends Controller
             'bank_acc' => 'required|max:20',
         ]);
 
+        if($attributes['position_id'] == 2 || $attributes['position_id'] == 1){
+            $attributes['isAdmin'] = 1;
+        }else{
+            $attributes['isAdmin'] = 0;
+        }
+
         $attributes['birthday_reminder'] = get_next_birthday($attributes['birthday']);
 
         $user->update($attributes);

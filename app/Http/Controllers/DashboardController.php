@@ -18,6 +18,7 @@ class DashboardController extends Controller
         'Permohonan Cuti' => '/leaves',
         'Perihal Staf' => '/staff',
         'Slip Gaji' => '/payslips',
+        'POS Lama' => '/orders/old',
     ];
     protected $links_order = [
         'Senarai Order' => '/orders',
