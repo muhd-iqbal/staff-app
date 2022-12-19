@@ -18,7 +18,7 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="id" :value="__('Nama')" />
+                <x-label for="id" :value="__('Nama Agen')" />
 
                 <select id="id"
                     class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
