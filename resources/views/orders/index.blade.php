@@ -54,6 +54,10 @@
                                     <table class="items-center bg-transparent w-full border-collapse ">
                                         <thead>
                                             <tr>
+                                            <th
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    {{ __('Bil') }}
+                                                </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                                     {{ __('No') }}
@@ -68,11 +72,11 @@
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                                                    {{ __('P/U') }}
+                                                    {{ __('O/D') }}
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                                                    {{ __('DUE') }}
+                                                    {{ __('Amount') }}
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
