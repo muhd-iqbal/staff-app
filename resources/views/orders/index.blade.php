@@ -98,7 +98,7 @@
                                                         }
 
                                                     @endphp
-                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ ($orders->currentpage() - 1) * $orders->perpage() + $loop->index + 1 }}</td>
                                                     <th id="noid"
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 {{ @$paid }}">
                                                         {{ order_num($order->id) }}
