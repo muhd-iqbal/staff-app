@@ -54,7 +54,10 @@
                                     <table class="items-center bg-transparent w-full border-collapse ">
                                         <thead>
                                             <tr>
-                                            
+                                            <th
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    {{ __('Bil') }}
+                                                </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                                     {{ __('No') }}
@@ -95,6 +98,15 @@
                                                         }
 
                                                     @endphp
+                                                    <td class="text-center border">
+                                                    {{ ($customers->currentpage() - 1) * $customers->perpage() + $loop->index + 1 }}
+                                                    @if ($customer->is_agent)
+                                                        <div
+                                                            class="ml-2 items-center  bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                            <span class="inline-flex px-1">{{ __('AGENT') }}</span>
+                                                        </div>
+                                                    @endif
+                                                </td>
                                                     <th id="noid"
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 {{ @$paid }}">
                                                         {{ order_num($order->id) }}
