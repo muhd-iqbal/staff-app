@@ -60,7 +60,7 @@
                                                 </th>
                                                  <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                                                    {{ __('Tarikh') }}
+                                                    {{ __('Tarikh Order') }}
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
@@ -76,7 +76,7 @@
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                                                    {{ __('O/D') }}
+                                                    {{ __('P/U') }}
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
