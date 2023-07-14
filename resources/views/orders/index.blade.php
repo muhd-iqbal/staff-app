@@ -76,7 +76,7 @@
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                                                    {{ __('P/U') }}
+                                                    {{ __('Amaun') }}
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
@@ -205,9 +205,7 @@
                                                             </div>
                                                         @endunless
                                                     </td>
-                                                    <td class="text-center">{!! $order->pickup_time
-                                                        ? date('d-M', strtotime($order->pickup_time))
-                                                        : '<span class="text-red-500">&times;</span>' !!}
+                                                    <td class="text-center">{{ 'RM' . RM($order->grand_total) }}
                                                     </td>
                                                     <td class="text-red-500 text-center">
                                                         {{ $order->due ? RM($order->due) : '' }}</td>
