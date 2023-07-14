@@ -74,7 +74,7 @@
                                         {{ __('No Telefon: ') . $order->customer->phone }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh pesanan: ') . date('F', 'd/m/Y', strtotime($order->date)) }}
+                                        {{ __('Tarikh pesanan: ') . date('d/m/Y', strtotime($order->date)) }}
                                     </div>
                                     @if ($order->deadline)
                                         <div
