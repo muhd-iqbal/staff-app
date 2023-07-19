@@ -29,7 +29,7 @@ class SMAController extends Controller
         }
 
         if (request('search')) {
-            $data->where('reference_no', 'like', '%' . request('search') . '%')->orWhere('customer', 'like', '%' . request('search') . '%')->orWhere('phone', 'like', '%' . request('search') . '%')->orWhere('od', 'like', '%' . request('search') . '%');
+            $data->where('reference_no', 'like', '%' . request('search') . '%')->orWhere('customer', 'like', '%' . request('search') . '%')->orWhere('phone', 'like', '%' . request('search') . '%')->orWhere('date', 'like', '%' . request('search') . '%');
         }
 
         return view('sma.index', [
