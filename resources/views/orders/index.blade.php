@@ -103,7 +103,7 @@
 
                                                     @endphp
                                                     <td>{{ ($orders->currentpage() - 1) * $orders->perpage() + $loop->index + 1 }}</td>
-                                                    <td
+                                                    <td id="od"
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                             {{ date('d-F-Y', strtotime($order->created_at)) }}
                                                         </td>
