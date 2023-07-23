@@ -267,8 +267,8 @@
                                         <span class="inline-flex px-1">{{ __('Unpaid') }}</span>
                                     </div>
                                     <div class="text-sm font-bold" title="Order dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Tertunggak: RM{{ RM($dues) }} </div>
-                                    &nbsp
-                                    <div class="text-sm font-bold">Total Order: RM{{number_format($order->grand_total)  }} </div>
+                                    <br>
+                                    <div class="text-sm font-bold">Total Order: RM{{number_format($total_sales, 2)  }} </div>
                                 </div>
                             </div>
                         </div>
