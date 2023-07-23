@@ -268,7 +268,7 @@
                                     </div>
                                     <div class="text-sm font-bold" title="Order dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Tertunggak: RM{{ RM($dues) }} </div>
                                     &nbsp
-                                    
+                                    <div class="text-sm font-bold" title="Order dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Total Order: RM{{  }} </div>
                                 </div>
                             </div>
                         </div>
