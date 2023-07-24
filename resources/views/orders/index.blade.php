@@ -269,10 +269,7 @@
                                     <div class="text-sm font-bold" title="Order dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Tertunggak: RM{{ RM($dues) }} </div>
                                     <br>
                                     <div class="text-sm font-bold">Total Order: RM{{number_format($order->grand_total, 2)  }} </div>
-                                @foreach ($order->grand_total as $sale)
-                                <div class="text-sm font-bold">Total Sale: RM{{number_format($sale, 2)  }} </div>
-                                </div>
-                                @endforeach
+                                
                                 </div>
                             </div>
                         </div>
