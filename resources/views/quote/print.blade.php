@@ -71,6 +71,7 @@
                             <tr class="bg-gray-100">
                                 <th class="text-center px-3 border w-1/12">No</th>
                                 <th class="text-left px-3 border">Perkara</th>
+                                <th class="text-center px-3 border w-2/12">Kuantiti</th>
                                 <th class="text-center px-3 border w-2/12">Harga Seunit</th>
                                 <th class="text-right px-3 border w-2/12">Jumlah (RM)</th>
                             </tr>
