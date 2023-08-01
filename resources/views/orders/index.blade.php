@@ -37,12 +37,7 @@
                                 <button onclick="goToOrder()" title="Carian Order">&#128269;</button>
                             </div>
                             <div class="flex-grow"></div>
-                            
-
-                            
-
-                            
-
+            
                             <div class="flex md:flex-row-reverse">
                                 <form action="/orders">
                                     <input type="text" name="search" placeholder="Carian..."
@@ -53,7 +48,6 @@
                             </div>
                         </div>
                         <div class="w-full xl:w-full mb-12 xl:mb-0 px-4 mx-auto">
-                            <div id="outprint">
                             <div
                                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                                 <div class="block w-full overflow-x-auto">
@@ -289,37 +283,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-                        <script>
-	$(document).ready(function(){
-         $('.select2').select2({
-            width:'100%'
-        })
-        $('#filter').submit(function(e){
-            e.preventDefault();
-            location.href= './?page=reports/date_wise_payment&'+$(this).serialize();
-        })
-       $('#print').click(function(){
-		   start_loader()
-		   var _p = $('#outprint').clone()
-		   var _h = $('head').clone()
-		   var _el = $('<div>')
-		   _h.find("title").text("Senarai Customer - Print View")
-		   _p.find('tr.text-light').removeClass('text-light bg-gradient-purple bg-lightblue')
-		   _el.append(_h)
-		   _el.append(_p)
-		   var nw = window.open("","_blank","width=1000,height=900,left=300,top=50")
-		   	nw.document.write(_el.html())
-			nw.document.close()
-			setTimeout(() => {
-				nw.print()
-				setTimeout(() => {
-					nw.close()
-					end_loader()
-				}, 300);
-			}, 750);
-	   })
-	})
-</script>
+    </div>                        
 </x-app-layout>
