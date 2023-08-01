@@ -37,6 +37,27 @@
                                 <button onclick="goToOrder()" title="Carian Order">&#128269;</button>
                             </div>
                             <div class="flex-grow"></div>
+                            
+
+                            <legend>Tapis</legend>
+					<form action="/orders" id="filter">
+						<div class="row align-items-end">
+							<div class="form-group col-md-3">
+								<label for="from" class="control-label">Date From</label>
+                                <input type="date" name="from" id="from" value="<?= $from ?>" class="form-control form-control-sm rounded-0">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="to" class="control-label">Date To</label>
+                                <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
+							</div>
+							<div class="form-group col-md-4">
+                                <button class="btn btn-primary btn-flat btn-sm"><i class="fa fa-filter"></i> Tapis</button>
+			                    <button class="btn btn-sm btn-flat btn-success" type="button" id="print"><i class="fa fa-print"></i> Print</button>
+							</div>
+						</div>
+					</form>
+
+                            
 
                             <div class="flex md:flex-row-reverse">
                                 <form action="/orders">
