@@ -293,7 +293,13 @@
 
                         <script>
 	$(document).ready(function(){
-        
+         $('.select2').select2({
+            width:'100%'
+        })
+        $('#filter').submit(function(e){
+            e.preventDefault();
+            location.href= './?page=reports/date_wise_payment&'+$(this).serialize();
+        })
        $('#print').click(function(){
 		   start_loader()
 		   var _p = $('#outprint').clone()
