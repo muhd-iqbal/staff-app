@@ -25,12 +25,13 @@ class DashboardController extends Controller
         'Senarai Sebut Harga' => '/quote',
         'Tugasan Design' => '/to-do',
         'Print List' => '/print',
-        'Graf Jualan' => '/reports',
+        
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
     ];
     protected $links_admin = [
         'Daftar Staf' => '/register',
+        'Graf Jualan' => '/reports',
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
