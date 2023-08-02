@@ -14,7 +14,7 @@
             document.getElementById("form").submit();
         }
     </script>
-    <form id="form" action="/test/go">
+    <form id="form" action="/order/go">
         <input type="hidden" id="id" name="id" />
     </form>
     
@@ -22,7 +22,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @isset($to_be_updated)
                 <div class="bg-yellow-500 p-2 rounded mb-4 text-center">
-                    Terdapat {{ $to_be_updated }} Item tiada harga. <a href="/test/item/zero-value"
+                    Terdapat {{ $to_be_updated }} Item tiada harga. <a href="/order/item/zero-value"
                         class="bg-gray-100 px-2 rounded ml-2">Lihat</a>
                 </div>
             @endisset
@@ -35,7 +35,7 @@
                                     class='items-center mx-5 bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah') }}
                                 </a>
-                                <button onclick="goToOrder()" title="Carian test">&#128269;</button>
+                                <button onclick="goToOrder()" title="Carian order">&#128269;</button>
                             </div>
                             <div class="flex-grow"></div>
 
@@ -69,7 +69,7 @@
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                                                    {{ __('Tarikh test') }}
+                                                    {{ __('Tarikh order') }}
                                                 </th>
                                                 <th
                                                     class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
@@ -98,13 +98,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($testing as $test)
-                                                <tr onclick="window.location='/testing/view/{{ $test->id }}'"
+                                            @foreach ($testing as $order)
+                                                <tr onclick="window.location='/testing/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
                                                     @php
-                                                        if ($test->due == $test->grand_total) {
+                                                        if ($order->due == $order->grand_total) {
                                                             $paid = 'bg-red-600 text-white';
-                                                        } elseif ($test->due > 0) {
+                                                        } elseif ($order->due > 0) {
                                                             $paid = 'bg-yellow-500 text-white';
                                                         } else {
                                                             $paid = '';
@@ -113,26 +113,26 @@
                                                     <td>{{ ($testing->currentpage() - 1) * $testing->perpage() + $loop->index + 1 }}</td>
                                                     <td id="od"
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                                            {{ date('d-F-Y', strtotime($test->created_at)) }}
+                                                            {{ date('d-F-Y', strtotime($order->created_at)) }}
                                                         </td>
                                                     <th id="noid"
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 {{ @$paid }}">
-                                                        {{ order_num($test->id) }}
+                                                        {{ order_num($order->id) }}
                                                     </th>
                                                     <td
                                                         class="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                         <div id="branch-label"
-                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $test->branch->color_code }}-500">
+                                                            class="w-5 h-5 mr-2 rounded-full bg-{{ $order->branch->color_code }}-500">
                                                         </div>
                                                         <div>
                                                             <div class="uppercase">
-                                                                {{ $test->customer->name }}
+                                                                {{ $order->customer->name }}
                                                             </div>
                                                             <div class="text-xs uppercase">
-                                                                {{ $test->customer->organisation }}
+                                                                {{ $order->customer->organisation }}
                                                             </div>
                                                         </div>
-                                                        <div id="urgent-{{ $test->id }}"
+                                                        <div id="urgent-{{ $order->id }}"
                                                             class="ml-2 items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold hidden">
                                                             <span class="inline-flex px-1">{{ __('URGENT') }}</span>
                                                         </div>
@@ -142,11 +142,11 @@
 
                                                         @php
                                                             $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
-                                                            $count = count($test->order_item);
+                                                            $count = count($order->order_item);
                                                             $urgent = 0;
                                                         @endphp
 
-                                                        @foreach ($test->order_item as $item)
+                                                        @foreach ($order->order_item as $item)
                                                             @php
                                                                 if ($item->is_done) {
                                                                     $is_done++;
@@ -211,15 +211,15 @@
                                                             </div>
                                                         @endunless
                                                     </td>
-                                                    <td class="text-center">{{ 'RM' . RM($test->grand_total) }}
+                                                    <td class="text-center">{{ 'RM' . RM($order->grand_total) }}
                                                     </td>
                                                     <td class="text-red-500 text-center">
-                                                        {{ $test->due ? RM($test->due) : '' }}</td>
-                                                    <td class="uppercase p-0 text-xs">{{ $test->pay_method }}</td>
+                                                        {{ $order->due ? RM($order->due) : '' }}</td>
+                                                    <td class="uppercase p-0 text-xs">{{ $order->pay_method }}</td>
                                                 </tr>
                                                 @if ($urgent > 0)
                                                     <script>
-                                                        document.getElementById("urgent-{{ $test->id }}").style.display = 'block';
+                                                        document.getElementById("urgent-{{ $order->id }}").style.display = 'block';
                                                     </script>
                                                 @endif
                                             @endforeach
@@ -272,7 +272,7 @@
                                         class="inline-flex flex-grow md:flex-grow-0 items-center bg-red-600 leading-none text-white p-1 shadow text-sm font-bold cursor-pointer">
                                         <span class="inline-flex px-1">{{ __('Unpaid') }}</span>
                                     </div>
-                                    <div class="text-sm font-bold" title="test dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Tertunggak: RM{{ RM($dues) }} </div>
+                                    <div class="text-sm font-bold" title="order dimulakan pada {{ date('d-m-Y', strtotime(config('app.pos_start'))) }}">Tertunggak: RM{{ RM($dues) }} </div>
                                 
                                    
                         </div>
