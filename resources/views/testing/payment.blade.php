@@ -17,7 +17,7 @@
                         <div>{{ __('Telah dibayar: ') . 'RM' . RM($order->paid) }}</div>
                         <div class="mb-3">{{ __('Baki: ') . 'RM' . RM($order->due) }}
                         </div>
-                        <a href="/orders/view/{{ $order->id }}"
+                        <a href="/testing/view/{{ $order->id }}"
                             class='text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl text-white px-4 py-2'>
                             {{ __('Kembali ke pesanan') }}
                         </a>
@@ -51,7 +51,7 @@
                                                 </div>
                                                 <!--body-->
                                                 <div class="relative p-6 flex-auto">
-                                                    <form action="/orders/{{ $order->id }}/payments" method="POST"
+                                                    <form action="/testing/{{ $order->id }}/payments" method="POST"
                                                         enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="grid grid-flow-row gap-3">
@@ -184,7 +184,7 @@
                                                 </div>
                                                 <div class="text-right">
                                                     <form
-                                                        action="/orders/{{ $order->id }}/payments/{{ $payment->id }}"
+                                                        action="/testing/{{ $order->id }}/payments/{{ $payment->id }}"
                                                         method="POST">
                                                         @method('DELETE')
                                                         @csrf
