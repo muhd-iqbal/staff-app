@@ -16,7 +16,7 @@
         <!--Footer-->
         <div class="flex justify-end pt-2 gap-2">
             <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
-            <form action="/orders/{{ $order->id }}/delete" method="POST">
+            <form action="/testing/{{ $order->id }}/delete" method="POST">
                 @csrf
                 @method('DELETE')
                 <x-button>Padam</x-button>
@@ -92,7 +92,7 @@
                                 </div>
                                 @if (auth()->user()->isAdmin && !$order->isDone)
                                     <div class="text-right m-5">
-                                        <form method="POST" action="/orders/view/{{ $order->id }}/mark-done">
+                                        <form method="POST" action="/testing/view/{{ $order->id }}/mark-done">
                                             @csrf
                                             @method('PATCH')
                                             <x-button class="h-10"
@@ -103,7 +103,7 @@
                                 @endif
                                 @if (auth()->user()->isAdmin && $order->isDone)
                                     <div class="text-right m-5">
-                                        <form method="POST" action="/orders/view/{{ $order->id }}/mark-undone">
+                                        <form method="POST" action="/testing/view/{{ $order->id }}/mark-undone">
                                             @csrf
                                             @method('PATCH')
                                             <x-button class="h-10"
@@ -115,11 +115,11 @@
                             </div>
                             <div
                                 class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
-                                <a href="/orders/{{ $order->id }}/add-item"
+                                <a href="/testing/{{ $order->id }}/add-item"
                                     class='w-auto text-center bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah Item') }}
                                 </a>
-                                <a href="/orders/view/{{ $order->id }}/edit"
+                                <a href="/testing/view/{{ $order->id }}/edit"
                                     class='w-auto text-center bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit Order') }}
                                 </a>
@@ -127,29 +127,29 @@
                                     <div>
                                         <button
                                             class="w-full py-2 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
-                                            onclick="window.location='/orders/{{ $order->id }}/invoice'">
+                                            onclick="window.location='/testing/{{ $order->id }}/invoice'">
                                             INVOIS
                                         </button>
                                     </div>
                                     <div>
                                         <button
                                             class="w-full py-2 text-center bg-gradient-to-r from-purple-600 to-red-500 hover:from-red-600 hover:to-yellow-500 rounded-full shadow-lg"
-                                            onclick="window.location='/orders/{{ $order->id }}/delivery-order'">
+                                            onclick="window.location='/testing/{{ $order->id }}/delivery-order'">
                                             DO
                                         </button>
                                     </div>
                                 </div>
-                                <a href="/orders/{{ $order->id }}/payments"
+                                <a href="/testing/{{ $order->id }}/payments"
                                     class='w-auto text-center bg-pink-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Bayaran') }}
                                 </a>
-                                <a href="/orders/view/{{ $order->id }}/pickup"
+                                <a href="/testing/view/{{ $order->id }}/pickup"
                                     @if ($order->pickup) onclick = "return confirm('Pickup sudah direkod!\nKemaskini semula?')" @endif
                                     class='w-auto text-center bg-blue-500 hover:bg-gray-700 rounded-lg shadow-xl
                                     font-medium text-white px-4 py-2'>
                                     {{ __('Pickup') }}
                                 </a>
-                                <a href="/orders"
+                                <a href="/testing"
                                     class='w-auto text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali') }}
                                 </a>
@@ -196,7 +196,7 @@
                                                     }
                                                 @endphp
                                                 <tr class="cursor-pointer"
-                                                    onclick="window.location='/orders/item/{{ $list->id }}'">
+                                                    onclick="window.location='/testing/item/{{ $list->id }}'">
                                                     <td class="py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="ml-4">
@@ -268,7 +268,7 @@
                             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                             <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                                 role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <form action="/orders/{{ $order->id }}/additional" method="POST">
+                                <form action="/testing/{{ $order->id }}/additional" method="POST">
                                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                         @csrf
                                         @method('PATCH')
