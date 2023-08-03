@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <!-- start component -->
-                    <form action="/orders/{{ $order->id }}/add-item" method="post">
+                    <form action="/testing/{{ $order->id }}/add-item" method="post">
                         @csrf
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-                                    <a href="/orders/view/{{ $order->id }}"
+                                    <a href="/testing/view/{{ $order->id }}"
                                         class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                         Batal
                                     </a>
