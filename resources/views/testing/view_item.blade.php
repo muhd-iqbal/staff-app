@@ -27,7 +27,7 @@
         <!--Footer-->
         <div class="flex justify-end pt-2 gap-2">
             <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
-            <form action="/orders/item/{{ $item->id }}/delete" method="POST">
+            <form action="/testing/item/{{ $item->id }}/delete" method="POST">
                 @csrf
                 @method('DELETE')
                 <x-button>Padam</x-button>
@@ -77,7 +77,7 @@
                                         @if (auth()->user()->isAdmin)
                                             Subcon:
                                             <div class="form">
-                                                <form action="/orders/item/{{ $item->id }}/update-subcon"
+                                                <form action="/testing/item/{{ $item->id }}/update-subcon"
                                                     method="POST">
                                                     @csrf
                                                     <select name="supplier_id" id=""
@@ -139,7 +139,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 mt-5 mx-7">
                                 @if (auth()->user()->isAdmin)
                                     <div class="mb-5">
-                                        <form action="/orders/item/{{ $item->id }}/user" method="POST">
+                                        <form action="/testing/item/{{ $item->id }}/user" method="POST">
                                             @csrf
                                             @method('PATCH')
                                             <label for="user_id">{{ __('Tugasan: ') }}</label><br />
@@ -162,7 +162,7 @@
                                     @unless(auth()->user()->id == $item->user_id)
                                         <div class="w-full m-5">
                                             <div class="mb-5">
-                                                <form action="/orders/item/{{ $item->id }}/takeover" method="POST">
+                                                <form action="/testing/item/{{ $item->id }}/takeover" method="POST">
                                                     @csrf
                                                     @method('PATCH')
                                                     <x-button onclick="return confirm('Sahkan ambil alih design')">
@@ -176,12 +176,12 @@
                                     class="my-5 flex {{ auth()->user()->isAdmin ? 'md:flex-row-reverse' : '' }} gap-2">
                                     @if ($item->is_done)
                                         <x-form.confirm-button id="{{ $item->id }}" txt="Print Semula" />
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/design'
+                                        <x-form.single-action action='/testing/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
                                     @elseif($item->is_approved)
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/done'
+                                        <x-form.single-action action='/testing/item/{{ $item->id }}/done'
                                             title='Selesai' color='green' />
-                                        <x-form.single-action action='/orders/item/{{ $item->id }}/design'
+                                        <x-form.single-action action='/testing/item/{{ $item->id }}/design'
                                             title='Design Semula' color='red' />
                                     @elseif($item->is_design)
                                         <x-form.confirm-button id="{{ $item->id }}" txt="Confirm Design" />
@@ -195,11 +195,11 @@
                             </div>
 
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>
-                                <a href="/orders/item/{{ $item->id }}/edit"
+                                <a href="/testing/item/{{ $item->id }}/edit"
                                     class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit item') }}
                                 </a>
-                                <a href="/orders/view/{{ $item->order_id }}"
+                                <a href="/testing/view/{{ $item->order_id }}"
                                     class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali ke senarai pesanan') }}
                                 </a>
@@ -213,7 +213,7 @@
                             @endif
                         </div>
                         <div class="">
-                            <form action="/orders/item/{{ $item->id }}/foto" method="POST"
+                            <form action="/testing/item/{{ $item->id }}/foto" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file"
@@ -227,7 +227,7 @@
                             <div class="relative mb-2">
                                 <img src="{{ asset('storage/' . $pic->picture) }}" alt=""
                                     class="w-full p-2 border">
-                                <form action="/orders/item/picture/{{ $pic->id }}/del" method="POST">
+                                <form action="/testing/item/picture/{{ $pic->id }}/del" method="POST">
                                     @csrf
                                     <button
                                         class="absolute top-5 right-5 bg-red-500 p-2 py-1 text-white rounded hover:bg-red-400"
