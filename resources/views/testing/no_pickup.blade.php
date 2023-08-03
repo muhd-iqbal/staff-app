@@ -12,14 +12,14 @@
                     <section class="py-1">
                         <div class="grid md:grid-cols-2 my-2">
                             <div class="mt-3">
-                                <a href="/orders/create"
+                                <a href="/testing/create"
                                     class='items-center mx-5 bg-green-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah Pesanan') }}
                                 </a>
                             </div>
 
                             <div class="text-right">
-                                <form action="/orders">
+                                <form action="/testing">
                                     <input type="text" name="search" placeholder="Carian..."
                                         class="items-center mx-5 rounded-lg shadow-xl font-medium px-4 py-2"
                                         value="{{ request('search') }}">
@@ -58,15 +58,15 @@
                                                     $bra[$branch->id] = 0;
                                                 endforeach;
                                             @endphp
-                                            @foreach ($orders as $order)
+                                            @foreach ($testing as $order)
                                                 @php
                                                     //again, sorry
                                                     $bra[$order->branch_id]++;
                                                 @endphp
-                                                <tr onclick="window.location='/orders/view/{{ $order->id }}'"
+                                                <tr onclick="window.location='/testing/view/{{ $order->id }}'"
                                                     class="hover:bg-gray-100 cursor-pointer">
                                                     <td class="text-center">
-                                                        {{ ($orders->currentpage() - 1) * $orders->perpage() + $loop->index + 1 }}
+                                                        {{ ($testing->currentpage() - 1) * $testing->perpage() + $loop->index + 1 }}
                                                     </td>
                                                     <th
                                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
@@ -88,13 +88,13 @@
                                     </table>
                                 </div>
                             </div>
-                            {{ $orders->withQueryString()->links() }}
+                            {{ $testing->withQueryString()->links() }}
                         </div>
                     </section>
                     <div class="m-5 grid md:grid-cols-2">
                         <div>
                             @foreach ($branches as $branch)
-                                <div onclick="window.location='/orders/no-pickup?branch={{ $branch->id }}'"
+                                <div onclick="window.location='/testing/no-pickup?branch={{ $branch->id }}'"
                                     class="inline-flex items-center bg-white leading-none text-{{ $branch->color_code }}-500 rounded-full p-2 shadow text-sm cursor-pointer">
                                     <span
                                         class="inline-flex bg-{{ $branch->color_code }}-500 text-white rounded-full h-6 px-3 justify-center items-center text-">{{ $bra[$branch->id] }}</span>
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <a href="/orders"
+                        <a href="/testing"
                             class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                             {{ __('Kembali ke senarai pesanan') }}
                         </a>
