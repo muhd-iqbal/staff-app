@@ -14,7 +14,7 @@
             document.getElementById("form").submit();
         }
     </script>
-    <form id="form" action="/order/go">
+    <form id="form" action="/testing/go">
         <input type="hidden" id="id" name="id" />
     </form>
     
