@@ -71,6 +71,7 @@
                             <tr class="bg-gray-100">
                                 <th class="text-center px-3 border w-1/12">No</th>
                                 <th class="text-left px-3 border">Perkara</th>
+                                <th class="text-center px-3 border w-2/12">Saiz</th>
                                 <th class="text-center px-3 border w-2/12">Kuantiti</th>
                                 <th class="text-center px-3 border w-2/12">Harga Seunit</th>
                                 <th class="text-right px-3 border w-2/12">Jumlah (RM)</th>
@@ -79,6 +80,7 @@
                                 <tr>
                                     <td class="text-center px-3 border">{{ $loop->iteration }}</td>
                                     <td class="px-3 border">{{ $item->product }}</td>
+                                    <td class="px-3 text-center border">{{ $item->size }}</td>
                                     <td class="px-3 text-center border">{{ $item->quantity }}</td>
                                     <td class="px-3 text-center border">{{ RM($item->price) }}</td>
                                     <td class="px-3 text-right border">{{ RM($item->total) }}</td>
