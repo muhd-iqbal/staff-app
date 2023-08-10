@@ -82,7 +82,7 @@
                                     <td class="px-3 border">{{ $item->product }}</td>
                                     <td class="px-3 text-center border">
                                         {{ $item->size }}
-                                        {{ $list->measurement ? '(' . $list->measurement . ')' : '' }}
+                                        {{ $item->measurement ? '(' . $item->measurement . ')' : '' }}
                                     </td>
                                     <td class="px-3 text-center border">{{ $item->quantity }}</td>
                                     <td class="px-3 text-center border">{{ RM($item->price) }}</td>
