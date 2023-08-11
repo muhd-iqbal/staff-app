@@ -129,7 +129,7 @@
                         </div>
                        <div class="text-sm">
 
-                            Sebut harga sah selama 3 minggu
+                            Sebut harga ini sah selama 3 minggu daripada tarikh pesanan
                         </div>
                     </div>
                 </div>
