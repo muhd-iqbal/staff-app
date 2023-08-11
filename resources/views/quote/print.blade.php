@@ -127,8 +127,10 @@
 
                             Ini adalah dokumen yang dihasilkan komputer. Tidak perlu tandatangan
                         </div>
-                        <div class="text-center">{{ __('Sebut harga sah sehingga: ') . date('d/m/Y', strtotime($quote->date)) }}
-                            </div>
+                       <div class="text-sm">
+
+                            Sebut harga sah selama 3 minggu
+                        </div>
                     </div>
                 </div>
             </div>
