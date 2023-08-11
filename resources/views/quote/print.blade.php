@@ -129,7 +129,7 @@
                         </div>
                        <div class="text-sm">
 
-                            Sebut harga ini sah selama 3 minggu daripada tarikh dokumen ini dikeluarkan
+                            Sebut harga ini sah selama 3 minggu selepas tarikh dokumen ini dikeluarkan
                         </div>
                     </div>
                 </div>
