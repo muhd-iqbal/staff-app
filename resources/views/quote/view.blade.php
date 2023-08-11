@@ -78,7 +78,7 @@
                                         {{ __('No Telefon: ') . $quote->customer->phone }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh pesanan: ') . date('d/m/Y', strtotime($quote->date)) }}
+                                        {{ __('Tarikh sebut harga: ') . date('d/m/Y', strtotime($quote->date)) }}
                                     </div>
                                 </div>
                             </div>
