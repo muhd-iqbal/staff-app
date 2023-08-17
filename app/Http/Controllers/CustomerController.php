@@ -17,7 +17,7 @@ class CustomerController extends Controller
         if (request('search')) {
             $customers->where('name', 'like', '%' . request('search') . '%')
                 ->orWhere('phone', 'like', '%' . request('search') . '%')
-                ->orWhere('date', 'like', '%' . request('search') . '%')
+                
                 ->orWhere('organisation', 'like', '%' . request('search') . '%');
         }
         return view('customers.index', [
