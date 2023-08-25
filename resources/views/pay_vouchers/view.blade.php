@@ -216,4 +216,60 @@
 
         </div>
     </div>
+
+     <div class="mt-5 flex justify-between">
+                        <div class="p-5">
+                            @if (count($pictures))
+                                <h2 class="text-xl font-bold">{{ __('Senarai gambar') }}</h2>
+                            @endif
+                        </div>
+                        <div class="">
+                            <form action="/payment-vouchers/{{ $voucher->id }}/foto" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file"
+                                    id="picture" />
+                                <x-button class="mt-2">{{ __('Muat naik') }}</x-button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        @foreach ($pictures as $pic)
+                            <div class="relative mb-2">
+                                <img src="{{ asset('storage/' . $pic->picture) }}" alt=""
+                                    class="w-full p-2 border">
+                                <form action="/payment-vouchers/{{ $pic->id }}/del" method="POST">
+                                    @csrf
+                                    <button
+                                        class="absolute top-5 right-5 bg-red-500 p-2 py-1 text-white rounded hover:bg-red-400"
+                                        onclick="return confirm('Padam foto?')">x</button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById("picture");
+        const fileInput = document.getElementById("picture");
+
+        fileInput.addEventListener('change', () => {
+            form.submit();
+        });
+
+        window.addEventListener('paste', e => {
+            fileInput.files = e.clipboardData.files;
+        });
+
+        function showSubmit(id) {
+            var x = document.getElementById(id);
+            x.style.display = "inline-block";
+        }
+
+        function openLog(item) {
+            alert(item);
+        }
+    </script>
 </x-app-layout>
