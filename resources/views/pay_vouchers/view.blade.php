@@ -197,7 +197,7 @@
                         class="bg-blue-400 p-2 rounded-md px-4 font-bold mt-3 text-white hover:bg-blue-600">Cetak</button>
                 </div>
             </div>
-            <div class="text-center">
+            <div class="mt-3">
                 @if ($voucher->attachment)
                      <img src="{{ asset('storage/' . $voucher->attachment) }}" alt=""
                         class="w-full p-2 border">
