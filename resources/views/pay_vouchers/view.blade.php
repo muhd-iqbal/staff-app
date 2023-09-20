@@ -199,8 +199,8 @@
             </div>
             <div class="text-center">
                 @if ($voucher->attachment)
-                    <a href="{{ asset('storage/' . $voucher->attachment) }}" target="_blank"
-                        class="text-blue-600">Lihat Attachment</a>
+                     <img src="{{ asset('storage/' . $voucher->attachment) }}" alt=""
+                        class="w-full p-2 border">
                 @endif
                 <form action="/payment-vouchers/{{ $voucher->id }}/img" method="POST"
                     enctype="multipart/form-data">
