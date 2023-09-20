@@ -202,6 +202,12 @@
                      <img src="{{ asset('storage/' . $voucher->attachment) }}" alt=""
                         class="w-full p-2 border">
                 @endif
+                <form action="/payment-vouchers/{{ $voucher->id }}/del" method="POST">
+                                    @csrf
+                                    <button
+                                        class="absolute top-5 right-5 bg-red-500 p-2 py-1 text-white rounded hover:bg-red-400"
+                                        onclick="return confirm('Padam foto?')">x</button>
+                                </form>
                 <form action="/payment-vouchers/{{ $voucher->id }}/img" method="POST"
                     enctype="multipart/form-data">
                     @csrf
