@@ -27,7 +27,7 @@
                                         <th class="px-4 py-3">Staf</th>
                                         <th class="px-4 py-3">Jenis</th>
                                         <th class="px-4 py-3">Sebab</th>
-                                        <th class="px-4 py-3">Seharian / Setengah Hari</th>
+                                        
                                         <th class="px-4 py-3">Status</th>
                                         <th class="px-4 py-3">Foto / Tindakan</th>
                                     </tr>
@@ -63,8 +63,7 @@
                                             <td class="px-4 py-3 text-sm border">{{ $leave->detail }}
                                             </td>
 
-                                            <td class="px-4 py-3 text-sm border">{{ $leave->time->name }}
-                                            </td>
+                                           
                                             <!--------->
 
                                             
