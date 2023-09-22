@@ -10,13 +10,13 @@ class DashboardController extends Controller
     protected $links_acc = [
         'Muat Naik Foto' => '/profile/upload',
         'Maklumat Peribadi' => '/profile',
+        'Slip Gaji' => '/payslips',
+        'Permohonan Cuti' => '/leaves',
         'Tukar Kata Laluan' => '/change-password',
     ];
     protected $links_staff = [
-        'Peti Tunai' => '/cashflow',        
-        'Permohonan Cuti' => '/leaves',
-        'Perihal Staf' => '/staff',
-        'Slip Gaji' => '/payslips',
+        'Peti Tunai' => '/cashflow',                
+              
         'POS Lama' => '/orders/old',
     ];
     protected $links_order = [
@@ -32,6 +32,7 @@ class DashboardController extends Controller
         'Daftar Staf' => '/register',
         'Graf Jualan' => '/reports',
         'Baucer Bayaran' => '/payment-vouchers',
+        'Perihal Staf' => '/staff', 
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
