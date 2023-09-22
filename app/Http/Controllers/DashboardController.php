@@ -13,8 +13,7 @@ class DashboardController extends Controller
         'Tukar Kata Laluan' => '/change-password',
     ];
     protected $links_staff = [
-        'Peti Tunai' => '/cashflow',
-        'Baucer Bayaran' => '/payment-vouchers',
+        'Peti Tunai' => '/cashflow',        
         'Permohonan Cuti' => '/leaves',
         'Perihal Staf' => '/staff',
         'Slip Gaji' => '/payslips',
@@ -32,6 +31,7 @@ class DashboardController extends Controller
     protected $links_admin = [
         'Daftar Staf' => '/register',
         'Graf Jualan' => '/reports',
+        'Baucer Bayaran' => '/payment-vouchers',
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
