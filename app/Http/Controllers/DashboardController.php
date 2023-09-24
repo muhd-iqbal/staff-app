@@ -24,7 +24,6 @@ class DashboardController extends Controller
         'Senarai Sebut Harga' => '/quote',
         'Tugasan Design' => '/to-do',
         'Print List' => '/print',
-        'Testing' => '/testing',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
     ];
