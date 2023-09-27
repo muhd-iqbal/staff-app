@@ -23,7 +23,7 @@ class DashboardController extends Controller
         'Senarai Order' => '/orders',
         'Senarai Sebut Harga' => '/quote',
         'Tugasan Design' => '/to-do',
-        'Inventory' => 'https://phpgrid.com/example/inventory-management-dashboard-user-management-laravel-10-bootstrap-5/',
+        'Inventory' => '/inventory',
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
