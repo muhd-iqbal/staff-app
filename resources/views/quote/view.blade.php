@@ -36,6 +36,41 @@
             <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
         </div>
     </x-modalbox>
+    <x-modalbox>
+        <!--Title-->
+        <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-bold text-black">Edit Item</p>
+        </div>
+        <!--Body-->
+        <div class="my-5 text-black">
+            <form action="/quote/{{ $quote->id }}/add-item" method="POST">
+                @csrf
+                <div class="grid grid-col-2">
+                    <x-form.input name="product" label="Nama Produk" 
+                    value="{!! $quote->product !!}" />
+
+                    <x-form.input name="quantity" label="Kuantiti" type="number" 
+                    value="{!! $quote->amount !!}" />
+
+                    <x-form.input name="size" label="Saiz" 
+                    value="{!! $quote->amount !!}" />
+
+                    <x-form.select name="measurement" label="Ukuran" class="mb-2">
+                        @foreach ($measurements as $k => $v)
+                            <option value="{{ $k }}">{{ $v }}</option>
+                        @endforeach
+                    </x-form.select>
+                    <x-form.input name="price" label="Harga Seunit" type="number" 
+                    value="{!! $quote->amount !!}}" />
+                </div>
+                <x-button class="mt-3">Edit</x-button>
+            </form>
+        </div>
+        <!--Footer-->
+        <div class="flex justify-end pt-2 gap-2">
+            <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
+        </div>
+    </x-modalbox>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -146,10 +181,12 @@
                                                                 <button type="submit" class="text-red-500 font-bold"
                                                                     onclick="return confirm('Padam {{ $list->product }}')">X</button>
 
-                                                                <a href="/quote/{{ $quote->id }}/edit"
-                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</a>
+                                                                    <div onclick="openModal()"
+                                                                        class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</a>
+                                                                    </div>
                                                             </form>
-                                                            {{ $list->product }}
+                                                            {{ $quote->product }}
+                                                            
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
