@@ -146,6 +146,10 @@
                                                                 <button type="submit" class="text-red-500 font-bold"
                                                                     onclick="return confirm('Padam {{ $list->product }}')">X</button>
                                                             </form>
+                                                            <td class="text-center border">
+                                                                <a href="/quote/{{ $quote->id }}/edit"
+                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</a>
+                                                            </td>
                                                             {{ $list->product }}
                                                         </div>
                                                     </td>
