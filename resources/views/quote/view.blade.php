@@ -137,17 +137,9 @@
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach ($lists as $list)
                                                 <tr>
-                                                    <td class="py-4 whitespace-nowrap">
-                                                        <div class="flex gap-3 ml-4 text-sm font-medium">
-                                                            <form method="POST"
-                                                                action="/quote/{{ $quote->id }}/{{ $list->id }}/delete">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="text-red-500 font-bold"
-                                                                    onclick="return confirm('Padam {{ $list->product }}')">X</button>
-                                                            </form>
-                                                            {{ $list->product }}
-                                                        </div>
+                                                    <td class="text-center border">
+                                                        <a href="/quote/{{ $quote->id }}/edit"
+                                                            class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</a>
                                                     </td>
                                                     <td class="text-center">
                                                         {{ $list->size }}
