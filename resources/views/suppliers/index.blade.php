@@ -21,6 +21,7 @@
                                         <th>Nama</th>
                                         <th>Telefon</th>
                                         <th>Emel</th>
+                                        <th>Servis</th>
                                     </tr>
                                     @foreach ($suppliers as $sub)
                                         <tr class="text-center">
@@ -28,6 +29,7 @@
                                             <td>{{ $sub->name }}</td>
                                             <td>{{ $sub->phone }}</td>
                                             <td>{{ $sub->email }}</td>
+                                            <td>{{ $sub->service }}</td>
                                             <td><a href="/suppliers/{{ $sub->id }}/update">Edit</a></td>
                                         </tr>
                                     @endforeach
