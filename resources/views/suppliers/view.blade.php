@@ -32,6 +32,10 @@
                                             <x-form.input name="address" label="Alamat"
                                                 value="{{ $supplier->address }}" />
                                         </div>
+                                                <div class="col-span-3">
+                                            <x-form.input name="service" label="Servis"
+                                                value="{{ $supplier->service }}" />
+                                        </div>
                                     </div>
                                     <div class="flex flex-row-reverse p-5">
                                         <x-button>Kemaskini</x-button>
