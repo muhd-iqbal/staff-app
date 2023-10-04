@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="col-span-1">
                                             <x-form.input name="whatsapp_2" label="WhatsApp 2"
-                                                value="{{ $branch->whatsapp_1 }}" />
+                                                value="{{ $branch->whatsapp_2 }}" />
                                         </div>
                                         <div class="col-span-1">
                                             <x-form.input name="bank_account_1" label="Akaun Bank 1"
