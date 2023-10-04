@@ -4,7 +4,7 @@
             {{ quote_num($quote->id) }}
         </h2>
     </x-slot>
-    <x-modalbox>
+    <x-modalbox id="add-item-modal">
         <!--Title-->
         <div class="flex justify-between items-center pb-3">
             <p class="text-2xl font-bold text-black">Tambah Item</p>
@@ -29,6 +29,42 @@
                         class="mb-2" tags="step=0.01 required" />
                 </div>
                 <x-button class="mt-3">Tambah</x-button>
+            </form>
+        </div>
+        <!--Footer-->
+        <div class="flex justify-end pt-2 gap-2">
+            <button class="focus:outline-none modal-close px-4 bg-gray-400 text-black hover:bg-gray-300">Batal</button>
+        </div>
+    </x-modalbox>
+
+    <x-modalbox id="edit-item-modal">
+        <!--Title-->
+        <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-bold text-black">Edit Item</p>
+        </div>
+        <!--Body-->
+        <div class="my-5 text-black">
+            <form action="/quote/{{ $quote->id }}/add-item" method="POST">
+                @csrf
+                <div class="grid grid-col-2">
+                    <x-form.input name="product" label="Nama Produk" 
+                    value="{!! $orders->product !!}" />
+
+                    <x-form.input name="quantity" label="Kuantiti" type="number" 
+                    value="{!! $orders->amount !!}" />
+
+                    <x-form.input name="size" label="Saiz" 
+                    value="{!! $orders->amount !!}" />
+
+                    <x-form.select name="measurement" label="Ukuran" class="mb-2">
+                        @foreach ($measurements as $k => $v)
+                            <option value="{{ $k }}">{{ $v }}</option>
+                        @endforeach
+                    </x-form.select>
+                    <x-form.input name="price" label="Harga Seunit" type="number" 
+                    value="{!! $orders->amount !!}}" />
+                </div>
+                <x-button class="mt-3">Edit</x-button>
             </form>
         </div>
         <!--Footer-->
@@ -84,7 +120,7 @@
                             </div>
                             <div
                                 class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
-                                <div onclick="openModal()"
+                                <div onclick="openAddItemModal()"
                                     class='w-auto cursor-pointer text-center bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Tambah Item') }}
                                 </div>
@@ -146,10 +182,11 @@
                                                                 <button type="submit" class="text-red-500 font-bold"
                                                                     onclick="return confirm('Padam {{ $list->product }}')">X</button>
 
-                                                                <a href="/quote/{{ $quote->id }}/edit"
-                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</a>
+                                                                <div onclick="openEditItemModal()"
+                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</div>
                                                             </form>
-                                                            {{ $list->product }}
+                                                            {{ $quote->product }}
+                                                            
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
@@ -217,6 +254,14 @@
         </div>
     </div>
     <script>
+        function openAddItemModal() {
+            document.getElementById('add-item-modal').classList.toggle('hidden');
+        }
+
+        function openEditItemModal() {
+            document.getElementById('edit-item-modal').classList.toggle('hidden');
+        }
+        
         function toggleModalShipping() {
             document.getElementById('modal-shipping').classList.toggle('hidden')
         }
