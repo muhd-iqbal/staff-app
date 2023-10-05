@@ -145,10 +145,11 @@
                                                                 @method('DELETE')
                                                                 <button type="submit" class="text-red-500 font-bold"
                                                                     onclick="return confirm('Padam {{ $list->product }}')">X</button>
+
+                                                                <a href="/quote/{{ $quote->id }}/edit"
+                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">{{ __('Edit') }}</a>
                                                             </form>
                                                             {{ $list->product }}
-                                                            class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">
-                                                                <i class="fas fa-edit"></i>
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
