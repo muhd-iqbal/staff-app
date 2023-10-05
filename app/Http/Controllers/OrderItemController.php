@@ -30,7 +30,7 @@ class OrderItemController extends Controller
             'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
-            'finishing' => 'max:100',
+            'finishing' => 'max:10000',
             'remarks' => 'max:1000',
         ]);
         if (request()->has('printing_list')) {
@@ -181,7 +181,7 @@ class OrderItemController extends Controller
             'quantity' => 'required|numeric|min:1',
             'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'price' => 'required|min:0|numeric',
-            'finishing' => 'max:100',
+            'finishing' => 'max:10000',
             'remarks' => 'max:1000',
         ]);
 
