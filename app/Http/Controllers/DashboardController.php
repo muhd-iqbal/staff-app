@@ -27,6 +27,7 @@ class DashboardController extends Controller
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
+        'Events' => '/event',
     ];
     protected $links_admin = [
         'Daftar Staf' => '/register',
