@@ -71,6 +71,7 @@
                                         Kemaskini Item
                                     </button>
                                 </div>
+                            </div>
                         </div> <!-- end components -->
                     </form>
                 </div>
