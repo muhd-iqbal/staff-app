@@ -149,7 +149,6 @@
                                                             {{ $list->product }}
 
                                                             <a href="/quote/{{ $quote->id }}/edit"
-                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
                                                             
