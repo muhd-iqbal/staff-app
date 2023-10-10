@@ -13,7 +13,7 @@ class DashboardController extends Controller
         'Slip Gaji' => '/payslips',
         'Permohonan Cuti' => '/leaves',
         'Tukar Kata Laluan' => '/change-password',
-        'Aktiviti Syarikat' => 'http://localhost/eras/admin/',
+        'Aktiviti Syarikat' => 'http://192.168.0.164/event/portal.php',
     ];
     protected $links_staff = [
         'Peti Tunai' => '/cashflow',                
