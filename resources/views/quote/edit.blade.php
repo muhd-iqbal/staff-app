@@ -36,13 +36,13 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <div class="mt-3 grid md:grid-cols-12 gap-3">
                                         <x-form.input name="product" label="Nama Produk" 
-                                            value="{!! $quote->product !!}" />
+                                            value="{!! $list->product !!}" />
 
                                         <x-form.input name="quantity" label="Kuantiti" type="number" 
-                                            value="{!! $quote->quantity !!}" />
+                                            value="{!! $list->quantity !!}" />
 
                                         <x-form.input name="size" label="Saiz" 
-                                            value="{!! $quote->size !!}" />
+                                            value="{!! $list->size !!}" />
 
                                         <div class="col-span-3">
                                             <label for="measurement"
@@ -51,14 +51,14 @@
                                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                 @foreach ($measurements as $k => $v)
                                                     <option value="{{ $k }}"
-                                                        {{ $quote->measurement == $k ? 'selected' : '' }}>
+                                                        {{ $list->measurement == $k ? 'selected' : '' }}>
                                                         {{ $v }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
 
                                         <x-form.input name="" label="Harga Seunit" type="number" 
-                                            value="{!! $quote->price !!}}" />
+                                            value="{!! $list->price !!}}" />
                                     </div>
                                 </div>
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
