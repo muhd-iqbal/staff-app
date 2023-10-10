@@ -67,10 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/quote/{quote}/print', [QuotationController::class, 'print']);
     Route::patch('/quote/{quote}/print', [QuotationController::class, 'update_footer']);
     Route::post('/quote/{quote}/export', [QuotationController::class, 'export']);
+    Route::get('/quote/{quote}/{list}/edit', [QuotationController::class, 'edit']);
 
     Route::post('/quote/{quote}/add-item', [QuotationItemController::class, 'insert']);
     Route::delete('/quote/{quote}/{list}/delete', [QuotationItemController::class, 'delete']);
-    Route::get('/quote/{quote}/{list}/edit', [QuotationItemController::class, 'insert']);
 
     Route::get('/payment/{order}', [OrderController::class, 'print']);
 
