@@ -70,7 +70,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/quote/{quote}/add-item', [QuotationItemController::class, 'insert']);
     Route::delete('/quote/{quote}/{list}/delete', [QuotationItemController::class, 'delete']);
-    Route::post('/quote/{quote}/{list}/edit', [QuotationItemController::class, 'edit']);
 
     Route::get('/payment/{order}', [OrderController::class, 'print']);
 
