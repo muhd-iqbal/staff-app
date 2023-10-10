@@ -12,17 +12,37 @@
 
                     <!-- start component -->
                     <form action="/quote/{{ $quote->id }}/{{ $list->id }}/edit" method="post">
-                        
+                        @csrf
+                        @method('PATCH')
+                        <div class="flex items-center justify-center">
+                            <div class="grid bg-white rounded-lg shadow-xl w-full">
+
+                                <div class="flex justify-center">
+                                    <div class="flex">
+                                        <h1 class="text-gray-600 font-bold md:text-2xl text-xl"></h1>
+                                    </div>
+                                </div>
+
+                                @if ($errors->any())
+                                    <div class="bg-red-500 mt-5 mx-7">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <div class="mt-3 grid md:grid-cols-12 gap-3">
                                         <x-form.input name="product" label="Nama Produk" 
-                                            value="{!! $list->product !!}" />
+                                            value="{!! $quote->product !!}" />
 
                                         <x-form.input name="quantity" label="Kuantiti" type="number" 
-                                            value="{!! $list->quantity !!}" />
+                                            value="{!! $quote->quantity !!}" />
 
                                         <x-form.input name="size" label="Saiz" 
-                                            value="{!! $list->size !!}" />
+                                            value="{!! $quote->size !!}" />
 
                                         <div class="col-span-3">
                                             <label for="measurement"
@@ -31,14 +51,14 @@
                                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                 @foreach ($measurements as $k => $v)
                                                     <option value="{{ $k }}"
-                                                        {{ $list->measurement == $k ? 'selected' : '' }}>
+                                                        {{ $quote->measurement == $k ? 'selected' : '' }}>
                                                         {{ $v }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
 
                                         <x-form.input name="" label="Harga Seunit" type="number" 
-                                            value="{!! $list->price !!}}" />
+                                            value="{!! $quote->price !!}}" />
                                     </div>
                                 </div>
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
@@ -51,7 +71,8 @@
                                         Kemaskini Item
                                     </button>
                                 </div>
-                                            
+                            </div>
+                        </div> <!-- end components -->
                     </form>
                 </div>
             </div>
