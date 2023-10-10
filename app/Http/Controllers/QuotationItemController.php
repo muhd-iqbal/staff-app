@@ -43,4 +43,12 @@ class QuotationItemController extends Controller
 
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
+
+    public function edit(Quotation $quote)
+    {
+        return view('quote.edit', [
+            'list' => $list,
+            'measurements' => $this->measurement,
+        ]);
+    }
 }
