@@ -148,11 +148,10 @@
                                                             </form>
                                                             {{ $list->product }}
 
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="{{route('edit')}}">
-                                                                    <i class="fas fa-edit"></i>
-                                                                </a>
-                                                            </li>
+                                                            <a href="/quote/{{ $quote->id }}/{{ $list->id }}/edit"
+                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
                                                             
                                                         </div>
                                                     </td>
