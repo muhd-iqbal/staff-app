@@ -133,12 +133,4 @@ class QuotationController extends Controller
 
         return redirect('/orders/view/' . $order->id);
     }
-
-    public function edit(QuotationItem $item)
-    {
-        return view('quote.edit', [
-            'item' => $item,
-            'measurements' => $this->measurement,
-        ]);
-    }
 }
