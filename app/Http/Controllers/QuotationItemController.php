@@ -47,6 +47,7 @@ class QuotationItemController extends Controller
     public function edit(Quotation $quote, QuotationItem $list)
     {
         return view('quote.edit', [
+            'quote' => $quote,
             'list' => $list,
             'measurements' => $this->measurement,
         ]);
