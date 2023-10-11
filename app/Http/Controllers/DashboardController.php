@@ -13,7 +13,7 @@ class DashboardController extends Controller
         'Slip Gaji' => '/payslips',
         'Permohonan Cuti' => '/leaves',
         'Tukar Kata Laluan' => '/change-password',
-        'Aktiviti Syarikat' => 'https://192.168.0.164/event/',
+        'Aktiviti Syarikat' => 'http://192.168.56.1/event/',
     ];
     protected $links_staff = [
         'Peti Tunai' => '/cashflow',                
