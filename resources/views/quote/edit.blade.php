@@ -58,7 +58,7 @@
                                         </div>
 
                                         <x-form.input name="price" label="Harga Seunit"
-                                            value="{{!! $list->price / 100 !!}}" span=3 />
+                                            value="{{$list->price / 100}}" span=3 />
                                     </div>
                                 </div>
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
