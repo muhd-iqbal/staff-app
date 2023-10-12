@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <!-- start component -->
-                    <form action="/quote/list/{{ $list->id }}/update" enctype="multipart/form-data" method="get">
+                    <form action="/quote/list/{{ $list->id }}/update" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="flex items-center justify-center">
