@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <!-- start component -->
-                    <form action="/quote/{{ $quote->id }}/{{ $list->id }}/edit" method="post">
+                    <form action="/quote/list/{{ $list->id }}/update" method="post">
                         @csrf
                         @method('PATCH')
                         <div class="flex items-center justify-center">
@@ -58,7 +58,7 @@
                                         </div>
 
                                         <x-form.input name="price" label="Harga Seunit"
-                                            value="{{ $list->price / 100 }}" span=3 />
+                                            value="{{!! $list->price / 100 !!}}" span=3 />
                                     </div>
                                 </div>
                                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
@@ -67,7 +67,7 @@
                                         Batal
                                     </a>
                                     <button
-                                        class='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                        class='w-auto bg-pink-500 hover:bg-pink-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                         Kemaskini Item
                                     </button>
                                 </div>
