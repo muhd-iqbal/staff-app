@@ -13,7 +13,7 @@
                     <!-- start component -->
                     <form action="/quote/list/{{ $list->id }}/update" enctype="multipart/form-data" method="POST">
                         @csrf
-                        
+                        @method('PATCH')
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
 
