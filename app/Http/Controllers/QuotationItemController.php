@@ -44,20 +44,12 @@ class QuotationItemController extends Controller
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
 
-    public function update(QuotationItem $list)
+    public function edit(Quotation $quote, QuotationItem $list)
     {
-        $attributes = request()->validate([
-            'product' => 'required|max:255',
-            'size' => 'required|max:100',
-            'quantity' => 'required|numeric|min:1',
-            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
-            'price' => 'required|min:0|numeric',
+        return view('quote.edit', [
+            'quote' => $quote,
+            'list' => $list,
+            'measurements' => $this->measurement,
         ]);
-
-        $attributes['price'] = $attributes['price'] * 100; //for database precision
-        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
-        $list->update($attributes);
-
-        return redirect('/quote/list/' . $list->id)->with('success', 'Item Dikemaskini.');
     }
 }
