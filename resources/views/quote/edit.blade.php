@@ -11,8 +11,9 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <!-- start component -->
-                    <form action="/quote/{{ $quote->id }}/{{ $list->id }}/edit" enctype="multipart/form-data" method="POST">
-                        @csrf
+                    <form action="/quote/{{ $list->id }}/update" enctype="multipart/form-data" method="POST">
+                        {{ method_field('patch') }}
+                        {{ csrf_field() }}
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
 
