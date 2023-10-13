@@ -147,8 +147,8 @@
                                                                     onclick="return confirm('Padam {{ $list->product }}')">X</button>
                                                             </form>
                                                             {{ $list->product }}
-
-                                                            <a href="/quote/list/{{ $list->id }}/update"
+                                                            
+                                                            <a href="/quote/{{ $quote-> id }}/{{ $list->id }}/edit"
                                                                 class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
