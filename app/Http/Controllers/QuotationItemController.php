@@ -44,7 +44,7 @@ class QuotationItemController extends Controller
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
 
-    public function update(QuotationItem $list, Quotation $quote)
+    public function update(Quotation $quote, QuotationItem $list)
     {
         $attributes = request()->validate([
             'product' => 'required|max:255',
@@ -54,12 +54,24 @@ class QuotationItemController extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
+        // Validate that price and total are non-negative
+        if ($attributes['price'] < 0 || $attributes['quantity'] < 0) {
+            return redirect()->back()->withErrors(['error' => 'Harga dan kuantiti tidak boleh negatif!'])->withInput();
+        }
+
         $attributes['price'] *= 100; // Convert price to cents for database precision
         $attributes['total'] = $attributes['price'] * $attributes['quantity'];
 
-        $list->update($attributes);
+        $list->update([
+            'product' => $attributes['product'],
+            'size' => $attributes['size'],
+            'quantity' => $attributes['quantity'],
+            'measurement' => $attributes['measurement'],
+            'price' => $attributes['price'],
+            'total' => $attributes['total']
+        ]);
 
-        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini');
+        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
     }
 
 }
