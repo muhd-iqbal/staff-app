@@ -92,7 +92,7 @@
                                     class='w-auto text-center bg-blue-500 hover:bg-blue-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Print') }}
                                 </a>
-                                @unless($quote->export_to_order)
+                                
                                 <form action="/quote/{{ $quote->id }}/export" method="POST">
                                     @csrf
                                     <button onclick="return confirm('Pengesahan: export quotation ke order')" type="submit"
@@ -100,7 +100,7 @@
                                         Export ke Order
                                     </button>
                                 </form>
-                                @endunless
+                                
                                 <a href="/quote"
                                     class='w-auto text-center bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali') }}
