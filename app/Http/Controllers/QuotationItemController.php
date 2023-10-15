@@ -44,9 +44,9 @@ class QuotationItemController extends Controller
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
 
-    public function update(QuotationItem $list)
+    public function update(QuotationItem $list, Quotation $quote)
     {
-        $data = request()->validate([
+        $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
             'quantity' => 'required|numeric|min:1',
@@ -54,12 +54,12 @@ class QuotationItemController extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
-        $data['price'] *= 100; // Convert price to cents for database precision
-        $data['total'] = $data['price'] * $data['quantity'];
+        $attributes['price'] *= 100; // Convert price to cents for database precision
+        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
 
-        $list->update($data);
+        $list->update($attributes);
 
-        return redirect('/quote/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
+        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini');
     }
 
 }
