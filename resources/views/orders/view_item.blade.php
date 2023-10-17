@@ -70,6 +70,12 @@
                                         <h2 class="text-gray-500 font-bold text-lg">{{ __('Status: ') }}
                                             {{ $status }}</h2>
                                     </div>
+
+                                    <div>
+                                        <h2 class="text-gray-500 font-bold text-lg">{{ __('Tarikh Ambil Alih: ') }}
+                                            {{ date('d/m/Y h:i A', strtotime($item->user_id ? $item->user->date : 'Tiada')) }} </h2>
+                                    </div>
+                                    
                                     <div class="text-red-500 font-bold text-xl">
                                         {{ $item->is_urgent ? 'URGENT' : '' }}</div>
                                     @if ($item->supplier_id)
