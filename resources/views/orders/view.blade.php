@@ -77,9 +77,11 @@
                                         {{ __('Tarikh pesanan: ') . date('d-M-Y', strtotime($order->date)) }}
                                     </div>
 
+                                    @if ($order->is_design)
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         {{ __('Tarikh Ambil Alih: ') . $order->is_design . ' (' . date('d-M-Y', strtotime($order->is_design_time)) . ')' }}
                                     </div>
+                                    @end if
                                     
                                     @if ($order->deadline)
                                         <div
