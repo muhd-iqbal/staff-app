@@ -79,7 +79,7 @@
 
                                     
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh Ambil Alih: ') . date('d-M-Y', strtotime($order->is_design_time)) }}
+                                        {{ __('Tarikh/Masa Mula Design: ') . date('d-M-Y h:i A', strtotime($order->is_design_time)) }}
                                     </div>
                                     
                                     
