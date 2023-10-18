@@ -74,12 +74,12 @@
                                         {{ __('No Telefon: ') . $order->customer->phone }}
                                     </div>
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh pesanan: ') . date('d-M-Y h:i A', strtotime($order->created_at)) }}
+                                        {{ __('Tarikh pesanan: ') . date('d-M-Y (h:i A)', strtotime($order->created_at)) }}
                                     </div>
 
                                     
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh/Masa Mula Design: ') . date('d-M-Y h:i A', strtotime($order->is_design_time)) }}
+                                        {{ __('Tarikh/Masa Mula Design: ') . date('d-M-Y (h:i A)', strtotime($order->is_design_time)) }}
                                     </div>
                                     
                                     
