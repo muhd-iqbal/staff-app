@@ -79,12 +79,7 @@
 
                                     
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh/Masa Mula Design: ') }}
-                                        @if ($isDesignTime->is_design && $isDesignTime->is_design_time)
-                                            {{ date('d-M-Y (h:i A)', strtotime($isDesignTime->is_design_time)) }}
-                                        @else
-                                            Not available
-                                        @endif
+                                        {{ __('Tarikh/Masa Mula Design: ') . date('d-M-Y (h:i A)', strtotime($order->is_design_time)) }}
                                     </div>
                                     
                                     
