@@ -165,6 +165,7 @@
                                                 <form action="/orders/item/{{ $item->id }}/takeover" method="POST">
                                                     @csrf
                                                     @method('PATCH')
+                                                    <input type="hidden" name="is_design_time" value="{{ $isDesignTime }}">
                                                     <x-button onclick="return confirm('Sahkan ambil alih design')">
                                                         {{ __('Ambil Alih') }}</x-button>
                                                 </form>
