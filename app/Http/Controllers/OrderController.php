@@ -16,7 +16,6 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(['order_item', 'customer'])->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
-        $isDesignTime = null;
 
         if (preg_match('/^[A-Za-z]\d+$/', request('search'))) {
             if (substr(strtoupper(request('search')), 0, 1) === config('app.order_prefix')) {
@@ -30,7 +29,13 @@ class OrderController extends Controller
                     ->orWhere('organisation', 'like', '%' . request('search') . '%');
             })->orderBy('created_at', 'DESC');
         }
+        
 
+        if (request('is_design_time')){
+            $orders->where('is_design_time', '<=', now());
+        }
+
+        
         if (!$orders->count()) {
 
             $orders = Order::whereHas('order_item', function ($query) {
@@ -52,16 +57,11 @@ class OrderController extends Controller
             }
         }
 
-        if (request('is_design_time')){
-            $isDesignTime = now();
-        }
-
         return view('orders.index', [
             'orders' => $orders->with('branch')->paginate(20),
             'branches' => Branch::get(),
             'dues' => $orders->where('date', '>=',config('app.pos_start'))->sum('due'),
             'to_be_updated' => OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(config('app.pos_start'))) . ' 00:00:00')->count(),
-            'is_design_time' => $isDesignTime,
         ]);
     }
 
