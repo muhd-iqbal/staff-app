@@ -30,12 +30,6 @@ class OrderController extends Controller
             })->orderBy('created_at', 'DESC');
         }
         
-
-        if (request('is_design_time')){
-            $orders->where('is_design_time', '<=', now());
-        }
-
-        
         if (!$orders->count()) {
 
             $orders = Order::whereHas('order_item', function ($query) {
