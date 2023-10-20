@@ -77,14 +77,6 @@
                                         {{ __('Tarikh pesanan: ') . date('d-M-Y (h:i A)', strtotime($order->created_at)) }}
                                     </div>
 
-                                    @if ($order->is_design)
-                                        <div 
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                            {{ __('Tarikh/Masa Mula Design: ') }}
-                                            {{ date('d/m/Y h:i A', strtotime($item->is_design_time)) }}
-                                        </div>
-                                    @endif
-
                                     
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
                                         <input type="datetime-local" name="is_design_time" id="is_design_time"><br>
