@@ -31,7 +31,7 @@ class OrderController extends Controller
         }
         
 
-        if (request('is_design')){
+        if (request('is_design_time')){
             $orders->where('is_design_time', '<=', now());
         }
 
