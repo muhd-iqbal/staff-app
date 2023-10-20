@@ -79,7 +79,8 @@
 
                                     
                                     <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                        {{ __('Tarikh/Masa Mula Design: ') . date('d-M-Y (h:i A)', strtotime($order->is_design_time)) }}
+                                        <input type="datetime-local" name="is_design_time" id="is_design_time"><br>
+                                        {{ __('Tarikh/Masa Mula Design: ') .  date('d-M-Y (h:i A)', strtotime($order->is_design_time))  }}
                                     </div>
                                     
                                     
