@@ -172,6 +172,10 @@
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
                                             <tr>
+                                                 <th scope="col"
+                                                    class="px-6 py-3 font-medium text-gray-500 uppercase tracking-wider">
+                                                    {{ __('Tarikh') }}
+                                                </th>
                                                 <th scope="col"
                                                     class="px-6 py-3 font-medium text-gray-500 uppercase tracking-wider">
                                                     {{ __('Item') }}
@@ -205,6 +209,16 @@
                                                 @endphp
                                                 <tr class="cursor-pointer"
                                                     onclick="window.location='/orders/item/{{ $list->id }}'">
+                                                    <td class="py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="ml-4">
+                                                                <div
+                                                                    class="text-sm font-medium {{ $list->is_urgent ? 'text-red-600' : '' }}">
+                                                                    {{ $list->created_at }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td class="py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="ml-4">
