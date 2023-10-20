@@ -121,6 +121,11 @@
                                     </div>
                                 @endif
                             </div>
+
+                            <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold" text-align="right">
+                            <input type="datetime-local" class="form-control form-control-sm" name="datetime_start" id="datetime_start" value="<?php echo isset($datetime_start) ? date("Y-m-d\\TH:i",strtotime($datetime_start)) : '' ?>" required>
+                            </div>
+                            
                             <div
                                 class='grid text-sm md:text-base grid-cols-2 md:grid-cols-3 gap-5 items-center justify-center p-5 pb-5'>
                                 <a href="/orders/{{ $order->id }}/add-item"
