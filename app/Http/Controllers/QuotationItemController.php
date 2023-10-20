@@ -71,7 +71,8 @@ class QuotationItemController extends Controller
             'total' => $attributes['total']
         ]);
 
-        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
+        return back()->with('success', 'Item berjaya dikemaskini.');
+        
     }
 
 }
