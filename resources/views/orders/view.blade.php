@@ -78,12 +78,9 @@
                                     </div>
 
                                     
-                                    @if ($order->is_design)
-                                        <div
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
-                                            {{ __('Tarikh/Masa Mula Design: ') . $order->is_design . ' (' . date('d/m/Y', strtotime($order->is_design_time)) . ')' }}
-                                        </div>
-                                    @endif
+                                    <div class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">
+                                        {{ __('Tarikh/Masa Mula Design: ') . date('d-M-Y (h:i A)', strtotime($order->is_design_time)) }}
+                                    </div>
                                     
                                     
                                     @if ($order->deadline)
