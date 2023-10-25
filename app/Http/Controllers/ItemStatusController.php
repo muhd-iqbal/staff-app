@@ -159,7 +159,7 @@ class ItemStatusController extends Controller
                 $title = 'Pending';
                 $items = OrderItem::where('is_design', '=', 0);
                 break;
-            
+            default:
                 abort(404);
                 break;
         }
