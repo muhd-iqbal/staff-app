@@ -42,6 +42,11 @@
                                             span=3 />
                                         <x-form.input name="size" label="Saiz" value="{!! $item->size !!}" span=3 />
                                         <div class="col-span-3">
+
+                                            <x-form.input name="status" label="Status" value="{{ $item->status }}"
+                                            span=3 />
+
+                                                
                                             <label for="measurement"
                                                 class="block text-sm font-medium text-gray-700">Ukuran</label>
                                             <select name="measurement" id="measurement"
