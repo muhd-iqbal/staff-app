@@ -25,6 +25,7 @@ class AgentOrderController extends Controller
             'order_id' => 'nullable|starts_with:' . config('app.order_prefix'),
             'product' => 'required|min:5',
             'size' => 'required|max:50',
+            'status' => 'nullable',
             'quantity' => 'required|integer|min:1',
             'branch_id' => 'required|exists:branches,id',
             'remarks' => 'nullable',
@@ -35,6 +36,7 @@ class AgentOrderController extends Controller
         $insert = [
             'product' => $attr['product'],
             'size' => $attr['size'],
+            'status' => $attr['status'],
             'quantity' => $attr['quantity'],
             'remarks' => $attr['remarks'],
             'price' => 0,
