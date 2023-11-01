@@ -27,7 +27,6 @@ class OrderItemController extends Controller
         $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
-            'status' => 'required|max:100',
             'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
@@ -179,7 +178,6 @@ class OrderItemController extends Controller
         $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
-            'status' => 'required|max:100',
             'quantity' => 'required|numeric|min:1',
             'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'price' => 'required|min:0|numeric',
