@@ -119,6 +119,7 @@ class QuotationController extends Controller
             $attrs['order_id'] = $order->id;
             $attrs['product'] = $item->product;
             $attrs['size'] = $item->size;
+            $attrs['status'] = $item->size;
             $attrs['measurement'] = $item->measurement;
             $attrs['quantity'] = $item->quantity;
             $attrs['price'] = $item->price;
