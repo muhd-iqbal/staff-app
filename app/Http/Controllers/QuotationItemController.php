@@ -44,35 +44,15 @@ class QuotationItemController extends Controller
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
 
-    public function update(Quotation $quote, QuotationItem $list)
+    public function edit(Quotation $quote, QuotationItem $list)
     {
-        $attributes = request()->validate([
-            'product' => 'required|max:255',
-            'size' => 'required|max:100',
-            'quantity' => 'required|numeric|min:1',
-            'measurement' => ['required', 'max:2', Rule::in(array_keys($this->measurement))],
-            'price' => 'required|numeric|min:0',
-        ]);
-
-        // Validate that price and total are non-negative
-        if ($attributes['price'] < 0 || $attributes['quantity'] < 0) {
-            return redirect()->back()->withErrors(['error' => 'Harga dan kuantiti tidak boleh negatif!'])->withInput();
-        }
-
-        $attributes['price'] *= 100; // Convert price to cents for database precision
-        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
-
-        $list->update([
-            'product' => $attributes['product'],
-            'size' => $attributes['size'],
-            'quantity' => $attributes['quantity'],
-            'measurement' => $attributes['measurement'],
-            'price' => $attributes['price'],
-            'total' => $attributes['total']
+        return view('quote.edit', [
+            'quote' => $quote,
+            'list' => $list,
+            'measurements' => $this->measurement,
         ]);
 
         return back()->with('success', 'Item berjaya dikemaskini.');
-        
     }
 
 }
