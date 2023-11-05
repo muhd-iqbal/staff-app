@@ -51,6 +51,19 @@ class QuotationItemController extends Controller
             'list' => $list,
             'measurements' => $this->measurement,
         ]);
+    }
+
+    public function update(Quotation $quote, QuotationItem $list)
+    {
+        $attributes = request()->validate([
+            'product' => 'required|max:255',
+            'size' => 'required|max:100',
+            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
+            'quantity' => 'required|numeric|min:1',
+            'price' => 'required|min:0|numeric',
+        ]);
+ 
+        $quote->update($attributes);
 
         return back()->with('success', 'Item berjaya dikemaskini.');
     }
