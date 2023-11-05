@@ -24,7 +24,7 @@ class DashboardController extends Controller
         'Senarai Order' => '/orders',
         'Senarai Sebut Harga' => '/quote',
         'Tugasan Design' => '/to-do',
-        'Inventory' => '/inventory',
+        'Inventory' => 'https://sys.inspirazs.com/inventory/',
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
