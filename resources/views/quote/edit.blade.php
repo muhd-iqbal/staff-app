@@ -11,9 +11,8 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <!-- start component -->
-                    <form action="/quote/{{ $quote->id }}/{{ $list->id }}/update-item" method="post">
+                    <form action="/quote/{{ $quote->id }}/{{ $list->id }}/edit-item" method="GET">
                         @csrf
-                        @method('PATCH')
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
 
