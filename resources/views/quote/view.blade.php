@@ -148,7 +148,7 @@
                                                             </form>
                                                             {{ $list->product }}
                                                             
-                                                            <a href="/quote/{{ $quote->id }}/{{ $list->id }}/edit-item"
+                                                            <a href="/quote/{{ $quote->id }}/{{ $list->id }}/update-item"
                                                                 class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
