@@ -56,7 +56,7 @@
                                             </select>
                                         </div>
 
-                                        <x-form.input name="" label="Harga Seunit" type="number" 
+                                        <x-form.input name="price" label="Harga Seunit" type="number" 
                                             value="{{ $list->price }}" />
                                     </div>
                                 </div>
