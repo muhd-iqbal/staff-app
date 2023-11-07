@@ -51,6 +51,8 @@ class QuotationItemController extends Controller
             'list' => $list,
             'measurements' => $this->measurement,
         ]);
+
+        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
     }
 
     public function update(Quotation $quote, QuotationItem $list)
