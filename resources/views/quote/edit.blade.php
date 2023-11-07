@@ -36,13 +36,13 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <div class="mt-3 grid md:grid-cols-12 gap-3">
                                         <x-form.input name="product" label="Nama Produk" 
-                                            value="{ $list->product }" />
+                                            value="{{ $list->product }}" />
 
                                         <x-form.input name="quantity" label="Kuantiti" type="number" 
-                                            value="{ $list->quantity }" />
+                                            value="{{ $list->quantity }}" />
 
                                         <x-form.input name="size" label="Saiz" 
-                                            value="{ $list->size }" />
+                                            value="{{ $list->size }}" />
 
                                         <div class="col-span-3">
                                             <label for="measurement"
@@ -58,21 +58,21 @@
                                         </div>
 
                                         <x-form.input name="" label="Harga Seunit" type="number" 
-                                            value="{ $list->price }}" />
+                                            value="{{ $list->price }}" />
                                     </div>
+                                </div>
+                                <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
+                                    <a href="/quote/{{ $quote->id }}"
+                                        class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                        Batal
+                                    </a>
+                                    <button
+                                        class='w-auto bg-pink-500 hover:bg-pink-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                        Kemaskini Item
+                                    </button>
                                 </div>
                             </div>
                         </div> <!-- end components -->
-                        <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-                            <a href="/quote/{{ $quote->id }}"
-                                class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                Batal
-                            </a>
-                            <button
-                                class='w-auto bg-pink-500 hover:bg-pink-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
-                                Kemaskini Item
-                            </button>
-                        </div>
                     </form>
                 </div>
             </div>
