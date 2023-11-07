@@ -58,14 +58,17 @@ class QuotationItemController extends Controller
         $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
-            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'quantity' => 'required|numeric|min:1',
-            'price' => 'required|min:0|numeric',
+            'measurement' => ['required', 'max:2', Rule::in(array_keys($this->measurement))],
+            'price' => 'required|numeric|min:0',
         ]);
- 
-        $quote->update($attributes);
 
-        return back()->with('success', 'Item berjaya dikemaskini.');
+        $attributes['price'] *= 100; // Convert price to cents for database precision
+        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
+
+        $list->update($attributes);
+
+        return redirect('/quote/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
     }
 
 }
