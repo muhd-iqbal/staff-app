@@ -13,7 +13,7 @@
                     <!-- start component -->
                     <form action="/quote/{{ $quote->id }}/{{ $list->id }}/update-item" method="post">
                         @csrf
-                        @method('PATCH')
+                        @method('PUT')
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
 
