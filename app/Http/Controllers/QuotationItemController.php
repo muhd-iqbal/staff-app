@@ -46,17 +46,6 @@ class QuotationItemController extends Controller
 
     public function edit(Quotation $quote, QuotationItem $list)
     {
-        return view('quote.edit', [
-            'quote' => $quote,
-            'list' => $list,
-            'measurements' => $this->measurement,
-        ]);
-
-        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
-    }
-
-    public function update(Quotation $quote, QuotationItem $list)
-    {
         $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
