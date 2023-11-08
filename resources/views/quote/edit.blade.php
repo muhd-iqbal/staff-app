@@ -13,7 +13,7 @@
                     <!-- start component -->
                     <form action="/quote/{{ $quote->id }}/{{ $list->id }}/update-item" method="post">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
                         <div class="flex items-center justify-center">
                             <div class="grid bg-white rounded-lg shadow-xl w-full">
 
@@ -36,13 +36,12 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <div class="mt-3 grid md:grid-cols-12 gap-3">
                                         <x-form.input name="product" label="Nama Produk" 
-                                            value="{{ $list->product }}" />
+                                            value="{!! $list->product !!}" />
 
                                         <x-form.input name="quantity" label="Kuantiti" type="number" 
                                             value="{{ $list->quantity }}" />
 
-                                        <x-form.input name="size" label="Saiz" 
-                                            value="{{ $list->size }}" />
+                                            <x-form.input name="size" label="Saiz" value="{!! $list->size !!}" span=3 />
 
                                         <div class="col-span-3">
                                             <label for="measurement"
