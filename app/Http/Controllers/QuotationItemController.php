@@ -46,31 +46,23 @@ class QuotationItemController extends Controller
 
     public function edit(Quotation $quote, QuotationItem $list)
     {
-        return view('quote.edit', [
-            'quote' => $quote,
-            'list' => $list,
-            'measurements' => $this->measurement,
-        ]);
+        $product = request('product');
+        $quantity = request('quantity');
+        $size = request('size');
+        $measurement = request('measurement');
+        $price = request('price') * 100; // Convert price to cents
 
-        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
-    }
+        $listItem = List::find($list->id);
 
-    public function update(Quotation $quote, QuotationItem $list)
-    {
-        $attributes = request()->validate([
-            'product' => 'required|max:255',
-            'size' => 'required|max:100',
-            'quantity' => 'required|numeric|min:1',
-            'measurement' => ['required', 'max:2', Rule::in(array_keys($this->measurement))],
-            'price' => 'required|numeric|min:0',
-        ]);
+        $listItem->product = $product;
+        $listItem->quantity = $quantity;
+        $listItem->size = $size;
+        $listItem->measurement = $measurement;
+        $listItem->price = $price;
 
-        $attributes['price'] *= 100; // Convert price to cents for database precision
-        $attributes['total'] = $attributes['price'] * $attributes['quantity'];
+        $listItem->save();
 
-        $list->update($attributes);
-
-        return redirect('/quote/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
+        return redirect("/quote/{$quote->id}")->with('success', 'Item telah berjaya dikemaskini.');
     }
 
 }
