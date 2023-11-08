@@ -52,7 +52,7 @@ class QuotationItemController extends Controller
         $measurement = request('measurement');
         $price = request('price') * 100; // Convert price to cents
 
-        $listItem = List::find($list->id);
+        $listItem = ItemList::find($list->id);
 
         $listItem->product = $product;
         $listItem->quantity = $quantity;
