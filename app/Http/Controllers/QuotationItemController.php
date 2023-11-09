@@ -44,31 +44,27 @@ class QuotationItemController extends Controller
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
 
-    public function edit(Quotation $quote, QuotationItem $list)
-    {
-        return view('quote.edit', [
-            'quote' => $quote,
-            'list' => $list,
-            'measurements' => $this->measurement,
-        ]);
-    }
-
-    public function update(QuotationItem $list, Quotation $quote)
+    public function update(Quotation $quote, QuotationItem $list)
     {
         $attributes = request()->validate([
             'product' => 'required|max:255',
             'size' => 'required|max:100',
+            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'quantity' => 'required|numeric|min:1',
-            'measurement' => ['required', 'max:2', Rule::in(array_keys($this->measurement))],
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|min:0|numeric',
         ]);
 
-        $attributes['price'] *= 100; // Convert price to cents for database precision
+        $attributes['price'] = $attributes['price'] * 100; // for database precision
         $attributes['total'] = $attributes['price'] * $attributes['quantity'];
 
         $list->update($attributes);
 
-        return redirect('/quote/' . $quote->id . '/' . $list->id)->with('success', 'Item Berjaya Dikemaskini.');
+        $totalDifference = $attributes['total'] - $list->total;
+        DB::table('quotations')->where('id', $quote->id)->increment('total', $totalDifference);
+
+        quote_adjustment($quote->id);
+
+        return redirect('/quote/' . $quote->id . '/list/' . $list->id)->with('success', 'Item berjaya dikemaskini.');
     }
 
 }
