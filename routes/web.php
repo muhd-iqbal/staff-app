@@ -150,6 +150,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/old-reports/{year}', [ReportController::class, 'old_yearly']);
     Route::get('/old-reports/{year}/{branch}', [ReportController::class, 'old_branch_yearly']);
 
+    Route::get('/staff-reports', [StaffReportController::class, 'index']);
+    Route::get('/staff-reports/{year}', [StaffReportController::class, 'yearly']);
+    Route::get('/staff-reports/{year}/{branch}', [StaffReportController::class, 'branch_yearly']);
+    Route::get('/old-reports', [StaffReportController::class, 'old_index']);
+    Route::get('/old-reports/{year}', [StaffReportController::class, 'old_yearly']);
+    Route::get('/old-reports/{year}/{branch}', [StaffReportController::class, 'old_branch_yearly']);
+
     Route::get('/payment-vouchers', [PaymentVoucherController::class, 'index']);
     Route::post('/payment-vouchers/add', [PaymentVoucherController::class, 'create']);
     Route::get('/payment-vouchers/{voucher}', [PaymentVoucherController::class, 'view']);
