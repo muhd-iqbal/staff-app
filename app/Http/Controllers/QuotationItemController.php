@@ -44,14 +44,12 @@ class QuotationItemController extends Controller
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
     }
 
-    public function view (QuotationItem $item)
+    public function view(Quotation $quote, QuotationItem $item)
     {
         return view('quote.view_item', [
-            'product' => 'required|max:255',
-            'size' => 'required|max:100',
-            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
-            'quantity' => 'required|numeric|min:1',
-            'price' => 'required|min:0|numeric',
+            'quote' => $quote,
+            'item' => $item,
+            'measurements' => $this->measurement, 
         ]);
     }
 
