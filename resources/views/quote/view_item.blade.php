@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>
-                                <a href="/quote/{{ $quote->id }}/list/{{ $list->id }}"
+                                <a href="/quote/{{ $quote->id }}/item/{{ $item->id }}"
                                     class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit item') }}
                                 </a>
