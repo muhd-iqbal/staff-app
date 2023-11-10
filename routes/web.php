@@ -21,6 +21,7 @@ use App\Http\Controllers\QuotationItemController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SMAController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffReportController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TopLeaveController;
