@@ -136,15 +136,7 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach ($lists as $list)
-                                                @php
-                                                    if ($list->price == 0) {
-                                                        $alert = $alert + 1;
-                                                    } else {
-                                                        $alert = $alert; 
-                                                    }
-                                                @endphp
-                                                <tr class="cursor-pointer"
-                                                    onclick="window.location='/quote/{{ $quote->id }}/list/{{ $list->id }}'">
+                                                <tr>
                                                     <td class="py-4 whitespace-nowrap">
                                                         <div class="flex gap-3 ml-4 text-sm font-medium">
                                                             <form method="POST"
@@ -154,7 +146,13 @@
                                                                 <button type="submit" class="text-red-500 font-bold"
                                                                     onclick="return confirm('Padam {{ $list->product }}')">X</button>
                                                             </form>
-                                                            {{ $list->product }}                      
+                                                            {{ $list->product }}
+                                                            
+                                                            <a href="/quote/{{ $quote->id }}/list/{{ $list->id }}"
+                                                                class="bg-gray-500 text-sm px-1 rounded-sm text-white cursor-pointer hover:bg-gray-700">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
