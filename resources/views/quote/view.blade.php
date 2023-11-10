@@ -137,7 +137,7 @@
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach ($lists as $list)
                                                 <tr class="cursor-pointer"
-                                                    onclick="window.location='/quote/{{ $quote->id }}/list/{{ $list->id }}'">
+                                                    onclick="window.location='/quote/item/{{ $list->id }}'">
                                                     <td class="py-4 whitespace-nowrap">
                                                         <div class="flex gap-3 ml-4 text-sm font-medium">
                                                             <form method="POST"
