@@ -12,6 +12,7 @@ class DashboardController extends Controller
         'Maklumat Peribadi' => '/profile',
         'Slip Gaji' => '/payslips',
         'Permohonan Cuti' => '/leaves',
+        'Graf Design Staff' => '/staff-reports',
         'Tukar Kata Laluan' => '/change-password',
         'Aktiviti Syarikat' => 'http://192.168.1.105/event/',
     ];
@@ -23,8 +24,7 @@ class DashboardController extends Controller
     protected $links_order = [
         'Senarai Order' => '/orders',
         'Senarai Sebut Harga' => '/quote',
-        'Tugasan Design' => '/to-do',
-        'Graf Design Staff' => '/staff-reports',
+        'Tugasan Design' => '/to-do',        
         'Inventory' => 'https://sys.inspirazs.com/inventory/',
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
