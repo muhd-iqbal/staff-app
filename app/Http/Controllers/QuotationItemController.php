@@ -49,6 +49,7 @@ class QuotationItemController extends Controller
         return view('quote.view_item', [
             'quote' => $quote,
             'item' => $item,
+            'pictures' => QuotationPicture::where('quotation_item_id', $item->id)->get(),
             'measurements' => $this->measurement, 
         ]);
     }
