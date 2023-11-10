@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Item Pesanan') . ': ' . quote_num($quote->id) }}
+            {{ __('Quotation') . ': ' . quote_num($item->quote_id) }}
         </h2>
     </x-slot>
 
