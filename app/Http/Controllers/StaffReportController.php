@@ -44,7 +44,7 @@ class StaffReportController extends Controller
         }
         // }
 
-        return view('reports.index', [
+        return view('staff-reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
             'current' => 1,
@@ -74,7 +74,7 @@ class StaffReportController extends Controller
             $sales[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
         }
         // }
-        return view('reports.index', [
+        return view('staff-reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
             'curr_branch' => Branch::find($branch),
@@ -161,7 +161,7 @@ class StaffReportController extends Controller
             $sales[month_name($month)] = (optional($summary->first(fn ($row) => $row->month == $month))->grand_totals);
         }
 
-        return view('reports.index', [
+        return view('staff-reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
             'current' => 0,
@@ -211,7 +211,7 @@ class StaffReportController extends Controller
             $sales[month_name($month)] = (optional($summary->first(fn ($row) => $row->month == $month))->grand_totals);
         }
 
-        return view('reports.index', [
+        return view('staff-reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
             'curr_branch' => Branch::find($branch),
