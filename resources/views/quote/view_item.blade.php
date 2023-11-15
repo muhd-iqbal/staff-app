@@ -33,7 +33,7 @@
                                     class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit item') }}
                                 </a>
-                                <a href="/quote/{{ $list->quotation_id }}}"
+                                <a href="/quote/{{ $item->quotation_id }}}"
                                     class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali ke senarai pesanan') }}
                                 </a>
