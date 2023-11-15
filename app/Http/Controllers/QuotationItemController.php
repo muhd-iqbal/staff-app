@@ -75,7 +75,7 @@ class QuotationItemController extends Controller
 
         $item->update($attributes);
 
-        return redirect('/quote/' . '/item/' . $item->id)->with('success', 'Item berjaya dikemaskini.');
+        return redirect('/quote/item/' . $item->id)->with('success', 'Item berjaya dikemaskini.');
     }
 
 }
