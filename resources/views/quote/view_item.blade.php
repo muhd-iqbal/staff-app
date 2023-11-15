@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>
-                                <a href="/quote/{{ $quote->id }}/item/{{ $item->id }}"
+                                <a href="/quote/{{ $quote->id }}/item/{{ $item->id }}/edit-item"
                                     class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit item') }}
                                 </a>
@@ -40,36 +40,6 @@
                             </div>
                         </div>
                     </div> <!-- end components -->
-                    <div class="mt-5 flex justify-between">
-                        <div class="p-5">
-                            @if (count($pictures))
-                                <h2 class="text-xl font-bold">{{ __('Senarai gambar') }}</h2>
-                            @endif
-                        </div>
-                        <div class="">
-                            <form action="/orders/item/{{ $item->id }}/foto" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file"
-                                    id="picture" />
-                                <x-button class="mt-2">{{ __('Muat naik') }}</x-button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        @foreach ($pictures as $pic)
-                            <div class="relative mb-2">
-                                <img src="{{ asset('storage/' . $pic->picture) }}" alt=""
-                                    class="w-full p-2 border">
-                                <form action="/orders/item/picture/{{ $pic->id }}/del" method="POST">
-                                    @csrf
-                                    <button
-                                        class="absolute top-5 right-5 bg-red-500 p-2 py-1 text-white rounded hover:bg-red-400"
-                                        onclick="return confirm('Padam foto?')">x</button>
-                                </form>
-                            </div>
-                        @endforeach
-                    </div>
                 </div>
             </div>
         </div>
