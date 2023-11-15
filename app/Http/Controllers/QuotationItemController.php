@@ -52,7 +52,15 @@ class QuotationItemController extends Controller
         ]);
     }
 
-    public function update(Quotation $quote, QuotationItem $list)
+    public function edit(QuotationItem $item)
+    {
+        return view('quote.edit', [
+            'item' => $item,
+            'measurements' => $this->measurement, 
+        ]);
+    }
+
+    public function update(QuotationItem $item)
     {
         $attributes = request()->validate([
             'product' => 'required|max:255',
@@ -65,14 +73,9 @@ class QuotationItemController extends Controller
         $attributes['price'] = $attributes['price'] * 100; // for database precision
         $attributes['total'] = $attributes['price'] * $attributes['quantity'];
 
-        $list->update($attributes);
+        $item->update($attributes);
 
-        $totalDifference = $attributes['total'] - $list->total;
-        DB::table('quotations')->where('id', $quote->id)->increment('total', $totalDifference);
-
-        quote_adjustment($quote->id);
-
-        return redirect('/quote/' . $quote->id . '/list/' . $list->id)->with('success', 'Item berjaya dikemaskini.');
+        return redirect('/quote/' . '/item/' . $item->id)->with('success', 'Item berjaya dikemaskini.');
     }
 
 }
