@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Quotation;
 use App\Models\QuotationItem;
-use App\Models\QuotationPicture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -43,16 +42,6 @@ class QuotationItemController extends Controller
         quote_adjustment($quote->id);
 
         return redirect('/quote/' . $quote->id)->with('success', 'Item berjaya padam.');
-    }
-
-    public function view(Quotation $quote, QuotationItem $item)
-    {
-        return view('quote.view_item', [
-            'quote' => $quote,
-            'item' => $item,
-            'pictures' => QuotationPicture::where('quotation_item_id', $item->id)->get(),
-            'measurements' => $this->measurement, 
-        ]);
     }
 
     public function update(Quotation $quote, QuotationItem $list)
