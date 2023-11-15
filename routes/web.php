@@ -74,8 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/quote/item/{item}', [QuotationItemController::class, 'view']);
     Route::post('/quote/item/{item}/foto', [QuotationItemController::class, 'update_photo']);
     Route::post('/quote/item/picture/{picture}/del', [QuotationItemController::class, 'delete_photo']);
-    Route::get('/quote/{quote}/item/{item}/edit-item', [QuotationItemController::class, 'edit']); 
-    Route::patch('/quote/{quote}/item/{item}', [QuotationItemController::class, 'update']);
+    Route::get('/quote/item/{item}/edit-item', [QuotationItemController::class, 'edit']); 
+    Route::patch('/quote/item/{item}/update-item', [QuotationItemController::class, 'update']);
 
     Route::get('/payment/{order}', [OrderController::class, 'print']);
 
