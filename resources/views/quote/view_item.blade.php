@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ quote_num($quote->id) }}
+            {{ __('Item Pesanan') . ': ' . quote_num($item->quote_id) }} 
         </h2>
     </x-slot>
 
@@ -29,11 +29,11 @@
                                 </div>
                             </div>
                             <div class='flex gap-5 items-center justify-center p-5 pb-5'>
-                                <a href="/quote/{{ $quote->id }}/item/{{ $item->id }}/edit-item"
+                                <a href="/quote/{{ $quote->id }}/item/{{ $item->id }}"
                                     class='w-auto bg-yellow-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Edit item') }}
                                 </a>
-                                <a href="/quote/{{ $quote->id }}"
+                                <a href="/quote/{{ $item->quote_id }}"
                                     class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
                                     {{ __('Kembali ke senarai pesanan') }}
                                 </a>
