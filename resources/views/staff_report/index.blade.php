@@ -76,13 +76,13 @@
                     <div class="text-center mt-5">
                         <table class="w-full border border-collapse">
                             <tr>
-                                <th class="border">Bulan</th>
-                                <th class="border">Jumlah RM</th>
+                                <th class="border">Designer</th>
+                                <th class="border">Jumlah Design</th>
                             </tr>
                             @foreach ($sales as $sale)
                                 <tr>
-                                    <td class="border">{{ month_name($loop->iteration) }}</td>
-                                    <td class="border">{{ number_format($sale, 2) }}</td>
+                                    <td class="border"></td>
+                                    <td class="border"></td>
                                 </tr>
                             @endforeach
                         </table>
