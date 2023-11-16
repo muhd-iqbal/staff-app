@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div width="400" height="400">
-                        <canvas id="barChart"></canvas>
+                        <canvas id="chartContainer"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
