@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div width="400" height="400">
-                        <canvas id="chartContainer"></canvas>
+                        <canvas id="pieChart"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
@@ -99,8 +99,8 @@
         $(function() {
             var sales = {!! json_encode($sales) !!};
             {{-- var dues = {!! json_encode($dues) !!}; --}}
-            var barCanvas = $("#barChart");
-            var barChart = new Chart(barCanvas, {
+            var pieCanvas = $("#pieChart");
+            var pieChart = new Chart(pieCanvas, {
                 type: 'bar',
                 data: {
                     datasets: [{
@@ -110,7 +110,7 @@
                             hoverBackgroundColor: '#fff',
                             borderColor: '#00f',
                             borderWidth: 1,
-                            barPercentage: 0.5,
+                            piePercentage: 0.5,
                         },
                         // {
                         //     label:'Tertungak {{ request('year') }}',
