@@ -139,7 +139,7 @@ if (!function_exists('recalculate_quote')) {
         INNER JOIN (
           SELECT SUM(total) as totals
           FROM quotation_items
-          WHERE id = $quote
+          WHERE quotation_id = $quote
         ) qi ON qu.id = $quote
         SET qu.total = qi.totals";
         DB::statement($statement);
