@@ -79,7 +79,7 @@
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
-                            @foreach ($sales as $sale)
+                            @foreach ($users as $user)
                                 <tr>
                                     <td class="border">{{ ucwords(strtolower($user->name)) }}</td>
                                     <td class="border"></td>
