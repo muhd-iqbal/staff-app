@@ -138,7 +138,7 @@ if (!function_exists('recalculate_quote')) {
         $statement = "UPDATE quotations qu
         INNER JOIN (
           SELECT SUM(total) as totals
-          FROM quote_item
+          FROM quotation_items
           WHERE id = $quote
         ) qi ON qu.id = $quote
         SET qu.total = qi.totals";
