@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Models\Cashflow;
 use App\Models\Order;
+use App\Models\Quotation;
 use Illuminate\Support\Facades\DB;
 
 $status_list = [
@@ -127,6 +128,22 @@ if (!function_exists('recalculate_order')) {
         SET od.total = oi.totals";
         DB::statement($statement);
         DB::statement("UPDATE orders SET grand_total = total + shipping - discount, due = grand_total - paid WHERE id = $order");
+    }
+}
+
+//calculate quotation when item change total price
+if (!function_exists('recalculate_quote')) {
+    function recalculate_quote($quote)
+    {
+        $statement = "UPDATE quotations qu
+        INNER JOIN (
+          SELECT SUM(total) as totals
+          FROM quote_item
+          WHERE id = $quote
+        ) qi ON qu.id = $quote
+        SET qu.total = qi.totals";
+        DB::statement($statement);
+        DB::statement("UPDATE quotations SET grand_total = total + shipping - discount WHERE id = $quote");
     }
 }
 
