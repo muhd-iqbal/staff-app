@@ -104,7 +104,7 @@
                 type: 'bar',
                 data: {
                     datasets: [{
-                            label: 'Jualan {{ request('year') }}',
+                            label: 'Designer {{ request('year') }}',
                             data: sales,
                             backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                             hoverBackgroundColor: '#fff',
