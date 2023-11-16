@@ -52,7 +52,7 @@
                     @endif
                     <div class="flex">
                         <h1 class="capitalize text-xl mt-3">
-                            Jualan {{ request('branch') ? $curr_branch->shortname : '' }} {{ request('year') }}
+                            Designer {{ request('branch') ? $curr_branch->shortname : '' }} {{ request('year') }}
                             {{ $current ? '(Terkini)' : '(Lama)' }}
                         </h1>
                         <div class="ml-auto mt-3">
