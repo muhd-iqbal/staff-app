@@ -74,8 +74,8 @@ class QuotationItemController extends Controller
         $attributes['total'] = $attributes['price'] * $attributes['quantity'];
 
         $item->update($attributes);
-        quote_adjustment($item->id); 
-        recalculate_quote($item->id);
+        quote_adjustment($item->quotation_id); 
+        recalculate_quote($item->quotation_id);
 
         return redirect('/quote/item/' . $item->id)->with('success', 'Item berjaya dikemaskini.');
     }
