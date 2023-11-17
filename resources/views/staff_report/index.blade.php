@@ -87,9 +87,9 @@
                             @endforeach
                         </table>
                     </div>
-                    <div class="mt-5">
+                    <!-- <div class="mt-5">
                         <div>POS terkini bermula {{ date("d M Y", strtotime(config('app.pos_start'))) }}</div>
-                    </div>
+                    </div>-->
                 </section>
             </div>
         </div>
