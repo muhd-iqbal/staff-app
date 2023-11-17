@@ -64,14 +64,14 @@
                     <div width="400" height="400">
                         <canvas id="chartContainer"></canvas>
                     </div>
-                    <div class="flex flex-row-reverse gap-3 mt-5">
+                   <!-- <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                         @foreach ($branches as $branch)
                             <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}/{{ $branch->id }}"
                                 class="capitalize bg-{{ $branch->color_code }}-500 p-2 px-4 rounded-md shadow-md text-white">
                                 {{ $branch->shortname }}</a>
-                        @endforeach
+                        @endforeach -->
                     </div>
                     <div class="text-center mt-5">
                         <table class="w-full border border-collapse">
