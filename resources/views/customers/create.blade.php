@@ -18,11 +18,11 @@
                                         <div class="col-span-1">
                                             <x-form.select name="title" label="Title" class="uppercase">
                                                 <option value="">Tiada / Masukkan sendiri...</option>
-                                                <option value="en">En</option>
-                                                <option value="cik">Cik</option>
-                                                <option value="cg">Cg</option>
-                                                <option value="tn">Tuan</option>
-                                                <option value="pn">Puan</option>
+                                                <option value="ENCIK">ENCIK</option>
+                                                <option value="CIK">CIK</option>
+                                                <option value="CIKGU">CIKGU</option>
+                                                <option value="TUAN">TUAN</option>
+                                                <option value="PUAN">PUAN</option>
                                             </x-form.select>
                                         </div>
                                         <div class="col-span-2">
