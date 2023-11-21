@@ -108,6 +108,13 @@
                                     <div class="md:text-right">
                                         {{ __('Harga: RM') . RM($item->price) }}</div>
                                     <div class="md:text-right">{{ $item->finishing }}</div>
+
+                                    @if($item->status_design) 
+                                        <div class="md:text-right">
+                                            {{ __('Status Design: ') . ($item->status_design) }}
+                                        </div>
+                                    @endif
+                                    
                                     <div class="justify-self-end">
                                         @php
                                             $log = 'Dibuat: ' . date('d/m/Y h:i A', strtotime($item->created_at));
