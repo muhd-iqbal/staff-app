@@ -30,6 +30,7 @@ class OrderItemController extends Controller
             'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|min:0|numeric',
+            'design_status' => 'max:10000',
             'finishing' => 'max:10000',
             'remarks' => 'max:10000',
         ]);
@@ -181,6 +182,7 @@ class OrderItemController extends Controller
             'quantity' => 'required|numeric|min:1',
             'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
             'price' => 'required|min:0|numeric',
+            'design_status' => 'max:10000',
             'finishing' => 'max:10000',
             'remarks' => 'max:10000',
         ]);
