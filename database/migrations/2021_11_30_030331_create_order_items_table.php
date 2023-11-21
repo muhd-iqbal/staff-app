@@ -22,7 +22,7 @@ class CreateOrderItemsTable extends Migration
             $table->string('size');
             $table->string('quantity');
             $table->integer('price');
-            $table->string('design_status');
+            $table->string('design_status')->nullable();
             $table->string('finishing')->nullable();
             $table->text('remarks')->nullable();
             $table->boolean('is_urgent')->default(0);
