@@ -41,7 +41,6 @@ return new class extends Migration
             $table->string('size');
             $table->string('measurement');
             $table->string('quantity');
-            $table->string('design_status');
             $table->date('timeframe');
             $table->integer('price');
             $table->integer('total');
