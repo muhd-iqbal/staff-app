@@ -53,7 +53,7 @@
                                         <input
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="text" name="status" placeholder="Status"
-                                            value="{{ old('status') }}" />
+                                            value="{{ old('design_status') }}" />
 
                                         
                                         <select name="measurement" id="measurement"
