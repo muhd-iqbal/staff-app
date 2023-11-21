@@ -43,7 +43,7 @@
                                         <x-form.input name="size" label="Saiz" value="{!! $item->size !!}" span=3 />
                                         <div class="col-span-3">
 
-                                            <x-form.input name="status" label="Status" value="{{ $item->status }}"
+                                            <x-form.input name="design_status" label="Status" value="{{ $item->design_status }}"
                                             span=3 />
 
                                                 
