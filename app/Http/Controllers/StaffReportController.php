@@ -14,6 +14,8 @@ class StaffReportController extends Controller
 
     public function index()
     {
+         $users = User::with(['position', 'department'])->orderBy('active', 'DESC')->orderBy('name')->paginate(10);
+        return view('staff.index', ['users'=>$users]);
         return redirect('/staff-reports/' . date('Y'));
     }
     public function yearly($y)
