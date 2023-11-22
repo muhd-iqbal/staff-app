@@ -79,10 +79,10 @@
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
-                            @foreach ($lists as $list)
+                            @foreach ($users as $designer)
                                 <tr>
-                                    <td class="border">{{ $list->user->name }}</td>
-                                    <td class="border"></td>
+                                    <td class="border">{{ $designer->name }}</td>
+                                    <td class="border">{{ $designer->order_item->count() ? $designer->order_item->count() : 'Tiada' }} design.</td>
                                 </tr>
                             @endforeach
                         </table>
