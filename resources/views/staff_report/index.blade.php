@@ -79,9 +79,9 @@
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
-                            @foreach ($lists as $list)
+                            @foreach ($sales as $sale)
                                 <tr>
-                                    <td class="border">{{ $list->user->name }}</td>
+                                    <td class="border">{{ month_name($loop->iteration) }}</td>
                                     <td class="border"></td>
                                 </tr>
                             @endforeach
