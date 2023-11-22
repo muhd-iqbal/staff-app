@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Order;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,9 +14,6 @@ class StaffReportController extends Controller
 
     public function index()
     {
-        $users = User::with(['position', 'department'])->orderBy('active', 'DESC')->orderBy('name')->paginate(10);
-        return view('staff_report.index', ['users'=>$users]);
-
         return redirect('/staff-reports/' . date('Y'));
     }
     public function yearly($y)
@@ -54,15 +50,6 @@ class StaffReportController extends Controller
             'current' => 1,
         ]);
     }
-    public function show(User $user)
-    {
-        return view('staff.show', [
-            'user' => $user,
-            'departments' => Department::get(),
-            'positions' => Position::get()
-        ]);
-    }
-
 
     public function branch_yearly($y, $branch)
     {
