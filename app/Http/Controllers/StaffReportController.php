@@ -35,7 +35,7 @@ class StaffReportController extends Controller
 
         // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
-            $sales[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
+            $users[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
             // $dues[month_name($month)] = (optional($dbData->first(fn($row) => $row->month == $month))->dues)/100;
             // 'year' => $year,
             // 'month' => $month,
@@ -45,7 +45,7 @@ class StaffReportController extends Controller
         // }
 
         return view('staff_report.index', [
-            'sales' => $sales,
+            'users' => $users,
             'branches' => Branch::all(),
             'current' => 1,
         ]);
@@ -71,11 +71,11 @@ class StaffReportController extends Controller
 
         // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
-            $sales[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
+            $users[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
         }
         // }
         return view('staff_report.index', [
-            'sales' => $sales,
+            'users' => $users,
             'branches' => Branch::all(),
             'curr_branch' => Branch::find($branch),
             'current' => 1,
@@ -91,13 +91,13 @@ class StaffReportController extends Controller
     {
 
         $summary =  DB::select("SELECT month(date) as month, sum(total) as totals, sum(total_discount) as discounts, sum(shipping) as shippings, sum(grand_total) as grand_totals
-        FROM ( SELECT * FROM sma_gurun_sales UNION ALL SELECT * FROM sma_guar_sales ) s
+        FROM ( SELECT * FROM sma_gurun_users UNION ALL SELECT * FROM sma_guar_users ) s
         WHERE date > '$y-01-01 00:00:00' AND date < '$y-12-31 23:59:59' AND date < '" . config('app.pos_start') . " 00:00:00'
         GROUP BY month");
 
         $summary = collect($summary);
 
-        // $table1 = DB::table('sma_gurun_sales')
+        // $table1 = DB::table('sma_gurun_users')
         //     ->select(
         //         // DB::raw('year(date) as year'),
         //         DB::raw('month(date) as month'),
@@ -112,7 +112,7 @@ class StaffReportController extends Controller
         //     ->groupBy(DB::raw('month'))
         // // ->get()
         // ;
-        // return  $table2 = DB::table('sma_guar_sales')
+        // return  $table2 = DB::table('sma_guar_users')
         //     ->select(
         //         DB::raw('month(date) as month'),
         //         DB::raw('sum(total_discount) as discounts'),
@@ -126,7 +126,7 @@ class StaffReportController extends Controller
         //     ->union($table1)
         //     ->get();
 
-        // $table2 = DB::table('sma_guar_sales')->where('date', '>', $y . '-01-01 00:00:00')->where('date', '<', $y . '-12-31 23:59:59')->get();
+        // $table2 = DB::table('sma_guar_users')->where('date', '>', $y . '-01-01 00:00:00')->where('date', '<', $y . '-12-31 23:59:59')->get();
 
         //     // DB::raw('year(date) as year'),
         //     DB::raw('month(date) as month'),
@@ -144,7 +144,7 @@ class StaffReportController extends Controller
 
         // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         //     for ($month = 1; $month <= 12; $month++) {
-        //         $sales[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
+        //         $users[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
         //         // $dues[month_name($month)] = (optional($dbData->first(fn($row) => $row->month == $month))->dues)/100;
         //         // 'year' => $year,
         //         // 'month' => $month,
@@ -152,17 +152,17 @@ class StaffReportController extends Controller
         //         // 'dues' => optional($dbData->first(fn($row) => $row->month == $month && $row->year == $year))->dues,
         //     }
         // }
-        // return view('reports.index', [
-        //     'sales' => $sales,
+        // return view('staff_report.index', [
+        //     'users' => $users,
         //     'branches' => Branch::all(),
         // ]);
 
         for ($month = 1; $month <= 12; $month++) {
-            $sales[month_name($month)] = (optional($summary->first(fn ($row) => $row->month == $month))->grand_totals);
+            $users[month_name($month)] = (optional($summary->first(fn ($row) => $row->month == $month))->grand_totals);
         }
 
         return view('staff_report.index', [
-            'sales' => $sales,
+            'users' => $users,
             'branches' => Branch::all(),
             'current' => 0,
         ]);
@@ -172,7 +172,7 @@ class StaffReportController extends Controller
     {
         switch ($branch) {
             case '1':
-                $summary = DB::table('sma_gurun_sales')
+                $summary = DB::table('sma_gurun_users')
                     ->select(
                         DB::raw('month(date) as month'),
                         DB::raw('sum(total_discount) as discounts'),
@@ -187,7 +187,7 @@ class StaffReportController extends Controller
                     ->get();
                 break;
             case '2':
-                $summary = DB::table('sma_guar_sales')
+                $summary = DB::table('sma_guar_users')
                     ->select(
                         DB::raw('month(date) as month'),
                         DB::raw('sum(total_discount) as discounts'),
@@ -208,11 +208,11 @@ class StaffReportController extends Controller
         }
 
         for ($month = 1; $month <= 12; $month++) {
-            $sales[month_name($month)] = (optional($summary->first(fn ($row) => $row->month == $month))->grand_totals);
+            $users[month_name($month)] = (optional($summary->first(fn ($row) => $row->month == $month))->grand_totals);
         }
 
         return view('staff_report.index', [
-            'sales' => $sales,
+            'users' => $users,
             'branches' => Branch::all(),
             'curr_branch' => Branch::find($branch),
             'current' => 0,
