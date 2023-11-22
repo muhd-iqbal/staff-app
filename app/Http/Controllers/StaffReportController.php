@@ -35,7 +35,7 @@ class StaffReportController extends Controller
 
         // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
-            $users[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
+            $sales[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals) / 100;
             // $dues[month_name($month)] = (optional($dbData->first(fn($row) => $row->month == $month))->dues)/100;
             // 'year' => $year,
             // 'month' => $month,
