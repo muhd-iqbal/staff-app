@@ -81,7 +81,7 @@
                             </tr>
                             @foreach ($sales as $sale)
                                 <tr>
-                                    <td class="border"></td>
+                                    <td class="border">{{ month_name($loop->iteration) }}</td>
                                     <td class="border"></td>
                                 </tr>
                             @endforeach
