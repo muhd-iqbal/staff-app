@@ -79,10 +79,10 @@
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
-                            @foreach ($users as $designer)
+                            @foreach ($sales as $sale)
                                 <tr>
-                                    <td class="border">{{ $designer->list->user }}</td>
-                                    <td class="border">{{ $designer->order_item->count() ? $designer->order_item->count() : 'Tiada' }} design.</td>
+                                    <td class="border">{{ ucwords(strtolower($sale->name)) }}</td>
+                                    <td class="border"></td>
                                 </tr>
                             @endforeach
                         </table>
