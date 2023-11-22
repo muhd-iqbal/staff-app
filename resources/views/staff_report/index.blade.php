@@ -97,7 +97,7 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var sales = {!! json_encode($sales) !!};
+            var sales = {!! json_encode($users) !!};
             {{-- var dues = {!! json_encode($dues) !!}; --}}
             var barCanvas = $("#barChart");
             var barChart = new Chart(barCanvas, {
@@ -105,7 +105,7 @@
                 data: {
                     datasets: [{
                             label: 'Jualan {{ request('year') }}',
-                            data: sales,
+                            data: users,
                             backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                             hoverBackgroundColor: '#fff',
                             borderColor: '#00f',
