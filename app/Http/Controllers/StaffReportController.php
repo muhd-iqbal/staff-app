@@ -37,7 +37,7 @@ class StaffReportController extends Controller
         return view('staff_report.index', [
             'branches' => Branch::all(),       
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->get(),
+            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
             'current' => 1,
         ]);
     }
@@ -63,7 +63,7 @@ class StaffReportController extends Controller
         // }
         return view('staff_report.index', [
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->get(),
+            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
             'curr_user' => User::find($user),
             'current' => 1,
         ]);
@@ -95,7 +95,7 @@ class StaffReportController extends Controller
 
         return view('staff_report.index', [
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->get(),
+            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
             'current' => 1,
         ]);
     }
@@ -121,7 +121,7 @@ class StaffReportController extends Controller
         // }
         return view('staff_report.index', [
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->get(),
+            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
             'curr_user' => User::find($user),
             'current' => 1,
         ]);
