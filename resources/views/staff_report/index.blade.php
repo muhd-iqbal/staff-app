@@ -81,7 +81,7 @@
                             </tr>
                              @foreach ($users as $designer)
                                 <tr>
-                                    <td class="border">{{ ucwords(strtolower($designer->name))}}</td>
+                                    <td class="border">{{ ucwords(strtolower($designer->active->name))}}</td>
                                     <td class="border">{{ $designer->order_item->count() ? $designer->order_item->count() : 'Tiada' }} design.</td>
                                 </tr>
                             @endforeach
