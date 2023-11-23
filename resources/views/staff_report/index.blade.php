@@ -79,10 +79,10 @@
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
-                            @foreach ($sales as $sale)
+                             @foreach ($users as $designer)
                                 <tr>
-                                    <td class="border">{{ month_name($loop->iteration) }}</td>
-                                    <td class="border"></td>
+                                    <td class="border">{{ ucwords(strtolower($designer->name))}}</td>
+                                    <td class="border">{{ $designer->order_item->count() ? $designer->order_item->count() : 'Tiada' }} design.</td>
                                 </tr>
                             @endforeach
                         </table>
@@ -97,7 +97,7 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var sales = {!! json_encode($sales) !!};
+            var users = {!! json_encode($users) !!};
             {{-- var dues = {!! json_encode($dues) !!}; --}}
             var barCanvas = $("#barChart");
             var barChart = new Chart(barCanvas, {
