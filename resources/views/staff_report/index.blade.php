@@ -102,7 +102,7 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var users = {!! json_encode($sales) !!};
+            var users = {!! json_encode($users) !!};
             {{-- var dues = {!! json_encode($dues) !!}; --}}
             var barCanvas = $("#barChart");
             var barChart = new Chart(barCanvas, {
