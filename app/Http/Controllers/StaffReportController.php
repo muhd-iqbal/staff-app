@@ -71,7 +71,7 @@ class StaffReportController extends Controller
 
     public function old_index()
     {
-        return redirect('/old-reports/' . date('Y'));
+        return redirect('/staff-old-reports/' . date('Y'));
     }
 
     public function old_yearly($y)
