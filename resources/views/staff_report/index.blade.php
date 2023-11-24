@@ -110,7 +110,7 @@
                 data: {
                     datasets: [{
                             label: 'Jualan {{ request('year') }}',
-                            data: sales,
+                            data: users,
                             backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                             hoverBackgroundColor: '#fff',
                             borderColor: '#00f',
