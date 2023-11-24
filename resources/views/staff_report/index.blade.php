@@ -84,7 +84,7 @@
                                 @if ($designer->order_item->count() > 0)
                                     <tr>
                                         <td class="border">{{ ucwords(strtolower($designer->name))}}</td>
-                                        <td class="border">{{ $designer->order_item->count() }} design(s).</td>
+                                        <td class="border">{{ $designer->order_item->count() }} design.</td>
                                     </tr>
                                 @endif
                             @endforeach
