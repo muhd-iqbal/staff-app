@@ -110,7 +110,7 @@ class QuotationController extends Controller
         $attributes['discount'] = $attributes['discount'] * 100;
 
         $quote->update($attributes);
-        order_adjustment($quote->id);
+        quote_adjustment($quote->id);
 
         return back()->with('success', 'Info tambahan dikemaskini.');
     }
