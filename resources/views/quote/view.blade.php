@@ -185,7 +185,7 @@
                             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                             <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                                 role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <form action="/quote/{{ $quote->id }}/additional" method="POST">
+                                <form action="/orders/{{ $quote->id }}/additional" method="POST">
                                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                         @csrf
                                         @method('PATCH')
