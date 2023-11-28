@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/quote/{quote}/print', [QuotationController::class, 'print']);
     Route::patch('/quote/{quote}/print', [QuotationController::class, 'update_footer']);
     Route::post('/quote/{quote}/export', [QuotationController::class, 'export']);
+    Route::patch('/quote/{quote}/additional', [QuotationController::class, 'update_additional']);
 
     Route::post('/quote/{quote}/add-item', [QuotationItemController::class, 'insert']);
     Route::delete('/quote/{quote}/{list}/delete', [QuotationItemController::class, 'delete']);
