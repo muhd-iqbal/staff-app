@@ -99,6 +99,21 @@ class QuotationController extends Controller
 
         return redirect('/quote')->with('success', 'Sebut harga dipadam!');
     }
+    
+     public function update_additional(Quotation $quote)
+    {
+        $attributes = request()->validate([
+            'shipping' => 'required|numeric',
+            'discount' => 'required|numeric',
+        ]);
+        $attributes['shipping'] = $attributes['shipping'] * 100;
+        $attributes['discount'] = $attributes['discount'] * 100;
+
+        $quote->update($attributes);
+        order_adjustment($quote->id);
+
+        return back()->with('success', 'Info tambahan dikemaskini.');
+    }
 
     public function export(Quotation $quote)
     {
