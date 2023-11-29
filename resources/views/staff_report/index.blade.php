@@ -67,11 +67,11 @@
                     <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
-                       <!-- @foreach ($branches as $branch) -->
+<!-- @foreach ($branches as $branch) -->
                             <a href=""
                                 class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
                             {{$month}}</a>
-
+<!-- @endforeach -->
                     </div>
                                     
                     <div class="text-center mt-5">
