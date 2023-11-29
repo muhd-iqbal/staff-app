@@ -39,7 +39,7 @@ class StaffReportController extends Controller
             'branches' => Branch::all(),       
             'order' => $orders,
             'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
-            'month' => 'required|varchar|min:1|max:12',
+            'month' => 'required|array|min:1|max:12',
             'current' => 1,
         ]);
     }
