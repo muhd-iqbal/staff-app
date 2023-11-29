@@ -70,7 +70,7 @@
 
                             <a href=""
                                 class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
-                            {{month_name ($loop->iteration)}}</a>
+                            {{month_name($loop->iteration)}}</a>
 
                     </div>
                                     
