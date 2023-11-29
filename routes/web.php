@@ -156,7 +156,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/staff-reports', [StaffReportController::class, 'index']);
     Route::get('/staff-reports/{year}', [StaffReportController::class, 'yearly']);
-    Route::get('/sortbymonth', [StaffReportController::class, 'sortbymonth']);
+    Route::get('/staff-reports/{sortbymonth}', [StaffReportController::class, 'sortbymonth']);
     Route::get('/staff-reports/{year}/{branch}', [StaffReportController::class, 'branch_yearly']);
     Route::get('/staff-old-reports', [StaffReportController::class, 'old_index']);
     Route::get('/staff-old-reports/{year}', [StaffReportController::class, 'old_yearly']);
