@@ -69,8 +69,29 @@
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                        <!-- @foreach ($branches as $branch) -->
                             <a href=""
-                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
-                                {{ month_name($loop->iteration) }}</a>
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Januari</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Febuari</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">March</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">April</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Mei</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Jun</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Julai</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Ogos</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">September</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Oktober</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">November</a>
+                        <a href=""
+                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">Disember</a>
                        <!-- @endforeach -->
                     </div>
                                     
