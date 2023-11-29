@@ -68,8 +68,8 @@
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                        <!-- @foreach ($branches as $branch) -->
-                            <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
-                                class="capitalize bg-{{ $branch->color_code }}-500 p-2 px-4 rounded-md shadow-md text-white">
+                            <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('month') }}"
+                                class="capitalize bg-{{ blue }}-500 p-2 px-4 rounded-md shadow-md text-white">
                                 {{ month_name($loop->iteration) }}</a>
                        <!-- @endforeach -->
                     </div>
