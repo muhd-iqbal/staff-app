@@ -70,7 +70,7 @@
 <!-- @foreach ($branches as $branch) -->
                             <a href=""
                                 class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
-                            {{month_name}}</a>
+                            {{month_name ($order->month)}}</a>
 <!-- @endforeach -->
                     </div>
                                     
