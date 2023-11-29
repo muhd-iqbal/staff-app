@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\User;
+use App\Models\Month;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,7 @@ class StaffReportController extends Controller
             'branches' => Branch::all(),       
             'order' => $orders,
             'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
+            'month' => 'required|integer|min:1|max:12',
             'current' => 1,
         ]);
     }
