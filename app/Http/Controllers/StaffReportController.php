@@ -37,7 +37,7 @@ class StaffReportController extends Controller
 
         return view('staff_report.index', [
             'branches' => Branch::all(),       
-            'sales' => $sales,       
+                  
             'order' => $orders,
             'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
             'month' => 'required|array|min:1|max:12',
