@@ -99,7 +99,11 @@ class StaffReportController extends Controller
             'current' => 1,
         ]);
     }
-
+ public function sortByMonth()
+    {
+        $records = Order::orderByRaw('MONTH(created_at)')->get();
+        return view('staff_report.index', compact('records'));
+    }
     public function old_branch_yearly($y, $user)
     {
         $dbData = Order::select(
