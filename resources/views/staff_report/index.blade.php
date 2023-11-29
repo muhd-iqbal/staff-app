@@ -56,7 +56,7 @@
                             {{ $current ? '(Terkini)' : '(Lama)' }}
                         </h1>
                         <div class="ml-auto mt-3">
-                            <a href="/{{ $current ? 'old-' : '' }}staff-reports"
+                            <a href="/{{ $current ? 'old-' : '' }}reports"
                                 class="bg-blue-{{ $current ? '5' : '4' }}00 text-white py-1 px-2 rounded-md shadow-md">POS
                                 {{ $current ? 'lama' : 'terkini' }}</a>
                         </div>
@@ -65,7 +65,7 @@
                         <canvas id="chartContainer"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
-                        <a href="/staff-reports/{{ request('year') }}"
+                        <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                        <!-- @foreach ($branches as $branch) -->
                             <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('month') }}"
