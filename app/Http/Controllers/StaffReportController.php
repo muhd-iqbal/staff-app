@@ -13,7 +13,8 @@ class StaffReportController extends Controller
 {
     public function index()
     {
-        return redirect('/staff-reports/' . date('Y'));
+        return redirect('/staff-reports/' . date('Y')
+                       'reports' => Report::where('user_id', auth()->id())->orderBy('year', 'DESC')->orderBy('month', 'DESC')->get(),);
     }
 
     public function yearly($y)
@@ -40,7 +41,8 @@ class StaffReportController extends Controller
                   
             'order' => $orders,
             'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
-            'month' => 'required|array|min:1|max:12',
+            'month' => 'required|integer|min:1|max:12',
+            'year' => 'required|integer|min:2020|max:'.date("Y"),
             'current' => 1,
         ]);
     }
