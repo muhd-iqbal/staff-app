@@ -13,9 +13,7 @@ class StaffReportController extends Controller
 {
     public function index()
     {
-        return redirect('/staff-reports/' . date('Y'),[
-                       'sreports' => Report::where('user_id', auth()->id())->orderBy('year', 'DESC')->orderBy('month', 'DESC')->get(),
-                        ]);
+        return redirect('/staff-reports/' . date('Y'));
     }
 
     public function yearly($y)
