@@ -67,10 +67,10 @@
                     <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
-@foreach ($users as $loop)
+@foreach ($reports as $report)
                             <a href=""
                                 class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
-                            {{month_name($loop->iteration)}}</a>
+                            {{month_name($report->month) . ' ' . $report->year}}</a>
 @endforeach
                     </div>
                                     
