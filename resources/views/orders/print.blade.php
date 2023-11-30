@@ -84,8 +84,8 @@
             <div class="my-4 px-3 text-center">
                 <span>Buat bayaran kepada: <br />
                     {{ $order->branch->bank_account_1 }} <br />
-                    {!! $order->branch->bank_account_2? $order->branch->bank_account_2."<br />": "" !!}
-                    {!! $order->branch->bank_account_3? $order->branch->bank_account_3."<br />": "" !!}
+                  <!--  {!! $order->branch->bank_account_2? $order->branch->bank_account_2."<br />": "" !!}
+                    {!! $order->branch->bank_account_3? $order->branch->bank_account_3."<br />": "" !!} -->
                     dengan Rujukan
                     {{ order_num($order->id) }}
             </div>
