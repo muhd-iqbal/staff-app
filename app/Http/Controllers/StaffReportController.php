@@ -14,7 +14,7 @@ class StaffReportController extends Controller
     public function index()
     {
         return redirect('/staff-reports/' . date('Y'),[
-                       'reports' => Report::where('user_id', auth()->id())->orderBy('year', 'DESC')->orderBy('month', 'DESC')->get(),
+                       'sreports' => Report::where('user_id', auth()->id())->orderBy('year', 'DESC')->orderBy('month', 'DESC')->get(),
                         ]);
     }
 
@@ -39,7 +39,7 @@ class StaffReportController extends Controller
 
         return view('staff_report.index', [
             'branches' => Branch::all(),       
-            'reports' => Report::all(),      
+            'sreports' => Report::all(),      
             'order' => $orders,
             'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
             'month' => 'required|integer|min:1|max:12',
