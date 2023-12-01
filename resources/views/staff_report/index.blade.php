@@ -52,8 +52,8 @@
                     @endif
                     <div class="flex">
                         <h1 class="capitalize text-xl mt-3">
-                            Designer {{ request('year') }}
-                            {{ $current ? '(Terkini)' : '(Lama)' }}
+                            Jumlah Design Designer {{ request('year') }}
+
                         </h1>
                         <div class="ml-auto mt-3">
                             <a href="/{{ $current ? 'staff-old-' : '' }}reports"
