@@ -56,7 +56,7 @@
                             {{ $current ? '(Terkini)' : '(Lama)' }}
                         </h1>
                         <div class="ml-auto mt-3">
-                            <a href="/{{ $current ? 'old-' : '' }}reports"
+                            <a href="/{{ $current ? 'staff-old-' : '' }}reports"
                                 class="bg-blue-{{ $current ? '5' : '4' }}00 text-white py-1 px-2 rounded-md shadow-md">POS
                                 {{ $current ? 'lama' : 'terkini' }}</a>
                         </div>
