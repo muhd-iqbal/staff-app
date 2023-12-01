@@ -18,15 +18,15 @@
                     @if ($current)
                         <div class="flex">
                             <div>
-                                @if (request('year') > date('Y', strtotime(config('app.pos_start'))))
-                                    <a href="/staff-reports/{{ request('year') - 1 }}{{ request('branch') ? '/' . request('branch') : '' }}"
+                                @if (request('year') > date('Y'))
+                                    <a href="/staff-reports/{{ request('year') - 1 }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                                         {{ request('year') - 1 }}</a>
                                 @endif
                             </div>
                             <div class="ml-auto">
                                 @if (request('year') < date('Y'))
-                                    <a href="/staff-reports/{{ request('year') + 1 }}{{ request('branch') ? '/' . request('branch') : '' }}"
+                                    <a href="/staff-reports/{{ request('year') + 1 }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
                                         {{ request('year') + 1 }} &#10095;</a>
                                 @endif
@@ -35,15 +35,15 @@
                     @else
                         <div class="flex">
                             <div>
-                                @if (request('year') <= date('Y', strtotime(config('app.pos_start'))))
-                                    <a href="/old-reports/{{ request('year') - 1 }}{{ request('branch') ? '/' . request('branch') : '' }}"
+                                @if (request('year') <= date('Y'))
+                                    <a href="/staff-old-reports/{{ request('year') - 1 }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                                         {{ request('year') - 1 }}</a>
                                 @endif
                             </div>
                             <div class="ml-auto">
                                 @if (request('year') < date('Y'))
-                                    <a href="/old-reports/{{ request('year') + 1 }}{{ request('branch') ? '/' . request('branch') : '' }}"
+                                    <a href="/staff-old-reports/{{ request('year') + 1 }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
                                         {{ request('year') + 1 }} &#10095;</a>
                                 @endif
@@ -52,35 +52,30 @@
                     @endif
                     <div class="flex">
                         <h1 class="capitalize text-xl mt-3">
-                            Designer {{ request('branch') ? $curr_branch->shortname : '' }} {{ request('year') }}
+                            Designer {{ request('year') }}
                             {{ $current ? '(Terkini)' : '(Lama)' }}
                         </h1>
-                        <div class="ml-auto mt-3">
-                            <a href="/{{ $current ? 'old-' : '' }}reports"
-                                class="bg-blue-{{ $current ? '5' : '4' }}00 text-white py-1 px-2 rounded-md shadow-md">POS
-                                {{ $current ? 'lama' : 'terkini' }}</a>
-                        </div>
                     </div>
                     <div width="400" height="400">
                         <canvas id="chartContainer"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
-                        <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
+                        <a href="/{{ $current ? '' : 'staff-old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
-@foreach ($order as $loop)
+                        @foreach ($order as $loop)
                             <a href=""
                                 class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
                             {{month_name($loop->iteration)}}</a>
-@endforeach
+                        @endforeach
                     </div>
-                                    
+
                     <div class="text-center mt-5">
                         <table class="w-full border border-collapse">
                             <tr>
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
-                            
+
                              @foreach ($users as $designer)
                                 @if ($designer->order_item->count() > 0)
                                     <tr>
@@ -89,12 +84,9 @@
                                     </tr>
                                 @endif
                             @endforeach
-                            
+
                         </table>
                     </div>
-                    <!-- <div class="mt-5">
-                        <div>POS terkini bermula {{ date("d M Y", strtotime(config('app.pos_start'))) }}</div>
-                    </div>-->
                 </section>
             </div>
         </div>
@@ -117,11 +109,6 @@
                             borderWidth: 1,
                             barPercentage: 0.5,
                         },
-                        // {
-                        //     label:'Tertungak {{ request('year') }}',
-                        //     data:dues,
-                        //     backgroundColor:'#0ff'
-                        // },
                     ]
                 },
                 options: {
