@@ -18,7 +18,7 @@
                     @if ($current)
                         <div class="flex">
                             <div>
-                                @if (request('year') > date('Y'))
+                                @if (request('year') > date('Y', strtotime(config('app.pos_start'))))
                                     <a href="/staff-reports/{{ request('year') - 1 }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                                         {{ request('year') - 1 }}</a>
@@ -35,7 +35,7 @@
                     @else
                         <div class="flex">
                             <div>
-                                @if (request('year') <= date('Y'))
+                                @if (request('year') <= date('Y', strtotime(config('app.pos_start'))))
                                     <a href="/staff-old-reports/{{ request('year') - 1 }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                                         {{ request('year') - 1 }}</a>
