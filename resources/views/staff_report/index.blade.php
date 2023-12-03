@@ -99,33 +99,32 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var users = {!! json_encode($users) !!};
-            {{-- var dues = {!! json_encode($dues) !!}; --}}
-            var barCanvas = $("#barChart");
+            var designer = {!! json_encode($users->pluck('name')) !!};
+            var order = {!! json_encode($orders) !!};
+
+            var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
+                    labels: designer,
                     datasets: [{
-                            label: 'Jualan {{ request('year') }}',
-                            data: users,
-                            backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
-                            hoverBackgroundColor: '#fff',
-                            borderColor: '#00f',
-                            borderWidth: 1,
-                            barPercentage: 0.5,
-                        },
-                    ]
+                        label: 'Total Designs',
+                        data: order,
+                        backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
+                        hoverBackgroundColor: '#fff',
+                        borderColor: '#00f',
+                        borderWidth: 1,
+                        barPercentage: 0.5,
+                    }]
                 },
                 options: {
                     scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            })
-        })
+            });
+        });
     </script>
 </x-app-layout>
