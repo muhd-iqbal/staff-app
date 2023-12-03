@@ -122,7 +122,7 @@
                                         @php
                                             $log = 'Dibuat: ' . date('d/m/Y h:i A', strtotime($item->created_at));
                                             if ($item->is_design) {
-                                                $log .= '\nDesign: ' . date('d/m/Y h:i A', ($item->is_design_time));
+                                                $log .= '\nDesign: ' . date('d/m/Y h:i A', strtotime($item->is_design_time));
                                             }
                                             if ($item->is_approved) {
                                                 $log .= '\nApprove: ' . date('d/m/Y h:i A', strtotime($item->is_approved_time));
