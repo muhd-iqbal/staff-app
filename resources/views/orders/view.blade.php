@@ -207,7 +207,7 @@
                                                             <div class="ml-4">
                                                                 <div
                                                                     class="text-sm font-medium {{ $list->is_urgent ? 'text-red-600' : '' }}">
-                                                                   {{ date('d-M-Y (h:i A)', strtotime($list->is_design_time)) }}
+                                                                   {{ date('d-M-Y (h:i A)', strtotime($list->created_at)) }}
                                                                 </div>
                                                             </div>
                                                         </div>
