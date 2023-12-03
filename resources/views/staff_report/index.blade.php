@@ -100,7 +100,7 @@
     <script>
         $(function() {
             var designer = {!! json_encode($users->pluck('name')) !!};
-            var order = {!! json_encode($orders) !!};
+            {{-- var order = {!! json_encode($orders) !!}; --}}
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
