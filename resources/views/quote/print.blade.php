@@ -124,6 +124,10 @@
                     @endif
                     <div class="text-center mt-10">
                         <div class="text-sm">
+                            <div class="mt-5">{{ __('Nombor Akaun:') }}</div>
+                            {{ $quote->branch->bank_account_1 }}
+                        </div>
+                        <div class="text-sm">
 
                             Ini adalah dokumen yang dihasilkan komputer. Tidak perlu tandatangan
                         </div>
