@@ -4,6 +4,7 @@
             {{ __('Item Status: ') . $status }}
         </h2>
     </x-slot>
+    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -39,6 +40,8 @@
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     {{ __('Designer') }}
                                                 </th>
+                                                
+                                               
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -62,12 +65,94 @@
                                                         <td class="text-center">{{ $list->status }}</td>
                                                         <td class="text-center">{{ $list->quantity }}</td>
                                                         <td class="flex py-1 justify-center">
-                                                            @if ($list->user)
-                                                                <img class="h-5 w-5 rounded-full"
-                                                                    src="{{ asset('storage/' . $list->user->photo) }}"
-                                                                    title="{{ $list->user->name }}" />
+                                                            ($list->user->name)
+                                                        
+                                                                
                                                             @endif
                                                         </td>
+                                                        <td
+                                                        class="border-t-0 px-6 text-center align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2">
+
+                                                        @php
+                                                            $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
+                                                            $count = count($order->order_item);
+                                                            $urgent = 0;
+                                                        @endphp
+
+                                                        @foreach ($order->order_item as $item)
+                                                            @php
+                                                                if ($item->is_done) {
+                                                                    $is_done++;
+                                                                } elseif ($item->is_printing) {
+                                                                    $is_printing++;
+                                                                } elseif ($item->is_approved) {
+                                                                    $is_approved++;
+                                                                } elseif ($item->is_designer) {
+                                                                    $wait_confirmation++;
+                                                                } elseif ($item->is_design) {
+                                                                    $is_design++;
+                                                                } else {
+                                                                    $is_pending++;
+                                                                }
+                                                                if ($item->is_urgent) {
+                                                                    $urgent++;
+                                                                }
+                                                            @endphp
+                                                        @endforeach
+
+                                                        @unless($count == 0)
+                                                            @php $status = $status/$count @endphp
+
+                                                            @if ($is_pending)
+                                                                <div
+                                                                    class="inline-flex items-center bg-red-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_pending }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_design)
+                                                                <div
+                                                                    class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white bg-yellow-400 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_design }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($wait_confirmation)
+                                                                <div
+                                                                    class="inline-flex items-center bg-purple-500 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white bg-purple-500 rounded-full h-6 w-6 justify-center items-center text-base">{{ $wait_confirmation }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_approved)
+                                                                <div
+                                                                    class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white bg-yellow-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_printing)
+                                                                <div
+                                                                    class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white bg-purple-600 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_printing }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($is_done)
+                                                                <div
+                                                                    class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white bg-green-600 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_done }}</span>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            <div
+                                                                class="inline-flex items-center bg-gray-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                <span
+                                                                    class="inline-flex px-1">{{ __('Tiada Item') }}</span>
+                                                            </div>
+                                                        @endunless
+                                                    </td>
                                                     </tr>
                                                 @endforeach
                                             @else
