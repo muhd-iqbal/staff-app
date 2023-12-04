@@ -80,7 +80,7 @@ class OrderItemController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
         $attributes['is_design'] = 1;
-        $attributes['is_design_time'] = now();
+        $attributes['is_design_time'] = NOW();
 
         $item->update($attributes);
 
