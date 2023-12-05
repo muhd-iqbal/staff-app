@@ -71,8 +71,12 @@
                                             {{ $status }}</h2>
                                     </div>
                                     <div>
-                                        <h2 class="text-gray-500 font-bold text-lg">{{ __('Tarikh Ambil Alih: ') }}
-                                            {{ date('d/m/Y h:i A', strtotime($item->is_design_time ? $item->is_design_time : 'Tiada')) }} </h2>
+                                        @if($item->is_design_time)
+                                            <div>
+                                                <h2 class="text-gray-500 font-bold text-lg">{{ __('Tarikh Ambil Alih: ') }}
+                                                    {{ date('d/m/Y h:i A', strtotime($item->is_design_time)) }} </h2>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="text-red-500 font-bold text-xl">
                                         {{ $item->is_urgent ? 'URGENT' : '' }}</div>
