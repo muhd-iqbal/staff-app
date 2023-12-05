@@ -134,7 +134,7 @@
                                                         class="border-t-0 px-6 text-center align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2">
 
                                                         @php
-                                                            $status = $is_done = $is_printing = $is_approved = $is_design = $is_pending = 0;
+                                                            $status = $is_done = $is_printing = $is_approved = $wait_confirmation = $is_design = $is_pending = 0;
                                                             $count = count($order->order_item);
                                                             $urgent = 0;
                                                         @endphp
@@ -147,6 +147,8 @@
                                                                     $is_printing++;
                                                                 } elseif ($item->is_approved) {
                                                                     $is_approved++;
+                                                                } elseif ($item->wait_confirmation) {
+                                                                    $wait_confirmation++;    
                                                                 } elseif ($item->is_design) {
                                                                     $is_design++;
                                                                 } else {
@@ -175,6 +177,13 @@
                                                                     class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
                                                                     <span
                                                                         class="inline-flex text-white bg-yellow-400 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_design }}</span>
+                                                                </div>
+                                                            @endif
+                                                            @if ($wait_confirmation)
+                                                                <div
+                                                                    class="inline-flex items-center bg-purple-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
+                                                                    <span
+                                                                        class="inline-flex text-white bg-purple-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
                                                                 </div>
                                                             @endif
                                                             @if ($is_approved)
