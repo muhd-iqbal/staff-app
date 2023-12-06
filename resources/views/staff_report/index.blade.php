@@ -99,7 +99,7 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var order = {!! json_encode($order) !!};
+            var order = {!! json_encode($sales) !!};
             {{-- var order = {!! json_encode($orders) !!}; --}}
 
             var barCanvas = $("#barChart");
