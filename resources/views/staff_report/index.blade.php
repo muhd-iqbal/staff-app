@@ -102,7 +102,7 @@
             var designer = {!! json_encode($users->pluck('name')) !!};
             {{-- var order = {!! json_encode($orders) !!}; --}}
 
-            var barCanvas = $("#chartContainer");
+            var barCanvas = $("#barChart");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
