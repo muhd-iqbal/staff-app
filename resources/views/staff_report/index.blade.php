@@ -99,7 +99,7 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var designer = {!! json_encode($users->pluck('name')) !!};
+            var order = {!! json_encode($orders) !!};
             {{-- var order = {!! json_encode($orders) !!}; --}}
 
             var barCanvas = $("#barChart");
@@ -108,7 +108,7 @@
                 data: {
                     labels: designer,
                     datasets: [{
-                        label: 'Total Designs',
+                        label: 'Total Designs {{ request('year') }}',
                         data: order,
                         backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                         hoverBackgroundColor: '#fff',
@@ -119,11 +119,13 @@
                 },
                 options: {
                     scales: {
-                        y: {
+                       yAxes: [{
+                            ticks: {
                             beginAtZero: true
                         }
                     }
                 }
+                               }
             });
         });
     </script>
