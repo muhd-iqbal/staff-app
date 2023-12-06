@@ -36,14 +36,14 @@
                         <div class="flex">
                             <div>
                                 @if (request('year') <= date('Y', strtotime(config('app.pos_start'))))
-                                    <a href="/staff-old-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                                    <a href="/old-staff-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                                         {{ request('year') - 1 }}</a>
                                 @endif
                             </div>
                             <div class="ml-auto">
                                 @if (request('year') < date('Y'))
-                                    <a href="/staff-old-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                                    <a href="/old-staff-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
                                         {{ request('year') + 1 }} &#10095;</a>
                                 @endif
@@ -56,7 +56,7 @@
 
                         </h1>
                         <div class="ml-auto mt-3">
-                            <a href="/{{ $current ? 'staff-old-' : '' }}reports"
+                            <a href="/{{ $current ? 'old-' : '' }}staff-reports"
                                 class="bg-blue-{{ $current ? '5' : '4' }}00 text-white py-1 px-2 rounded-md shadow-md">POS
                                 {{ $current ? 'lama' : 'terkini' }}</a>
                         </div>
@@ -65,7 +65,7 @@
                         <canvas id="barChart"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
-                        <a href="/{{ $current ? 'staff-old-' : '' }}reports/{{ request('year') }}"
+                        <a href="/{{ $current ? 'old-' : '' }}staff-reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                         @foreach ($order as $loop)
                             <a href=""
