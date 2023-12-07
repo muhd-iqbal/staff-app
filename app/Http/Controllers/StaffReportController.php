@@ -15,7 +15,7 @@ class StaffReportController extends Controller
         return redirect('/staff-reports/' . date('Y'));
     }
 
-    public function yearly($y)
+    public function yearly($y, $user)
     {
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
@@ -44,7 +44,7 @@ class StaffReportController extends Controller
         ]);
     }
 
-    public function branch_yearly($y, $user, )
+    public function branch_yearly($y, $user)
     {
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
@@ -76,7 +76,7 @@ class StaffReportController extends Controller
         return redirect('/staff-old-reports/' . date('Y'));
     }
 
-    public function old_yearly($y)
+    public function old_yearly($y, $user)
     {
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
@@ -84,6 +84,7 @@ class StaffReportController extends Controller
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
+            ->where('user_id', '=', $user)
             ->groupBy('users')
             ->get();
 
@@ -98,7 +99,6 @@ class StaffReportController extends Controller
         return view('staff_report.index', [
             'order' => $orders,
             'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
-            'current' => 1,
         ]);
     }
  public function sortByMonth()
