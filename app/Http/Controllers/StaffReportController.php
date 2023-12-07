@@ -23,6 +23,7 @@ class StaffReportController extends Controller
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
+            ->where('user_id', '=', $user)
             ->groupBy('users')
             ->get();
 
