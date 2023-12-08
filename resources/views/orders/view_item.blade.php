@@ -120,7 +120,7 @@
                                     
                                     <div class="justify-self-end">
                                         @php
-                                            $log = 'Dibuat: ' . date('d/m/Y h:i A', strtotime($item->created_at));
+                                            {$log = 'Dibuat: ' . date('d/m/Y h:i A', strtotime($item->created_at));}
                                             if ($item->is_design) {
                                                 $log .= '\nDesign: ' . date('d/m/Y h:i A', strtotime($item->is_design_time));
                                             }
