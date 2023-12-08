@@ -124,9 +124,7 @@
                                             if ($item->is_design) {
                                                 $log .= '\nDesign: ' . date('d/m/Y h:i A', strtotime($item->is_design_time));
                                             }
-                                            if ($item->wait_confirmation) {
-                                                $log .= '\nConfirmation: ' . date('d/m/Y h:i A', strtotime($item->wait_confirmation_time));
-                                            }
+                                        
                                             if ($item->is_approved) {
                                                 $log .= '\nApprove: ' . date('d/m/Y h:i A', strtotime($item->is_approved_time));
                                             }
