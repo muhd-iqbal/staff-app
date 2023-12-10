@@ -157,7 +157,7 @@ class ItemStatusController extends Controller
                 break;
             case 'is_pending':
                 $title = 'Pending';
-                $items = OrderItem::where('is_pending', '=', 1)->where('is_design', '=', 0);
+                $items = OrderItem::where('is_design', '=', 0);
                 break;
             default:
                 abort(404);
