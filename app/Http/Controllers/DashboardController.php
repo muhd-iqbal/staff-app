@@ -14,7 +14,7 @@ class DashboardController extends Controller
         'Permohonan Cuti' => '/leaves',
         'Graf Design Staff' => '/staff-reports',
         'Tukar Kata Laluan' => '/change-password',
-        'Aktiviti Syarikat' => 'http://192.168.1.105/event/',
+        'Aktiviti Syarikat' => 'http://192.168.1.110/event/',
     ];
     protected $links_staff = [
         'Peti Tunai' => '/cashflow',                
