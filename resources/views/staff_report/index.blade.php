@@ -36,14 +36,14 @@
                         <div class="flex">
                             <div>
                                 @if (request('year') <= date('Y', strtotime(config('app.pos_start'))))
-                                    <a href="/old-staff-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                                    <a href="/staff-old-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
                                         {{ request('year') - 1 }}</a>
                                 @endif
                             </div>
                             <div class="ml-auto">
                                 @if (request('year') < date('Y'))
-                                    <a href="/old-staff-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                                    <a href="/staff-old-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
                                         class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
                                         {{ request('year') + 1 }} &#10095;</a>
                                 @endif
@@ -56,16 +56,16 @@
 
                         </h1>
                         <div class="ml-auto mt-3">
-                            <a href="/{{ $current ? 'old-' : '' }}staff-reports"
+                            <a href="/{{ $current ? 'staff-old-' : '' }}reports"
                                 class="bg-blue-{{ $current ? '5' : '4' }}00 text-white py-1 px-2 rounded-md shadow-md">POS
                                 {{ $current ? 'lama' : 'terkini' }}</a>
                         </div>
                     </div>
                     <div width="400" height="400">
-                        <canvas id="barChart"></canvas>
+                        <canvas id="chartContainer"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
-                        <a href="/{{ $current ? 'old-' : '' }}staff-reports/{{ request('year') }}"
+                        <a href="/{{ $current ? 'staff-old-' : '' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                         @foreach ($order as $loop)
                             <a href=""
@@ -74,14 +74,14 @@
                         @endforeach
                     </div>
 
-                    <div class="text-center mt-5">
+                    <div class="text-center mt-5"> 
                         <table class="w-full border border-collapse">
                             <tr>
                                 <th class="border">Designer</th>
                                 <th class="border">Jumlah Design</th>
                             </tr>
 
-                             @foreach ($users as $designer)
+                            @foreach ($users as $designer)
                                 @if ($designer->order_item->count() > 0)
                                     <tr>
                                         <td class="border">{{ ucwords(strtolower($designer->name))}}</td>
@@ -99,16 +99,16 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var order = {!! json_encode($order) !!};
-            {{-- var order = {!! json_encode($orders) !!}; --}}
+            var designer = {!! json_encode($users->pluck('name')) !!};
+            var order = {!! json_encode($orders) !!};
 
-            var barCanvas = $("#barChart");
+            var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
                     labels: designer,
                     datasets: [{
-                        label: 'Total Designs {{ request('year') }}',
+                        label: 'Total Designs',
                         data: order,
                         backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                         hoverBackgroundColor: '#fff',
@@ -119,13 +119,11 @@
                 },
                 options: {
                     scales: {
-                       yAxes: [{
-                            ticks: {
+                        y: {
                             beginAtZero: true
                         }
                     }
                 }
-                               }
             });
         });
     </script>
