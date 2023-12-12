@@ -99,8 +99,8 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var order = {!! json_encode($users->pluck('name')) !!};
-            
+            var designer = {!! json_encode($users->pluck('name')) !!};
+            var order = {!! json_encode($order) !!};
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
