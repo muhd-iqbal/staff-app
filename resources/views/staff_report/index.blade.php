@@ -109,7 +109,7 @@
                     labels: designer,
                     datasets: [{
                         label: 'Total Designs',
-                        data: users,
+                        data: order,
                         backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                         hoverBackgroundColor: '#fff',
                         borderColor: '#00f',
