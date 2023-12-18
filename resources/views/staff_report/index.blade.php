@@ -99,8 +99,8 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var designer = {!! json_encode($users->pluck('name')) !!};
-            var order = {!! json_encode($order) !!};
+            var designer = [];
+            var order = {"Admin / Sales Department":81,"Nurhidayatul Hafifi Binti Ab. Halim":2777,"Muhamad Nur Afif Bin Rosli":304,"Nor Athirah Binti Ahmad":5,"Noor Hanna Imtiyaz Binti Noor Hisyam":1389,"Nurhuda Adilah Binti Abdul Rahman":1047};
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
