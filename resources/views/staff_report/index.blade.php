@@ -99,8 +99,10 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var designer = {!! json_encode($users->pluck('name')) !!};
-            var order = {!! json_encode($designer->order_item->count() ? $designer->order_item->count() : 'Tiada') !!};
+            var designers = {!! json_encode($users->pluck('name')) !!};
+            var orders = {!! json_encode($users->filter(function($designer) {
+                return $designer->order_item->count() > 0;
+            })->pluck('order_item')->map->count()) !!};
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
