@@ -100,7 +100,7 @@
     <script>
         $(function() {
             var designer = [];
-            var order = {"Admin / Sales Department":81,"Nurhidayatul Hafifi Binti Ab. Halim":2777,"Muhamad Nur Afif Bin Rosli":304,"Nor Athirah Binti Ahmad":5,"Noor Hanna Imtiyaz Binti Noor Hisyam":1389,"Nurhuda Adilah Binti Abdul Rahman":1047};
+            var order = {!! json_encode($designer->order_item->count() ? $designer->order_item->count() : 'Tiada') !!};
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
