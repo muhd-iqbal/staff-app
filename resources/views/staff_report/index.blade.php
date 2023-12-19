@@ -99,7 +99,7 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var designer = [];
+            var designer = {!! json_encode($users->pluck('name')) !!};
             var order = {!! json_encode($designer->order_item->count() ? $designer->order_item->count() : 'Tiada') !!};
 
             var barCanvas = $("#chartContainer");
