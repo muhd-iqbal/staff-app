@@ -99,17 +99,22 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var designer = {!! json_encode($users->pluck('name')) !!};
-            var order = {!! json_encode($designer->order_item->count() ? $designer->order_item->count() : 'Tiada') !!};
+            var designersWithDesigns = {!! json_encode($users->filter(function($user) use ($designer) {
+                return $designer->where('user_id', $user->id)->count() > 0;
+            })->pluck('name')) !!};
+
+            var orderCounts = designersWithDesigns.map(function(designer) {
+                return {!! json_encode($designer->where('user_id', $users->firstWhere('name', designer)->id)->order_item->count()) !!};
+            });
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
-                    labels: designer,
+                    labels: designersWithDesigns,
                     datasets: [{
-                        label: 'Total Designs',
-                        data: order,
+                        label: 'Total Designs {{ request('month') }}',
+                        data: orderCounts,
                         backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                         hoverBackgroundColor: '#fff',
                         borderColor: '#00f',
