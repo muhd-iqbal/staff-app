@@ -106,16 +106,16 @@
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
+                    labels: designer,
                     datasets: [{
-                            label: 'Total Designs',
-                            data: order,
-                            backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
-                            hoverBackgroundColor: '#fff',
-                            borderColor: '#00f',
-                            borderWidth: 1,
-                            barPercentage: 0.5,
-                        },
-                    ]
+                        label: 'Total Designs {{ request('month') }}',
+                        data: order,
+                        backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
+                        hoverBackgroundColor: '#fff',
+                        borderColor: '#00f',
+                        borderWidth: 1,
+                        barPercentage: 0.5,
+                    }]
                 },
                 options: {
                     scales: {
