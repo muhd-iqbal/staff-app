@@ -108,7 +108,7 @@
                 data: {
                     labels: designer,
                     datasets: [{
-                        label: 'Total Designs',
+                        label: 'Total Designs {{ request('month') }}',
                         data: order,
                         backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
                         hoverBackgroundColor: '#fff',
