@@ -39,7 +39,11 @@ class StaffReportController extends Controller
             'branches' => Branch::all(),       
                  
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
+            'users' => User::with('order_item')
+                ->where('position_id', '<>', 1)
+                ->where('active', true)
+                ->has('order_item', '>', 0)
+                ->get(),
             'month' => 'required|integer|min:1|max:12',
             'year' => 'required|integer|min:2020|max:'.date("Y"),
             'current' => 1,
@@ -67,7 +71,11 @@ class StaffReportController extends Controller
         // }
         return view('staff_report.index', [
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
+            'users' => User::with('order_item')
+                ->where('position_id', '<>', 1)
+                ->where('active', true)
+                ->has('order_item', '>', 0)
+                ->get(),
             'curr_user' => User::find($user),
             'current' => 1,
         ]);
@@ -99,7 +107,11 @@ class StaffReportController extends Controller
 
         return view('staff_report.index', [
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
+            'users' => User::with('order_item')
+                ->where('position_id', '<>', 1)
+                ->where('active', true)
+                ->has('order_item', '>', 0)
+                ->get(),
             'current' => 1,
         ]);
     }
@@ -129,7 +141,11 @@ class StaffReportController extends Controller
         // }
         return view('staff_report.index', [
             'order' => $orders,
-            'users' => User::with('order_item')->where('position_id', '<>', 1)->where('active', true)->get(),
+            'users' => User::with('order_item')
+                ->where('position_id', '<>', 1)
+                ->where('active', true)
+                ->has('order_item', '>', 0)
+                ->get(),
             'curr_user' => User::find($user),
             'current' => 1,
         ]);
