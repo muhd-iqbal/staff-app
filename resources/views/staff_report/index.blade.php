@@ -55,11 +55,7 @@
                             Jumlah Design Designer {{ request('year') }}
 
                         </h1>
-                        <div class="ml-auto mt-3">
-                            <a href="/{{ $current ? 'staff-old-' : '' }}reports"
-                                class="bg-blue-{{ $current ? '5' : '4' }}00 text-white py-1 px-2 rounded-md shadow-md">POS
-                                {{ $current ? 'lama' : 'terkini' }}</a>
-                        </div>
+                        
                     </div>
                     
                     <div width="400" height="400">
