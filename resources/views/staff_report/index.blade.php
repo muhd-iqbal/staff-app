@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight capitalize">
-            {{ __('Graf Jumlah Design Staff') }}
+            {{ __('Graf Jumlah Design Designer') }}
         </h2>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -61,6 +61,7 @@
                                 {{ $current ? 'lama' : 'terkini' }}</a>
                         </div>
                     </div>
+                    
                     <div width="400" height="400">
                         <canvas id="chartContainer"></canvas>
                     </div>
@@ -106,7 +107,7 @@
 
             var datasets = designers.map(function(designer, index) {
                 return {
-                    label: 'Total Designs {{ request('month') }} - ' + designer,
+                    label: designer,
                     data: [orders[index]],
                     backgroundColor: colors[index],
                     hoverBackgroundColor: '#fff',
