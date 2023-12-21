@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\User;
 use App\Models\Report;
 use App\Models\Order;
@@ -18,29 +19,25 @@ class StaffReportController extends Controller
     public function yearly($y)
     {
         $dbData = Order::select(
+            // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
-            DB::raw('count(id) as totals')
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
             ->groupBy('month')
             ->get();
 
-        $orders = [];
+        // $data = [];
 
+        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
             $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
         }
-
-        $users = User::with(['order_items' => function ($query) use ($y) {
-            $query->whereYear('date', '=', $y);
-        }])
-            ->where('position_id', '<>', 1)
-            ->where('active', true)
-            ->has('order_item', '>', 0)
-            ->get();
+        // }
 
         return view('staff_report.index', [
+            'branches' => Branch::all(),
+
             'order' => $orders,
             'users' => User::with('order_item')
                 ->where('position_id', '<>', 1)
@@ -48,7 +45,7 @@ class StaffReportController extends Controller
                 ->has('order_item', '>', 0)
                 ->get(),
             'month' => 'required|integer|min:1|max:12',
-            'year' => 'required|integer|min:2020|max:' . date("Y"),
+            'year' => 'required|integer|min:2020|max:'.date("Y"),
             'current' => 1,
         ]);
     }
@@ -58,7 +55,6 @@ class StaffReportController extends Controller
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
-            DB::raw('count(id) as totals')
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
@@ -66,11 +62,13 @@ class StaffReportController extends Controller
             ->groupBy('month')
             ->get();
 
-        $orders = [];
+        // $data = [];
 
+        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
             $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
         }
+        // }
 
         return view('staff_report.index', [
             'order' => $orders,
@@ -95,18 +93,19 @@ class StaffReportController extends Controller
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
-            DB::raw('count(id) as totals')
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
             ->groupBy('month')
             ->get();
 
-        $orders = [];
+        // $data = [];
 
+        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
             $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
         }
+        // }
 
         return view('staff_report.index', [
             'order' => $orders,
@@ -130,7 +129,6 @@ class StaffReportController extends Controller
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
-            DB::raw('count(id) as totals')
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
@@ -138,11 +136,13 @@ class StaffReportController extends Controller
             ->groupBy('month')
             ->get();
 
-        $orders = [];
+        // $data = [];
 
+        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
         for ($month = 1; $month <= 12; $month++) {
             $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
         }
+        // }
 
         return view('staff_report.index', [
             'order' => $orders, //
