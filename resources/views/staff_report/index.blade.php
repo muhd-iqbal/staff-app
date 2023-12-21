@@ -74,7 +74,7 @@
                         @endforeach
                     </div>
 
-                    <div class="text-center mt-5"> 
+                    <div class="text-center mt-5">
                         <table class="w-full border border-collapse">
                             <tr>
                                 <th class="border">Designer</th>
@@ -99,23 +99,29 @@
     <x-dashboard-link />
     <script>
         $(function() {
-            var designer = {!! json_encode($users->pluck('name')) !!};
-            var order = {!! json_encode($designer->order_item->count() ? $designer->order_item->count() : 'Tiada') !!};
+            var designers = {!! json_encode($users->pluck('name')) !!};
+            var orders = {!! json_encode($designer->order_item->count()) !!};
+
+            var colors = ['#39f', '#139f', '#f00', '#0f0', '#f90', '#900', '#f60', '#60f', '#999', '#f0f'];
+
+            var datasets = designers.map(function(designer, index) {
+                return {
+                    label: 'Total Designs {{ request('month') }} - ' + designer,
+                    data: [orders[index]],
+                    backgroundColor: colors[index],
+                    hoverBackgroundColor: '#fff',
+                    borderColor: '#00f',
+                    borderWidth: 1,
+                    barPercentage: 0.5,
+                };
+            });
 
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
-                    labels: designer,
-                    datasets: [{
-                        label: 'Total Designs {{ request('month') }}',
-                        data: order,
-                        backgroundColor: '{{ $current ? '#39f' : '#139f' }}',
-                        hoverBackgroundColor: '#fff',
-                        borderColor: '#00f',
-                        borderWidth: 1,
-                        barPercentage: 0.5,
-                    }]
+                    labels: designers,
+                    datasets: datasets,
                 },
                 options: {
                     scales: {
