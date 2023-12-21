@@ -37,7 +37,7 @@ class StaffReportController extends Controller
         }])
             ->where('position_id', '<>', 1)
             ->where('active', true)
-            ->has('order_items', '>', 0)
+            ->has('order_item', '>', 0)
             ->get();
 
         return view('staff_report.index', [
