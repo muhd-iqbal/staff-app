@@ -107,7 +107,7 @@
                     data: [orders[index]],
                     backgroundColor: colors[index],
                     hoverBackgroundColor: '#fff',
-                    borderColor: '#00f',
+                    borderColor: '#000000',
                     borderWidth: 1,
                     barPercentage: 0.5,
                 };
