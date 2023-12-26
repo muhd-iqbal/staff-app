@@ -98,9 +98,9 @@
         $(function() {
             var designers = {!! json_encode($users->pluck('name')) !!};
             var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
-    
+
             var colors = ['#39f', '#f90', '#f00', '#FFC0CB', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'];
-    
+
             var datasets = designers.map(function(designer, index) {
                 return {
                     label: designer,
@@ -109,20 +109,24 @@
                     hoverBackgroundColor: '#fff',
                     borderColor: '#000000',
                     borderWidth: 1,
+                    barPercentage: 0.5,
                 };
             });
-    
-            var pieCanvas = $("#chartContainer");
-            var pieChart = new Chart(pieCanvas, {
-                type: 'pie',
+
+            var barCanvas = $("#chartContainer");
+            var barChart = new Chart(barCanvas, {
+                type: 'bar',
                 data: {
                     labels: designers,
                     datasets: datasets,
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
         });
     </script>
