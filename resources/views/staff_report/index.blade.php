@@ -97,10 +97,10 @@
     <script>
         $(function() {
             var designers = {!! json_encode($users->pluck('name')) !!};
-            var orders = {!! json_encode($designer->order_item->count()) !!};
-    
+            var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
+
             var colors = ['#39f', '#139f', '#f00', '#0f0', '#f90', '#900', '#f60', '#60f', '#999', '#f0f'];
-    
+
             var datasets = designers.map(function(designer, index) {
                 return {
                     label: designer,
@@ -112,7 +112,7 @@
                     barPercentage: 0.5,
                 };
             });
-    
+
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
@@ -121,9 +121,8 @@
                     datasets: datasets,
                 },
                 options: {
-                    indexAxis: 'y', // Set the index axis to 'y' for horizontal bars
                     scales: {
-                        x: {
+                        y: {
                             beginAtZero: true
                         }
                     }
@@ -131,5 +130,4 @@
             });
         });
     </script>
-
 </x-app-layout>
