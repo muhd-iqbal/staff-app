@@ -99,7 +99,7 @@
             var designers = {!! json_encode($users->pluck('name')) !!};
             var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
 
-            var colors = ['#39f', '#f90', '#139f', '#f00', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#f0f'];
+            var colors = ['#39f', '#f90', '#f0f', '#f00', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'];
 
             var datasets = designers.map(function(designer, index) {
                 return {
