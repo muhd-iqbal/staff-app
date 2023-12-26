@@ -117,6 +117,7 @@
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
+                    labels: designers,
                     datasets: datasets,
                 },
                 options: {
