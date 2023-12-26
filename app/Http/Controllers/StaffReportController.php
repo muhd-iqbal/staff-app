@@ -47,39 +47,6 @@ class StaffReportController extends Controller
         ]);
     }
 
-    public function branch_yearly($y, $user)
-    {
-        $dbData = Order::select(
-            // DB::raw('year(date) as year'),
-            DB::raw('month(date) as month'),
-        )
-            ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-            ->where(DB::raw('year(date)'), '=', $y)
-            ->where('user_id', '=', $user)
-            ->groupBy('month')
-            ->get();
-
-        // $data = [];
-
-        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
-        for ($month = 1; $month <= 12; $month++) {
-            $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
-        }
-        // }
-
-        return view('staff_report.index', [
-            'order' => $orders,
-            'users' => User::with('order_item')
-                ->where('position_id', '<>', 1)
-                ->where('active', true)
-                ->has('order_item', '>', 0)
-                ->get(),
-            'curr_user' => User::find($user),
-            'current' => 1,
-        ]);
-
-    }
-
     public function old_index()
     {
         return redirect('/staff-old-reports/' . date('Y'));
@@ -111,44 +78,6 @@ class StaffReportController extends Controller
                 ->where('active', true)
                 ->has('order_item', '>', 0)
                 ->get(),
-            'current' => 1,
-        ]);
-    }
-
-    public function sortBy()
-    {
-        $records = Order::orderByRaw('MONTH(created_at)')->get();
-        return view('staff_report.index', compact('records'));
-    }
-
-    public function old_branch_yearly($y, $user)
-    {
-        $dbData = Order::select(
-            // DB::raw('year(date) as year'),
-            DB::raw('month(date) as month'),
-        )
-            ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-            ->where(DB::raw('year(date)'), '=', $y)
-            ->where('user_id', '=', $user)
-            ->groupBy('month')
-            ->get();
-
-        // $data = [];
-
-        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
-        for ($month = 1; $month <= 12; $month++) {
-            $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
-        }
-        // }
-
-        return view('staff_report.index', [
-            'order' => $orders, //
-            'users' => User::with('order_item')
-                ->where('position_id', '<>', 1)
-                ->where('active', true)
-                ->has('order_item', '>', 0)
-                ->get(),
-            'curr_user' => User::find($user),
             'current' => 1,
         ]);
     }
