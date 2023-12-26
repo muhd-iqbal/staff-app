@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
 use App\Models\User;
 use App\Models\Report;
 use App\Models\Order;
@@ -36,8 +35,6 @@ class StaffReportController extends Controller
         // }
 
         return view('staff_report.index', [
-            'branches' => Branch::all(),
-
             'order' => $orders,
             'users' => User::with('order_item')
                 ->where('position_id', '<>', 1)
