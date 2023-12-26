@@ -103,6 +103,7 @@
 
             var datasets = designers.map(function(designer, index) {
                 return {
+                    label: designer,
                     data: [orders[index]],
                     backgroundColor: colors[index],
                     hoverBackgroundColor: '#fff',
