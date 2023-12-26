@@ -94,40 +94,32 @@
         </div>
     </div>
     <x-dashboard-link />
-    <script>
-        $(function() {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+    
+        function drawChart() {
             var designers = {!! json_encode($users->pluck('name')) !!};
             var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
-
-            var colors = ['#39f', '#f90', '#f00', '#FFC0CB', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'];
-
-            var datasets = designers.map(function(designer, index) {
-                return {
-                    label: designer,
-                    data: [orders[index]],
-                    backgroundColor: colors[index],
-                    hoverBackgroundColor: '#fff',
-                    borderColor: '#000000',
-                    borderWidth: 1,
-                    barPercentage: 0.5,
-                };
-            });
-
-            var barCanvas = $("#chartContainer");
-            var barChart = new Chart(barCanvas, {
-                type: 'bar',
-                data: {
-                    labels: designers,
-                    datasets: datasets,
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        });
+    
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Designer');
+            data.addColumn('number', 'Orders');
+    
+            for (var i = 0; i < designers.length; i++) {
+                data.addRow([designers[i], orders[i]]);
+            }
+    
+            var options = {
+                title: 'Orders by Designer',
+                is3D: true,
+                colors: ['#39f', '#f90', '#f00', '#FFC0CB', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'],
+            };
+    
+            var chart = new google.visualization.PieChart(document.getElementById('chartContainer'));
+            chart.draw(data, options);
+        }
     </script>
+
 </x-app-layout>
