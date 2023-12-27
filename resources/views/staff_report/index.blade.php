@@ -109,7 +109,7 @@
                     hoverBackgroundColor: '#fff',
                     borderColor: '#000000',
                     borderWidth: 1,
-                    barPercentage: 0.5,
+                    barPercentage: 1,
                 };
             });
 
