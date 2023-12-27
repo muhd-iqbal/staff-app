@@ -108,7 +108,7 @@
                     backgroundColor: colors[index],
                     hoverBackgroundColor: '#fff',
                     borderColor: '#000000',
-                    borderWidth: 1,
+                    borderWidth: 3,
                     barPercentage: 6,
                 };
             });
