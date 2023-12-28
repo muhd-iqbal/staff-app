@@ -98,9 +98,9 @@
         $(function() {
             var designers = {!! json_encode($users->pluck('name')) !!};
             var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
-
+    
             var colors = ['#39f', '#f90', '#f00', '#FFC0CB', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'];
-
+    
             var datasets = designers.map(function(designer, index) {
                 return {
                     label: designer,
@@ -112,7 +112,7 @@
                     barPercentage: 1,
                 };
             });
-
+    
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
@@ -124,6 +124,28 @@
                     scales: {
                         y: {
                             beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        onComplete: function () {
+                            var ctx = this.chart.ctx;
+                            ctx.textAlign = "center";
+                            ctx.textBaseline = "middle";
+    
+                            this.data.datasets.forEach(function (dataset) {
+                                for (var i = 0; i < dataset.data.length; i++) {
+                                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                    ctx.fillStyle = '#000';
+                                    ctx.fillText(dataset.data[i], model.x, model.y - 10);
+                                }
+                            });
                         }
                     }
                 }
