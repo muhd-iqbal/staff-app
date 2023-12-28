@@ -117,7 +117,6 @@
                 type: 'bar',
                 data: {
                     labels: designers,
-                    datasets: datasets,
                 },
                 options: {
                     scales: {
