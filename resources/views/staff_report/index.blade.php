@@ -97,14 +97,14 @@
     <script>
         $(function() {
             var designers = {!! json_encode($users->pluck('name')) !!};
+            var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
+
             var colors = ['#39f', '#f90', '#f00', '#FFC0CB', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'];
-    
+
             var datasets = designers.map(function(designer, index) {
-                var designerData = {!! json_encode($users->where('name', designer)->pluck('order_item')->map->count()) !!};
-    
                 return {
                     label: designer,
-                    data: [designerData[0]], // Assuming there is only one order_item for each designer
+                    data: [orders[index]],
                     backgroundColor: colors[index],
                     hoverBackgroundColor: '#fff',
                     borderColor: '#000000',
@@ -112,7 +112,7 @@
                     barPercentage: 1,
                 };
             });
-    
+
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
@@ -130,5 +130,4 @@
             });
         });
     </script>
-
 </x-app-layout>
