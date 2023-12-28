@@ -117,7 +117,7 @@
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
                 data: {
-                    labels: designers,
+                    labels: 'Jumlah Design {{ request('year') }}',
                     datasets: datasets,
                 },
                 options: {
