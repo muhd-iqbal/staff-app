@@ -98,20 +98,17 @@
         $(function() {
             var designers = {!! json_encode($users->pluck('name')) !!};
             var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
-
+    
             var colors = ['#39f', '#f90', '#f00', '#FFC0CB', '#0f0', '#BF40BF', '#900', '#f60', '#60f', '#999', '#139f'];
-
-            var datasets = designers.map(function(designer, index) {
-                return {
-                    label: designer,
-                    data: [orders[index]],
-                    backgroundColor: colors[index],
-                    hoverBackgroundColor: '#fff',
-                    borderColor: '#000000',
-                    borderWidth: 1.5,
-                };
-            });
-
+    
+            var datasets = [{
+                data: orders,
+                backgroundColor: colors,
+                hoverBackgroundColor: '#fff',
+                borderColor: '#000000',
+                borderWidth: 1.5,
+            }];
+    
             var barCanvas = $("#chartContainer");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
@@ -127,9 +124,6 @@
                     }
                 }
             });
-
-            barChart.config.data.labels = designers;
-            barChart.update();
         });
     </script>
 </x-app-layout>
