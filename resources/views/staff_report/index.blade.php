@@ -109,9 +109,9 @@
                 borderWidth: 1.5,
             }];
     
-            var barCanvas = $("#chartContainer");
-            var barChart = new Chart(barCanvas, {
-                type: 'bar',
+            var pieCanvas = $("#chartContainer");
+            var pieChart = new Chart(pieCanvas, {
+                type: 'pie',
                 data: {
                     labels: designers,
                     datasets: datasets,
