@@ -119,6 +119,7 @@
                 options: {
                     scales: {
                         y: {
+                            display: false,
                             beginAtZero: true
                         }
                     }
