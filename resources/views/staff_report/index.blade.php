@@ -58,7 +58,7 @@
                         
                     </div>
                     
-                    <div style="width: 300px; height: 300px;">
+                    <div style="width: 600px; height: 600px;">
                         <canvas id="chartContainer"></canvas>
                     </div>
                     <div class="flex flex-row-reverse gap-3 mt-5">
