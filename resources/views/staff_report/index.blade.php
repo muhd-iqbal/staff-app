@@ -117,6 +117,7 @@
                     datasets: datasets,
                 },
                 options: {
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             display: false,
