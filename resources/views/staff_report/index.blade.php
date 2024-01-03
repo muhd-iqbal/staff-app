@@ -16,39 +16,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <section class="container mx-auto p-6 font-mono">
                     @if ($current)
-                        <div class="flex">
-                            <div>
-                                @if (request('year') > date('Y', strtotime(config('app.pos_start'))))
-                                    <a href="/staff-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
-                                        class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
-                                        {{ request('year') - 1 }}</a>
-                                @endif
-                            </div>
-                            <div class="ml-auto">
-                                @if (request('year') < date('Y'))
-                                    <a href="/staff-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
-                                        class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
-                                        {{ request('year') + 1 }} &#10095;</a>
-                                @endif
-                            </div>
-                        </div>
+                        <a href="/staff-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                            class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
+                            {{ request('year') - 1 }}</a>
+                        <a href="/staff-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                            class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
+                            {{ request('year') + 1 }} &#10095;</a>
                     @else
-                        <div class="flex">
-                            <div>
-                                @if (request('year') <= date('Y', strtotime(config('app.pos_start'))))
-                                    <a href="/staff-old-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
-                                        class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
-                                        {{ request('year') - 1 }}</a>
-                                @endif
-                            </div>
-                            <div class="ml-auto">
-                                @if (request('year') < date('Y'))
-                                    <a href="/staff-old-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
-                                        class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
-                                        {{ request('year') + 1 }} &#10095;</a>
-                                @endif
-                            </div>
-                        </div>
+                        <a href="/staff-old-reports/{{ request('year') - 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                            class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">&#10094;
+                            {{ request('year') - 1 }}</a>
+                        <a href="/staff-old-reports/{{ request('year') + 1 }}{{ request('month') ? '/' . request('month') : '' }}"
+                            class="bg-yellow-500 p-2 px-4 rounded-md shadow-md hover:bg-yellow-400">
+                            {{ request('year') + 1 }} &#10095;</a>
                     @endif
                     <div class="flex">
                         <h1 class="capitalize text-xl mt-3">
