@@ -22,7 +22,7 @@ class StaffReportController extends Controller
             DB::raw('month(date) as month'),
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-            ->where(DB::raw('year(date)'), '=', $y)
+            ->whereYear('date', $y) 
             ->groupBy('month')
             ->get();
 
@@ -59,7 +59,7 @@ class StaffReportController extends Controller
             DB::raw('month(date) as month'),
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-            ->where(DB::raw('year(date)'), '=', $y)
+            ->whereYear('date', $y) 
             ->groupBy('month')
             ->get();
 
