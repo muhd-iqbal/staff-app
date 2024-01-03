@@ -20,6 +20,7 @@ class StaffReportController extends Controller
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
+            DB::raw('sum(order_item) as totals'),
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
@@ -57,6 +58,7 @@ class StaffReportController extends Controller
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
+            DB::raw('sum(order_item) as totals'),
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
