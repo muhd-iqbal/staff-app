@@ -78,7 +78,7 @@ class StaffReportController extends Controller
                 ->where('active', true)
                 ->has('order_item', '>', 0)
                 ->get(),
-            'current' => 1,
+            'current' => 0,
         ]);
     }
 }
