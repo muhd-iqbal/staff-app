@@ -20,6 +20,7 @@ class StaffReportController extends Controller
         $dbData = Order::select(
             // DB::raw('year(date) as year'),
             DB::raw('month(date) as month'),
+            DB::raw('sum(order_item) as totals'),
         )
             ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
             ->where(DB::raw('year(date)'), '=', $y)
@@ -55,7 +56,7 @@ class StaffReportController extends Controller
     public function old_yearly($y)
     {
         $summary = DB::table('order_items')
-        ->select(DB::raw('month(date) as month'), DB::raw('sum(order_items) as totals')) //kena ubah
+        ->select(DB::raw('month(date) as month'), DB::raw('sum(order_item) as totals')) //kena ubah
         ->where('date', '>', $y . '-01-01 00:00:00')
         ->where('date', '<', $y . '-12-31 23:59:59')
         ->where('date', '<', config('app.pos_start') . ' 00:00:00')
