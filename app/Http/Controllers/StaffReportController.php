@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Report;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,8 +40,6 @@ class StaffReportController extends Controller
                 ->where('active', true)
                 ->has('order_item', '>', 0)
                 ->get(),
-            'month' => 'required|integer|min:1|max:12',
-            'year' => 'required|integer|min:2020|max:'.date("Y"),
             'current' => 1,
         ]);
     }
