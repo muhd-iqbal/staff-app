@@ -60,6 +60,9 @@
                                                                     <span
                                                                         class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
                                                                         onclick="set_pay(50)">{!! __('50&#37;') !!}</span>
+                                                                     <span
+                                                                        class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
+                                                                        onclick="set_pay(70)">{!! __('70&#37;') !!}</span>
                                                                     <span
                                                                         class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
                                                                         onclick="set_pay(100)">{!! __('100&#37;') !!}</span>
