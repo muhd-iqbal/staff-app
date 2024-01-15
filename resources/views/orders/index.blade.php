@@ -254,10 +254,7 @@
                                         class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
                                         <span class="inline-flex px-1">{{ __('Production') }}</span>
                                     </div>
-                                    <div onclick="window.location='/orders/item/status/wait_confirmation'"
-                                        class="inline-flex items-center bg-purple-500 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
-                                        <span class="inline-flex px-1">{{ __('Confirmation') }}</span>
-                                    </div>
+                                   
                                     <div onclick="window.location='/orders/item/status/is_design'"
                                         class="inline-flex items-center bg-yellow-400 leading-none text-white rounded-full p-1 shadow text-sm font-bold cursor-pointer">
                                         <span class="inline-flex px-1">{{ __('Design') }}</span>
