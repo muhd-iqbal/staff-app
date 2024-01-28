@@ -57,8 +57,7 @@
                             <div class="text-base font-bold uppercase">{{ $order->branch->address }}</div>
                             <div class="mt-5">{{ __('No Akaun:') }}</div>
                             {{ $order->branch->bank_account_1 }}
-                            {!! $order->branch->bank_account_2 ? '<br />' . $order->branch->bank_account_2 : '' !!}
-                            {!! $order->branch->bank_account_3 ? '<br />' . $order->branch->bank_account_3 : '' !!}
+                           
                         </div>
                     </div>
                     <div class="border-b border-gray-600 pb-3">
