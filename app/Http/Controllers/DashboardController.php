@@ -43,7 +43,7 @@ class DashboardController extends Controller
         'Slip Gaji Staf' => '/admin/payslips',
     ];
     protected $links_owner = [
-        // 'Permohonan Cuti' => '/top/leaves/approval',
+         'Permohonan Cuti' => '/top/leaves/approval',
     ];
 
     protected $birthday = 0;
