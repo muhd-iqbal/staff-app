@@ -14,6 +14,7 @@ class DashboardController extends Controller
         'Permohonan Cuti' => '/leaves',
         'Graf Design Staff' => '/staff-reports',
         'Tukar Kata Laluan' => '/change-password',
+        'Baucer Bayaran' => '/payment-vouchers',
         'Aktiviti Syarikat' => 'http://192.168.1.110/event/',
     ];
     protected $links_staff = [
@@ -34,7 +35,7 @@ class DashboardController extends Controller
     protected $links_admin = [
         'Daftar Staf' => '/register',
         'Graf Jualan' => '/reports',
-        'Baucer Bayaran' => '/payment-vouchers',
+        
         'Perihal Staf' => '/staff', 
         'Senarai Cuti Staf' => '/leaves/list',
         'Permohonan Cuti Staf' => '/leaves/approval',
