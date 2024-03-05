@@ -53,7 +53,7 @@
 
     <div class="w-full py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if (auth()->user()->isAdmin)
+            @if (auth()->user()->isOwner)
                 <div class="flex flex-row-reverse gap-3 mb-3">
                     <form action="/payment-vouchers/{{ $voucher->id }}/paid" method="POST">
                         @csrf
