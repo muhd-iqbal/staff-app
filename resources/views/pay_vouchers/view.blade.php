@@ -150,7 +150,7 @@
 
                     <div class="grid grid-cols-3 gap-5 mt-5">
                         <div>
-                            <div>Prepared By</div>
+                            <div>Requested By</div>
                             <div class="w-full border-b-2 mt-5">&nbsp;</div>
                             <div class="">{{ $prepared_by->name }}</div>
                             <div class="">IC No: {{ ic_format($prepared_by->icno) }}</div>
