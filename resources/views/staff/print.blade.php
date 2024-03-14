@@ -8,7 +8,7 @@
         @media print {
             body * {
                 visibility: hidden;
-            }
+            } 
 
             #section-to-print,
             #section-to-print * {
