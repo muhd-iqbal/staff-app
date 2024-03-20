@@ -53,6 +53,10 @@
                                                 <tr class="text-center">
                                                     <th
                                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
+                                                        {{ __('Bil') }}
+                                                    </th>
+                                                    <th
+                                                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold">
                                                         {{ __('Pelanggan') }}
                                                     </th>
                                                     <th
@@ -81,6 +85,11 @@
                                                     @foreach ($print as $task)
                                                         <tr onclick="window.location='orders/item/{{ $task->id }}';"
                                                             class="hover:bg-gray-100 cursor-pointer text-center  {{ $task->is_urgent ? 'bg-red-500' : '' }}">
+                                                            <td
+                                                                class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs">
+                                                            {{ ($print->currentpage() - 1) * $print->perpage() + $loop->index + 1 }}
+                                                            </td>
+                                                            
                                                             <td
                                                                 class="border-t-2 px-2 align-middle border-l-0 border-r-0 text-xs">
                                                                 {{ $task->order->customer->name }}
