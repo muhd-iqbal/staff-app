@@ -59,7 +59,7 @@
 
                 <tbody>
                     @if (count($print))
-                    @foreach ($task as $branch)
+                    @foreach ($branches as $branch)
                     <tr>
                         <td colspan="5"
                             class="bg-gray-50 border border-solid border-black align-middle text-center text-sm whitespace-nowrap">
