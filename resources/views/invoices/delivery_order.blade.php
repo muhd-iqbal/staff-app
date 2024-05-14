@@ -36,7 +36,7 @@
                         <div>
                             <div class="uppercase text-xl font-bold">{{ $order->branch->name }}</div>
                             <div class="uppercase text-base font-bold">{{ $order->branch->address }}</div>
-                            <div class="text-base font-bold">Tel: {{ phone_format($order->branch->phone_1) }} / Emel:
+                            <div class="text-base font-bold">Tel: {{ phone_format($order->branch->phone_2) }} / Emel:
                                 admin@inspirazs.com.my</div>
                         </div>
                     </div>
