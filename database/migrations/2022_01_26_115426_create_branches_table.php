@@ -37,7 +37,7 @@ class CreateBranchesTable extends Migration
             'address' => 'Lot 15, Bangunan PKNK Kawasan Perindustrian Ringan Gurun, Kilang Ketapan, 08300 Gurun, Kedah',
             'phone_1' => '044681423',
             'phone_2' => '0135303135',
-            'whatsapp_1' => '0193653135',
+            'whatsapp_1' => '0135303135',
             'whatsapp_2' => '0135303135',
             'bank_account_1' => 'CIMB BANK 8604614297 (Inspirazs Sdn. Bhd.)',
             'bank_account_2' => 'PUBLIC BANK 3159884900 (Inspirazs Enterprise)',
