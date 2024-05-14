@@ -38,8 +38,8 @@
                                 <div class="text-2xl font-bold uppercase">{{ $quote->branch->name }}</div>
                                 <div class="text-base font-bold uppercase">{{ $quote->branch->address }}</div>
                                 <div class="text-base font-bold uppercase">Tel:
-                                    {{ phone_format($quote->branch->phone_1) }}
-                                    {{ $quote->branch->phone_2 ? ' / ' . phone_format($quote->branch->phone_2) : '' }}
+                                    
+                                    {{ $quote->branch->phone_2 ? '  ' . phone_format($quote->branch->phone_2) : '' }}
                                 </div>
                                 <div class="text-base font-bold">EMEL: admin@inspirazs.com.my</div>
                             </div>
