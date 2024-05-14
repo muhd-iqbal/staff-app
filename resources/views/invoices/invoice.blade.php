@@ -123,7 +123,7 @@
                         <div>
                             {{ __('WhatsApp / Telefon: ') }} <br />
                             
-                            {{ $order->branch->phone_2 ? ' / ' . phone_format($order->branch->whatsapp_2) : '' }}
+                            {{ $order->branch->phone_2 ? '  ' . phone_format($order->branch->whatsapp_2) : '' }}
                         </div>
                     </div>
                 </div>
