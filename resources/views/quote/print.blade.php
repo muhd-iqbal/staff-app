@@ -36,7 +36,7 @@
                             <x-application-logo class="block md:hidden h-32 w-auto fill-current text-gray-600" />
                             <div>
                                 <div class="text-2xl font-bold uppercase">{{ $quote->branch->name }}</div>
-                                <div class="text-base font-bold uppercase">{{ $quote->branch->address }}</div>
+                                <div class="text-base font-bold uppercase">LOT 15, BANGUNAN PKNK KAWASAN PERINDUSTRIAN RINGAN GURUN, KILANG KETAPAN, 08300 GURUN, KEDAH</div>
                                 <div class="text-base font-bold uppercase">Tel:
                                     
                                     {{ $quote->branch->phone_2 ? '  ' . phone_format($quote->branch->phone_2) : '' }}
