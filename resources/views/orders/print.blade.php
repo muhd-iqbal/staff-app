@@ -91,8 +91,9 @@
             </div>
         @endif
 
-                    <div class="mb-2 text-1xl text-center px-3">
-            <span>MINIMUM HARGA UNTUK SOFTCOPY ADALAH RM100 DAN MAKSIMUM RM150 bergantung pada jumlah edit dan masa diperlukan</span>
+                    <br>
+        <div class="mb-2 text-1xl text-center px-3">
+            <b><span>MINIMUM HARGA UNTUK SOFTCOPY ADALAH RM100 DAN MAKSIMUM RM150 bergantung pada jumlah edit dan masa diperlukan</span></b>
         </div>
         <div class="mb-2 text-2xl text-center px-3">
             <span>Terima kasih!</span>
