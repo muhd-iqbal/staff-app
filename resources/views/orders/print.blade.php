@@ -98,6 +98,9 @@
         <div class="text-center text-xs px-3">
             INI ADALAH CETAKAN KOMPUTER, TANDATANGAN TIDAK DIPERLUKAN
         </div>
+                    <div class="text-center text-xs px-3">
+            MINIMUM HARGA UNTUK SOFTCOPY ADALAH RM50 DAN MAKSIMUM RM120
+        </div>
     </div>
     <script>
         window.print();
