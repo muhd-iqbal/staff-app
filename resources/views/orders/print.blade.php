@@ -93,7 +93,7 @@
 
                     <br>
         <div class="mb-2 text-1xl text-center px-3">
-            <b><span>MINIMUM HARGA UNTUK SOFTCOPY ADALAH RM100 DAN MAKSIMUM RM150 BERGANTUNG PADA JUMLAH EDIT DAN MASA DIPERLUKAN</span></b>
+            <b><span>MINIMUM HARGA UNTUK SOFTCOPY DESIGN ADALAH RM100 DAN MAKSIMUM RM150 BERGANTUNG PADA JUMLAH EDIT DAN MASA DIPERLUKAN</span></b>
         </div>
         <div class="mb-2 text-2xl text-center px-3">
             <span>Terima kasih!</span>
