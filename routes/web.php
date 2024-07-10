@@ -20,6 +20,7 @@ use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\QuotationItemController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffReportController;
+use App\Http\Controllers\ChequeReportController;
 use App\Http\Controllers\SMAController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
@@ -158,6 +159,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/staff-reports/{year}', [StaffReportController::class, 'yearly']);
     Route::get('/staff-old-reports', [StaffReportController::class, 'old_index']);
     Route::get('/staff-old-reports/{year}', [StaffReportController::class, 'old_yearly']);
+
+    Route::get('/cheque-reports', [ChequeReportController::class, 'index']);
 
     Route::get('/payment-vouchers', [PaymentVoucherController::class, 'index']);
     Route::post('/payment-vouchers/add', [PaymentVoucherController::class, 'create']);
