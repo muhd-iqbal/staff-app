@@ -30,6 +30,7 @@ class DashboardController extends Controller
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
+        'Cheques Issued' => '/admin/cheque',
         
     ];
     protected $links_admin = [
@@ -41,7 +42,7 @@ class DashboardController extends Controller
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
         'Slip Gaji Staf' => '/admin/payslips',
-        'Cheques Issued' => '/admin/cheque',
+        
     ];
     protected $links_owner = [
         // 'Permohonan Cuti' => '/top/leaves/approval',
