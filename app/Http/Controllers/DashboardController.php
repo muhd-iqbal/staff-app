@@ -41,6 +41,7 @@ class DashboardController extends Controller
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
         'Slip Gaji Staf' => '/admin/payslips',
+        'Cheques Issued' => '/admin/cheque',
     ];
     protected $links_owner = [
         // 'Permohonan Cuti' => '/top/leaves/approval',
