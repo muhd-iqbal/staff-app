@@ -55,7 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cheque as $cheques)
+                                @foreach ($cheques as $cheque)
                                     <tr class="text-center">
                                         <td class="border">{{ pay_vo_num($cheques->id) }}</td>
                                         <td class="border">{{ $cheques->payee_name }}</td>
@@ -67,9 +67,9 @@
                                                 class="bg-red-500 p-1 px-2 text-white rounded-md hover:bg-red-700">Edit</a>
                                         </td>
                                         <td class="p-0 w-min border font-bold">
-                                            @if ($cheques->is_received)
+                                            @if ($cheque->is_received)
                                                 <span class="text-green-500">&#10004;</span>
-                                            @elseif ($cheques->is_approved)
+                                            @elseif ($cheque->is_approved)
                                                 <span class="text-yellow-500">&#10004;</span>
                                             @else
                                                 <span class="text-red-500">&#10006;</span>
