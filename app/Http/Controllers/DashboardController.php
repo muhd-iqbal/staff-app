@@ -30,7 +30,7 @@ class DashboardController extends Controller
         'Print List' => '/print',
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
-        'Cheques Issued' => '/cheque',
+        'Cheques Issued' => '/cheque-reports',
         
     ];
     protected $links_admin = [
