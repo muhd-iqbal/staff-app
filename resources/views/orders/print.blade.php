@@ -6,7 +6,7 @@
             <div class="text-center w-full">
                 <span class="font-bold text-2xl uppercase">{{ strtoupper($order->branch->name) }}</span><br />
                 {{ strtoupper($order->branch->address) }}<br />
-                Hubungi: {{ phone_format($order->branch->phone_1) }} / admin&#x40;inspirazs.com.my<br />
+                Hubungi: 013-5303135 / admin&#x40;inspirazs.com.my<br />
             </div>
         </div>
 
