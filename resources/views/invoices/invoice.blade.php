@@ -53,8 +53,8 @@
                         </div>
                         <div class="text-right">
                             <div class="mt-5">{{ __('Bayar Kepada:') }}</div>
-                            <div class="text-lg font-bold uppercase">{{ $order->branch->name }}</div>
-                            <div class="text-base font-bold uppercase">{{ $order->branch->address }}</div>
+                            <div class="text-lg font-bold uppercase">Inspirazs Sdn. Bhd.</div>
+                            <div class="text-base font-bold uppercase">No. 8, Kompleks Guar Utama, Jalan Guar Utama 1, 08800 Guar Chempedak, Kedah</div>
                             <div class="mt-5">{{ __('No Akaun:') }}</div>
                             {{ $order->branch->bank_account_1 }}
                            
