@@ -54,7 +54,7 @@
                         <div class="text-right">
                             <div class="mt-5">{{ __('Bayar Kepada:') }}</div>
                             <div class="text-lg font-bold uppercase">{{ $order->branch->name }}</div>
-                            <div class="text-base font-bold uppercase">{{ $order->branch->address }}</div>
+                            <div class="text-base font-bold uppercase">Lot 15, Bangunan PKNK Kawasan Perindustrian Ringan Gurun, Kilang Ketapan, 08300 Gurun, Kedah</div>
                             <div class="mt-5">{{ __('No Akaun:') }}</div>
                             {{ $order->branch->bank_account_1 }}
                            
