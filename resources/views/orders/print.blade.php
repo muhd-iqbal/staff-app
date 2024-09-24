@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between mb-8 px-3">
 
             <div class="text-center w-full">
-                <span class="font-bold text-2xl uppercase">LOT 15, BANGUNAN PKNK KAWASAN PERINDUSTRIAN RINGAN GURUN, KILANG KETAPAN, 08300 GURUN, KEDAH</span><br />
+                <span class="font-bold text-2xl uppercase">{{ strtoupper($order->branch->name) }}</span><br />
                 {{ strtoupper($order->branch->address) }}<br />
                 Hubungi: 013-530 3135 / admin&#x40;inspirazs.com.my<br />
             </div>
