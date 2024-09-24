@@ -35,7 +35,7 @@
                         <x-application-logo class="block h-24 w-auto fill-current text-gray-600" />
                         <div>
                             <div class="uppercase text-xl font-bold">{{ $order->branch->name }}</div>
-                            <div class="uppercase text-base font-bold">{{ $order->branch->address }}</div>
+                            <div class="uppercase text-base font-bold">Lot 15, Bangunan PKNK Kawasan Perindustrian Ringan Gurun, Kilang Ketapan, 08300 Gurun, Kedah</div>
                             <div class="text-base font-bold">Tel: {{ phone_format($order->branch->phone_2) }} / Emel:
                                 admin@inspirazs.com.my</div>
                         </div>
