@@ -35,7 +35,7 @@ class CreateBranchesTable extends Migration
             'name' => 'Inspirazs Sdn. Bhd.',
             'shortname' => 'gurun',
             'address' => 'Lot 15, Bangunan PKNK Kawasan Perindustrian Ringan Gurun, Kilang Ketapan, 08300 Gurun, Kedah',
-            'phone_1' => '044681423',
+            'phone_1' => '0135303135',
             'phone_2' => '0135303135',
             'whatsapp_1' => '0135303135',
             'whatsapp_2' => '0135303135',
