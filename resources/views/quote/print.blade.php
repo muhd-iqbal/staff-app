@@ -39,7 +39,7 @@
                                 <div class="text-base font-bold uppercase">LOT 15, BANGUNAN PKNK KAWASAN PERINDUSTRIAN RINGAN GURUN, KILANG KETAPAN, 08300 GURUN, KEDAH</div>
                                 <div class="text-base font-bold uppercase">Tel:
                                     
-                                    {{ $quote->branch->phone_1 ? '  ' . phone_format($quote->branch->phone_1) : '' }}
+                                    {{ $quote->branch->phone_2 ? '  ' . phone_format($quote->branch->phone_2) : '' }}
                                 </div>
                                 <div class="text-base font-bold">EMEL: admin@inspirazs.com.my</div>
                             </div>
