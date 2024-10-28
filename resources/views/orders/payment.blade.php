@@ -68,6 +68,9 @@
                                                                         onclick="set_pay(80)">{!! __('80&#37;') !!}</span>
                                                                     <span
                                                                         class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
+                                                                        onclick="set_pay(90)">{!! __('90&#37;') !!}</span>
+                                                                    <span
+                                                                        class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
                                                                         onclick="set_pay(100)">{!! __('100&#37;') !!}</span>
                                                                 </label>
                                                                 <script>
