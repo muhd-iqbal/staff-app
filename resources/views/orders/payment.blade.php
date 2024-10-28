@@ -59,6 +59,9 @@
                                                                 <label for="amount">{{ __('Amaun Bayaran') }}
                                                                     <span
                                                                         class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
+                                                                        onclick="set_pay(10)">{!! __('10&#37;') !!}</span>
+                                                                    <span
+                                                                        class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
                                                                         onclick="set_pay(50)">{!! __('50&#37;') !!}</span>
                                                                      <span
                                                                         class="bg-yellow-300 p-1 text-xs rounded-md hover:bg-yellow-500 cursor-pointer"
