@@ -41,7 +41,7 @@
                                             type="text" name="customer_id" value="{{ $order->customer->name }}">
                                             @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}"
-                                                    {{ $customer->name == $order->customer_id ? 'selected' : '' }}>
+                                                    {{ $customer->id == $order->customer_id ? 'selected' : '' }}>
                                                     {{ $customer->name . ' - ' . $customer->organisation . ' - ' . $customer->phone }}
                                                 </option>
                                             @endforeach
