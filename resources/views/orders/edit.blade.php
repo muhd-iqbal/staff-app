@@ -40,8 +40,8 @@
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             type="text" name="customer_id" value="{{ $order->customer->name }}">
                                             @foreach ($customers as $customer)
-                                                <option value="{{ $customer->name }}"
-                                                    {{ $customer->name == $order->customer_name ? 'selected' : '' }}>
+                                                <option value="{{ $customer->id }}"
+                                                    {{ $customer->id == $order->customer_id ? 'selected' : '' }}>
                                                     {{ $customer->name . ' - ' . $customer->organisation . ' - ' . $customer->phone }}
                                                 </option>
                                             @endforeach
