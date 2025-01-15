@@ -36,7 +36,7 @@
                         <div>
                             <div class="uppercase text-xl font-bold">{{ $order->branch->name }}</div>
                             <div class="uppercase text-base font-bold">Lot 15, Bangunan PKNK Kawasan Perindustrian Ringan Gurun, Kilang Ketapan, 08300 Gurun, Kedah</div>
-                            <div class="text-base font-bold">Tel: 013-530 3135 }} / Emel:
+                            <div class="text-base font-bold">Tel: 013-530 3135 / Emel:
                                 admin@inspirazs.com.my</div>
                         </div>
                     </div>
