@@ -21,6 +21,7 @@ return new class extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->integer('total')->default(0);
             $table->integer('discount')->default(0);
+            $table->integer('wakaf')->default(0);
             $table->integer('shipping')->default(0);
             $table->integer('grand_total')->default(0);
             $table->string('payment_method', 20)->nullable();
@@ -45,7 +46,7 @@ return new class extends Migration
         ) oi ON od.id = oi.order_id
         SET od.total = oi.totals";
         DB::statement($statement);
-        DB::statement("UPDATE orders SET grand_total = total + shipping - discount, due = grand_total - paid");
+        DB::statement("UPDATE orders SET grand_total = total + shipping - discount - wakaf, due = grand_total - paid");
     }
 
     /**
@@ -63,6 +64,7 @@ return new class extends Migration
             // $table->dropForeign(['customer_id']);
             $table->dropColumn('total');
             $table->dropColumn('discount');
+            $table->dropColumn('wakaf');
             $table->dropColumn('shipping');
             $table->dropColumn('grand_total');
             $table->dropColumn('payment_method');
