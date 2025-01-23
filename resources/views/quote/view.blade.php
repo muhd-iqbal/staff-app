@@ -173,6 +173,7 @@
                                 onclick="toggleModalShipping()">edit</span></div>
                         <div>Penghantaran: RM{{ RM($quote->shipping) }}</div>
                         <div>Diskaun: RM{{ RM($quote->discount) }}</div>
+                        <div>Wakaf: RM{{ RM($quote->wakaf) }}</div>
                         <div>Jumlah: RM{{ RM($quote->grand_total) }}</div>
                     </div>
 
@@ -195,6 +196,9 @@
                                         <label>Jumlah Diskaun</label>
                                         <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3" name="discount"
                                             value="{{ RM($quote->discount) }}" />
+                                        <label>Jumlah Wakaf</label>
+                                        <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3" name="discount"
+                                            value="{{ RM($quote->wakaf) }}" />
                                     </div>
                                     <div class="bg-gray-200 px-4 py-3 text-right">
                                         <button type="button"
