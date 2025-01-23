@@ -271,6 +271,7 @@
                                 onclick="toggleModalShipping()">edit</span></div>
                         <div>Penghantaran: RM{{ RM($order->shipping) }}</div>
                         <div>Diskaun: RM{{ RM($order->discount) }}</div>
+                        <div>Wakaf: RM{{ RM($order->discount) }}</div>
                         <div>Jumlah: RM{{ RM($order->grand_total) }}</div>
                     </div>
 
@@ -291,6 +292,9 @@
                                         <input type="number" step="0.01" class="w-full bg-gray-100 p-2 mt-2 mb-3"
                                             name="shipping" value="{{ RM($order->shipping) }}" />
                                         <label>Jumlah Diskaun</label>
+                                        <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3"
+                                            name="discount" value="{{ RM($order->discount) }}" />
+                                        <label>Jumlah Wakaf</label>
                                         <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3"
                                             name="discount" value="{{ RM($order->discount) }}" />
                                     </div>
