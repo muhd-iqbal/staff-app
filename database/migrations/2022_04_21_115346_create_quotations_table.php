@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('total')->default(0);
             $table->integer('shipping')->default(0);
             $table->integer('discount')->default(0);
+            $table->integer('wakaf')->default(0);
             $table->integer('grand_total')->default(0);
             $table->text('foot_note')->nullable();
             $table->boolean('export_to_order')->default(0);
