@@ -218,9 +218,11 @@ class OrderController extends Controller
         $attributes = request()->validate([
             'shipping' => 'required|numeric',
             'discount' => 'required|numeric',
+            'wakaf' => 'required|numeric',
         ]);
         $attributes['shipping'] = $attributes['shipping'] * 100;
         $attributes['discount'] = $attributes['discount'] * 100;
+        $attributes['wakaf'] = $attributes['wakaf'] * 100;
 
         $order->update($attributes);
         order_adjustment($order->id);
