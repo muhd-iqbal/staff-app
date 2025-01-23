@@ -85,7 +85,7 @@
                             </div>
                         </div>
                     @endforeach
-                    @if ($order->discount || $order->shipping)
+                    @if ($order->discount || $order->wakaf || $order->shipping)
                         <div class="grid grid-cols-2 mt-5">
                             <div class="font-bold">{{ __('Jumlah Kasar') }}</div>
                             <div class="text-right font-bold">{{ 'RM' . RM($order->total) }}</div>
@@ -96,6 +96,13 @@
                             <div class="font-bold">{{ __('Diskaun') }}</div>
                             <div class="text-right font-bold">
                                 {{ '(RM' . RM($order->discount) . ')' }}</div>
+                        </div>
+                    @endif
+                                @if ($order->discount)
+                        <div class="grid grid-cols-2 mt-3">
+                            <div class="font-bold">{{ __('Wakaf') }}</div>
+                            <div class="text-right font-bold">
+                                {{ '(RM' . RM($order->wakaf) . ')' }}</div>
                         </div>
                     @endif
                     @if ($order->shipping)
