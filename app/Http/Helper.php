@@ -91,7 +91,7 @@ if (!function_exists('order_adjustment')) {
     function order_adjustment($id)
     {
         DB::table('orders')->where('id', $id)->update([
-            'grand_total' => DB::raw('`total`-`discount`+`shipping`'),
+            'grand_total' => DB::raw('`total`-`discount`-`wakaf`+`shipping`'),
             'due' => DB::raw('`grand_total`-`paid`')
         ]);
     }
@@ -102,7 +102,7 @@ if (!function_exists('quote_adjustment')) {
     function quote_adjustment($id)
     {
         DB::table('quotations')->where('id', $id)->update([
-            'grand_total' => DB::raw('`total`-`discount`+`shipping`'),
+            'grand_total' => DB::raw('`total`-`discount`-`wakaf`+`shipping`'),
         ]);
     }
 }
@@ -127,7 +127,7 @@ if (!function_exists('recalculate_order')) {
         ) oi ON od.id = $order
         SET od.total = oi.totals";
         DB::statement($statement);
-        DB::statement("UPDATE orders SET grand_total = total + shipping - discount, due = grand_total - paid WHERE id = $order");
+        DB::statement("UPDATE orders SET grand_total = total + shipping - discount - wakaf, due = grand_total - paid WHERE id = $order");
     }
 }
 
@@ -143,7 +143,7 @@ if (!function_exists('recalculate_quote')) {
         ) qi ON qu.id = $quote
         SET qu.total = qi.totals";
         DB::statement($statement);
-        DB::statement("UPDATE quotations SET grand_total = total + shipping - discount WHERE id = $quote");
+        DB::statement("UPDATE quotations SET grand_total = total + shipping - discount - wakaf WHERE id = $quote");
     }
 }
 
