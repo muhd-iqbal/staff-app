@@ -98,7 +98,7 @@
                                 {{ '(RM' . RM($order->discount) . ')' }}</div>
                         </div>
                     @endif
-                                @if ($order->wakaf)
+                                @if ($order->discount)
                         <div class="grid grid-cols-2 mt-3">
                             <div class="font-bold">{{ __('Wakaf') }}</div>
                             <div class="text-right font-bold">
