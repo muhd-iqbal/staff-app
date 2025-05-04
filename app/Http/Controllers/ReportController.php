@@ -23,7 +23,6 @@ class ReportController extends Controller
             DB::raw('month(date) as month'),
             DB::raw('sum(due) as dues'),
             DB::raw('sum(discount) as discounts'),
-            DB::raw('sum(wakaf) wakafs'),
             DB::raw('sum(shipping) as shippings'),
             DB::raw('sum(grand_total) as totals'),
         )
@@ -59,7 +58,6 @@ class ReportController extends Controller
             DB::raw('month(date) as month'),
             DB::raw('sum(due) as dues'),
             DB::raw('sum(discount) as discounts'),
-            DB::raw('sum(wakaf) as wakafs'),
             DB::raw('sum(shipping) as shippings'),
             DB::raw('sum(grand_total) as totals'),
         )
@@ -92,7 +90,7 @@ class ReportController extends Controller
     public function old_yearly($y)
     {
 
-        $summary =  DB::select("SELECT month(date) as month, sum(total) as totals, sum(total_discount) as discounts, sum(total_wakaf) as wakafs, sum(shipping) as shippings, sum(grand_total) as grand_totals
+        $summary =  DB::select("SELECT month(date) as month, sum(total) as totals, sum(total_discount) as discounts, sum(shipping) as shippings, sum(grand_total) as grand_totals
         FROM ( SELECT * FROM sma_gurun_sales UNION ALL SELECT * FROM sma_guar_sales ) s
         WHERE date > '$y-01-01 00:00:00' AND date < '$y-12-31 23:59:59' AND date < '" . config('app.pos_start') . " 00:00:00'
         GROUP BY month");
@@ -178,7 +176,6 @@ class ReportController extends Controller
                     ->select(
                         DB::raw('month(date) as month'),
                         DB::raw('sum(total_discount) as discounts'),
-                        DB::raw('sum(total_wakaf) as wakafs'),
                         DB::raw('sum(shipping) as shippings'),
                         DB::raw('sum(total) as totals'),
                         DB::raw('sum(grand_total) as grand_totals'),
@@ -194,7 +191,6 @@ class ReportController extends Controller
                     ->select(
                         DB::raw('month(date) as month'),
                         DB::raw('sum(total_discount) as discounts'),
-                        DB::raw('sum(total_wakaf) as wakafs'),
                         DB::raw('sum(shipping) as shippings'),
                         DB::raw('sum(total) as totals'),
                         DB::raw('sum(grand_total) as grand_totals'),
