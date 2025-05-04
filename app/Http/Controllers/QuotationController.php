@@ -105,11 +105,9 @@ class QuotationController extends Controller
         $attributes = request()->validate([
             'shipping' => 'required|numeric',
             'discount' => 'required|numeric',
-            'wakaf' => 'required|numeric',
         ]);
         $attributes['shipping'] = $attributes['shipping'] * 100;
         $attributes['discount'] = $attributes['discount'] * 100;
-        $attributes['wakaf'] = $attributes['wakaf'] * 100;
 
         $quote->update($attributes);
         quote_adjustment($quote->id);
@@ -128,7 +126,6 @@ class QuotationController extends Controller
         $attr['pay_method'] = 'cash';
         $attr['shipping'] = $quote->shipping;
         $attr['discount'] = $quote->discount;
-        $attr['wakaf'] = $quote->wakaf;
         $attr['grand_total'] = $quote->grand_total;
 
         $order = Order::create($attr);
