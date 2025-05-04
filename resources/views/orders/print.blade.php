@@ -56,13 +56,6 @@
                     {{ __('RM') . RM($order->discount) }} </div>
             </div>
         @endif
-         @if ($order->wakaf)
-            <div class="flex justify-between items-center mb-2 px-3">
-                <div class="text-base leading-none"><span class="">Wakaf</span>:</div>
-                <div class="text-base text-right font-medium">
-                    {{ __('RM') . RM($order->wakaf) }} </div>
-            </div>
-        @endif
 
         <div class="flex justify-between items-center mb-2 px-3">
             <div class="text-base leading-none"><span class="">Jumlah</span>:</div>
