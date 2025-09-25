@@ -39,19 +39,10 @@
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     {{ __('Designer') }}
                                                 </th>
-                                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-    {{ __('Subcon') }}
-    <form method="GET" action="">
-        <select name="subcon" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" onchange="this.form.submit()">
-            <option value="">{{ __('Semua Subcon') }}</option>
-            @foreach($subcons as $subcon)
-                <option value="{{ $subcon->id }}" {{ request('subcon') == $subcon->id ? 'selected' : '' }}>
-                    {{ $subcon->name }}
-                </option>
-            @endforeach
-        </select>
-    </form>
-</th>
+                                                <th scope="col"
+                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    {{ __('Subcon') }}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
