@@ -98,8 +98,12 @@
                 </td>
                 <!-- Note column added here -->
                 <td class="text-center">
-                    {{ $list->note ?? '' }}
-                </td>
+    <form method="POST" action="{{ route('orders.item.note', $list->id) }}">
+        @csrf
+        <textarea name="note" rows="2" class="border rounded w-full text-xs">{{ $list->note ?? '' }}</textarea>
+        <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded text-xs mt-1">Save</button>
+    </form>
+</td>
             </tr>
         @endforeach
     @else
