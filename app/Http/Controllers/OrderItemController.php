@@ -7,7 +7,7 @@ use App\Models\OrderItem;
 use App\Models\OrderPicture;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Item;
+use App\Models\OrderItem;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\ItemStatusController;
 use App\Models\Supplier;
