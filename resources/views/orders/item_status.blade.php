@@ -75,7 +75,7 @@
                                                         </td>
                                                         <td class="flex py-1 justify-center">
                                                             @if ($list->supplier_id)
-                                                                <title="{{ $list->supplier->name }}" />
+                                                                {{ $list->supplier->name }}
                                                             @endif
                                                         </td>
                                                     </tr>
