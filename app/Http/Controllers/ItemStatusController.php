@@ -125,7 +125,14 @@ class ItemStatusController extends Controller
 
         return back()->with('success', 'Status Dikemaskini: Siap');
     }
+public function updateNote(Request $request, $id)
+{
+    $item = Item::findOrFail($id);
+    $item->note = $request->input('note');
+    $item->save();
 
+    return back()->with('success', 'Note updated successfully!');
+}
 public function show_status($status)
 {
     // Get all subcon suppliers for the dropdown filter
