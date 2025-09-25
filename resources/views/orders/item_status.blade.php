@@ -15,95 +15,99 @@
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
-                                            <tr class="text-center">
-                                                <th scope="col"
-                                                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('No') }}</th>
-                                                <th scope="col"
-                                                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Pelanggan') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Item') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Saiz') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Kuantiti') }} 
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Designer') }}
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-    {{ __('Subcon') }}
-    <form method="GET" action="">
-        <select name="subcon" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" onchange="this.form.submit()">
-            <option value="">{{ __('Semua Subcon') }}</option>
-            @foreach($subcons as $subcon)
-                <option value="{{ $subcon->id }}" {{ request('subcon') == $subcon->id ? 'selected' : '' }}>
-                    {{ $subcon->name }}
-                </option>
-            @endforeach
-        </select>
-        {{-- Keep other filter parameters, if needed --}}
-        @foreach(request()->except('subcon') as $key => $value)
-            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+    <tr class="text-center">
+        <th scope="col"
+            class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('No') }}</th>
+        <th scope="col"
+            class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Pelanggan') }}
+        </th>
+        <th scope="col"
+            class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Item') }}
+        </th>
+        <th scope="col"
+            class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Saiz') }}
+        </th>
+        <th scope="col"
+            class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Kuantiti') }} 
+        </th>
+        <th scope="col"
+            class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Designer') }}
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Subcon') }}
+            <form method="GET" action="">
+                <select name="subcon" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" onchange="this.form.submit()">
+                    <option value="">{{ __('Semua Subcon') }}</option>
+                    @foreach($subcons as $subcon)
+                        <option value="{{ $subcon->id }}" {{ request('subcon') == $subcon->id ? 'selected' : '' }}>
+                            {{ $subcon->name }}
+                        </option>
+                    @endforeach
+                </select>
+                {{-- Keep other filter parameters, if needed --}}
+                @foreach(request()->except('subcon') as $key => $value)
+                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                @endforeach
+            </form>
+        </th>
+        <!-- Note column added here -->
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Note') }}
+        </th>
+    </tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200">
+    @if (count($items))
+        <?php $count = 1; ?>
+        @foreach ($items as $list)
+            <tr class="text-center cursor-pointer {{ $list->is_urgent ? 'bg-red-500' : '' }}"
+                onclick="window.location='/orders/item/{{ $list->id }}'">
+                <td class="text-center">
+                    {{ ($items->currentpage() - 1) * $items->perpage() + $loop->index + 1 }}
+                </td>
+                <td class="whitespace-nowrap">
+                    {{ $list->order->customer->name }}
+                </td>
+                <td class="text-center">
+                    <div class="text-sm font-medium text-gray-900">
+                        {{ $list->product }}
+                    </div>
+                </td>
+                <td class="text-center">{{ $list->size }}
+                {{ $list->measurement ? '(' . $list->measurement . ')' : '' }}</td>
+                <td class="text-center">{{ $list->quantity }}</td>
+                <td class="flex py-1 justify-center">
+                    @if ($list->user)
+                        <img class="h-5 w-5 rounded-full"
+                            src="{{ asset('storage/' . $list->user->photo) }}"
+                            title="{{ $list->user->name }}" />
+                    @endif
+                </td>
+                <td class="text-center">
+                    @if ($list->supplier_id)
+                    <div class="text-sm font-medium text-gray-900">
+                        {{ $list->supplier->name }}
+                        </div>
+                    @endif
+                </td>
+                <!-- Note column added here -->
+                <td class="text-center">
+                    {{ $list->note ?? '' }}
+                </td>
+            </tr>
         @endforeach
-    </form>
-</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200">
-                                            @if (count($items))
-                                                <?php $count = 1; ?>
-                                                @foreach ($items as $list)
-
-                                                    <tr class="text-center cursor-pointer {{ $list->is_urgent ? 'bg-red-500' : '' }}"
-                                                        onclick="window.location='/orders/item/{{ $list->id }}'">
-                                                        <td class="text-center">
-                                                            {{ ($items->currentpage() - 1) * $items->perpage() + $loop->index + 1 }}
-                                                        </td>
-                                                        <td class="whitespace-nowrap">
-                                                            {{ $list->order->customer->name }}
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <div class="text-sm font-medium text-gray-900">
-                                                                {{ $list->product }}
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center">{{ $list->size }}
-                                                        {{ $list->measurement ? '(' . $list->measurement . ')' : '' }}</td>
-                                                        <td class="text-center">{{ $list->quantity }}</td>
-                                                        <td class="flex py-1 justify-center">
-                                                            @if ($list->user)
-                                                                <img class="h-5 w-5 rounded-full"
-                                                                    src="{{ asset('storage/' . $list->user->photo) }}"
-                                                                    title="{{ $list->user->name }}" />
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">
-                                                            
-                                                            @if ($list->supplier_id)
-                                                            <div class="text-sm font-medium text-gray-900">
-                                                                {{ $list->supplier->name }}
-                                                                </div>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="4" class="text-center">{{ __('Tiada item') }}
-                                                    </td>
-                                                </tr>
-                                            @endif
-
-                                        </tbody>
+    @else
+        <tr>
+            <td colspan="5" class="text-center">{{ __('Tiada item') }}</td>
+        </tr>
+    @endif
+</tbody>
                                     </table>
                                 </div>
                             </div>
