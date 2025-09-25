@@ -126,49 +126,62 @@ class ItemStatusController extends Controller
         return back()->with('success', 'Status Dikemaskini: Siap');
     }
 
-    public function show_status($status)
-    {
-        switch ($status) {
-            case 'is_done':
-                $title = 'Done';
-                $items = OrderItem::where('is_done', '=', 1);
-                break;
-            case 'is_printing':
-                $title = 'Printing';
-                $items = OrderItem::where('is_printing', '=', 1)->where('is_done', '=', 0);
-                break;
-            case 'is_approved':
-                $title = 'Production';
-                $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
-                if (request('loc')) {
-                    switch (request('loc')) {
-                        case 'subcon':
-                            $items->whereNotNull('supplier_id');
-                            break;
-                        default:
-                            $items->whereNull('supplier_id')->where('branch_id', request('loc'));
-                            break;
-                    }
-                }
-                break;
-            case 'is_design':
-                $title = 'Design';
-                $items = OrderItem::where('is_design', '=', 1)->where('is_approved', '=', 0);
-                break;
-            case 'is_pending':
-                $title = 'Pending';
-                $items = OrderItem::where('is_design', '=', 0);
-                break;
-            default:
-                abort(404);
-                break;
-        }
+public function show_status($status)
+{
+    // Get all subcon suppliers for the dropdown filter
+    $subcons = \App\Models\Supplier::all();
 
-        return view('orders.item_status', [
-            'status' => $title,
-            'items' => $items->orderBy('created_at', 'DESC')->paginate(20),
-        ]);
+    switch ($status) {
+        case 'is_done':
+            $title = 'Done';
+            $items = OrderItem::where('is_done', '=', 1);
+            break;
+        case 'is_printing':
+            $title = 'Printing';
+            $items = OrderItem::where('is_printing', '=', 1)->where('is_done', '=', 0);
+            break;
+        case 'is_approved':
+            $title = 'Production';
+            $items = OrderItem::where('is_approved', '=', 1)->where('is_printing', '=', 0);
+
+            if (request('loc')) {
+                switch (request('loc')) {
+                    case 'subcon':
+                        $items->whereNotNull('supplier_id');
+                        break;
+                    default:
+                        $items->whereNull('supplier_id')->where('branch_id', request('loc'));
+                        break;
+                }
+            }
+            break;
+        case 'is_design':
+            $title = 'Design';
+            $items = OrderItem::where('is_design', '=', 1)->where('is_approved', '=', 0);
+            break;
+        case 'is_pending':
+            $title = 'Pending';
+            $items = OrderItem::where('is_design', '=', 0);
+            break;
+        default:
+            abort(404);
+            break;
     }
+
+    // --- ADD FILTERING HERE ---
+    // Filter by subcon (supplier_id) if dropdown is selected
+    if (request('subcon')) {
+        $items->where('supplier_id', request('subcon'));
+    }
+
+    // You can add more filters here (customer, product, etc.) if you want
+
+    return view('orders.item_status', [
+        'status' => $title,
+        'items' => $items->orderBy('created_at', 'DESC')->paginate(20),
+        'subcons' => $subcons, // <-- pass subcon list to the view
+    ]);
+}
     public function show_zero()
     {
         $to_be_updated = OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(config('app.pos_start'))) . ' 00:00:00');
