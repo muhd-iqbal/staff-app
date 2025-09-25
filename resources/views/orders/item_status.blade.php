@@ -74,8 +74,11 @@
                                                             @endif
                                                         </td>
                                                         <td class="flex py-1 justify-center">
+                                                            
                                                             @if ($list->supplier_id)
+                                                            <div class="text-sm font-medium text-gray-900">
                                                                 {{ $list->supplier->name }}
+                                                                </div>
                                                             @endif
                                                         </td>
                                                     </tr>
