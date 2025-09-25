@@ -73,7 +73,7 @@
                                                                     title="{{ $list->user->name }}" />
                                                             @endif
                                                         </td>
-                                                        <td class="flex py-1 justify-center">
+                                                        <td class="text-center">
                                                             
                                                             @if ($list->supplier_id)
                                                             <div class="text-sm font-medium text-gray-900">
