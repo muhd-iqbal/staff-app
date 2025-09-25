@@ -15,36 +15,44 @@
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
-                                            <tr class="text-center">
-                                                <th scope="col"
-                                                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('No') }}</th>
-                                                <th scope="col"
-                                                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Pelanggan') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Item') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Saiz') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Kuantiti') }} 
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Designer') }}
-                                                </th>
-                                                <th scope="col"
-                                                    class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Subcon') }}
-                                                </th>
-                                            </tr>
-                                        </thead>
+    <tr class="text-center">
+        <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('No') }}
+        </th>
+        <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Pelanggan') }}
+            <form method="GET" action="">
+                <input type="text" name="customer" value="{{ request('customer') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" placeholder="Cari pelanggan" onchange="this.form.submit()">
+            </form>
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Item') }}
+            <form method="GET" action="">
+                <input type="text" name="product" value="{{ request('product') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" placeholder="Cari item" onchange="this.form.submit()">
+            </form>
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Saiz') }}
+            <form method="GET" action="">
+                <input type="text" name="size" value="{{ request('size') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" placeholder="Cari saiz" onchange="this.form.submit()">
+            </form>
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Kuantiti') }}
+            <form method="GET" action="">
+                <input type="text" name="quantity" value="{{ request('quantity') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-xs" placeholder="Cari kuantiti" onchange="this.form.submit()">
+            </form>
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Designer') }}
+            {{-- You can make a dropdown for designer if needed --}}
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Subcon') }}
+            {{-- You can make a dropdown for subcon if needed --}}
+        </th>
+    </tr>
+</thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @if (count($items))
                                                 <?php $count = 1; ?>
