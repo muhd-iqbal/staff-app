@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/orders/item/{item}/takeover', [OrderItemController::class, 'update_takeover']);
     Route::post('/orders/item/{item}/foto', [OrderItemController::class, 'update_photo']);
     Route::post('/orders/item/picture/{picture}/del', [OrderItemController::class, 'delete_photo']);
+    Route::post('/orders/item/{id}/note', [OrderItemController::class, 'updateNote'])->name('orders.item.note');
 
     Route::post('/orders/item/{item}/design', [ItemStatusController::class, 'update_design']);
     Route::post('/orders/item/{item}/approved', [ItemStatusController::class, 'update_approved']);
