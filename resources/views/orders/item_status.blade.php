@@ -74,8 +74,8 @@
                                                             @endif
                                                         </td>
                                                         <td class="flex py-1 justify-center">
-                                                            @if ($item->supplier_id)
-                                                                <title="{{ $item->supplier->name }}" />
+                                                            @if ($list->supplier_id)
+                                                                <title="{{ $list->supplier->name }}" />
                                                             @endif
                                                         </td>
                                                     </tr>
