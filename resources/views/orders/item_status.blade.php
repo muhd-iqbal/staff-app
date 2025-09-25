@@ -37,13 +37,12 @@
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Subcon') }}
+                                                    {{ __('Designer') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Designer') }}
+                                                    {{ __('Subcon') }}
                                                 </th>
-                                                
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -68,6 +67,13 @@
                                                         {{ $list->measurement ? '(' . $list->measurement . ')' : '' }}</td>
                                                         <td class="text-center">{{ $list->quantity }}</td>
                                                         <td class="flex py-1 justify-center">
+                                                            @if ($list->user)
+                                                                <img class="h-5 w-5 rounded-full"
+                                                                    src="{{ asset('storage/' . $list->user->photo) }}"
+                                                                    title="{{ $list->user->name }}" />
+                                                            @endif
+                                                        </td>
+                                                        <td class="flex py-1 justify-center">
                                                             
                                                             @if ($list->supplier_id)
                                                             <div class="text-sm font-medium text-gray-900">
@@ -75,14 +81,6 @@
                                                                 </div>
                                                             @endif
                                                         </td>
-                                                        <td class="flex py-1 justify-center">
-                                                            @if ($list->user)
-                                                                <img class="h-5 w-5 rounded-full"
-                                                                    src="{{ asset('storage/' . $list->user->photo) }}"
-                                                                    title="{{ $list->user->name }}" />
-                                                            @endif
-                                                        </td>
-                                                        
                                                     </tr>
                                                 @endforeach
                                             @else
