@@ -231,4 +231,13 @@ class OrderItemController extends Controller
 
         return back()->with('success', 'Item berjaya padam.');
     }
+
+    public function updateNote(Request $request, $id)
+    {
+        $item = Item::findOrFail($id);
+        $item->note = $request->input('note');
+        $item->save();
+
+        return back()->with('success', 'Note updated successfully!');
+    }
 }
