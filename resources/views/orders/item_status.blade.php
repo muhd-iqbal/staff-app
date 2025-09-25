@@ -29,7 +29,7 @@
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    {{ __('Saiz') }}
+                                                    {{ __('Status') }}
                                                 </th>
                                                 <th scope="col"
                                                     class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -59,7 +59,7 @@
                                                                 {{ $list->product }}
                                                             </div>
                                                         </td>
-                                                        <td class="text-center">{{ $list->measurement }}</td>
+                                                        <td class="text-center">{{ $list->status }}</td>
                                                         <td class="text-center">{{ $list->quantity }}</td>
                                                         <td class="flex py-1 justify-center">
                                                             @if ($list->user)
