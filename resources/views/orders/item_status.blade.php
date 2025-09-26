@@ -97,13 +97,13 @@
                     @endif
                 </td>
                 <!-- Note column added here -->
-               <td class="text-center">
-                                                            <form method="POST" action="{{ route('orders.item.note', $list->id) }}" onclick="event.stopPropagation();">
-                                                                @csrf
-                                                                <textarea name="note" rows="2" class="border-2 border-blue-400 rounded w-full text-xs font-semibold bg-yellow-100 p-2 text-blue-900" style="resize:vertical;" onclick="event.stopPropagation();">{{ $list->note ?? '' }}</textarea>
-                                                                <button type="submit" class="bg-blue-600 hover:bg-blue-800 text-white px-2 py-1 rounded text-xs mt-1 font-bold shadow" onclick="event.stopPropagation();">Save</button>
-                                                            </form>
-                                                        </td>
+                <td class="text-center">
+    <form method="POST" action="{{ route('orders.item.note', $list->id) }}" onclick="event.stopPropagation();">
+        @csrf
+        <textarea name="note" rows="2" class="border rounded w-full text-xs" onclick="event.stopPropagation();">{{ $list->note ?? '' }}</textarea>
+        <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded text-xs mt-1" onclick="event.stopPropagation();">Save</button>
+    </form>
+</td>
             </tr>
         @endforeach
     @else
