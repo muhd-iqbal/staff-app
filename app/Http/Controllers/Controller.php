@@ -68,6 +68,5 @@ class Controller extends BaseController
         'cm' => "cm",
         'm' => "m",
         'jb' => 'job',
-        'year' => 'tahun',
     ];
 }
