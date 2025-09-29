@@ -65,10 +65,11 @@
                         <a href="/{{ $current ? 'staff-old-' : '' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
                         @foreach ($order as $loop)
-                            <a href=""
-                                class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
-                            {{month_name($loop->iteration)}}</a>
-                        @endforeach
+    <a href="/staff-reports/{{ request('year') }}?month={{ $loop->iteration }}"
+       class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
+       {{ month_name($loop->iteration) }}
+    </a>
+@endforeach
                     </div>
 
                     <div class="text-center mt-5">
@@ -128,3 +129,4 @@
         });
     </script>
 </x-app-layout>
+
