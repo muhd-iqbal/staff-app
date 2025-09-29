@@ -14,35 +14,38 @@ class StaffReportController extends Controller
         return redirect('/staff-reports/' . date('Y'));
     }
 
-    public function yearly($y)
-    {
-        $dbData = Order::select(
-            // DB::raw('year(date) as year'),
-            DB::raw('month(date) as month'),
-        )
-            ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-            ->where(DB::raw('year(date)'), '=', $y)
-            ->groupBy('month')
-            ->get();
+    public function yearly($y, Request $request)
+{
+    $month = $request->query('month'); // get month from query
 
-        // $data = [];
+    $query = Order::select(
+        DB::raw('month(date) as month'),
+        DB::raw('count(*) as totals')
+    )
+    ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
+    ->where(DB::raw('year(date)'), '=', $y);
 
-        // for ($year = 2022; $year <= now()->format('Y'); $year++) {
-        for ($month = 1; $month <= 12; $month++) {
-            $orders[month_name($month)] = (optional($dbData->first(fn ($row) => $row->month == $month))->totals);
-        }
-        // }
-
-        return view('staff_report.index', [
-            'order' => $orders,
-            'users' => User::with('order_item')
-                ->where('position_id', '<>', 1)
-                ->where('active', true)
-                ->has('order_item', '>', 0)
-                ->get(),
-            'current' => 1,
-        ]);
+    if ($month) {
+        $query->where(DB::raw('month(date)'), '=', $month);
     }
+
+    $dbData = $query->groupBy('month')->get();
+
+    $orders = [];
+    for ($m = 1; $m <= 12; $m++) {
+        $orders[month_name($m)] = (optional($dbData->first(fn ($row) => $row->month == $m))->totals) ?? 0;
+    }
+
+    return view('staff_report.index', [
+        'order' => $orders,
+        'users' => User::with('order_item')
+            ->where('position_id', '<>', 1)
+            ->where('active', true)
+            ->has('order_item', '>', 0)
+            ->get(),
+        'current' => 1,
+    ]);
+}
 
     public function old_index()
     {
@@ -80,3 +83,4 @@ class StaffReportController extends Controller
         ]);
     }
 }
+
