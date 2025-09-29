@@ -64,10 +64,10 @@
                     <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? 'staff-old-' : '' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
-                        @foreach ($order as $loop)
-    <a href="/staff-reports/{{ request('year') }}?month={{ $loop->iteration }}"
-       class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
-       {{ month_name($loop->iteration) }}
+                       @foreach (range(1,12) as $month)
+    <a href="/staff-reports/{{ request('year') }}?month={{ $month }}"
+        class="capitalize bg-blue-500 p-2 px-4 rounded-md shadow-md text-white">
+        {{ month_name($month) }}
     </a>
 @endforeach
                     </div>
@@ -129,4 +129,5 @@
         });
     </script>
 </x-app-layout>
+
 
