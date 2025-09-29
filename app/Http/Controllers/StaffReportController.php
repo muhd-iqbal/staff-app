@@ -14,17 +14,22 @@ class StaffReportController extends Controller
         return redirect('/staff-reports/' . date('Y'));
     }
 
-    public function yearly($y)
-    {
-        $dbData = Order::select(
-            // DB::raw('year(date) as year'),
-            DB::raw('month(date) as month'),
-        )
-            ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-            ->where(DB::raw('year(date)'), '=', $y)
-            ->groupBy('month')
-            ->get();
+    public function yearly($y, Request $request)
+{
+    $month = $request->query('month'); // get month from query
 
+    $query = Order::select(DB::raw('month(date) as month'))
+        ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
+        ->where(DB::raw('year(date)'), '=', $y);
+
+    if ($month) {
+        $query->where(DB::raw('month(date)'), '=', $month);
+    }
+
+    $dbData = $query->groupBy('month')->get();
+
+    // ...rest of your code
+}
         // $data = [];
 
         // for ($year = 2022; $year <= now()->format('Y'); $year++) {
@@ -80,3 +85,4 @@ class StaffReportController extends Controller
         ]);
     }
 }
+
