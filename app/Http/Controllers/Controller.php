@@ -26,6 +26,8 @@ class Controller extends BaseController
         'transfer' => 'Online Transfer',
         'cek' => 'Cek',
         'toyyibpay' => 'FPX - Toyyibpay',
+        'lainlain' => 'Lain-Lain',
+        'cajeperolehan' => 'CajEPEROLEHAN',
     ];
 
     //dropdown states
