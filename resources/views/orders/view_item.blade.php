@@ -228,7 +228,7 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 <x-form.input name="picture" label="{{ __('Muat Naik Foto:') }}" type="file"
-                                    id="picture" />
+                                    id="picture" multiple />
                                 <x-button class="mt-2">{{ __('Muat naik') }}</x-button>
                             </form>
                         </div>
