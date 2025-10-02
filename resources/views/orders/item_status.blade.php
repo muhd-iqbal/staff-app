@@ -35,10 +35,7 @@
             class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
             {{ __('Kuantiti') }} 
         </th>
-        <th scope="col"
-            class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {{ __('Designer') }}
-        </th>
+        
         <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
             {{ __('Subcon') }}
             <form method="GET" action="">
@@ -55,6 +52,10 @@
                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                 @endforeach
             </form>
+        </th>
+        <th scope="col"
+            class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('Designer') }}
         </th>
         <!-- Note column added here -->
         <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -82,6 +83,13 @@
                 <td class="text-center">{{ $list->size }}
                 {{ $list->measurement ? '(' . $list->measurement . ')' : '' }}</td>
                 <td class="text-center">{{ $list->quantity }}</td>
+                 <td class="text-center">
+                    @if ($list->supplier_id)
+                    <div class="text-sm font-medium text-gray-900">
+                        {{ $list->supplier->name }}
+                        </div>
+                    @endif
+                </td>
                 <td class="flex py-1 justify-center">
                     @if ($list->user)
                         <img class="h-5 w-5 rounded-full"
@@ -89,13 +97,7 @@
                             title="{{ $list->user->name }}" />
                     @endif
                 </td>
-                <td class="text-center">
-                    @if ($list->supplier_id)
-                    <div class="text-sm font-medium text-gray-900">
-                        {{ $list->supplier->name }}
-                        </div>
-                    @endif
-                </td>
+               
                 <!-- Note column added here -->
                 <td class="text-center">
     <form method="POST" action="{{ route('orders.item.note', $list->id) }}" onclick="event.stopPropagation();">
