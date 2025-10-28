@@ -18,7 +18,7 @@ class DashboardController extends Controller
         'Aktiviti Syarikat' => 'http://192.168.1.110/event/',
     ];
     protected $links_staff = [
-        'Peti Tunai' => '/cashflow',                
+                        
               
         'POS Lama' => '/orders/old',
     ];
@@ -42,6 +42,7 @@ class DashboardController extends Controller
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
         'Slip Gaji Staf' => '/admin/payslips',
+        'Peti Tunai' => '/cashflow',
         
     ];
     protected $links_owner = [
