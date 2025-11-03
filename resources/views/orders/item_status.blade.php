@@ -77,7 +77,7 @@
                 </td>
                 <!-- Order ID cell -->
                 <td class="text-center">
-                    {{ $list->order->id ?? '-' }}
+                    {{ order_num($list->order->id) ?? '-' }}
                 </td>
                 <td class="whitespace-nowrap">
                     {{ $list->order->customer->name }}
