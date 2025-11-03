@@ -19,6 +19,9 @@
         <th scope="col"
             class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
             {{ __('No') }}</th>
+         <th scope="col"
+            class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ __('No Order') }}</th>
         <th scope="col"
             class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
             {{ __('Pelanggan') }}
@@ -71,6 +74,10 @@
                 onclick="window.location='/orders/item/{{ $list->id }}'">
                 <td class="text-center">
                     {{ ($items->currentpage() - 1) * $items->perpage() + $loop->index + 1 }}
+                </td>
+                <!-- Order ID cell -->
+                <td class="text-center">
+                    {{ $list->order->id ?? '-' }}
                 </td>
                 <td class="whitespace-nowrap">
                     {{ $list->order->customer->name }}
