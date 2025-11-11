@@ -243,7 +243,7 @@
                     readyInput.value = readyPercent;
                 }
 
-                const paymentAmount = grandTotal * (paymentPercent / 100);
+                const paymentAmount = (paymentPercent / 100);
                 const depositAmount = paymentAmount * (depositPercent / 100);
                 const readyAmount = paymentAmount * (readyPercent / 100);
 
