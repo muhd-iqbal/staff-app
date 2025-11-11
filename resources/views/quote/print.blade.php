@@ -210,7 +210,7 @@
     <script>
         (function () {
             // Use server-side grand total safely encoded into JS
-            const grandTotal = parseFloat({!! json_encode((float) $quote->grand_total) !!}) || 0;
+            const grandTotal = parseFloat({!! json_encode((float) $quote->grand_total / 100) !!}) || 0;
 
             const paymentInput = document.getElementById('payment_percent');
             const depositInput = document.getElementById('deposit_percent');
