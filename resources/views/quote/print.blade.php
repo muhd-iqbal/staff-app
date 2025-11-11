@@ -144,7 +144,7 @@
             <!-- Percentage calculation section (ADDED) -->
             <div class="mt-5 p-4 bg-gray-50 rounded-md border">
                 <h3 class="font-bold mb-2">Kiraan Peratus Pembayaran</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div>
                         <label class="block text-sm font-medium">Peratus Bayaran (%)</label>
                         <input id="payment_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
@@ -159,6 +159,11 @@
                         <label class="block text-sm font-medium">Peratus Barang Sedia Untuk Dihantar (%)</label>
                         <input id="ready_percent" type="number" min="0" max="100" value="40" class="mt-1 block w-full rounded-md border px-2 py-1" />
                         <div class="text-xs text-gray-500">Biasanya 100 - deposit</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium">Jangkaan Siap (hari)</label>
+                        <input id="lead_time_days" type="number" min="0" value="60" class="mt-1 block w-full rounded-md border px-2 py-1" />
+                        <div class="text-xs text-gray-500">Isi berapa hari diperlukan</div>
                     </div>
                 </div>
 
@@ -209,12 +214,13 @@
 
     <script>
         (function () {
-            // Use server-side grand total safely encoded into JS
+            // grand_total is stored in sen (cents) in the DB, divide by 100 to get ringgit
             const grandTotal = parseFloat({!! json_encode((float) $quote->grand_total / 100) !!}) || 0;
 
             const paymentInput = document.getElementById('payment_percent');
             const depositInput = document.getElementById('deposit_percent');
             const readyInput = document.getElementById('ready_percent');
+            const leadTimeInput = document.getElementById('lead_time_days');
             const preview = document.getElementById('note_preview');
             const calcBtn = document.getElementById('calc_btn');
             const applyBtn = document.getElementById('apply_to_note');
@@ -226,18 +232,20 @@
                 return 'RM ' + new Intl.NumberFormat('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
             }
 
+            function sanitizeInt(v, fallback = 0, min = 0, max = 999999) {
+                let n = parseInt(v, 10);
+                if (isNaN(n)) return fallback;
+                n = Math.max(min, Math.min(max, n));
+                return n;
+            }
+
             function generateNote() {
                 const paymentPercent = Math.max(0, Math.min(100, parseFloat(paymentInput.value) || 0));
                 const depositPercent = Math.max(0, Math.min(100, parseFloat(depositInput.value) || 0));
                 let readyPercent = Math.max(0, Math.min(100, parseFloat(readyInput.value) || 0));
+                const leadDays = sanitizeInt(leadTimeInput.value, 60, 0, 10000);
 
                 // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
-                // The semantics: deposit and ready split the "payment percent" amount.
-                // We'll compute amounts as:
-                // paymentAmount = grandTotal * paymentPercent/100
-                // depositAmount = paymentAmount * depositPercent/100
-                // readyAmount = paymentAmount * readyPercent/100
-                // If readyPercent not provided (0) and depositPercent provided, set readyPercent = 100 - depositPercent
                 if (readyPercent === 0 && depositPercent > 0) {
                     readyPercent = Math.max(0, 100 - depositPercent);
                     readyInput.value = readyPercent;
@@ -257,7 +265,6 @@
                     lines.push('0% BAYARAN = ' + formatRM(0));
                 }
 
-                // Show deposit/ready lines if their percentages > 0
                 if (depositPercent > 0) {
                     lines.push(depositPercent + '% DEPOSIT = ' + formatRM(depositAmount));
                 }
@@ -267,12 +274,13 @@
 
                 lines.push('');
                 lines.push('JANGKAAN SIAP :');
-                lines.push('60 HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
+                lines.push(leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
 
                 return lines.join('\n');
             }
 
             function updatePreview() {
+                // Display as plain text with line breaks
                 preview.textContent = generateNote();
             }
 
@@ -282,26 +290,25 @@
 
             // Apply generated preview into the foot_note textarea (HTML allowed in existing implementation)
             applyBtn.addEventListener('click', function () {
-                // We want to preserve line breaks but allow HTML if needed.
-                // Convert newlines to <br> for storage in foot_note (the view prints {!! $quote->foot_note !!})
                 const text = generateNote();
                 const html = text.replace(/\n/g, '<br>');
                 if (footNote) {
                     footNote.value = html;
                 }
-                // Update preview to reflect the HTML that will be saved (optional)
-                preview.innerHTML = html.replace(/\n/g, '<br>');
+                // Update preview to reflect the HTML that will be saved
+                preview.innerHTML = html;
             });
 
             resetBtn.addEventListener('click', function () {
                 paymentInput.value = 100;
                 depositInput.value = 60;
                 readyInput.value = 40;
+                leadTimeInput.value = 60;
                 updatePreview();
             });
 
             // update automatically on change
-            [paymentInput, depositInput, readyInput].forEach(function (el) {
+            [paymentInput, depositInput, readyInput, leadTimeInput].forEach(function (el) {
                 el.addEventListener('input', updatePreview);
             });
 
