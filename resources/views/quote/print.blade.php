@@ -291,7 +291,7 @@
 
                 // Build note text similar to the example
                 const lines = [];
-                lines.push('Nota:');
+                //lines.push('Nota:');
                 lines.push('CARA PEMBAYARAN :');
                 if (paymentPercent > 0) {
                     lines.push(paymentPercent + '% BAYARAN = ' + formatRM(paymentAmount));
