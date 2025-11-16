@@ -144,18 +144,28 @@
             <!-- Percentage calculation section (ADDED) -->
             <div class="mt-5 p-4 bg-gray-50 rounded-md border">
                 <h3 class="font-bold mb-2">Kiraan Peratus Pembayaran</h3>
-                <!-- Put Peratus Bayaran and E-PEROLEHAN stacked in the same column so E-PEROLEHAN is directly below Peratus Bayaran -->
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                    <div>
-                        <label class="block text-sm font-medium">Peratus Bayaran (%)</label>
-                        <input id="payment_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
-                        <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran</div>
 
-                        <!-- E-PEROLEHAN placed directly below Peratus Bayaran -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                    <!-- Cara Pembayaran (radio) + Percentage below it -->
+                    <div>
+                        <label class="block text-sm font-medium">Cara Pembayaran</label>
+                        <div class="mt-1 space-y-2">
+                            <label class="inline-flex items-center">
+                                <input name="cara_payment" type="radio" value="TUNAI" class="form-radio h-4 w-4 text-blue-600" checked>
+                                <span class="ml-2 text-sm">TUNAI</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input name="cara_payment" type="radio" value="E-PEROLEHAN" class="form-radio h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-sm">E-PEROLEHAN</span>
+                            </label>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">Pilih salah satu cara pembayaran</div>
+
+                        <!-- Percentage field (applies to the selected Cara Pembayaran) -->
                         <div class="mt-3">
-                            <label class="block text-sm font-medium">E-PEROLEHAN (%)</label>
-                            <input id="eperolehan_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
-                            <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran (paparan sahaja)</div>
+                            <label class="block text-sm font-medium">Peratus (%)</label>
+                            <input id="payment_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
+                            <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran</div>
                         </div>
                     </div>
 
@@ -248,12 +258,12 @@
             const leadTimeInput = document.getElementById('lead_time_days');
             const serviceDelivery = document.getElementById('service_delivery');
             const serviceInstallation = document.getElementById('service_installation');
-            const eperolehanInput = document.getElementById('eperolehan_percent');
             const preview = document.getElementById('note_preview');
             const calcBtn = document.getElementById('calc_btn');
             const applyBtn = document.getElementById('apply_to_note');
             const resetBtn = document.getElementById('reset_btn');
             const footNote = document.getElementById('foot_note');
+            const caraRadios = document.getElementsByName('cara_payment');
 
             function formatRM(value) {
                 // Format number with thousand separators and 2 decimals, e.g. 27,360.00
@@ -265,6 +275,13 @@
                 if (isNaN(n)) return fallback;
                 n = Math.max(min, Math.min(max, n));
                 return n;
+            }
+
+            function getSelectedCara() {
+                for (let i = 0; i < caraRadios.length; i++) {
+                    if (caraRadios[i].checked) return caraRadios[i].value;
+                }
+                return 'TUNAI';
             }
 
             function generateServiceType() {
@@ -283,15 +300,12 @@
             }
 
             function generateNote() {
-                const paymentPercent = Math.max(0, Math.min(100, parseFloat(paymentInput.value) || 0));
+                const cara = getSelectedCara();
+                const percent = Math.max(0, Math.min(100, parseFloat(paymentInput.value) || 0));
                 const depositPercent = Math.max(0, Math.min(100, parseFloat(depositInput.value) || 0));
                 let readyPercent = Math.max(0, Math.min(100, parseFloat(readyInput.value) || 0));
                 const leadDays = sanitizeInt(leadTimeInput.value, 60, 0, 10000);
                 const serviceType = generateServiceType();
-
-                // E-PEROLEHAN (independent)
-                const eperolehanPercent = Math.max(0, Math.min(100, parseFloat(eperolehanInput.value) || 0));
-                const eperolehanAmount = grandTotal * (eperolehanPercent / 100);
 
                 // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
                 if (readyPercent === 0 && depositPercent > 0) {
@@ -299,20 +313,17 @@
                     readyInput.value = readyPercent;
                 }
 
-                const paymentAmount = grandTotal * (paymentPercent / 100);
+                const paymentAmount = grandTotal * (percent / 100);
                 const depositAmount = paymentAmount * (depositPercent / 100);
                 const readyAmount = paymentAmount * (readyPercent / 100);
 
-                // Build note text similar to the example
                 const lines = [];
-                //lines.push('Nota:');
-                lines.push('CARA PEMBAYARAN :');
-                if (paymentPercent > 0) {
-                    lines.push(paymentPercent + '% BAYARAN = ' + formatRM(paymentAmount));
-                } else {
-                    lines.push('0% BAYARAN = ' + formatRM(0));
-                }
-
+                lines.push('CARA PEMBAYARAN : ' + cara);
+                lines.push('');
+                // Show the percent/amount for the selected cara
+                lines.push(percent + '% = ' + formatRM(paymentAmount));
+                lines.push('');
+                lines.push('CARA PEMBAYARAN TERPERINCI :');
                 if (depositPercent > 0) {
                     lines.push(depositPercent + '% DEPOSIT = ' + formatRM(depositAmount));
                 }
@@ -321,22 +332,13 @@
                 }
 
                 lines.push('');
-                // Include selected service type
-                // lines.push('JENIS PERKHIDMATAN : ' + serviceType);
-                lines.push('');
                 lines.push('JANGKAAN SIAP :');
                 lines.push(serviceType + ' ' + leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
-
-                // E-PEROLEHAN preview (independent, displayed in preview but not used elsewhere)
-                lines.push('');
-                lines.push('E-PEROLEHAN :');
-                lines.push(eperolehanPercent + '% = ' + formatRM(eperolehanAmount));
 
                 return lines.join('\n');
             }
 
             function updatePreview() {
-                // Display as plain text with line breaks
                 preview.textContent = generateNote();
             }
 
@@ -351,27 +353,36 @@
                 if (footNote) {
                     footNote.value = html;
                 }
-                // Update preview to reflect the HTML that will be saved
                 preview.innerHTML = html;
             });
 
             resetBtn.addEventListener('click', function () {
+                // reset inputs to defaults
+                // default cara = TUNAI
+                for (let i = 0; i < caraRadios.length; i++) {
+                    caraRadios[i].checked = caraRadios[i].value === 'TUNAI';
+                }
                 paymentInput.value = 100;
                 depositInput.value = 0;
                 readyInput.value = 0;
                 leadTimeInput.value = 60;
                 if (serviceDelivery) serviceDelivery.checked = true;
                 if (serviceInstallation) serviceInstallation.checked = false;
-                if (eperolehanInput) eperolehanInput.value = 100;
                 updatePreview();
             });
 
             // update automatically on change
-            [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation, eperolehanInput].forEach(function (el) {
+            const inputsToWatch = [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation];
+            inputsToWatch.forEach(function (el) {
                 if (!el) return;
                 el.addEventListener('input', updatePreview);
                 el.addEventListener('change', updatePreview);
             });
+
+            // watch cara radios too
+            for (let i = 0; i < caraRadios.length; i++) {
+                caraRadios[i].addEventListener('change', updatePreview);
+            }
 
             // initial preview
             updatePreview();
