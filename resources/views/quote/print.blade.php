@@ -144,7 +144,7 @@
             <!-- Percentage calculation section (ADDED) -->
             <div class="mt-5 p-4 bg-gray-50 rounded-md border">
                 <h3 class="font-bold mb-2">Kiraan Peratus Pembayaran</h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                     <div>
                         <label class="block text-sm font-medium">Peratus Bayaran (%)</label>
                         <input id="payment_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
@@ -152,18 +152,29 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium">Peratus Deposit (%)</label>
-                        <input id="deposit_percent" type="number" min="0" max="100" value="60" class="mt-1 block w-full rounded-md border px-2 py-1" />
+                        <input id="deposit_percent" type="number" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border px-2 py-1" />
                         <div class="text-xs text-gray-500">Contoh: 50 = separuh daripada jumlah bayaran</div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium">Peratus Barang Sedia Untuk Dihantar (%)</label>
-                        <input id="ready_percent" type="number" min="0" max="100" value="40" class="mt-1 block w-full rounded-md border px-2 py-1" />
+                        <input id="ready_percent" type="number" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border px-2 py-1" />
                         <div class="text-xs text-gray-500">Biasanya 100 - deposit</div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium">Jangkaan Siap (hari)</label>
                         <input id="lead_time_days" type="number" min="0" value="60" class="mt-1 block w-full rounded-md border px-2 py-1" />
                         <div class="text-xs text-gray-500">Isi berapa hari diperlukan</div>
+                    </div>
+
+                    <!-- New selection field for Penghantaran / Pemasangan -->
+                    <div>
+                        <label class="block text-sm font-medium">Jenis Perkhidmatan</label>
+                        <select id="service_type" class="mt-1 block w-full rounded-md border px-2 py-1">
+                            <option value="Penghantaran" selected>Penghantaran</option>
+                            <option value="Pemasangan">Pemasangan</option>
+                            <option value="Tiada">Tiada</option>
+                        </select>
+                        <div class="text-xs text-gray-500">Pilih sama ada penghantaran atau pemasangan diperlukan</div>
                     </div>
                 </div>
 
@@ -221,6 +232,7 @@
             const depositInput = document.getElementById('deposit_percent');
             const readyInput = document.getElementById('ready_percent');
             const leadTimeInput = document.getElementById('lead_time_days');
+            const serviceSelect = document.getElementById('service_type');
             const preview = document.getElementById('note_preview');
             const calcBtn = document.getElementById('calc_btn');
             const applyBtn = document.getElementById('apply_to_note');
@@ -244,6 +256,7 @@
                 const depositPercent = Math.max(0, Math.min(100, parseFloat(depositInput.value) || 0));
                 let readyPercent = Math.max(0, Math.min(100, parseFloat(readyInput.value) || 0));
                 const leadDays = sanitizeInt(leadTimeInput.value, 60, 0, 10000);
+                const serviceType = serviceSelect ? serviceSelect.value : 'Tiada';
 
                 // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
                 if (readyPercent === 0 && depositPercent > 0) {
@@ -272,6 +285,9 @@
                     lines.push(readyPercent + '% BARANG SEDIA UNTUK DIHANTAR = ' + formatRM(readyAmount));
                 }
 
+                lines.push('');
+                // Include selected service type
+                lines.push('JENIS PERKHIDMATAN : ' + serviceType);
                 lines.push('');
                 lines.push('JANGKAAN SIAP :');
                 lines.push(leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
@@ -304,12 +320,15 @@
                 depositInput.value = 60;
                 readyInput.value = 40;
                 leadTimeInput.value = 60;
+                if (serviceSelect) serviceSelect.value = 'Penghantaran';
                 updatePreview();
             });
 
             // update automatically on change
-            [paymentInput, depositInput, readyInput, leadTimeInput].forEach(function (el) {
+            [paymentInput, depositInput, readyInput, leadTimeInput, serviceSelect].forEach(function (el) {
+                if (!el) return;
                 el.addEventListener('input', updatePreview);
+                el.addEventListener('change', updatePreview);
             });
 
             // initial preview
