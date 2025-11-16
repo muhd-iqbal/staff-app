@@ -166,15 +166,20 @@
                         <div class="text-xs text-gray-500">Isi berapa hari diperlukan</div>
                     </div>
 
-                    <!-- New selection field for Penghantaran / Pemasangan -->
+                    <!-- New checkboxes for Penghantaran / Pemasangan -->
                     <div>
                         <label class="block text-sm font-medium">Jenis Perkhidmatan</label>
-                        <select id="service_type" class="mt-1 block w-full rounded-md border px-2 py-1">
-                            <option value="Penghantaran" selected>Penghantaran</option>
-                            <option value="Pemasangan">Pemasangan</option>
-                            <option value="Tiada">Tiada</option>
-                        </select>
-                        <div class="text-xs text-gray-500">Pilih sama ada penghantaran atau pemasangan diperlukan</div>
+                        <div class="mt-1 space-y-1">
+                            <label class="inline-flex items-center">
+                                <input id="service_delivery" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
+                                <span class="ml-2 text-sm">Penghantaran</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input id="service_installation" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-sm">Pemasangan</span>
+                            </label>
+                        </div>
+                        <div class="text-xs text-gray-500">Tanda pilihan: boleh pilih kedua-duanya</div>
                     </div>
                 </div>
 
@@ -232,7 +237,8 @@
             const depositInput = document.getElementById('deposit_percent');
             const readyInput = document.getElementById('ready_percent');
             const leadTimeInput = document.getElementById('lead_time_days');
-            const serviceSelect = document.getElementById('service_type');
+            const serviceDelivery = document.getElementById('service_delivery');
+            const serviceInstallation = document.getElementById('service_installation');
             const preview = document.getElementById('note_preview');
             const calcBtn = document.getElementById('calc_btn');
             const applyBtn = document.getElementById('apply_to_note');
@@ -251,12 +257,27 @@
                 return n;
             }
 
+            function generateServiceType() {
+                const d = !!serviceDelivery && serviceDelivery.checked;
+                const p = !!serviceInstallation && serviceInstallation.checked;
+
+                if (d && p) {
+                    return 'PENGHANTARAN DAN PEMASANGAN';
+                } else if (d) {
+                    return 'PENGHANTARAN';
+                } else if (p) {
+                    return 'PEMASANGAN';
+                } else {
+                    return 'TIADA';
+                }
+            }
+
             function generateNote() {
                 const paymentPercent = Math.max(0, Math.min(100, parseFloat(paymentInput.value) || 0));
                 const depositPercent = Math.max(0, Math.min(100, parseFloat(depositInput.value) || 0));
                 let readyPercent = Math.max(0, Math.min(100, parseFloat(readyInput.value) || 0));
                 const leadDays = sanitizeInt(leadTimeInput.value, 60, 0, 10000);
-                const serviceType = serviceSelect ? serviceSelect.value : 'Tiada';
+                const serviceType = generateServiceType();
 
                 // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
                 if (readyPercent === 0 && depositPercent > 0) {
@@ -287,10 +308,10 @@
 
                 lines.push('');
                 // Include selected service type
-                lines.push('JENIS PERKHIDMATAN : ' + serviceType);
+                // lines.push('JENIS PERKHIDMATAN : ' + serviceType);
                 lines.push('');
                 lines.push('JANGKAAN SIAP :');
-                lines.push(leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
+                lines.push(serviceType + leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
 
                 return lines.join('\n');
             }
@@ -317,15 +338,16 @@
 
             resetBtn.addEventListener('click', function () {
                 paymentInput.value = 100;
-                depositInput.value = 60;
-                readyInput.value = 40;
+                depositInput.value = 0;
+                readyInput.value = 0;
                 leadTimeInput.value = 60;
-                if (serviceSelect) serviceSelect.value = 'Penghantaran';
+                if (serviceDelivery) serviceDelivery.checked = true;
+                if (serviceInstallation) serviceInstallation.checked = false;
                 updatePreview();
             });
 
             // update automatically on change
-            [paymentInput, depositInput, readyInput, leadTimeInput, serviceSelect].forEach(function (el) {
+            [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation].forEach(function (el) {
                 if (!el) return;
                 el.addEventListener('input', updatePreview);
                 el.addEventListener('change', updatePreview);
