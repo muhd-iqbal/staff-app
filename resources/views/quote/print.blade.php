@@ -144,12 +144,21 @@
             <!-- Percentage calculation section (ADDED) -->
             <div class="mt-5 p-4 bg-gray-50 rounded-md border">
                 <h3 class="font-bold mb-2">Kiraan Peratus Pembayaran</h3>
-                <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                <!-- Put Peratus Bayaran and E-PEROLEHAN stacked in the same column so E-PEROLEHAN is directly below Peratus Bayaran -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                     <div>
                         <label class="block text-sm font-medium">Peratus Bayaran (%)</label>
                         <input id="payment_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
                         <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran</div>
+
+                        <!-- E-PEROLEHAN placed directly below Peratus Bayaran -->
+                        <div class="mt-3">
+                            <label class="block text-sm font-medium">E-PEROLEHAN (%)</label>
+                            <input id="eperolehan_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
+                            <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran (paparan sahaja)</div>
+                        </div>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium">Peratus Deposit (%)</label>
                         <input id="deposit_percent" type="number" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border px-2 py-1" />
@@ -180,13 +189,6 @@
                             </label>
                         </div>
                         <div class="text-xs text-gray-500">Tanda pilihan: boleh pilih kedua-duanya</div>
-                    </div>
-
-                    <!-- E-PEROLEHAN (new, independent percent field) -->
-                    <div>
-                        <label class="block text-sm font-medium">E-PEROLEHAN (%)</label>
-                        <input id="eperolehan_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
-                        <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran (paparan sahaja)</div>
                     </div>
                 </div>
 
