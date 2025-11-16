@@ -144,7 +144,7 @@
             <!-- Percentage calculation section (ADDED) -->
             <div class="mt-5 p-4 bg-gray-50 rounded-md border">
                 <h3 class="font-bold mb-2">Kiraan Peratus Pembayaran</h3>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
                     <div>
                         <label class="block text-sm font-medium">Peratus Bayaran (%)</label>
                         <input id="payment_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
@@ -180,6 +180,13 @@
                             </label>
                         </div>
                         <div class="text-xs text-gray-500">Tanda pilihan: boleh pilih kedua-duanya</div>
+                    </div>
+
+                    <!-- E-PEROLEHAN (new, independent percent field) -->
+                    <div>
+                        <label class="block text-sm font-medium">E-PEROLEHAN (%)</label>
+                        <input id="eperolehan_percent" type="number" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border px-2 py-1" />
+                        <div class="text-xs text-gray-500">Contoh: 100 = penuh bayaran (paparan sahaja)</div>
                     </div>
                 </div>
 
@@ -239,6 +246,7 @@
             const leadTimeInput = document.getElementById('lead_time_days');
             const serviceDelivery = document.getElementById('service_delivery');
             const serviceInstallation = document.getElementById('service_installation');
+            const eperolehanInput = document.getElementById('eperolehan_percent');
             const preview = document.getElementById('note_preview');
             const calcBtn = document.getElementById('calc_btn');
             const applyBtn = document.getElementById('apply_to_note');
@@ -279,6 +287,10 @@
                 const leadDays = sanitizeInt(leadTimeInput.value, 60, 0, 10000);
                 const serviceType = generateServiceType();
 
+                // E-PEROLEHAN (independent)
+                const eperolehanPercent = Math.max(0, Math.min(100, parseFloat(eperolehanInput.value) || 0));
+                const eperolehanAmount = grandTotal * (eperolehanPercent / 100);
+
                 // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
                 if (readyPercent === 0 && depositPercent > 0) {
                     readyPercent = Math.max(0, 100 - depositPercent);
@@ -313,6 +325,11 @@
                 lines.push('JANGKAAN SIAP :');
                 lines.push(serviceType + ' ' + leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
 
+                // E-PEROLEHAN preview (independent, displayed in preview but not used elsewhere)
+                lines.push('');
+                lines.push('E-PEROLEHAN :');
+                lines.push(eperolehanPercent + '% = ' + formatRM(eperolehanAmount));
+
                 return lines.join('\n');
             }
 
@@ -343,11 +360,12 @@
                 leadTimeInput.value = 60;
                 if (serviceDelivery) serviceDelivery.checked = true;
                 if (serviceInstallation) serviceInstallation.checked = false;
+                if (eperolehanInput) eperolehanInput.value = 100;
                 updatePreview();
             });
 
             // update automatically on change
-            [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation].forEach(function (el) {
+            [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation, eperolehanInput].forEach(function (el) {
                 if (!el) return;
                 el.addEventListener('input', updatePreview);
                 el.addEventListener('change', updatePreview);
