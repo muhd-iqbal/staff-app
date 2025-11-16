@@ -311,7 +311,7 @@
                 // lines.push('JENIS PERKHIDMATAN : ' + serviceType);
                 lines.push('');
                 lines.push('JANGKAAN SIAP :');
-                lines.push(serviceType ' + leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
+                lines.push(serviceType + leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
 
                 return lines.join('\n');
             }
