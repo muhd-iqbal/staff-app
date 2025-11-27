@@ -58,7 +58,7 @@
                                         </h1>
                                         <button onclick="copied()" id="btn"
                                             class="btn bg-gray-700 text-white p-2 py-1 rounded-md text-sm hover:bg-gray-300 active:bg-gray-700"
-                                            data-clipboard-text="{{ order_num($item->order->id) }} - {{ $item->order->customer->name }} {{ $item->order->customer->organisation ? ' - ' . $item->order->[...]
+                                            data-clipboard-text="{{ order_num($item->order->id) }} - {{ $item->order->customer->name }} {{ $item->order->customer->organisation ? ' - ' . $item->order->customer->organisation : '' }} - {{ $item->product }} {{ $item->size }} ({{ $item->measurement }})">
                                             Copy
                                         </button>
                                     </div>
@@ -72,7 +72,7 @@
                                     </div>
                                     <div>
                                         <h2 class="text-gray-500 font-bold text-lg">{{ __('Tarikh Ambil Alih: ') }}
-                                            {{ $item->is_design_time ? date('d/m/Y h:i A', strtotime($item->is_design_time)) : 'Tiada' }} </h2>
+                                            {{ date('d/m/Y h:i A', strtotime($item->is_design_time ? $item->is_design_time : 'Tiada')) }} </h2>
                                     </div>
                                     <div class="text-red-500 font-bold text-xl">
                                         {{ $item->is_urgent ? 'URGENT' : '' }}</div>
@@ -95,7 +95,7 @@
                                                     <x-button class="h-10 hidden" id="supplier-save">Simpan
                                                     </x-button>
                                                     <a href="/suppliers/create" id="supplier-add" title="Tambah Subcon"
-                                                        class="h-10 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-[...]
+                                                        class="h-10 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">+</a>
                                                 </form>
                                             </div>
                                         @else
