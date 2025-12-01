@@ -61,9 +61,11 @@
                                 {{ $current ? 'lama' : 'terkini' }}</a>
                         </div>
                     </div>
+
                     <div width="400" height="400">
                         <canvas id="barChart"></canvas>
                     </div>
+
                     <div class="flex flex-row-reverse gap-3 mt-5">
                         <a href="/{{ $current ? '' : 'old-' }}reports/{{ request('year') }}"
                             class="capitalize bg-gray-500 p-2 px-4 rounded-md shadow-md text-white">Semua</a>
@@ -90,26 +92,30 @@
                         </table>
                     </div>
 
-                    <!-- Date search form for daily sales -->
+                    <!-- Date range search form for daily sales -->
                     <div class="mt-6 flex items-center gap-3">
                         <form method="GET"
                             action="{{ url(($current ? '' : 'old-') . 'reports/' . request('year') . (request('branch') ? '/' . request('branch') : '')) }}"
                             class="flex items-center gap-2">
-                            <label for="date" class="text-sm">Cari mengikut tarikh:</label>
-                            <input id="date" name="date" type="date"
-                                value="{{ request('date') }}"
+                            <label for="start_date" class="text-sm">Dari:</label>
+                            <input id="start_date" name="start_date" type="date"
+                                value="{{ request('start_date') }}"
+                                class="border rounded-md p-1">
+                            <label for="end_date" class="text-sm">Hingga:</label>
+                            <input id="end_date" name="end_date" type="date"
+                                value="{{ request('end_date') }}"
                                 class="border rounded-md p-1">
                             <button type="submit"
                                 class="bg-green-500 text-white px-3 py-1 rounded-md shadow-md">Cari</button>
 
-                            <!-- keep year and branch in query (the action already includes them, but ensure GET params keep other filters) -->
-                            @if(request()->has('other'))
-                                <input type="hidden" name="other" value="{{ request('other') }}">
-                            @endif
+                            <!-- keep other query params if present -->
+                            @foreach(request()->except(['start_date','end_date','_token']) as $k => $v)
+                                <input type="hidden" name="{{ $k }}" value="{{ $v }}">
+                            @endforeach
                         </form>
 
                         <div class="ml-auto text-sm text-gray-600">
-                            <span class="italic">Masukkan tarikh untuk melihat jualan harian.</span>
+                            <span class="italic">Masukkan julat tarikh untuk melihat pecahan jualan harian.</span>
                         </div>
                     </div>
 
@@ -117,91 +123,39 @@
                     <div class="text-center mt-5">
                         <h2 class="text-lg font-semibold">
                             Jualan Harian
-                            @if(request('date'))
-                                - {{ date('d M Y', strtotime(request('date'))) }}
+                            @if(request('start_date') || request('end_date'))
+                                -
+                                @if(request('start_date')) {{ date('d M Y', strtotime(request('start_date'))) }} @else - @endif
+                                hingga
+                                @if(request('end_date')) {{ date('d M Y', strtotime(request('end_date'))) }} @else - @endif
                             @endif
                         </h2>
 
                         @isset($dailySales)
-                            @if (is_countable($dailySales) && count($dailySales) > 0)
+                            @if ($dailySales->count() > 0)
                                 <table class="w-full border border-collapse mt-3">
                                     <tr>
                                         <th class="border">Tarikh</th>
                                         <th class="border">Jumlah RM</th>
                                     </tr>
 
-                                    @foreach ($dailySales as $key => $row)
-                                        @php
-                                            // Try to be flexible with the shape of $dailySales:
-                                            // - associative array: '2025-12-01' => 123.45
-                                            // - collection/array of objects: [ { date: '2025-12-01', amount: 123.45 }, ... ]
-                                            // - collection/array of arrays: [ ['date' => '2025-12-01', 'amount' => 123.45], ... ]
-                                            $date = null;
-                                            $amount = null;
-
-                                            if (is_string($key) && (strtotime($key) !== false)) {
-                                                $date = $key;
-                                                $amount = $row;
-                                            } elseif (is_object($row)) {
-                                                if (isset($row->date)) {
-                                                    $date = $row->date;
-                                                } elseif (isset($row->created_at)) {
-                                                    $date = $row->created_at;
-                                                }
-                                                if (isset($row->amount)) {
-                                                    $amount = $row->amount;
-                                                } elseif (isset($row->total)) {
-                                                    $amount = $row->total;
-                                                } else {
-                                                    // If object itself is a numeric value
-                                                    $amount = is_numeric($row) ? $row : null;
-                                                }
-                                            } elseif (is_array($row)) {
-                                                if (isset($row['date'])) {
-                                                    $date = $row['date'];
-                                                } elseif (isset($row['created_at'])) {
-                                                    $date = $row['created_at'];
-                                                }
-                                                if (isset($row['amount'])) {
-                                                    $amount = $row['amount'];
-                                                } elseif (isset($row['total'])) {
-                                                    $amount = $row['total'];
-                                                } else {
-                                                    $amount = is_numeric($row) ? $row : null;
-                                                }
-                                            } else {
-                                                // fallback when row is just a numeric value
-                                                $amount = is_numeric($row) ? $row : null;
-                                            }
-
-                                            // final fallbacks
-                                            if (!$date && isset($row->date)) {
-                                                $date = $row->date;
-                                            }
-                                            if (!$date && isset($row['date'])) {
-                                                $date = $row['date'];
-                                            }
-                                        @endphp
-
+                                    @foreach ($dailySales as $row)
                                         <tr>
-                                            <td class="border">
-                                                @if($date)
-                                                    {{ date('d M Y', strtotime($date)) }}
-                                                @else
-                                                    {{ $loop->iteration }}
-                                                @endif
-                                            </td>
-                                            <td class="border">
-                                                {{ number_format($amount ?? 0, 2) }}
-                                            </td>
+                                            <td class="border">{{ date('d M Y', strtotime($row->date)) }}</td>
+                                            <td class="border">{{ number_format($row->total, 2) }}</td>
                                         </tr>
                                     @endforeach
                                 </table>
+
+                                <!-- Optional: show total for range -->
+                                <div class="mt-3 font-semibold">
+                                    Jumlah keseluruhan: RM {{ number_format($dailySales->sum('total'), 2) }}
+                                </div>
                             @else
-                                <div class="mt-3 text-gray-600">Tiada data jualan harian untuk tarikh atau julat yang dipilih.</div>
+                                <div class="mt-3 text-gray-600">Tiada data jualan harian untuk julat yang dipilih.</div>
                             @endif
                         @else
-                            <div class="mt-3 text-gray-600">Pilih tarikh dan tekan Cari untuk melihat jualan harian.</div>
+                            <div class="mt-3 text-gray-600">Pilih julat tarikh dan tekan Cari untuk melihat jualan harian.</div>
                         @endisset
                     </div>
 
@@ -216,7 +170,6 @@
     <script>
         $(function() {
             var sales = {!! json_encode($sales) !!};
-            {{-- var dues = {!! json_encode($dues) !!}; --}}
             var barCanvas = $("#barChart");
             var barChart = new Chart(barCanvas, {
                 type: 'bar',
@@ -230,11 +183,6 @@
                             borderWidth: 1,
                             barPercentage: 0.5,
                         },
-                        // {
-                        //     label:'Tertungak {{ request('year') }}',
-                        //     data:dues,
-                        //     backgroundColor:'#0ff'
-                        // },
                     ]
                 },
                 options: {
