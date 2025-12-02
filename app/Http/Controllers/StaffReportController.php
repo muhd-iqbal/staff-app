@@ -19,19 +19,23 @@ class StaffReportController extends Controller
     {
         $month = $request->query('month'); // get month from query
 
-        // Detect the date column used in the orders table (common candidates)
+        // Quick debug: uncomment to verify month is being passed
+        // dd(['year' => $y, 'query' => $request->query()]);
+
+        // Detect orders date column
         $orderDateColumn = Schema::hasColumn('orders', 'created_at') ? 'created_at'
             : (Schema::hasColumn('orders', 'date') ? 'date' : 'order_date');
 
+        // Build monthly totals for the orders table (used for the monthly chart)
         $query = Order::select(
             DB::raw("month($orderDateColumn) as month"),
             DB::raw('count(*) as totals')
         )
         ->whereDate($orderDateColumn, '>=', config('app.pos_start'))
-        ->whereYear($orderDateColumn, '=', $y);
+        ->whereYear($orderDateColumn, $y);
 
         if ($month) {
-            $query->whereMonth($orderDateColumn, '=', $month);
+            $query->whereMonth($orderDateColumn, $month);
         }
 
         $dbData = $query->groupBy('month')->get();
@@ -41,12 +45,14 @@ class StaffReportController extends Controller
             $orders[month_name($m)] = (optional($dbData->first(fn ($row) => $row->month == $m))->totals) ?? 0;
         }
 
-        // Detect the date column used in the order_items table (for filtering per-designer)
+        // Detect date column on order_items (used to filter per-designer)
         $orderItemDateColumn = Schema::hasColumn('order_items', 'created_at') ? 'created_at'
             : (Schema::hasColumn('order_items', 'date') ? 'date' : 'order_date');
 
-        // Get users who have order_item in the requested year/month,
-        // and include a count (order_item_count) that is already filtered.
+        // Optionally enable query logging for debugging:
+        // DB::enableQueryLog();
+
+        // Get users filtered by year/month and return a filtered count field `order_item_count`
         $users = User::where('position_id', '<>', 1)
             ->where('active', true)
             ->whereHas('order_item', function ($q) use ($y, $month, $orderItemDateColumn) {
@@ -62,6 +68,12 @@ class StaffReportController extends Controller
                 }
             }])
             ->get();
+
+        // Quick debug: uncomment to inspect the generated SQL queries and the counts
+        // dd([
+        //     'query_log' => DB::getQueryLog(),
+        //     'users_counts' => $users->map(fn($u)=>[$u->id, $u->name, $u->order_item_count])
+        // ]);
 
         return view('staff_report.index', [
             'order' => $orders,
@@ -79,24 +91,29 @@ class StaffReportController extends Controller
     {
         $month = $request->query('month');
 
-        // Detect date column in order_items (common candidates)
+        // Detect date column on order_items
         $orderItemDateColumn = Schema::hasColumn('order_items', 'created_at') ? 'created_at'
             : (Schema::hasColumn('order_items', 'date') ? 'date' : 'order_date');
 
-        // Use count(*) (number of order_items rows per month) rather than summing a non-existent column.
+        // Build monthly totals for old orders (count of order_items rows)
         $summary = DB::table('order_items')
             ->select(DB::raw("month($orderItemDateColumn) as month"), DB::raw('count(*) as totals'))
-            ->where($orderItemDateColumn, '>', $y . '-01-01 00:00:00')
-            ->where($orderItemDateColumn, '<', $y . '-12-31 23:59:59')
-            ->where($orderItemDateColumn, '<', config('app.pos_start') . ' 00:00:00')
-            ->groupBy('month')
-            ->get();
+            ->whereYear($orderItemDateColumn, $y);
 
-        $summary = collect($summary);
+        if ($month) {
+            $summary->whereMonth($orderItemDateColumn, $month);
+        }
+
+        // exclude records after pos_start if your logic requires it:
+        if (Schema::hasColumn('order_items', $orderItemDateColumn) && config('app.pos_start')) {
+            $summary->where($orderItemDateColumn, '<', config('app.pos_start') . ' 00:00:00');
+        }
+
+        $summary = $summary->groupBy('month')->get()->keyBy('month');
 
         $orders = [];
         for ($m = 1; $m <= 12; $m++) {
-            $orders[month_name($m)] = (optional($summary->first(fn ($row) => $row->month == $m))->totals) ?? 0;
+            $orders[month_name($m)] = (optional($summary->get($m))->totals) ?? 0;
         }
 
         // Also filter users by order_items in the given old-year (and optional month),
