@@ -80,10 +80,10 @@
                             </tr>
 
                             @foreach ($users as $designer)
-                                @if ($designer->order_item_count > 0)
+                                @if ($designer->order_item->count() > 0)
                                     <tr>
                                         <td class="border">{{ ucwords(strtolower($designer->name))}}</td>
-                                        <td class="border">{{ $designer->order_item_count }} design.</td>
+                                        <td class="border">{{ $designer->order_item->count() }} design.</td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -98,10 +98,10 @@
     <script>
         $(function() {
             var designers = {!! json_encode($users->pluck('name')) !!};
-            var orders = {!! json_encode($users->pluck('order_item_count')) !!}; // use the filtered count
-
+            var orders = {!! json_encode($users->pluck('order_item')->map->count()) !!};
+    
             var colors = ['#82D1F1', '#E0CD67', '#DF2525', '#FFC0CB', '#55965B', '#B879FF', '#900', '#f60', '#60f', '#999', '#139f'];
-
+    
             var datasets = [{
                 data: orders,
                 backgroundColor: colors,
@@ -109,7 +109,7 @@
                 borderColor: '#000000',
                 borderWidth: 1.5,
             }];
-
+    
             var pieCanvas = $("#chartContainer");
             var pieChart = new Chart(pieCanvas, {
                 type: 'pie',
@@ -129,3 +129,5 @@
         });
     </script>
 </x-app-layout>
+
+
