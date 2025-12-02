@@ -19,61 +19,67 @@ class StaffReportController extends Controller
     {
         $month = $request->query('month'); // get month from query
 
-        // Quick debug: uncomment to verify month is being passed
-        // dd(['year' => $y, 'query' => $request->query()]);
-
-        // Detect orders date column
+        // Detect date column on the orders table (for monthly totals)
         $orderDateColumn = Schema::hasColumn('orders', 'created_at') ? 'created_at'
-            : (Schema::hasColumn('orders', 'date') ? 'date' : 'order_date');
+            : (Schema::hasColumn('orders', 'date') ? 'date' : null);
 
-        // Build monthly totals for the orders table (used for the monthly chart)
-        $query = Order::select(
-            DB::raw("month($orderDateColumn) as month"),
-            DB::raw('count(*) as totals')
-        )
-        ->whereDate($orderDateColumn, '>=', config('app.pos_start'))
-        ->whereYear($orderDateColumn, $y);
+        // Build monthly totals for orders (chart)
+        $query = Order::select(DB::raw("month($orderDateColumn) as month"), DB::raw('count(*) as totals'))
+            ->whereYear($orderDateColumn, $y);
 
         if ($month) {
             $query->whereMonth($orderDateColumn, $month);
         }
 
-        $dbData = $query->groupBy('month')->get();
+        $dbData = $query->groupBy('month')->get()->keyBy('month');
 
         $orders = [];
         for ($m = 1; $m <= 12; $m++) {
-            $orders[month_name($m)] = (optional($dbData->first(fn ($row) => $row->month == $m))->totals) ?? 0;
+            $orders[month_name($m)] = optional($dbData->get($m))->totals ?? 0;
         }
 
-        // Detect date column on order_items (used to filter per-designer)
+        // Detect if order_items has a date column. If not, we will filter via order_item->order(date).
         $orderItemDateColumn = Schema::hasColumn('order_items', 'created_at') ? 'created_at'
-            : (Schema::hasColumn('order_items', 'date') ? 'date' : 'order_date');
+            : (Schema::hasColumn('order_items', 'date') ? 'date' : null);
 
-        // Optionally enable query logging for debugging:
-        // DB::enableQueryLog();
+        // DEBUG: uncomment to verify what's detected
+        // dd(['orderDateColumn' => $orderDateColumn, 'orderItemDateColumn' => $orderItemDateColumn, 'month' => $month, 'year' => $y]);
 
-        // Get users filtered by year/month and return a filtered count field `order_item_count`
-        $users = User::where('position_id', '<>', 1)
+        // Build users query: apply the same date filter via order_items or via the parent order relationship
+        $usersQuery = User::where('position_id', '<>', 1)
             ->where('active', true)
-            ->whereHas('order_item', function ($q) use ($y, $month, $orderItemDateColumn) {
-                $q->whereYear($orderItemDateColumn, $y);
-                if ($month) {
-                    $q->whereMonth($orderItemDateColumn, $month);
+            ->whereHas('order_item', function ($q) use ($y, $month, $orderItemDateColumn, $orderDateColumn) {
+                if ($orderItemDateColumn) {
+                    // order_items table has its own date column
+                    $q->whereYear($orderItemDateColumn, $y);
+                    if ($month) $q->whereMonth($orderItemDateColumn, $month);
+                } else {
+                    // filter order_items by their parent order's date
+                    $q->whereHas('order', function ($qq) use ($y, $month, $orderDateColumn) {
+                        $qq->whereYear($orderDateColumn, $y);
+                        if ($month) $qq->whereMonth($orderDateColumn, $month);
+                    });
                 }
-            })
-            ->withCount(['order_item as order_item_count' => function ($q) use ($y, $month, $orderItemDateColumn) {
-                $q->whereYear($orderItemDateColumn, $y);
-                if ($month) {
-                    $q->whereMonth($orderItemDateColumn, $month);
-                }
-            }])
-            ->get();
+            });
 
-        // Quick debug: uncomment to inspect the generated SQL queries and the counts
-        // dd([
-        //     'query_log' => DB::getQueryLog(),
-        //     'users_counts' => $users->map(fn($u)=>[$u->id, $u->name, $u->order_item_count])
-        // ]);
+        // withCount must apply the same logic so order_item_count is the filtered count
+        $usersQuery = $usersQuery->withCount(['order_item as order_item_count' => function ($q) use ($y, $month, $orderItemDateColumn, $orderDateColumn) {
+            if ($orderItemDateColumn) {
+                $q->whereYear($orderItemDateColumn, $y);
+                if ($month) $q->whereMonth($orderItemDateColumn, $month);
+            } else {
+                $q->whereHas('order', function ($qq) use ($y, $month, $orderDateColumn) {
+                    $qq->whereYear($orderDateColumn, $y);
+                    if ($month) $qq->whereMonth($orderDateColumn, $month);
+                });
+            }
+        }]);
+
+        // Get results
+        $users = $usersQuery->get();
+
+        // Optional debug to inspect returned counts:
+        // dd($users->map(fn($u) => [$u->id, $u->name, $u->order_item_count]));
 
         return view('staff_report.index', [
             'order' => $orders,
@@ -91,48 +97,64 @@ class StaffReportController extends Controller
     {
         $month = $request->query('month');
 
-        // Detect date column on order_items
+        // Detect date column on order_items or fallback to orders
         $orderItemDateColumn = Schema::hasColumn('order_items', 'created_at') ? 'created_at'
-            : (Schema::hasColumn('order_items', 'date') ? 'date' : 'order_date');
+            : (Schema::hasColumn('order_items', 'date') ? 'date' : null);
 
-        // Build monthly totals for old orders (count of order_items rows)
-        $summary = DB::table('order_items')
-            ->select(DB::raw("month($orderItemDateColumn) as month"), DB::raw('count(*) as totals'))
-            ->whereYear($orderItemDateColumn, $y);
+        $orderDateColumn = Schema::hasColumn('orders', 'created_at') ? 'created_at'
+            : (Schema::hasColumn('orders', 'date') ? 'date' : null);
 
-        if ($month) {
-            $summary->whereMonth($orderItemDateColumn, $month);
+        // Build monthly totals for old-year: count of order_items by month (use order_items date if present,
+        // otherwise aggregate by parent order date)
+        if ($orderItemDateColumn) {
+            $summary = DB::table('order_items')
+                ->select(DB::raw("month($orderItemDateColumn) as month"), DB::raw('count(*) as totals'))
+                ->whereYear($orderItemDateColumn, $y);
+            if ($month) $summary->whereMonth($orderItemDateColumn, $month);
+            $summary = $summary->groupBy('month')->get()->keyBy('month');
+        } else {
+            // Aggregate by orders table if order_items has no date
+            $summary = DB::table('order_items')
+                ->join('orders', 'order_items.order_id', '=', 'orders.id')
+                ->select(DB::raw("month($orderDateColumn) as month"), DB::raw('count(order_items.id) as totals'))
+                ->whereYear("orders.$orderDateColumn", $y);
+            if ($month) $summary->whereMonth("orders.$orderDateColumn", $month);
+            $summary = $summary->groupBy('month')->get()->keyBy('month');
         }
-
-        // exclude records after pos_start if your logic requires it:
-        if (Schema::hasColumn('order_items', $orderItemDateColumn) && config('app.pos_start')) {
-            $summary->where($orderItemDateColumn, '<', config('app.pos_start') . ' 00:00:00');
-        }
-
-        $summary = $summary->groupBy('month')->get()->keyBy('month');
 
         $orders = [];
         for ($m = 1; $m <= 12; $m++) {
-            $orders[month_name($m)] = (optional($summary->get($m))->totals) ?? 0;
+            $orders[month_name($m)] = optional($summary->get($m))->totals ?? 0;
         }
 
-        // Also filter users by order_items in the given old-year (and optional month),
-        // and return a pre-computed count field 'order_item_count'.
-        $users = User::where('position_id', '<>', 1)
+        // Build users with filtered order_item_count (same logic as above)
+        $usersQuery = User::where('position_id', '<>', 1)
             ->where('active', true)
-            ->whereHas('order_item', function ($q) use ($y, $month, $orderItemDateColumn) {
-                $q->whereYear($orderItemDateColumn, $y);
-                if ($month) {
-                    $q->whereMonth($orderItemDateColumn, $month);
+            ->whereHas('order_item', function ($q) use ($y, $month, $orderItemDateColumn, $orderDateColumn) {
+                if ($orderItemDateColumn) {
+                    $q->whereYear($orderItemDateColumn, $y);
+                    if ($month) $q->whereMonth($orderItemDateColumn, $month);
+                } else {
+                    $q->whereHas('order', function ($qq) use ($y, $month, $orderDateColumn) {
+                        $qq->whereYear($orderDateColumn, $y);
+                        if ($month) $qq->whereMonth($orderDateColumn, $month);
+                    });
                 }
-            })
-            ->withCount(['order_item as order_item_count' => function ($q) use ($y, $month, $orderItemDateColumn) {
+            });
+
+        $usersQuery = $usersQuery->withCount(['order_item as order_item_count' => function ($q) use ($y, $month, $orderItemDateColumn, $orderDateColumn) {
+            if ($orderItemDateColumn) {
                 $q->whereYear($orderItemDateColumn, $y);
-                if ($month) {
-                    $q->whereMonth($orderItemDateColumn, $month);
-                }
-            }])
-            ->get();
+                if ($month) $q->whereMonth($orderItemDateColumn, $month);
+            } else {
+                $q->whereHas('order', function ($qq) use ($y, $month, $orderDateColumn) {
+                    $qq->whereYear($orderDateColumn, $y);
+                    if ($month) $qq->whereMonth($orderDateColumn, $month);
+                });
+            }
+        }]);
+
+        $users = $usersQuery->get();
 
         return view('staff_report.index', [
             'order' => $orders,
