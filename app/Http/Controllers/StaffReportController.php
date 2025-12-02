@@ -18,15 +18,16 @@ class StaffReportController extends Controller
     {
         $month = $request->query('month'); // get month from query
 
+        // Use created_at instead of date (replace created_at with your actual date column if different)
         $query = Order::select(
-            DB::raw('month(date) as month'),
+            DB::raw('month(created_at) as month'),
             DB::raw('count(*) as totals')
         )
-        ->where(DB::raw('date(date)'), '>=', config('app.pos_start'))
-        ->where(DB::raw('year(date)'), '=', $y);
+        ->whereDate('created_at', '>=', config('app.pos_start'))
+        ->whereYear('created_at', '=', $y);
 
         if ($month) {
-            $query->where(DB::raw('month(date)'), '=', $month);
+            $query->whereMonth('created_at', '=', $month);
         }
 
         $dbData = $query->groupBy('month')->get();
@@ -54,11 +55,12 @@ class StaffReportController extends Controller
 
     public function old_yearly($y)
     {
+        // Use created_at instead of date (replace created_at with your actual column if different)
         $summary = DB::table('order_items')
-            ->select(DB::raw('month(date) as month'), DB::raw('sum(order_items) as totals'))
-            ->where('date', '>', $y . '-01-01 00:00:00')
-            ->where('date', '<', $y . '-12-31 23:59:59')
-            ->where('date', '<', config('app.pos_start') . ' 00:00:00')
+            ->select(DB::raw('month(created_at) as month'), DB::raw('sum(order_items) as totals'))
+            ->where('created_at', '>', $y . '-01-01 00:00:00')
+            ->where('created_at', '<', $y . '-12-31 23:59:59')
+            ->where('created_at', '<', config('app.pos_start') . ' 00:00:00')
             ->groupBy('month')
             ->get();
 
