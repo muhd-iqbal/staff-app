@@ -79,17 +79,32 @@
                     <!-- Monthly sales table -->
                     <div class="text-center mt-5">
                         <table class="w-full border border-collapse">
-                            <tr>
-                                <th class="border">Bulan</th>
-                                <th class="border">Jumlah RM</th>
-                            </tr>
-                            @foreach ($sales as $sale)
+                            <thead>
                                 <tr>
-                                    <td class="border">{{ month_name($loop->iteration) }}</td>
-                                    <td class="border">{{ number_format($sale, 2) }}</td>
+                                    <th class="border">Bulan</th>
+                                    <th class="border">Jumlah RM</th>
                                 </tr>
-                            @endforeach
+                            </thead>
+                            <tbody>
+                                @foreach ($sales as $sale)
+                                    <tr>
+                                        <td class="border">{{ month_name($loop->iteration) }}</td>
+                                        <td class="border">{{ number_format($sale, 2) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-semibold">
+                                    <th class="border">Jumlah Tahunan</th>
+                                    <th class="border">RM {{ number_format(collect($sales)->sum(), 2) }}</th>
+                                </tr>
+                            </tfoot>
                         </table>
+
+                        <!-- also show a clear summary below the table -->
+                        <div class="mt-2 font-semibold">
+                            Jumlah Tahunan: RM {{ number_format(collect($sales)->sum(), 2) }}
+                        </div>
                     </div>
 
                     <!-- Date range search form for daily sales -->
