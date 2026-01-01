@@ -30,6 +30,7 @@ class DashboardController extends Controller
         'Senarai Pelanggan' => '/customers',
         'Senarai Sub / Supplier' => '/suppliers',
         'Cheques Issued' => '/cheque-reports',
+        'Baucer Bayaran' => '/payment-vouchers',
         
     ];
     protected $links_admin = [
@@ -41,7 +42,7 @@ class DashboardController extends Controller
         'Permohonan Cuti Staf' => '/leaves/approval',
         'Cawangan' => '/branches',
         'Slip Gaji Staf' => '/admin/payslips',
-        'Baucer Bayaran' => '/payment-vouchers',
+        
         'Peti Tunai' => '/cashflow',
         
     ];
