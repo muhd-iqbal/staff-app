@@ -179,11 +179,13 @@
                         <input id="ready_percent" type="number" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border px-2 py-1" />
                         <div class="text-xs text-gray-500">Biasanya 100 - deposit</div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium">Jangkaan Siap (hari)</label>
-                        <input id="lead_time_days" type="number" min="0" value="60" class="mt-1 block w-full rounded-md border px-2 py-1" />
-                        <div class="text-xs text-gray-500">Isi berapa hari diperlukan</div>
-                    </div>
+                    <!-- Replace the existing numeric input with this text input (allows "7-10 HARI ...") -->
+<div>
+    <label class="block text-sm font-medium">Jangkaan Siap (hari)</label>
+    <!-- type="text" so user can type ranges and words; inputmode helps show numeric keyboard on mobile -->
+    <input id="lead_time_days" type="text" inputmode="numeric" min="0" value="60" class="mt-1 block w-full rounded-md border px-2 py-1" />
+    <div class="text-xs text-gray-500">Isi berapa hari diperlukan — boleh taip seperti "7-10 HARI BEKERJA SELEPAS PENGESAHAN ARTWORK"</div>
+</div>
 
                     <!-- New checkboxes for Penghantaran / Pemasangan -->
                     <div>
@@ -248,144 +250,162 @@
     </div>
 
     <script>
-        (function () {
-            // grand_total is stored in sen (cents) in the DB, divide by 100 to get ringgit
-            const grandTotal = parseFloat({!! json_encode((float) $quote->grand_total / 100) !!}) || 0;
+    (function () {
+        // grand_total is stored in sen (cents) in the DB, divide by 100 to get ringgit
+        const grandTotal = parseFloat({!! json_encode((float) $quote->grand_total / 100) !!}) || 0;
 
-            const paymentInput = document.getElementById('payment_percent');
-            const depositInput = document.getElementById('deposit_percent');
-            const readyInput = document.getElementById('ready_percent');
-            const leadTimeInput = document.getElementById('lead_time_days');
-            const serviceDelivery = document.getElementById('service_delivery');
-            const serviceInstallation = document.getElementById('service_installation');
-            const preview = document.getElementById('note_preview');
-            const calcBtn = document.getElementById('calc_btn');
-            const applyBtn = document.getElementById('apply_to_note');
-            const resetBtn = document.getElementById('reset_btn');
-            const footNote = document.getElementById('foot_note');
-            const caraRadios = document.getElementsByName('cara_payment');
+        const paymentInput = document.getElementById('payment_percent');
+        const depositInput = document.getElementById('deposit_percent');
+        const readyInput = document.getElementById('ready_percent');
+        const leadTimeInput = document.getElementById('lead_time_days');
+        const serviceDelivery = document.getElementById('service_delivery');
+        const serviceInstallation = document.getElementById('service_installation');
+        const preview = document.getElementById('note_preview');
+        const calcBtn = document.getElementById('calc_btn');
+        const applyBtn = document.getElementById('apply_to_note');
+        const resetBtn = document.getElementById('reset_btn');
+        const footNote = document.getElementById('foot_note');
+        const caraRadios = document.getElementsByName('cara_payment');
 
-            function formatRM(value) {
-                // Format number with thousand separators and 2 decimals, e.g. 27,360.00
-                return 'RM ' + new Intl.NumberFormat('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
-            }
+        function formatRM(value) {
+            return 'RM ' + new Intl.NumberFormat('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+        }
 
-            function sanitizeInt(v, fallback = 0, min = 0, max = 999999) {
-                let n = parseInt(v, 10);
-                if (isNaN(n)) return fallback;
-                n = Math.max(min, Math.min(max, n));
-                return n;
-            }
+        function sanitizeInt(v, fallback = 0, min = 0, max = 999999) {
+            const n = Number(v);
+            if (!isFinite(n) || isNaN(n)) return fallback;
+            const intN = Math.floor(n);
+            return Math.max(min, Math.min(max, intN));
+        }
 
-            function getSelectedCara() {
-                for (let i = 0; i < caraRadios.length; i++) {
-                    if (caraRadios[i].checked) return caraRadios[i].value;
-                }
-                return 'TUNAI';
-            }
-
-            function generateServiceType() {
-                const d = !!serviceDelivery && serviceDelivery.checked;
-                const p = !!serviceInstallation && serviceInstallation.checked;
-
-                if (d && p) {
-                    return 'PENGHANTARAN DAN PEMASANGAN';
-                } else if (d) {
-                    return 'PENGHANTARAN';
-                } else if (p) {
-                    return 'PEMASANGAN';
-                } else {
-                    return 'TIADA';
-                }
-            }
-
-            function generateNote() {
-                const cara = getSelectedCara();
-                const percent = Math.max(0, Math.min(100, parseFloat(paymentInput.value) || 0));
-                const depositPercent = Math.max(0, Math.min(100, parseFloat(depositInput.value) || 0));
-                let readyPercent = Math.max(0, Math.min(100, parseFloat(readyInput.value) || 0));
-                const leadDays = sanitizeInt(leadTimeInput.value, 60, 0, 10000);
-                const serviceType = generateServiceType();
-
-                // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
-                if (readyPercent === 0 && depositPercent > 0) {
-                    readyPercent = Math.max(0, 100 - depositPercent);
-                    readyInput.value = readyPercent;
-                }
-
-                const paymentAmount = grandTotal * (percent / 100);
-                const depositAmount = paymentAmount * (depositPercent / 100);
-                const readyAmount = paymentAmount * (readyPercent / 100);
-
-                const lines = [];
-                lines.push('CARA PEMBAYARAN : ' + cara);
-                lines.push('');
-                // Show the percent/amount for the selected cara
-                lines.push(percent + '% = ' + formatRM(paymentAmount));
-                lines.push('');
-                lines.push('CARA PEMBAYARAN TERPERINCI :');
-                if (depositPercent > 0) {
-                    lines.push(depositPercent + '% DEPOSIT = ' + formatRM(depositAmount));
-                }
-                if (readyPercent > 0) {
-                    lines.push(readyPercent + '% BARANG SEDIA UNTUK DIHANTAR = ' + formatRM(readyAmount));
-                }
-
-                lines.push('');
-                lines.push('JANGKAAN SIAP :');
-                lines.push(serviceType + ' ' + leadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT');
-
-                return lines.join('\n');
-            }
-
-            function updatePreview() {
-                preview.textContent = generateNote();
-            }
-
-            calcBtn.addEventListener('click', function () {
-                updatePreview();
-            });
-
-            // Apply generated preview into the foot_note textarea (HTML allowed in existing implementation)
-            applyBtn.addEventListener('click', function () {
-                const text = generateNote();
-                const html = text.replace(/\n/g, '<br>');
-                if (footNote) {
-                    footNote.value = html;
-                }
-                preview.innerHTML = html;
-            });
-
-            resetBtn.addEventListener('click', function () {
-                // reset inputs to defaults
-                // default cara = TUNAI
-                for (let i = 0; i < caraRadios.length; i++) {
-                    caraRadios[i].checked = caraRadios[i].value === 'TUNAI';
-                }
-                paymentInput.value = 100;
-                depositInput.value = 0;
-                readyInput.value = 0;
-                leadTimeInput.value = 60;
-                if (serviceDelivery) serviceDelivery.checked = true;
-                if (serviceInstallation) serviceInstallation.checked = false;
-                updatePreview();
-            });
-
-            // update automatically on change
-            const inputsToWatch = [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation];
-            inputsToWatch.forEach(function (el) {
-                if (!el) return;
-                el.addEventListener('input', updatePreview);
-                el.addEventListener('change', updatePreview);
-            });
-
-            // watch cara radios too
+        function getSelectedCara() {
             for (let i = 0; i < caraRadios.length; i++) {
-                caraRadios[i].addEventListener('change', updatePreview);
+                if (caraRadios[i].checked) return caraRadios[i].value;
+            }
+            return 'TUNAI';
+        }
+
+        function generateServiceType() {
+            const d = !!serviceDelivery && serviceDelivery.checked;
+            const p = !!serviceInstallation && serviceInstallation.checked;
+
+            if (d && p) {
+                return 'PENGHANTARAN DAN PEMASANGAN';
+            } else if (d) {
+                return 'PENGHANTARAN';
+            } else if (p) {
+                return 'PEMASANGAN';
+            } else {
+                return 'TIADA';
+            }
+        }
+
+        // Return a user-friendly lead-time phrase.
+        // - If input is purely numeric (e.g. "60") -> return "60 HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT"
+        // - If input contains text or hyphen (e.g. "7-10 HARI BEKERJA SELEPAS PENGESAHAN ARTWORK") -> return it verbatim
+        // - Empty -> fallback to defaultPhrase (60)
+        const defaultLeadDays = 60;
+        function leadTimePhraseFromInput() {
+            const raw = (leadTimeInput && leadTimeInput.value || '').trim();
+            if (raw === '') {
+                return defaultLeadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+            }
+            // numeric-only (allows whitespace)
+            if (/^\d+$/.test(raw)) {
+                const days = sanitizeInt(raw, defaultLeadDays, 0, 10000);
+                return days + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+            }
+            // contains non-digit (letters/hyphen): return exactly what user typed
+            return raw;
+        }
+
+        function generateNote() {
+            const cara = getSelectedCara();
+            const percent = Math.max(0, Math.min(100, Number(paymentInput.value) || 0));
+            const depositPercent = Math.max(0, Math.min(100, Number(depositInput.value) || 0));
+            let readyPercent = Math.max(0, Math.min(100, Number(readyInput.value) || 0));
+            const serviceType = generateServiceType();
+
+            // If ready percent is zero, try to auto compute as remainder of deposit within the payment percent context
+            if (readyPercent === 0 && depositPercent > 0) {
+                readyPercent = Math.max(0, 100 - depositPercent);
+                readyInput.value = readyPercent;
             }
 
-            // initial preview
+            const paymentAmount = grandTotal * (percent / 100);
+            const depositAmount = paymentAmount * (depositPercent / 100);
+            const readyAmount = paymentAmount * (readyPercent / 100);
+
+            const lines = [];
+            lines.push('CARA PEMBAYARAN : ' + cara);
+            lines.push('');
+            // Show the percent/amount for the selected cara
+            lines.push(percent + '% = ' + formatRM(paymentAmount));
+            lines.push('');
+            lines.push('CARA PEMBAYARAN TERPERINCI :');
+            if (depositPercent > 0) {
+                lines.push(depositPercent + '% DEPOSIT = ' + formatRM(depositAmount));
+            }
+            if (readyPercent > 0) {
+                lines.push(readyPercent + '% BARANG SEDIA UNTUK DIHANTAR = ' + formatRM(readyAmount));
+            }
+
+            lines.push('');
+            lines.push('JANGKAAN SIAP :');
+            // Use the phrase returned by leadTimePhraseFromInput(). If the user included a full phrase,
+            // it will be used verbatim (e.g. "7-10 HARI BEKERJA SELEPAS PENGESAHAN ARTWORK").
+            lines.push(serviceType + ' ' + leadTimePhraseFromInput());
+
+            return lines.join('\n');
+        }
+
+        function updatePreview() {
+            const note = generateNote();
+            preview.textContent = note;
+        }
+
+        calcBtn.addEventListener('click', function () {
             updatePreview();
-        })();
-    </script>
+        });
+
+        // Apply generated preview into the foot_note textarea (HTML allowed in existing implementation)
+        applyBtn.addEventListener('click', function () {
+            const text = generateNote();
+            const html = text.replace(/\n/g, '<br>');
+            if (footNote) {
+                footNote.value = html;
+            }
+            preview.innerHTML = html;
+        });
+
+        resetBtn.addEventListener('click', function () {
+            for (let i = 0; i < caraRadios.length; i++) {
+                caraRadios[i].checked = caraRadios[i].value === 'TUNAI';
+            }
+            paymentInput.value = 100;
+            depositInput.value = 0;
+            readyInput.value = 0;
+            leadTimeInput.value = String(defaultLeadDays);
+            if (serviceDelivery) serviceDelivery.checked = true;
+            if (serviceInstallation) serviceInstallation.checked = false;
+            updatePreview();
+        });
+
+        // update automatically on change
+        const inputsToWatch = [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation];
+        inputsToWatch.forEach(function (el) {
+            if (!el) return;
+            el.addEventListener('input', updatePreview);
+            el.addEventListener('change', updatePreview);
+        });
+
+        // watch cara radios too
+        for (let i = 0; i < caraRadios.length; i++) {
+            caraRadios[i].addEventListener('change', updatePreview);
+        }
+
+        // initial preview
+        updatePreview();
+    })();
+</script>
 </x-app-layout>
