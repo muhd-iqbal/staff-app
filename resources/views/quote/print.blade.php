@@ -305,20 +305,38 @@
         // - If input contains text or hyphen (e.g. "7-10 HARI BEKERJA SELEPAS PENGESAHAN ARTWORK") -> return it verbatim
         // - Empty -> fallback to defaultPhrase (60)
         const defaultLeadDays = 60;
-        function leadTimePhraseFromInput() {
-            const raw = (leadTimeInput && leadTimeInput.value || '').trim();
-            if (raw === '') {
-                return defaultLeadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
-            }
-            // numeric-only (allows whitespace)
-            if (/^\d+$/.test(raw)) {
-                const days = sanitizeInt(raw, defaultLeadDays, 0, 10000);
-                return days + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
-            }
-            // contains non-digit (letters/hyphen): return exactly what user typed
-            return raw;
-        }
+        // smarter lead-time handling: append suffix for numeric or range inputs, use verbatim if user already included "HARI" or full phrase
+function leadTimePhraseFromInput() {
+    const raw = (leadTimeInput && leadTimeInput.value || '').trim();
+    if (raw === '') {
+        return defaultLeadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+    }
 
+    // pure numeric, e.g. "60"
+    if (/^\d+$/.test(raw)) {
+        const days = sanitizeInt(raw, defaultLeadDays, 0, 10000);
+        return days + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+    }
+
+    // numeric range like "7-10" or "7 - 10"
+    if (/^\d+\s*-\s*\d+$/.test(raw)) {
+        return raw + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+    }
+
+    // If user already included the word "HARI" or "PENGESAHAN" (case-insensitive), assume they provided a complete phrase
+    if (/\bHARI\b/i.test(raw) || /\bPENGESAHAN\b/i.test(raw)) {
+        return raw;
+    }
+
+    // If it contains digits but not the word HARI, it's probably a partial like "7-10 ARTWORK" or "7-10 days" —
+    // append the default suffix to be helpful.
+    if (/\d/.test(raw)) {
+        return raw + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+    }
+
+    // Otherwise return verbatim
+    return raw;
+}
         function generateNote() {
             const cara = getSelectedCara();
             const percent = Math.max(0, Math.min(100, Number(paymentInput.value) || 0));
