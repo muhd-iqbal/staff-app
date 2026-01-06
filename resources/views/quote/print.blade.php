@@ -189,6 +189,22 @@
     <!-- type="text" so user can type ranges and words; inputmode helps show numeric keyboard on mobile -->
     <input id="lead_time_days" type="text" inputmode="numeric" min="0" value="60" class="mt-1 block w-full rounded-md border px-2 py-1" />
     <div class="text-xs text-gray-500">Isi berapa hari diperlukan — boleh taip seperti "7-10 HARI BEKERJA SELEPAS PENGESAHAN ARTWORK"</div>
+
+    <!-- New checkboxes for pengesahan design / pembayaran deposit that affect jangkaan siap -->
+    <div class="mt-2">
+        <label class="block text-sm font-medium">Rujukan Jangkaan Siap</label>
+        <div class="mt-1 space-y-1">
+            <label class="inline-flex items-center">
+                <input id="confirm_design" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
+                <span class="ml-2 text-sm">Pengesahan Design</span>
+            </label>
+            <label class="inline-flex items-center">
+                <input id="confirm_deposit" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
+                <span class="ml-2 text-sm">Pembayaran Deposit</span>
+            </label>
+        </div>
+        <div class="text-xs text-gray-500">Pilih apa yang diperlukan sebelum jangkaan siap</div>
+    </div>
 </div>
 
                     <!-- New checkboxes for Penghantaran / Pemasangan -->
@@ -271,6 +287,10 @@
         const footNote = document.getElementById('foot_note');
         const caraRadios = document.getElementsByName('cara_payment');
 
+        // New confirmation checkboxes for jangkaan siap
+        const confirmDesign = document.getElementById('confirm_design');
+        const confirmDeposit = document.getElementById('confirm_deposit');
+
         function formatRM(value) {
             return 'RM ' + new Intl.NumberFormat('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
         }
@@ -304,38 +324,55 @@
             }
         }
 
+        // Return the confirmations phrase based on the two checkboxes.
+        // Possible results:
+        // - "PENGESAHAN DESIGN" (only design)
+        // - "PEMBAYARAN DEPOSIT" (only deposit)
+        // - "PENGESAHAN DESIGN DAN PEMBAYARAN DEPOSIT" (both)
+        // - default "PENGESAHAN PEMBAYARAN DEPOSIT" (none selected)
+        function confirmationsPhrase() {
+            const parts = [];
+            if (confirmDesign && confirmDesign.checked) parts.push('PENGESAHAN DESIGN');
+            if (confirmDeposit && confirmDeposit.checked) parts.push('PEMBAYARAN DEPOSIT');
+            if (parts.length === 0) return 'PENGESAHAN PEMBAYARAN DEPOSIT';
+            return parts.join(' DAN ');
+        }
+
         // Return a user-friendly lead-time phrase.
-        // - If input is purely numeric (e.g. "60") -> return "60 HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT"
+        // - If input is purely numeric (e.g. "60") -> return "60 HARI BEKERJA SELEPAS <CONFIRMATIONS>"
         // - If input contains text or hyphen (e.g. "7-10 HARI BEKERJA SELEPAS PENGESAHAN ARTWORK") -> return it verbatim
         // - Empty -> fallback to defaultPhrase (60)
         const defaultLeadDays = 60;
         // smarter lead-time handling: append suffix for numeric or range inputs, use verbatim if user already included "HARI" or full phrase
 function leadTimePhraseFromInput() {
     const raw = (leadTimeInput && leadTimeInput.value || '').trim();
+    const suffix = confirmationsPhrase();
+
     if (raw === '') {
-        return defaultLeadDays + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+        return defaultLeadDays + ' HARI BEKERJA SELEPAS ' + suffix;
     }
 
     // pure numeric, e.g. "60"
     if (/^\d+$/.test(raw)) {
         const days = sanitizeInt(raw, defaultLeadDays, 0, 10000);
-        return days + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+        return days + ' HARI BEKERJA SELEPAS ' + suffix;
     }
 
     // numeric range like "7-10" or "7 - 10"
     if (/^\d+\s*-\s*\d+$/.test(raw)) {
-        return raw + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+        return raw + ' HARI BEKERJA SELEPAS ' + suffix;
     }
 
-    // If user already included the word "HARI" or "PENGESAHAN" (case-insensitive), assume they provided a complete phrase
-    if (/\bHARI\b/i.test(raw) || /\bPENGESAHAN\b/i.test(raw)) {
+    // If user already included the word "HARI" or "PENGESAHAN" or "PEMBAYARAN" (case-insensitive),
+    // assume they provided a complete phrase.
+    if (/\bHARI\b/i.test(raw) || /\bPENGESAHAN\b/i.test(raw) || /\bPEMBAYARAN\b/i.test(raw)) {
         return raw;
     }
 
     // If it contains digits but not the word HARI, it's probably a partial like "7-10 ARTWORK" or "7-10 days" —
     // append the default suffix to be helpful.
     if (/\d/.test(raw)) {
-        return raw + ' HARI BEKERJA SELEPAS PENGESAHAN PEMBAYARAN DEPOSIT';
+        return raw + ' HARI BEKERJA SELEPAS ' + suffix;
     }
 
     // Otherwise return verbatim
@@ -410,11 +447,16 @@ function leadTimePhraseFromInput() {
             leadTimeInput.value = String(defaultLeadDays);
             if (serviceDelivery) serviceDelivery.checked = true;
             if (serviceInstallation) serviceInstallation.checked = false;
+
+            // reset confirmations to default (both checked)
+            if (confirmDesign) confirmDesign.checked = true;
+            if (confirmDeposit) confirmDeposit.checked = true;
+
             updatePreview();
         });
 
         // update automatically on change
-        const inputsToWatch = [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation];
+        const inputsToWatch = [paymentInput, depositInput, readyInput, leadTimeInput, serviceDelivery, serviceInstallation, confirmDesign, confirmDeposit];
         inputsToWatch.forEach(function (el) {
             if (!el) return;
             el.addEventListener('input', updatePreview);
