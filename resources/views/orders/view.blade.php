@@ -271,6 +271,7 @@
                                 onclick="toggleModalShipping()">edit</span></div>
                         <div>Penghantaran: RM{{ RM($order->shipping) }}</div>
                         <div>Diskaun: RM{{ RM($order->discount) }}</div>
+                        <div>Penajaan: RM{{ RM($order->sponsorship ?? 0) }}</div>
                         <div>Jumlah: RM{{ RM($order->grand_total) }}</div>
                     </div>
 
@@ -293,6 +294,9 @@
                                         <label>Jumlah Diskaun</label>
                                         <input type="text" class="w-full bg-gray-100 p-2 mt-2 mb-3"
                                             name="discount" value="{{ RM($order->discount) }}" />
+                                        <label>Penajaan</label>
+                                        <input type="number" step="0.01" class="w-full bg-gray-100 p-2 mt-2 mb-3"
+                                            name="sponsorship" value="{{ RM($order->sponsorship ?? 0) }}" />
                                     </div>
                                     <div class="bg-gray-200 px-4 py-3 text-right">
                                         <button type="button"
