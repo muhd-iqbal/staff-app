@@ -162,10 +162,6 @@
                                 <input name="cara_payment" type="radio" value="LO" class="form-radio h-4 w-4 text-blue-600">
                                 <span class="ml-2 text-sm">LO</span>
                             </label>
-                            <label class="inline-flex items-center">
-                                <input name="cara_payment" type="radio" value="PENAJAAN" class="form-radio h-4 w-4 text-blue-600">
-                                <span class="ml-2 text-sm">PENAJAAN</span>
-                            </label>
                         </div>
                         <div class="text-xs text-gray-500 mt-1">Pilih salah satu cara pembayaran</div>
 
