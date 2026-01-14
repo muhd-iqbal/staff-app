@@ -218,9 +218,13 @@ class OrderController extends Controller
         $attributes = request()->validate([
             'shipping' => 'required|numeric',
             'discount' => 'required|numeric',
+            'sponsorship' => 'nullable|numeric',
         ]);
+        // Convert displayed RM numbers to cents (same pattern as shipping/discount)
         $attributes['shipping'] = $attributes['shipping'] * 100;
         $attributes['discount'] = $attributes['discount'] * 100;
+        $attributes['sponsorship'] = isset($attributes['sponsorship']) ? $attributes['sponsorship'] * 100 : 0;
+
 
         $order->update($attributes);
         order_adjustment($order->id);
