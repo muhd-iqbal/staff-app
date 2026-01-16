@@ -91,12 +91,12 @@ if (!function_exists('order_adjustment')) {
     function order_adjustment($id)
     {
         DB::table('orders')->where('id', $id)->update([
-            'grand_total' => DB::raw('`total`-`discount`+`shipping`'),
+            // subtract sponsorship as well
+            'grand_total' => DB::raw('`total`-`discount`-`sponsorship`+`shipping`'),
             'due' => DB::raw('`grand_total`-`paid`')
         ]);
     }
 }
-//helper to make grandtotal and due updated on row update
 
 if (!function_exists('quote_adjustment')) {
     function quote_adjustment($id)
@@ -107,7 +107,6 @@ if (!function_exists('quote_adjustment')) {
     }
 }
 
-// convert integer to money format from database
 if (!function_exists('RM')) {
     function RM($amount)
     {
@@ -115,7 +114,6 @@ if (!function_exists('RM')) {
     }
 }
 
-//calculate order when item change total price
 if (!function_exists('recalculate_order')) {
     function recalculate_order($order)
     {
@@ -127,7 +125,8 @@ if (!function_exists('recalculate_order')) {
         ) oi ON od.id = $order
         SET od.total = oi.totals";
         DB::statement($statement);
-        DB::statement("UPDATE orders SET grand_total = total + shipping - discount, due = grand_total - paid WHERE id = $order");
+        // include sponsorship in grand_total calculation
+        DB::statement("UPDATE orders SET grand_total = total + shipping - discount - sponsorship, due = grand_total - paid WHERE id = $order");
     }
 }
 
