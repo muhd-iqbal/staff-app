@@ -103,6 +103,7 @@
                                         <x-form.select name="pay_method" label="cash / lo" class="py-3 border-2">
                                             <option value="cash">Cash</option>
                                             <option value="lo">LO</option>
+                                            <option value="eperolehan">eperolehan</option>
                                         </x-form.select>
                                     </div>
                                 </div>
