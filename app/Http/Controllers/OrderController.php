@@ -101,7 +101,7 @@ class OrderController extends Controller
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
             'branch_id' => 'required|exists:branches,id',
-            'pay_method' => 'required|in:cash,lo,eper',
+            'pay_method' => 'required|in:cash,lo,ep',
             // 'remarks' => 'required',
         ]);
         $attributes['user_id'] = auth()->user()->id;
@@ -159,7 +159,7 @@ class OrderController extends Controller
             'customer_id' => 'required|numeric',
             'dateline' => 'nullable|date',
             'method' => ['required', Rule::in(['walkin', 'online'])],
-            'pay_method' => ['required', Rule::in(['cash', 'lo', 'eper'])],
+            'pay_method' => ['required', Rule::in(['cash', 'lo', 'ep'])],
             'branch_id' => 'required|exists:branches,id',
         ]);
 
