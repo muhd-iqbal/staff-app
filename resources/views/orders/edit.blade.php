@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label
-                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CASH / LO</label>
+                                            class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CASH / LO / EPEROLEHAN</label>
                                         <select name="pay_method"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                                             <option value="cash"
@@ -100,7 +100,7 @@
                                                 {{ $order->pay_method == 'lo' ? 'selected' : '' }}>
                                                 LO
                                             </option>
-                                            <option value="eperolehan"
+                                            <option value="eper"
                                                 {{ $order->pay_method == 'eperolehan' ? 'selected' : '' }}>
                                                 ePerolehan
                                             </option>
