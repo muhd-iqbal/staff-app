@@ -101,7 +101,7 @@
                                                 LO
                                             </option>
                                             <option value="ep"
-                                                {{ $order->pay_method == 'eperolehan' ? 'selected' : '' }}>
+                                                {{ $order->pay_method == 'ep' ? 'selected' : '' }}>
                                                 ePerolehan
                                             </option>
                                         </select>
