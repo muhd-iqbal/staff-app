@@ -100,7 +100,7 @@
                                                 type="date" name="dateline" value="{{ old('dateline') }}" />
                                         </div>
                                     <div>
-                                        <x-form.select name="pay_method" label="cash / lo /eperolehan" class="py-3 border-2">
+                                        <x-form.select name="pay_method" label="cash / lo / eperolehan" class="py-3 border-2">
                                             <option value="cash">Tunai</option>
                                             <option value="lo">LO</option>
                                             <option value="eperolehan">ePerolehan</option>
