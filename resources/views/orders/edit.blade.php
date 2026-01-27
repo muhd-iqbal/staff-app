@@ -100,6 +100,10 @@
                                                 {{ $order->pay_method == 'lo' ? 'selected' : '' }}>
                                                 LO
                                             </option>
+                                            <option value="eperolehan"
+                                                {{ $order->pay_method == 'eperolehan' ? 'selected' : '' }}>
+                                                ePerolehan
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
