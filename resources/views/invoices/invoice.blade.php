@@ -123,7 +123,7 @@
                         <div>
                             {{ __('WhatsApp / Telefon: ') }} <br />
                             
-                            013-530 3135
+                            013-509 3135
                         </div>
                     </div>
                 </div>
