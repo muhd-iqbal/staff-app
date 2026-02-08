@@ -39,7 +39,7 @@
                                 <div class="text-base font-bold uppercase">LOT 15, BANGUNAN PKNK KAWASAN PERINDUSTRIAN RINGAN GURUN, KILANG KETAPAN, 08300 GURUN, KEDAH</div>
                                 <div class="text-base font-bold uppercase">Tel:
                                     
-                                    013-530 3135
+                                    013-509 3135
                                 </div>
                                 <div class="text-base font-bold">EMEL: admin@inspirazs.com.my</div>
                             </div>
