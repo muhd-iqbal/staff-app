@@ -44,6 +44,7 @@ class DashboardController extends Controller
         'Slip Gaji Staf' => '/admin/payslips',
         'Baucer Bayaran' => '/payment-vouchers',
         'Peti Tunai' => '/cashflow',
+        'Dummy Quotation' => 'https://companyquotation.inspirazs.com/'
         
     ];
     protected $links_owner = [
