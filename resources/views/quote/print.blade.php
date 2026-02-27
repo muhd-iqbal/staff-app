@@ -320,7 +320,7 @@
             } else if (p) {
                 return 'PEMASANGAN';
             } else {
-                return 'TIADA';
+                return '';
             }
         }
 
