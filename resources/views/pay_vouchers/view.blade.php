@@ -81,7 +81,8 @@
                         <div class="font-bold text-base text-gray-500 text-right">{{ __('PAYMENT VOUCHER') }}</div>
                         <div class="text-2xl uppercase font-bold">{{ $branch->name }}</div>
                         <div class="text-lg">{{ $branch->address }}</div>
-                        <div class="text-lg">Contact: {{ phone_format($branch->phone_1) }} /
+                        <div class="text-lg">Contact: 013-509 3135
+                        <!--<div class="text-lg">Contact: {{ phone_format($branch->phone_1) }} -->/
                             admin@inspirazs.com.my</div>
                         {{-- <div class="text-lg">Phone:0199290219 Emel: 2sdmfnsd@kskfd.cppo</div> --}}
                     </div>
