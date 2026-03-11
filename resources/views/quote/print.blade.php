@@ -116,6 +116,11 @@
                         <div class="text-right font-bold">{{ 'RM' . RM($quote->grand_total) }}
                         </div>
                     </div>
+                                <!-- Amount in Malay words -->
+<div class="grid grid-cols-2 mt-3">
+    <div class="font-bold">{{ __('Dalam Perkataan') }}</div>
+    <div class="text-right font-bold">RINGGIT MALAYSIA : {{ number_to_words(intval($quote->grand_total / 100)) }} SAHAJA</div>
+</div>
                     @if ($quote->foot_note)
                         <div class="border mt-2 p-1">
                             <div>Nota:</div>
