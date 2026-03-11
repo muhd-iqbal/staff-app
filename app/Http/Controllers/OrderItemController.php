@@ -179,7 +179,7 @@ class OrderItemController extends Controller
             'product' => 'required|max:255',
             'size' => 'required|max:100',
             'quantity' => 'required|numeric|min:1',
-            'measurement' => ['max:2', Rule::in(array_keys($this->measurement))],
+            'measurement' => ['max:3', Rule::in(array_keys($this->measurement))],
             'price' => 'required|min:0|numeric',
             'finishing' => 'max:10000',
             'remarks' => 'max:10000',
