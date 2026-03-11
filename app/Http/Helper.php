@@ -245,30 +245,30 @@ if (!function_exists('number_to_words')) {
         }
 
         if ($number < 100) {
-            $t = intval($number / 10) * 10;
-            $o = $number % 10;
-            return $tens[$t] . ($o > 0 ? ' ' . $ones[$o] : '');
+            $tens_digit = intval($number / 10) * 10;
+            $ones_digit = $number % 10;
+            return $tens[$tens_digit] . ($ones_digit > 0 ? ' ' . $ones[$ones_digit] : '');
         }
 
         if ($number < 1000) {
-            $h = intval($number / 100);
-            $r = $number % 100;
-            $result = ($h === 1 ? 'SERATUS' : $ones[$h] + ' RATUS');
-            return $result . ($r > 0 ? ' ' . number_to_words($r) : '');
+            $hundreds = intval($number / 100);
+            $remainder = $number % 100;
+            $result = ($hundreds === 1 ? 'SERATUS' : $ones[$hundreds] . ' RATUS');
+            return $result . ($remainder > 0 ? ' ' . number_to_words($remainder) : '');
         }
 
         if ($number < 1000000) {
-            $t = intval($number / 1000);
-            $r = $number % 1000;
-            $result = number_to_words($t) . ' RIBU';
-            return $result . ($r > 0 ? ' ' . number_to_words($r) : '');
+            $thousands = intval($number / 1000);
+            $remainder = $number % 1000;
+            $result = number_to_words($thousands) . ' RIBU';
+            return $result . ($remainder > 0 ? ' ' . number_to_words($remainder) : '');
         }
 
         if ($number < 1000000000) {
-            $m = intval($number / 1000000);
-            $r = $number % 1000000;
-            $result = number_to_words($m) . ' JUTA';
-            return $result . ($r > 0 ? ' ' . number_to_words($r) : '');
+            $millions = intval($number / 1000000);
+            $remainder = $number % 1000000;
+            $result = number_to_words($millions) . ' JUTA';
+            return $result . ($remainder > 0 ? ' ' . number_to_words($remainder) : '');
         }
 
         return 'Angka terlalu besar';
