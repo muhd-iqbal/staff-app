@@ -193,3 +193,84 @@ if (!function_exists('get_next_birthday')) {
         return $date->format('Y-m-d');
     }
 }
+if (!function_exists('number_to_words')) {
+    function number_to_words($number)
+    {
+        $ones = [
+            0 => '',
+            1 => 'SATU',
+            2 => 'DUA',
+            3 => 'TIGA',
+            4 => 'EMPAT',
+            5 => 'LIMA',
+            6 => 'ENAM',
+            7 => 'TUJUH',
+            8 => 'LAPAN',
+            9 => 'SEMBILAN'
+        ];
+
+        $tens = [
+            10 => 'SEPULUH',
+            11 => 'SEBELAS',
+            12 => 'DUA BELAS',
+            13 => 'TIGA BELAS',
+            14 => 'EMPAT BELAS',
+            15 => 'LIMA BELAS',
+            16 => 'ENAM BELAS',
+            17 => 'TUJUH BELAS',
+            18 => 'LAPAN BELAS',
+            19 => 'SEMBILAN BELAS',
+            20 => 'DUA PULUH',
+            30 => 'TIGA PULUH',
+            40 => 'EMPAT PULUH',
+            50 => 'LIMA PULUH',
+            60 => 'ENAM PULUH',
+            70 => 'TUJUH PULUH',
+            80 => 'LAPAN PULUH',
+            90 => 'SEMBILAN PULUH'
+        ];
+
+        $number = intval($number);
+
+        if ($number === 0) {
+            return 'NOL';
+        }
+
+        if ($number < 10) {
+            return $ones[$number];
+        }
+
+        if ($number < 20) {
+            return $tens[$number];
+        }
+
+        if ($number < 100) {
+            $t = intval($number / 10) * 10;
+            $o = $number % 10;
+            return $tens[$t] . ($o > 0 ? ' ' . $ones[$o] : '');
+        }
+
+        if ($number < 1000) {
+            $h = intval($number / 100);
+            $r = $number % 100;
+            $result = ($h === 1 ? 'SERATUS' : $ones[$h] + ' RATUS');
+            return $result . ($r > 0 ? ' ' . number_to_words($r) : '');
+        }
+
+        if ($number < 1000000) {
+            $t = intval($number / 1000);
+            $r = $number % 1000;
+            $result = number_to_words($t) . ' RIBU';
+            return $result . ($r > 0 ? ' ' . number_to_words($r) : '');
+        }
+
+        if ($number < 1000000000) {
+            $m = intval($number / 1000000);
+            $r = $number % 1000000;
+            $result = number_to_words($m) . ' JUTA';
+            return $result . ($r > 0 ? ' ' . number_to_words($r) : '');
+        }
+
+        return 'Angka terlalu besar';
+    }
+}
