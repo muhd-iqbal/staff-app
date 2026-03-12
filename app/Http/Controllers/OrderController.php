@@ -188,7 +188,7 @@ class OrderController extends Controller
     public function update_pickup(Order $order)
     {
         request()->validate([
-            'pickup_type' => [Rule::in(['Gurun', 'Guar', 'Kurier'])],
+            'pickup_type' => [Rule::in(['Gurun', 'Penghantaran', 'Pemasangan' , 'Pos'])],
         ]);
 
         $attributes['pickup'] = request('pickup_type');
