@@ -1,6 +1,12 @@
 <x-guest-layout>
     <div class="mx-auto p-3" style="max-width: 148mm; background: ">
-        <div class="text-right text-xl font-bold text-gray-500">RESIT</div>
+        <div class="text-right text-xl font-bold text-gray-500">
+    @if ($order->due > 0)
+        BIL
+    @else
+        RESIT
+    @endif
+</div>
         <div class="flex items-center justify-between mb-8 px-3">
 
             <div class="text-center w-full">
