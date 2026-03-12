@@ -52,8 +52,9 @@
                                         <select name="pickup_type"
                                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                                             <option value="Gurun">Gurun</option>
-                                            <option value="Guar">Guar</option>
-                                            <option value="Kurier">Kurier</option>
+                                            <option value="Penghantaran">Penghantaran</option>
+                                            <option value="Pemasangan">Pemasangan</option>
+                                            <option value="Pos">Pos</option>
                                         </select>
                                     </div>
                                     <div class="grid grid-cols-1">
