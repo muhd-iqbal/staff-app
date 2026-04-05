@@ -28,6 +28,7 @@ class Controller extends BaseController
         'toyyibpay' => 'FPX - Toyyibpay',
         'lainlain' => 'Lain-Lain',
         'cajep' => 'Caj Eperolehan',
+        'eper' => 'Eperolehan',
     ];
 
     //dropdown states
