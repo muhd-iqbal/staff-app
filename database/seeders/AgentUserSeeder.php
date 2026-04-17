@@ -20,7 +20,7 @@ class AgentUserSeeder extends Seeder
                 'id' => 1,
                 'name' => 'Admin',
                 'icno' => '000000000000',
-                'email' => 'admin@inspirazs.com',
+                'email' => 'admininspirazs@gmail.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
                 'phone' => '0000000000',
                 'department_id' => 1,
