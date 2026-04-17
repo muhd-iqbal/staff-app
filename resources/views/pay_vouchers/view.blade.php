@@ -83,7 +83,7 @@
                         <div class="text-lg">{{ $branch->address }}</div>
                         <div class="text-lg">Contact: 013-509 3135
                         <!--<div class="text-lg">Contact: {{ phone_format($branch->phone_1) }} -->/
-                            admin@inspirazs.com.my</div>
+                            admininspirazs@gmail.com</div>
                         {{-- <div class="text-lg">Phone:0199290219 Emel: 2sdmfnsd@kskfd.cppo</div> --}}
                     </div>
                     <div class="grid grid-cols-3 w-full mt-5">
