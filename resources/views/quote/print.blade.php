@@ -41,7 +41,7 @@
                                     
                                     013-509 3135
                                 </div>
-                                <div class="text-base font-bold">EMEL: admin@inspirazs.com.my</div>
+                                <div class="text-base font-bold">EMEL: admininspirazs@gmail.com</div>
                             </div>
                         </div>
 
