@@ -34,7 +34,8 @@
                     <div class="flex gap-10 w-2/3 mb-5">
                         <x-application-logo class="block h-24 w-auto fill-current text-gray-600" />
                         <div>
-                            <div class="uppercase text-xl font-bold">{{ $order->branch->name }}<p1>202101005300 (1405599-V)</p1></div>
+                            <div class="uppercase text-xl font-bold">{{ $order->branch->name }}</div>
+                                <div class="uppercase text-base font-bold">202101005300 (1405599-V)</div>
                             <div class="uppercase text-base font-bold">Lot 15, Bangunan PKNK Kawasan Perindustrian Ringan Gurun, Kilang Ketapan, 08300 Gurun, Kedah</div>
                             <div class="text-base font-bold">Tel: 013-509 3135 / Emel:
                                 admininspirazs@gmail.com</div>
