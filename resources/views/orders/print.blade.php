@@ -10,7 +10,8 @@
         <div class="flex items-center justify-between mb-8 px-3">
 
             <div class="text-center w-full">
-                <span class="font-bold text-2xl uppercase">{{ strtoupper($order->branch->name) }}</span>(1405599-V)<br />
+                <span class="font-bold text-2xl uppercase">{{ strtoupper($order->branch->name) }}</span><br />
+                202101005300 (1405599-V)<br />
                 LOT 15, BANGUNAN PKNK KAWASAN PERINDUSTRIAN RINGAN GURUN, KILANG KETAPAN, 08300 GURUN, KEDAH<br />
                 Hubungi: 013-509 3135 / admininspirazs@gmail.com<br />
             </div>
