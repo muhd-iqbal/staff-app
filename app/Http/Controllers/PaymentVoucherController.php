@@ -20,6 +20,7 @@ class PaymentVoucherController extends Controller
     public function create()
     {
         $attr = request()->validate([
+            'payee_company' => 'required|max:255',
             'payee_name' => 'required|max:255',
             'payee_phone' => 'required|numeric',
             'payee_bank' => 'nullable|max:100',
@@ -66,6 +67,7 @@ class PaymentVoucherController extends Controller
         } else {
 
             $attr = request()->validate([
+                'payee_company' => 'required|max:255',
                 'payee_name' => 'required|max:255',
                 'payee_phone' => 'required|numeric',
                 'payee_bank' => 'nullable|max:100',
@@ -82,15 +84,7 @@ class PaymentVoucherController extends Controller
             return redirect('/payment-vouchers/' . $voucher->id)->with('success', 'Baucer dikemaskini.');
         }
     }
-public function destroy(PaymentVoucher $voucher)
-{
-    if ($voucher->is_received) {
-        return back()->with('forbidden', 'Baucer yang telah dibayar tidak boleh dipadam.');
-    } else {
-        $voucher->delete();
-        return back()->with('success', 'Baucer telah dipadam.');
-    }
-}
+
     public function approve(PaymentVoucher $voucher)
     {
         if ($voucher->is_received) {
@@ -133,5 +127,15 @@ public function destroy(PaymentVoucher $voucher)
         $voucher->update($attr);
 
         return back()->with('success', 'Lamparan dimuatnaik');
+    }
+
+    public function destroy(PaymentVoucher $voucher)
+    {
+        if ($voucher->is_received) {
+            return back()->with('forbidden', 'Baucer yang telah dibayar tidak boleh dipadam.');
+        } else {
+            $voucher->delete();
+            return back()->with('success', 'Baucer telah dipadam.');
+        }
     }
 }
