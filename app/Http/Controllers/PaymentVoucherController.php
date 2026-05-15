@@ -82,7 +82,15 @@ class PaymentVoucherController extends Controller
             return redirect('/payment-vouchers/' . $voucher->id)->with('success', 'Baucer dikemaskini.');
         }
     }
-
+public function destroy(PaymentVoucher $voucher)
+{
+    if ($voucher->is_received) {
+        return back()->with('forbidden', 'Baucer yang telah dibayar tidak boleh dipadam.');
+    } else {
+        $voucher->delete();
+        return back()->with('success', 'Baucer telah dipadam.');
+    }
+}
     public function approve(PaymentVoucher $voucher)
     {
         if ($voucher->is_received) {
