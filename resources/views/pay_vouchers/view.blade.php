@@ -161,16 +161,16 @@
                             </div>
                         </div>
                         <div>
-                            <div>Approved By</div>
+                           <div>Approved By</div>
                             <div class="w-full border-b-2 mt-5">&nbsp;</div>
                             <div class="">
-                                <input type="text" class="px-1 py-1 w-full" value="{{ $approved_by ? $approved_by->name : '' }}" />
+                                <input type="text" class="px-1 py-1 w-full border-none bg-transparent" value="{{ $approved_by ? $approved_by->name : '' }}" />
                             </div>
                             <div class="">
-                                <input type="text" class="px-1 py-1 w-full" placeholder="IC No:" value="{{ $approved_by ? ic_format($approved_by->icno) : '' }}" />
+                                <input type="text" class="px-1 py-1 w-full border-none bg-transparent" placeholder="IC No:" value="{{ $approved_by ? ic_format($approved_by->icno) : '' }}" />
                             </div>
                             <div class="">
-                                <input type="text" class="px-1 py-1 w-full" placeholder="Date:" value="{{ $voucher->approved_date ? date('d/m/Y', strtotime($voucher->approved_date)) : '' }}" />
+                                <input type="text" class="px-1 py-1 w-full border-none bg-transparent" placeholder="Date:" value="{{ $voucher->approved_date ? date('d/m/Y', strtotime($voucher->approved_date)) : '' }}" />
                             </div>
                         </div>
                         <div>
