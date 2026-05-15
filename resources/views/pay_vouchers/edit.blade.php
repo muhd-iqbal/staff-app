@@ -23,6 +23,8 @@
                                 class="mb-2" />
                             <x-form.input name="payee_acc_no" label="No Akaun" value="{{ $voucher->payee_acc_no }}"
                                 class="mb-2" />
+                            <x-form.input name="date" label="Date" type="date"
+                                value="{{ $voucher->date }}" class="mb-2" />
                             <x-form.input name="due_date" label="Due Date" type="date"
                                 value="{{ $voucher->due_date }}" class="mb-2" />
                             <x-form.input name="payment_method" label="Kaedah Pembayaran"
