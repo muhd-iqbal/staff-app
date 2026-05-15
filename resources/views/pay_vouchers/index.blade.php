@@ -65,6 +65,11 @@
                                                 class="bg-blue-500 p-1 px-2 text-white rounded-md hover:bg-blue-700">Lihat</a>
                                             <a href="/payment-vouchers/{{ $voucher->id }}/edit"
                                                 class="bg-red-500 p-1 px-2 text-white rounded-md hover:bg-red-700">Edit</a>
+                                            <form action="/payment-vouchers/{{ $voucher->id }}" method="POST" style="display:inline;" onsubmit="return confirm('Adakah anda pasti ingin memadam?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-gray-700 p-1 px-2 text-white rounded-md hover:bg-gray-900">Padam</button>
+                                            </form>
                                         </td>
                                         <td class="p-0 w-min border font-bold">
                                             @if ($voucher->is_received)
