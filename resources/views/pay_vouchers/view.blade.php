@@ -102,6 +102,10 @@
                         <div class="col-span-1 grid grid-cols-3">
                             <div class="col-span-1">PV No:</div>
                             <div class="border col-span-2 px-2">{{ pay_vo_num($voucher->id) }}</div>
+                            <div class="col-span-1">Date:</div>
+                            <div class="border col-span-2 px-2">
+                                {{ $voucher->date ? date('d/m/Y', strtotime($voucher->date)) : '' }}
+                            </div>
                             <div class="col-span-1">Due Date:</div>
                             <div class="border col-span-2 px-2">
                                 {{ $voucher->due_date ? date('d/m/Y', strtotime($voucher->due_date)) : '' }}
