@@ -13,6 +13,8 @@
                         @csrf
                         @method('PATCH')
                         <div class="grid grid-col-2">
+                            <x-form.input name="payee_company" label="Nama Syarikat" value="{{ $voucher->payee_company }}"
+                                class="mb-2" />
                             <x-form.input name="payee_name" label="Nama" value="{{ $voucher->payee_name }}"
                                 class="mb-2" />
                             <x-form.input name="payee_phone" label="Telefon" value="{{ $voucher->payee_phone }}"
