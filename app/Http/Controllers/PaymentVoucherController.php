@@ -26,6 +26,7 @@ class PaymentVoucherController extends Controller
             'payee_bank' => 'nullable|max:100',
             'payee_acc_no' => 'nullable|max:100',
             'payment_method' => 'nullable',
+            'date' => 'nullable|date',
             'due_date' => 'nullable|date',
             'remarks' => 'nullable',
         ]);
@@ -73,6 +74,7 @@ class PaymentVoucherController extends Controller
                 'payee_bank' => 'nullable|max:100',
                 'payee_acc_no' => 'nullable|max:100',
                 'payment_method' => 'nullable',
+                'date' => 'nullable|date',                       
                 'due_date' => 'nullable|date',
                 'remarks' => 'nullable',
             ]);
