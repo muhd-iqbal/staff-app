@@ -88,6 +88,8 @@
                     </div>
                     <div class="grid grid-cols-3 w-full mt-5">
                         <div class="col-span-2 grid grid-cols-4">
+                            <div class="col-span-1">Company Name:</div>
+                            <div class="border col-span-3 mr-5 px-2">{{ $voucher->payee_company ?? '' }}</div>
                             <div class="col-span-1">Payee Name:</div>
                             <div class="border col-span-3 mr-5 px-2">{{ $voucher->payee_name }}</div>
                             <div class="col-span-1">Phone No:</div>
