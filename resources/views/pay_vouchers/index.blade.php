@@ -13,8 +13,6 @@
             <form action="/payment-vouchers/add" method="POST">
                 @csrf
                 <div class="grid grid-col-2">
-                    <x-form.input name="payee_company" label="Nama Syarikat" value="{{ old('payee_company') }}" class="mb-2"
-                        tags="required" />
                     <x-form.input name="payee_name" label="Nama" value="{{ old('payee_name') }}" class="mb-2"
                         tags="required" />
                     <x-form.input name="payee_phone" label="Telefon" value="{{ old('payee_phone') }}"
@@ -22,8 +20,6 @@
                     <x-form.input name="payee_bank" label="Bank" value="{{ old('payee_bank') }}"
                         class="mb-2" />
                     <x-form.input name="payee_acc_no" label="No Akaun" value="{{ old('payee_acc_no') }}"
-                        class="mb-2" />
-                    <x-form.input name="date" label="Date" type="date" value="{{ old('date') }}"
                         class="mb-2" />
                     <x-form.input name="due_date" label="Due Date" type="date" value="{{ old('due_date') }}"
                         class="mb-2" />
