@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('payee_phone');
             $table->string('payee_bank')->nullable();
             $table->string('payee_acc_no')->nullable();
-            $table->date('date')->nullable->change()();
             $table->date('due_date')->nullable();
             $table->string('payment_method')->nullable();
             $table->integer('total')->default(0);
@@ -42,7 +41,6 @@ return new class extends Migration
             $table->string('title');
             $table->integer('amount');
             $table->timestamps();
-            $table->dropColumn('date');
         });
     }
 
