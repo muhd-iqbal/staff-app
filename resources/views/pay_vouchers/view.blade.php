@@ -83,13 +83,12 @@
                         <div class="text-lg">{{ $branch->address }}</div>
                         <div class="text-lg">Contact: 013-509 3135
                         <!--<div class="text-lg">Contact: {{ phone_format($branch->phone_1) }} -->/
+                            admin@inspirazs.com.my</div>
                             admininspirazs@gmail.com</div>
                         {{-- <div class="text-lg">Phone:0199290219 Emel: 2sdmfnsd@kskfd.cppo</div> --}}
                     </div>
                     <div class="grid grid-cols-3 w-full mt-5">
                         <div class="col-span-2 grid grid-cols-4">
-                            <div class="col-span-1">Company Name:</div>
-                            <div class="border col-span-3 mr-5 px-2">{{ $voucher->payee_company ?? '' }}</div>
                             <div class="col-span-1">Payee Name:</div>
                             <div class="border col-span-3 mr-5 px-2">{{ $voucher->payee_name }}</div>
                             <div class="col-span-1">Phone No:</div>
@@ -102,10 +101,6 @@
                         <div class="col-span-1 grid grid-cols-3">
                             <div class="col-span-1">PV No:</div>
                             <div class="border col-span-2 px-2">{{ pay_vo_num($voucher->id) }}</div>
-                            <div class="col-span-1">Date:</div>
-                            <div class="border col-span-2 px-2">
-                                {{ $voucher->date ? date('d/m/Y', strtotime($voucher->date)) : '' }}
-                            </div>
                             <div class="col-span-1">Due Date:</div>
                             <div class="border col-span-2 px-2">
                                 {{ $voucher->due_date ? date('d/m/Y', strtotime($voucher->due_date)) : '' }}
@@ -167,14 +162,11 @@
                         <div>
                             <div>Approved By</div>
                             <div class="w-full border-b-2 mt-5">&nbsp;</div>
+                            <div class="">{{ $approved_by ? $approved_by->name : '' }}</div>
                             <div class="">
-                                <input type="text" class="px-1 py-1 w-full border-0 outline-none focus:outline-none bg-transparent" value="{{ $approved_by ? $approved_by->name : '' }}" />
-                            </div>
+                                {{ $approved_by ? 'IC No: ' . ic_format($approved_by->icno) : '' }}</div>
                             <div class="">
-                                <input type="text" class="px-1 py-1 w-full border-0 outline-none focus:outline-none bg-transparent" placeholder="IC No:" value="{{ $approved_by ? ic_format($approved_by->icno) : '' }}" />
-                            </div>
-                            <div class="">
-                                <input type="text" class="px-1 py-1 w-full border-0 outline-none focus:outline-none bg-transparent" placeholder="Date:" value="{{ $voucher->approved_date ? date('d/m/Y', strtotime($voucher->approved_date)) : '' }}" />
+                                {{ $voucher->approved_date ? 'Date: ' . date('d/m/Y', strtotime($voucher->approved_date)) : '' }}
                             </div>
                         </div>
                         <div>
