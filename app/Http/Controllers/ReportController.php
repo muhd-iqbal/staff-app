@@ -116,6 +116,47 @@ class ReportController extends Controller
         return $daily;
     }
 
+    private function buildPaymentMethodBreakdown(?string $start, ?string $end, $branch = null, bool $old = false)
+    {
+        $breakdown = collect();
+
+        if (!$start && !$end) {
+            return $breakdown;
+        }
+
+        // Normalize dates
+        if ($start && !$end) {
+            $end = $start;
+        } elseif ($end && !$start) {
+            $start = $end;
+        }
+
+        try {
+            $sd = date('Y-m-d', strtotime($start));
+            $ed = date('Y-m-d', strtotime($end));
+        } catch (\Throwable $e) {
+            return $breakdown;
+        }
+
+        if (!$sd || !$ed) {
+            return $breakdown;
+        }
+
+        // Query payments grouped by payment method within date range
+        $query = Payment::selectRaw('payment_method, COUNT(*) as count, SUM(amount) as total')
+            ->whereBetween(DB::raw('DATE(created_at)'), [$sd, $ed]);
+
+        if ($branch && !$old) {
+            $query->where('branch_id', $branch);
+        }
+
+        $breakdown = $query->groupBy('payment_method')
+            ->orderBy('total', 'DESC')
+            ->get();
+
+        return $breakdown;
+    }
+
     public function yearly($y)
     {
         $dbData = Order::select(
@@ -148,6 +189,22 @@ class ReportController extends Controller
             'dailySales' => $dailySales,
         ]);
     }
+
+    // Build dailySales if date range provided (current POS)
+        $start = request()->query('start_date');
+        $end = request()->query('end_date');
+        $dailySales = $this->buildDailySalesCollection($start, $end, null, false);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, false);
+
+        return view('reports.index', [
+            'sales' => $sales,
+            'branches' => Branch::all(),
+            'current' => 1,
+            'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
+        ]);
+    }
+
 
     public function branch_yearly($y, $branch)
     {
@@ -183,6 +240,22 @@ class ReportController extends Controller
         ]);
     }
 
+// Build dailySales for this branch if date range provided
+        $start = request()->query('start_date');
+        $end = request()->query('end_date');
+        $dailySales = $this->buildDailySalesCollection($start, $end, $branch, false);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, false);
+
+        return view('reports.index', [
+            'sales' => $sales,
+            'branches' => Branch::all(),
+            'curr_branch' => Branch::find($branch),
+            'current' => 1,
+            'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
+        ]);
+    }
+
     public function old_index()
     {
         return redirect('/old-reports/' . date('Y'));
@@ -212,6 +285,21 @@ class ReportController extends Controller
             'branches' => Branch::all(),
             'current' => 0,
             'dailySales' => $dailySales,
+        ]);
+    }
+
+// Build dailySales from old POS data if date range provided
+        $start = request()->query('start_date');
+        $end = request()->query('end_date');
+        $dailySales = $this->buildDailySalesCollection($start, $end, null, true);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, true);
+
+        return view('reports.index', [
+            'sales' => $sales,
+            'branches' => Branch::all(),
+            'current' => 0,
+            'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
         ]);
     }
 
@@ -269,6 +357,22 @@ class ReportController extends Controller
             'curr_branch' => Branch::find($branch),
             'current' => 0,
             'dailySales' => $dailySales,
+        ]);
+    }
+}
+// Build dailySales for old branch if date range provided
+        $start = request()->query('start_date');
+        $end = request()->query('end_date');
+        $dailySales = $this->buildDailySalesCollection($start, $end, $branch, true);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, true);
+
+        return view('reports.index', [
+            'sales' => $sales,
+            'branches' => Branch::all(),
+            'curr_branch' => Branch::find($branch),
+            'current' => 0,
+            'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
         ]);
     }
 }
