@@ -174,7 +174,7 @@
                         @endisset
                     </div>
 
-                    <!-- Payment method breakdown table -->
+                                        <!-- Payment method breakdown table -->
                     <div class="text-center mt-5">
                         <h2 class="text-lg font-semibold">
                             Pecahan Kaedah Pembayaran
@@ -186,7 +186,7 @@
                             @endif
                         </h2>
                         <div class="text-sm text-gray-600 mt-1">
-                            <span class="italic">(Menunjukkan jumlah pembayaran yang diterima)</span>
+                            <span class="italic">(Menunjukkan jumlah jualan mengikut kaedah pembayaran)</span>
                         </div>
 
                         @isset($paymentBreakdown)
@@ -239,7 +239,6 @@
                             <div class="mt-3 text-gray-600">Pilih julat tarikh dan tekan Cari untuk melihat pecahan pembayaran.</div>
                         @endisset
                     </div>
-
                     <div class="mt-5">
                         <div>POS terkini bermula {{ date("d M Y", strtotime(config('app.pos_start'))) }}</div>
                     </div>
