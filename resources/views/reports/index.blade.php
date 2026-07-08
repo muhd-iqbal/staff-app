@@ -185,6 +185,9 @@
                                 @if(request('end_date')) {{ date('d M Y', strtotime(request('end_date'))) }} @else - @endif
                             @endif
                         </h2>
+                        <div class="text-sm text-gray-600 mt-1">
+                            <span class="italic">(Menunjukkan jumlah pembayaran yang diterima)</span>
+                        </div>
 
                         @isset($paymentBreakdown)
                             @if ($paymentBreakdown->count() > 0)
@@ -208,14 +211,17 @@
                                                 'eper' => 'Eperolehan',
                                             ];
                                         @endphp
-                                        @foreach ($paymentBreakdown as $payment)
-                                            <tr>
-                                                <td class="border">
-                                                    {{ $paymentMethods[$payment->payment_method] ?? $payment->payment_method }}
-                                                </td>
-                                                <td class="border text-center">{{ $payment->count }}</td>
-                                                <td class="border">{{ number_format($payment->total / 100, 2) }}</td>
-                                            </tr>
+                                        @foreach ($paymentMethods as $key => $label)
+                                            @php
+                                                $methodData = $paymentBreakdown->firstWhere('payment_method', $key);
+                                            @endphp
+                                            @if ($methodData)
+                                                <tr>
+                                                    <td class="border">{{ $label }}</td>
+                                                    <td class="border text-center">{{ $methodData->count }}</td>
+                                                    <td class="border">RM {{ number_format($methodData->total / 100, 2) }}</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                     <tfoot>
