@@ -174,6 +174,66 @@
                         @endisset
                     </div>
 
+                    <!-- Payment method breakdown table -->
+                    <div class="text-center mt-5">
+                        <h2 class="text-lg font-semibold">
+                            Pecahan Kaedah Pembayaran
+                            @if(request('start_date') || request('end_date'))
+                                -
+                                @if(request('start_date')) {{ date('d M Y', strtotime(request('start_date'))) }} @else - @endif
+                                hingga
+                                @if(request('end_date')) {{ date('d M Y', strtotime(request('end_date'))) }} @else - @endif
+                            @endif
+                        </h2>
+
+                        @isset($paymentBreakdown)
+                            @if ($paymentBreakdown->count() > 0)
+                                <table class="w-full border border-collapse mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th class="border">Kaedah Pembayaran</th>
+                                            <th class="border">Bilangan</th>
+                                            <th class="border">Jumlah RM</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $paymentMethods = [
+                                                'tunai' => 'Tunai',
+                                                'transfer' => 'Online Transfer',
+                                                'cek' => 'Cek',
+                                                'toyyibpay' => 'FPX - Toyyibpay',
+                                                'lainlain' => 'Lain-Lain',
+                                                'cajep' => 'Caj Eperolehan',
+                                                'eper' => 'Eperolehan',
+                                            ];
+                                        @endphp
+                                        @foreach ($paymentBreakdown as $payment)
+                                            <tr>
+                                                <td class="border">
+                                                    {{ $paymentMethods[$payment->payment_method] ?? $payment->payment_method }}
+                                                </td>
+                                                <td class="border text-center">{{ $payment->count }}</td>
+                                                <td class="border">{{ number_format($payment->total / 100, 2) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="font-semibold">
+                                            <th class="border">Jumlah</th>
+                                            <th class="border text-center">{{ $paymentBreakdown->sum('count') }}</th>
+                                            <th class="border">RM {{ number_format($paymentBreakdown->sum('total') / 100, 2) }}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            @else
+                                <div class="mt-3 text-gray-600">Tiada data pembayaran untuk julat yang dipilih.</div>
+                            @endif
+                        @else
+                            <div class="mt-3 text-gray-600">Pilih julat tarikh dan tekan Cari untuk melihat pecahan pembayaran.</div>
+                        @endisset
+                    </div>
+
                     <div class="mt-5">
                         <div>POS terkini bermula {{ date("d M Y", strtotime(config('app.pos_start'))) }}</div>
                     </div>
