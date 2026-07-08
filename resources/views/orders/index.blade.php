@@ -38,13 +38,18 @@
                             </div>
                             <div class="flex-grow"></div>
 
-                            <div class="flex md:flex-row-reverse">
+                            <div class="flex md:flex-row-reverse gap-2">
                                 <form action="/orders">
                                     <input type="text" name="search" placeholder="Carian..."
                                         class="items-center mx-1 rounded-lg shadow-xl font-medium px-4 py-2"
                                         value="{{ request('search') }}">
                                     <a href="/orders" class="text-2xl" title="Tunjuk semua">&#8635;</a>
                                 </form>
+                                <a href="/orders?view_all=true{{ request('search') ? '&search=' . request('search') : '' }}"
+                                    class="items-center bg-blue-500 hover:bg-blue-700 rounded-lg shadow-xl font-medium text-white px-4 py-2"
+                                    title="Papar semua pesanan dalam satu halaman">
+                                    {{ $viewAll ? '📋 Papar Berkumpulan' : '📄 Papar Semua' }}
+                                </a>
                             </div>
                         </div>
                         <div class="w-full xl:w-full mb-12 xl:mb-0 px-4 mx-auto">
@@ -56,35 +61,35 @@
                                         <thead>
                                             <tr>
                                             <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     {{ __('Bil') }}
                                                 </th>
                                                  <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     {{ __('Tarikh Order') }}
                                                 </th>
                                                 <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     {{ __('No') }}
                                                 </th>
                                                 <th
-                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whi[...]
                                                     {{ __('Pelanggan') }}
                                                 </th>
                                                 <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     {{ __('Status') }}
                                                 </th>
                                                 <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     {{ __('Amaun') }}
                                                 </th>
                                                 <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     {{ __('Due') }}
                                                 </th>
                                                 <th
-                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                                                    class="bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-base uppercase border-l-0 border-r-0 whitespa[...]
                                                     &nbsp;
                                                 </th>
                                             </tr>
@@ -103,7 +108,13 @@
                                                         }
 
                                                     @endphp
-                                                    <td>{{ ($orders->currentpage() - 1) * $orders->perpage() + $loop->index + 1 }}</td>
+                                                    <td>
+                                                        @if ($viewAll)
+                                                            {{ $loop->index + 1 }}
+                                                        @else
+                                                            {{ ($orders->currentpage() - 1) * $orders->perpage() + $loop->index + 1 }}
+                                                        @endif
+                                                    </td>
                                                     <td id="od"
                                                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                                                             {{ date('d-F-Y', strtotime($order->created_at)) }}
@@ -183,28 +194,28 @@
                                                                 <div
                                                                     class="inline-flex items-center bg-purple-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
                                                                     <span
-                                                                        class="inline-flex text-white bg-purple-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
+                                                                        class="inline-flex text-white bg-purple-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approve[...]
                                                                 </div>
                                                             @endif
                                                             @if ($is_approved)
                                                                 <div
                                                                     class="inline-flex items-center bg-yellow-700 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
                                                                     <span
-                                                                        class="inline-flex text-white bg-yellow-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approved }}</span>
+                                                                        class="inline-flex text-white bg-yellow-700 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_approve[...]
                                                                 </div>
                                                             @endif
                                                             @if ($is_printing)
                                                                 <div
                                                                     class="inline-flex items-center bg-purple-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
                                                                     <span
-                                                                        class="inline-flex text-white bg-purple-600 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_printing }}</span>
+                                                                        class="inline-flex text-white bg-purple-600 rounded-full h-6 w-6 justify-center items-center text-base">{{ $is_printing }}</span[...]
                                                                 </div>
                                                             @endif
                                                             @if ($is_done)
                                                                 <div
                                                                     class="inline-flex items-center bg-green-600 leading-none text-white rounded-full p-1 shadow text-sm font-bold">
                                                                     <span
-                                                                        class="inline-flex text-white bg-green-600 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_done }}</span>
+                                                                        class="inline-flex text-white bg-green-600 rounded-full h-6 w-6 justify-center items-center text-base font-bold">{{ $is_done }}<[...]
                                                                 </div>
                                                             @endif
                                                         @else
@@ -231,7 +242,9 @@
                                     </table>
                                 </div>
                             </div>
-                            {{ $orders->withQueryString()->links() }}
+                            @if (!$viewAll)
+                                {{ $orders->withQueryString()->links() }}
+                            @endif
                         </div>
                         <div class="m-5 grid md:grid-cols-2">
                             <div>
