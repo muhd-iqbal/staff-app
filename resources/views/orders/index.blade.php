@@ -45,11 +45,6 @@
                                         value="{{ request('search') }}">
                                     <a href="/orders" class="text-2xl" title="Tunjuk semua">&#8635;</a>
                                 </form>
-                                <a href="/orders?view_all=true{{ request('search') ? '&search=' . request('search') : '' }}"
-                                    class="items-center bg-blue-500 hover:bg-blue-700 rounded-lg shadow-xl font-medium text-white px-4 py-2"
-                                    title="Papar semua pesanan dalam satu halaman">
-                                    {{ $viewAll ? '📋 Papar Berkumpulan' : '📄 Papar Semua' }}
-                                </a>
                             </div>
                         </div>
                         <div class="w-full xl:w-full mb-12 xl:mb-0 px-4 mx-auto">
