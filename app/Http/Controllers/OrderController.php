@@ -51,11 +51,15 @@ class OrderController extends Controller
             }
         }
 
+        // Check if user wants to view all orders or paginated
+        $viewAll = request('view_all') === 'true';
+        
         return view('orders.index', [
-            'orders' => $orders->with('branch')->paginate(20),
+            'orders' => $viewAll ? $orders->with('branch')->get() : $orders->with('branch')->paginate(20),
             'branches' => Branch::get(),
             'dues' => $orders->where('date', '>=',config('app.pos_start'))->sum('due'),
             'to_be_updated' => OrderItem::where('price', 0)->where('created_at', '>=', date('Y-m-d', strtotime(config('app.pos_start'))) . ' 00:00:00')->count(),
+            'viewAll' => $viewAll,
         ]);
     }
 
@@ -67,9 +71,13 @@ class OrderController extends Controller
         if (request('branch')) {
             $orders->where('branch_id', request('branch'));
         }
+        
+        $viewAll = request('view_all') === 'true';
+        
         return view('orders.no_pickup', [
-            'orders' => $orders->with(['branch', 'customer'])->orderBy('id', 'DESC')->paginate(20),
+            'orders' => $viewAll ? $orders->with(['branch', 'customer'])->orderBy('id', 'DESC')->get() : $orders->with(['branch', 'customer'])->orderBy('id', 'DESC')->paginate(20),
             'branches' => Branch::get(),
+            'viewAll' => $viewAll,
         ]);
     }
 
@@ -77,10 +85,13 @@ class OrderController extends Controller
     {
         $orders = Order::where('branch_id', '=', $branch)->with('order_item')->orderBy('isDone', 'ASC')->orderBy('created_at', 'DESC');
 
+        $viewAll = request('view_all') === 'true';
+
         return view('orders.index', [
-            'orders' => $orders->paginate(20),
+            'orders' => $viewAll ? $orders->get() : $orders->paginate(20),
             'branches' => Branch::get(),
             'dues' => Order::where('date', '>=', config('app.pos_start'))->where('branch_id', $branch)->sum('due'),
+            'viewAll' => $viewAll,
         ]);
     }
 
