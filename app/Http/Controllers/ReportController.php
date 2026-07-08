@@ -119,6 +119,7 @@ class ReportController extends Controller
 
     /**
      * Helper to build payment breakdown by method for a date range
+     * Shows breakdown of payments received grouped by payment method
      */
     private function buildPaymentMethodBreakdown(?string $start, ?string $end, $branch = null, bool $old = false)
     {
