@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -116,6 +117,50 @@ class ReportController extends Controller
         return $daily;
     }
 
+    /**
+     * Helper to build payment breakdown by method for a date range
+     */
+    private function buildPaymentMethodBreakdown(?string $start, ?string $end, $branch = null, bool $old = false)
+    {
+        $breakdown = collect();
+
+        if (!$start && !$end) {
+            return $breakdown;
+        }
+
+        // Normalize dates
+        if ($start && !$end) {
+            $end = $start;
+        } elseif ($end && !$start) {
+            $start = $end;
+        }
+
+        try {
+            $sd = date('Y-m-d', strtotime($start));
+            $ed = date('Y-m-d', strtotime($end));
+        } catch (\Throwable $e) {
+            return $breakdown;
+        }
+
+        if (!$sd || !$ed) {
+            return $breakdown;
+        }
+
+        // Query payments grouped by payment method within date range
+        $query = Payment::selectRaw('payment_method, COUNT(*) as count, SUM(amount) as total')
+            ->whereBetween(DB::raw('DATE(created_at)'), [$sd, $ed]);
+
+        if ($branch && !$old) {
+            $query->where('branch_id', $branch);
+        }
+
+        $breakdown = $query->groupBy('payment_method')
+            ->orderBy('total', 'DESC')
+            ->get();
+
+        return $breakdown;
+    }
+
     public function yearly($y)
     {
         $dbData = Order::select(
@@ -140,12 +185,14 @@ class ReportController extends Controller
         $start = request()->query('start_date');
         $end = request()->query('end_date');
         $dailySales = $this->buildDailySalesCollection($start, $end, null, false);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, false);
 
         return view('reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
             'current' => 1,
             'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
         ]);
     }
 
@@ -173,6 +220,7 @@ class ReportController extends Controller
         $start = request()->query('start_date');
         $end = request()->query('end_date');
         $dailySales = $this->buildDailySalesCollection($start, $end, $branch, false);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, false);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -180,6 +228,7 @@ class ReportController extends Controller
             'curr_branch' => Branch::find($branch),
             'current' => 1,
             'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
         ]);
     }
 
@@ -206,12 +255,14 @@ class ReportController extends Controller
         $start = request()->query('start_date');
         $end = request()->query('end_date');
         $dailySales = $this->buildDailySalesCollection($start, $end, null, true);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, true);
 
         return view('reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
             'current' => 0,
             'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
         ]);
     }
 
@@ -262,6 +313,7 @@ class ReportController extends Controller
         $start = request()->query('start_date');
         $end = request()->query('end_date');
         $dailySales = $this->buildDailySalesCollection($start, $end, $branch, true);
+        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, true);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -269,6 +321,7 @@ class ReportController extends Controller
             'curr_branch' => Branch::find($branch),
             'current' => 0,
             'dailySales' => $dailySales,
+            'paymentBreakdown' => $paymentBreakdown,
         ]);
     }
 }
