@@ -119,7 +119,7 @@ class ReportController extends Controller
 
     /**
      * Helper to build payment breakdown by method for a date range
-     * Shows breakdown of payments received grouped by payment method
+     * Groups orders by payment method from their first payment
      */
     private function buildPaymentMethodBreakdown(?string $start, ?string $end, $branch = null, bool $old = false)
     {
@@ -147,17 +147,28 @@ class ReportController extends Controller
             return $breakdown;
         }
 
-        // Query payments grouped by payment method within date range
-        $query = Payment::selectRaw('payment_method, COUNT(*) as count, SUM(amount) as total')
-            ->whereBetween(DB::raw('DATE(created_at)'), [$sd, $ed]);
+        if (!$old) {
+            // Query orders with their payment method from the first/earliest payment
+            $sql = "
+                SELECT 
+                    COALESCE(MIN(p.payment_method), 'tunai') as payment_method,
+                    COUNT(DISTINCT o.id) as count,
+                    SUM(o.grand_total) as total
+                FROM orders o
+                LEFT JOIN payments p ON o.id = p.order_id
+                WHERE DATE(o.date) >= ? AND DATE(o.date) <= ?
+                " . ($branch ? "AND o.branch_id = ? " : "") . "
+                GROUP BY COALESCE(MIN(p.payment_method), 'tunai')
+                ORDER BY total DESC
+            ";
 
-        if ($branch && !$old) {
-            $query->where('branch_id', $branch);
+            $params = [$sd, $ed];
+            if ($branch) {
+                $params[] = $branch;
+            }
+
+            $breakdown = collect(DB::select($sql, $params));
         }
-
-        $breakdown = $query->groupBy('payment_method')
-            ->orderBy('total', 'DESC')
-            ->get();
 
         return $breakdown;
     }
