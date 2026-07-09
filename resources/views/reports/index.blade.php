@@ -211,9 +211,9 @@
                                                 'eper' => 'Eperolehan',
                                             ];
                                         @endphp
-                                        @foreach ($payMethods as $key => $label)
+                                        @foreach ($paymentMethods as $key => $label)
                                             @php
-                                                $methodData = $paymentBreakdown->firstWhere('pay_method', $key);
+                                                $methodData = $paymentBreakdown->firstWhere('payment_method', $key);
                                             @endphp
                                             @if ($methodData)
                                                 <tr>
