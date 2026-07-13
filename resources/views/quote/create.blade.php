@@ -52,7 +52,7 @@
                                             <option selected disabled>Pilihan Pelanggan..</option>
                                             @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">
-                                                    {{ $customer->name . ' - ' . $customer->phone }}</option>
+                                                     {{ $customer->name . ' - ' . ($customer->company_name ?? '-') . ' - ' . $customer->phone }}</option>
                                             @endforeach
                                         </x-form.select>
                                     </div>
