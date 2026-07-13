@@ -35,7 +35,7 @@
                                     <div class="flex gap-2">
                                         <div class="flex-none">
                                             <a href="/customers/create" id="" title="Tambah Pelanggan"
-                                                class="h-10 inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest [...]"
+                                                class="h-10 inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                                                 +</a>
                                         </div>
                                         <div class="flex-grow"></div>
@@ -48,12 +48,11 @@
 
                                     <div class="grid grid-cols-6 gap-2 mt-5">
 
-                                        <x-form.select id="customer_id" name="customer_id" label="Nama Pelanggan" class="py-3">
+                                        <x-form.select name="customer_id" label="Nama Pelanggan" class="py-3">
                                             <option selected disabled>Pilihan Pelanggan..</option>
                                             @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">
-                                                    {{ $customer->name . ' - ' . ($customer->company_name ?? '-') . ' - ' . $customer->phone }}
-                                                </option>
+                                                    {{ $customer->name . ' - ' . $customer->phone }}</option>
                                             @endforeach
                                         </x-form.select>
                                     </div>
@@ -115,37 +114,29 @@
         </div>
     </div>
     <script>
-        const searchBox = document.querySelector("#searchBox");
-        const customerSelect = document.querySelector("#customer_id");
+        searchBox = document.querySelector("#searchBox");
+        customerid = document.querySelector("#customer_id");
+        var when = "keyup"; //You can change this to keydown, keypress or change
 
         searchBox.addEventListener("keyup", function(e) {
-            const text = e.target.value.trim();
-            const options = customerSelect.options;
-
-            // If search box is empty, reset to default option
-            if (!text) {
-                customerSelect.selectedIndex = 0;
-                return;
-            }
-
-            // Try to find the first matching option (by contains or regex)
-            for (let i = 0; i < options.length; i++) {
-                const option = options[i];
-                const optionText = option.text;
-                const lowerOptionText = optionText.toLowerCase();
-                const lowerText = text.toLowerCase();
-                const regex = new RegExp(text, "i");
-                const match = optionText.match(regex);
-                const contains = lowerOptionText.indexOf(lowerText) !== -1;
-
-                if (match || contains) {
-                    option.selected = true;
-                    return;
+            var text = e.target.value; //searchBox value
+            var options = customerid.options; //select options
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i]; //current option
+                var optionText = option.text; //option text ("Somalia")
+                var lowerOptionText = optionText
+                    .toLowerCase(); //option text lowercased for case insensitive testing
+                var lowerText = text.toLowerCase(); //searchBox value lowercased for case insensitive testing
+                var regex = new RegExp("^" + text, "i"); //regExp, explained in post
+                var match = optionText.match(regex); //test if regExp is true
+                var contains = lowerOptionText.indexOf(lowerText) != -
+                    1; //test if searchBox value is contained by the option text
+                if (match || contains) { //if one or the other goes through
+                    option.selected = true; //select that option
+                    return; //prevent other code inside this event from executing
                 }
+                searchBox.selectedIndex = 0; //if nothing matches it selects the default option
             }
-
-            // No match found => reset to default
-            customerSelect.selectedIndex = 0;
         });
     </script>
 </x-app-layout>
