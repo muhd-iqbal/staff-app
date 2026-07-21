@@ -166,12 +166,11 @@ class ReportController extends Controller
  * Helper to build payments grouped by sale date for a date range.
  *
  * For current POS (old = false) we join payments -> orders and group by DATE(orders.date).
- * For old POS (old = true) we query legacy payments tables (sma_gurun_payments / sma_guar_payments)
- * and return totals as-is (to match existing old_* behavior).
+ * Filtering by payment method is supported for current POS (payments.payment_method).
  *
  * Returns a collection of objects with ->date (YYYY-MM-DD), ->count (int) and ->total (numeric).
  */
-private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = null, bool $old = false)
+private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = null, bool $old = false, $method = null)
 {
     $out = collect();
 
@@ -204,15 +203,19 @@ private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = 
             ->whereBetween(DB::raw('DATE(orders.date)'), [$sd, $ed]);
 
         if ($branch) {
-            // filter by order branch (keeps behavior consistent with buildDailySalesCollection)
             $query->where('orders.branch_id', $branch);
+        }
+
+        if ($method) {
+            $query->where('payments.payment_method', $method);
         }
 
         $out = $query->groupBy(DB::raw('DATE(orders.date)'))
             ->orderBy(DB::raw('DATE(orders.date)'))
             ->get();
     } else {
-        // Old POS: union legacy payments tables
+        // Old POS: we currently do NOT attempt to filter by payment method for legacy tables
+        // (legacy payments schemas differ; implement if/when you confirm column names).
         $posStart = config('app.pos_start') . ' 00:00:00';
 
         if (! $branch) {
@@ -273,9 +276,10 @@ private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = 
         // Build dailySales if date range provided (current POS)
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-                $dailySales = $this->buildDailySalesCollection($start, $end, null, false);
-        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, false);
-        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, null, false);
+                $method = request()->query('payment_method'); // nullable
+$dailySales = $this->buildDailySalesCollection($start, $end, null, false);
+$paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, false);
+$paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, null, false, $method);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -310,9 +314,10 @@ private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = 
         // Build dailySales for this branch if date range provided
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-        $dailySales = $this->buildDailySalesCollection($start, $end, $branch, false);
-        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, false);
-        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, $branch, false);
+        $method = request()->query('payment_method'); // nullable
+$dailySales = $this->buildDailySalesCollection($start, $end, $branch, false);
+$paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, false);
+$paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, $branch, false, $method);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -347,10 +352,10 @@ private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = 
         // Build dailySales from old POS data if date range provided
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-                $dailySales = $this->buildDailySalesCollection($start, $end, null, true);
-        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, true);
-        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, null, true);
-
+                $method = request()->query('payment_method'); // will be ignored for old POS (see helper)
+$dailySales = $this->buildDailySalesCollection($start, $end, null, true);
+$paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, true);
+$paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, null, true, $method);
         return view('reports.index', [
             'sales' => $sales,
             'branches' => Branch::all(),
@@ -407,9 +412,10 @@ private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = 
         // Build dailySales for old branch if date range provided
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-                $dailySales = $this->buildDailySalesCollection($start, $end, $branch, true);
-        $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, true);
-        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, $branch, true);
+                $method = request()->query('payment_method'); // ignored for legacy tables
+$dailySales = $this->buildDailySalesCollection($start, $end, $branch, true);
+$paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, true);
+$paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, $branch, true, $method);
 
         return view('reports.index', [
             'sales' => $sales,
