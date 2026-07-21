@@ -239,6 +239,61 @@
                             <div class="mt-3 text-gray-600">Pilih julat tarikh dan tekan Cari untuk melihat pecahan pembayaran.</div>
                         @endisset
                     </div>
+
+                     <!-- Payment by Sale Date section -->
+<div class="text-center mt-5">
+    <h2 class="text-lg font-semibold">
+        Pembayaran Mengikut Tarikh Jualan
+        @if(request('start_date') || request('end_date'))
+            -
+            @if(request('start_date')) {{ date('d M Y', strtotime(request('start_date'))) }} @else - @endif
+            hingga
+            @if(request('end_date')) {{ date('d M Y', strtotime(request('end_date'))) }} @else - @endif
+        @endif
+    </h2>
+    <div class="text-sm text-gray-600 mt-1">
+        <span class="italic">(Bilangan transaksi dan jumlah mengikut tarikh jualan)</span>
+    </div>
+
+    @isset($paymentBySaleDate)
+        @if ($paymentBySaleDate->count() > 0)
+            <table class="w-full border border-collapse mt-3">
+                <thead>
+                    <tr>
+                        <th class="border">Tarikh</th>
+                        <th class="border">Bilangan</th>
+                        <th class="border">Jumlah RM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($paymentBySaleDate as $row)
+                        <tr>
+                            <td class="border">{{ date('d M Y', strtotime($row->date)) }}</td>
+                            <td class="border text-center">{{ $row->count }}</td>
+                            <td class="border">
+                                {{-- For current POS payments amounts are stored as integer (cents) -> divide by 100.
+                                     For old POS, totals are returned as-is. Use $current flag to decide. --}}
+                                RM {{ number_format(($current ? ($row->total / 100) : $row->total), 2) }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr class="font-semibold">
+                        <th class="border">Jumlah</th>
+                        <th class="border text-center">{{ $paymentBySaleDate->sum('count') }}</th>
+                        <th class="border">RM {{ number_format(($current ? ($paymentBySaleDate->sum('total') / 100) : $paymentBySaleDate->sum('total')), 2) }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        @else
+            <div class="mt-3 text-gray-600">Tiada data pembayaran untuk julat yang dipilih.</div>
+        @endif
+    @else
+        <div class="mt-3 text-gray-600">Pilih julat tarikh dan tekan Cari untuk melihat pembayaran mengikut tarikh jualan.</div>
+    @endisset
+</div>
+                                    
                     <div class="mt-5">
                         <div>POS terkini bermula {{ date("d M Y", strtotime(config('app.pos_start'))) }}</div>
                     </div>
