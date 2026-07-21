@@ -162,6 +162,94 @@ class ReportController extends Controller
         return $breakdown;
     }
 
+    /**
+ * Helper to build payments grouped by sale date for a date range.
+ *
+ * For current POS (old = false) we join payments -> orders and group by DATE(orders.date).
+ * For old POS (old = true) we query legacy payments tables (sma_gurun_payments / sma_guar_payments)
+ * and return totals as-is (to match existing old_* behavior).
+ *
+ * Returns a collection of objects with ->date (YYYY-MM-DD), ->count (int) and ->total (numeric).
+ */
+private function buildPaymentBySaleDate(?string $start, ?string $end, $branch = null, bool $old = false)
+{
+    $out = collect();
+
+    if (! $start && ! $end) {
+        return $out;
+    }
+
+    // Normalize dates
+    if ($start && ! $end) {
+        $end = $start;
+    } elseif ($end && ! $start) {
+        $start = $end;
+    }
+
+    try {
+        $sd = date('Y-m-d', strtotime($start));
+        $ed = date('Y-m-d', strtotime($end));
+    } catch (\Throwable $e) {
+        return $out;
+    }
+
+    if (! $sd || ! $ed) {
+        return $out;
+    }
+
+    if (! $old) {
+        // Current POS: group payments by the related order's date
+        $query = Payment::selectRaw('DATE(orders.date) as date, COUNT(*) as count, COALESCE(SUM(payments.amount),0) as total')
+            ->join('orders', 'payments.order_id', '=', 'orders.id')
+            ->whereBetween(DB::raw('DATE(orders.date)'), [$sd, $ed]);
+
+        if ($branch) {
+            // filter by order branch (keeps behavior consistent with buildDailySalesCollection)
+            $query->where('orders.branch_id', $branch);
+        }
+
+        $out = $query->groupBy(DB::raw('DATE(orders.date)'))
+            ->orderBy(DB::raw('DATE(orders.date)'))
+            ->get();
+    } else {
+        // Old POS: union legacy payments tables
+        $posStart = config('app.pos_start') . ' 00:00:00';
+
+        if (! $branch) {
+            $sql = "
+                SELECT DATE(date) as date, COUNT(*) as count, SUM(amount) as total
+                FROM (
+                    SELECT * FROM sma_gurun_payments
+                    UNION ALL
+                    SELECT * FROM sma_guar_payments
+                ) p
+                WHERE DATE(date) >= ? AND DATE(date) <= ? AND date < ?
+                GROUP BY DATE(date)
+                ORDER BY DATE(date)
+            ";
+            $rows = DB::select($sql, [$sd, $ed, $posStart]);
+            $out = collect($rows);
+        } else {
+            $table = $branch === '1' ? 'sma_gurun_payments' : ($branch === '2' ? 'sma_guar_payments' : null);
+            if ($table) {
+                $sql = "
+                    SELECT DATE(date) as date, COUNT(*) as count, SUM(amount) as total
+                    FROM {$table}
+                    WHERE DATE(date) >= ? AND DATE(date) <= ? AND date < ?
+                    GROUP BY DATE(date)
+                    ORDER BY DATE(date)
+                ";
+                $rows = DB::select($sql, [$sd, $ed, $posStart]);
+                $out = collect($rows);
+            } else {
+                $out = collect();
+            }
+        }
+    }
+
+    return $out;
+}
+
     public function yearly($y)
     {
         $dbData = Order::select(
@@ -185,8 +273,9 @@ class ReportController extends Controller
         // Build dailySales if date range provided (current POS)
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-        $dailySales = $this->buildDailySalesCollection($start, $end, null, false);
+                $dailySales = $this->buildDailySalesCollection($start, $end, null, false);
         $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, false);
+        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, null, false);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -194,6 +283,7 @@ class ReportController extends Controller
             'current' => 1,
             'dailySales' => $dailySales,
             'paymentBreakdown' => $paymentBreakdown,
+            'paymentBySaleDate' => $paymentBySaleDate,
         ]);
     }
 
@@ -222,6 +312,7 @@ class ReportController extends Controller
         $end = request()->query('end_date');
         $dailySales = $this->buildDailySalesCollection($start, $end, $branch, false);
         $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, false);
+        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, $branch, false);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -230,6 +321,7 @@ class ReportController extends Controller
             'current' => 1,
             'dailySales' => $dailySales,
             'paymentBreakdown' => $paymentBreakdown,
+            'paymentBySaleDate' => $paymentBySaleDate,
         ]);
     }
 
@@ -255,8 +347,9 @@ class ReportController extends Controller
         // Build dailySales from old POS data if date range provided
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-        $dailySales = $this->buildDailySalesCollection($start, $end, null, true);
+                $dailySales = $this->buildDailySalesCollection($start, $end, null, true);
         $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, null, true);
+        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, null, true);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -264,6 +357,7 @@ class ReportController extends Controller
             'current' => 0,
             'dailySales' => $dailySales,
             'paymentBreakdown' => $paymentBreakdown,
+            'paymentBySaleDate' => $paymentBySaleDate,
         ]);
     }
 
@@ -313,8 +407,9 @@ class ReportController extends Controller
         // Build dailySales for old branch if date range provided
         $start = request()->query('start_date');
         $end = request()->query('end_date');
-        $dailySales = $this->buildDailySalesCollection($start, $end, $branch, true);
+                $dailySales = $this->buildDailySalesCollection($start, $end, $branch, true);
         $paymentBreakdown = $this->buildPaymentMethodBreakdown($start, $end, $branch, true);
+        $paymentBySaleDate = $this->buildPaymentBySaleDate($start, $end, $branch, true);
 
         return view('reports.index', [
             'sales' => $sales,
@@ -323,6 +418,7 @@ class ReportController extends Controller
             'current' => 0,
             'dailySales' => $dailySales,
             'paymentBreakdown' => $paymentBreakdown,
+            'paymentBySaleDate' => $paymentBySaleDate,
         ]);
     }
 }
