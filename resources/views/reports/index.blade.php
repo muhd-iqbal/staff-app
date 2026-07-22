@@ -239,7 +239,7 @@
                             <div class="mt-3 text-gray-600">Pilih julat tarikh dan tekan Cari untuk melihat pecahan pembayaran.</div>
                         @endisset
                     </div>
-
+<br> <br>
 
                                     @php
     // same mapping used previously for labels
