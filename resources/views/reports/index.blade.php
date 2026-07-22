@@ -256,14 +256,12 @@
 @endphp
 
 <div class="flex flex-row-reverse gap-3 mt-4">
-    {{-- Keep other query params (start_date, end_date, branch, year) but replace payment_method --}}
-    {{-- All --}}
     <a href="{{ request()->url() . (count(request()->except('payment_method')) ? '?' . http_build_query(request()->except('payment_method')) : '') }}"
         class="capitalize {{ $currentMethod ? 'bg-gray-400' : 'bg-gray-600' }} p-2 px-4 rounded-md shadow-md text-white">All</a>
 
     @foreach ($paymentMethods as $key => $label)
         <a href="{{ request()->fullUrlWithQuery(['payment_method' => $key]) }}"
-            class="capitalize {{ $currentMethod === $key ? 'bg-yellow-500' : 'bg-' . $key . '-500' }} p-2 px-4 rounded-md shadow-md text-white">
+            class="capitalize {{ $currentMethod === $key ? 'bg-yellow-500' : 'bg-blue-500' }} p-2 px-4 rounded-md shadow-md text-white">
             {{ $label }}
         </a>
     @endforeach
