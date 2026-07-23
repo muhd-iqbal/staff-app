@@ -60,18 +60,6 @@
             class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
             {{ __('Designer') }}
         </th>
-        <!-- Total Sales column -->
-        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {{ __('Total Sales') }}
-        </th>
-        <!-- Total Modal column -->
-        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {{ __('Total Modal') }}
-        </th>
-        <!-- Profit column -->
-        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {{ __('Profit') }}
-        </th>
         <!-- Note column added here -->
         <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
             {{ __('Note') }}
@@ -117,45 +105,19 @@
                     @endif
                 </td>
                
-                <!-- Total Sales cell -->
-                <td class="text-center" onclick="event.stopPropagation();">
-                    <div class="text-sm font-medium text-gray-900">
-                        {{ number_format($list->price ?? 0, 2) }}
-                    </div>
-                </td>
-
-                <!-- Total Modal cell - textbox for user input -->
-                <td class="text-center" onclick="event.stopPropagation();">
-                    <form method="POST" action="{{ route('orders.item.modal', $list->id) }}" class="inline-block" onsubmit="event.stopPropagation();">
-                        @csrf
-                        <input type="number" name="total_modal" step="0.01" 
-                               class="border rounded w-20 text-xs text-center modal-input-{{ $list->id }}" 
-                               value="{{ $list->total_modal ?? 0 }}" 
-                               onchange="this.form.submit(); calculateProfit({{ $list->id }});"
-                               onclick="event.stopPropagation();" />
-                    </form>
-                </td>
-
-                <!-- Profit cell - auto calculated -->
-                <td class="text-center" onclick="event.stopPropagation();">
-                    <div class="text-sm font-medium text-gray-900 profit-{{ $list->id }}">
-                        {{ number_format(($list->price ?? 0) - ($list->total_modal ?? 0), 2) }}
-                    </div>
-                </td>
-               
                 <!-- Note column added here -->
-                <td class="text-center" onclick="event.stopPropagation();">
-                    <form method="POST" action="{{ route('orders.item.note', $list->id) }}" onsubmit="event.stopPropagation();">
-                        @csrf
-                        <textarea name="note" rows="2" class="border rounded w-full text-xs" onclick="event.stopPropagation();">{{ $list->note ?? '' }}</textarea>
-                        <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded text-xs mt-1" onclick="event.stopPropagation();">Save</button>
-                    </form>
-                </td>
+                <td class="text-center">
+    <form method="POST" action="{{ route('orders.item.note', $list->id) }}" onclick="event.stopPropagation();">
+        @csrf
+        <textarea name="note" rows="2" class="border rounded w-full text-xs" onclick="event.stopPropagation();">{{ $list->note ?? '' }}</textarea>
+        <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded text-xs mt-1" onclick="event.stopPropagation();">Save</button>
+    </form>
+</td>
             </tr>
         @endforeach
     @else
         <tr>
-            <td colspan="12" class="text-center">{{ __('Tiada item') }}</td>
+            <td colspan="5" class="text-center">{{ __('Tiada item') }}</td>
         </tr>
     @endif
 </tbody>
@@ -190,12 +152,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function calculateProfit(itemId) {
-            const totalSalesElements = document.querySelectorAll(`td`);
-            // This will be handled by page reload from the form submission
-            // Profit is recalculated server-side when modal is saved
-        }
-    </script>
 </x-app-layout>
