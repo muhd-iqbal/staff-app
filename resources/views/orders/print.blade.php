@@ -90,7 +90,7 @@
         @if ($order->due)
             <div class="my-4 px-3 text-center">
                 <span>Buat bayaran kepada: <br />
-                    {{ $order->branch->bank_account_1 }} <br />
+                    <!--{{ $order->branch->bank_account_1 }}--> PUBLIC BANK 3159884900 (Inspirazs Enterprise)<br />
                   <!--  {!! $order->branch->bank_account_2? $order->branch->bank_account_2."<br />": "" !!}
                     {!! $order->branch->bank_account_3? $order->branch->bank_account_3."<br />": "" !!} -->
                     dengan Rujukan
