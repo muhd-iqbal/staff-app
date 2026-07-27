@@ -131,7 +131,7 @@
                     <div class="text-center mt-10">
                         <div class="text-sm">
                             <div class="mt-5">{{ __('Nombor Akaun:') }}</div>
-                            {{ $quote->branch->bank_account_1 }} 
+                            <!--{{ $quote->branch->bank_account_1 }}--> PUBLIC BANK 3159884900 (Inspirazs Enterprise)
                             
                         </div>
                         &nbsp;
