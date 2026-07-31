@@ -35,7 +35,8 @@
                             <x-application-logo class="hidden md:block h-24 w-auto fill-current text-gray-600" />
                             <x-application-logo class="block md:hidden h-32 w-auto fill-current text-gray-600" />
                             <div>
-                                <div class="text-2xl font-bold uppercase">{{ $quote->branch->name }}</div>
+                                <!--<div class="text-2xl font-bold uppercase">{{ $quote->branch->name }}</div>-->
+                                <div class="text-2xl font-bold uppercase">INSPIRAZS ENTERPRISE</div>
                                 <div class="text-base font-bold uppercase">202101005300 (1405599-V)</div>
                                 <div class="text-base font-bold uppercase">LOT 15, BANGUNAN PKNK KAWASAN PERINDUSTRIAN RINGAN GURUN, KILANG KETAPAN, 08300 GURUN, KEDAH</div>
                                 <div class="text-base font-bold uppercase">Tel:
